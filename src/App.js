@@ -1,17 +1,10 @@
-import React from 'react';
 import './App.css';
-import Header from './Header.js';
-import Footer from './Footer.js';
-
+import { RouterProvider } from 'react-router-dom';
+import root from './router/root';
 
 function App() {
-  return (
-    <div className="App">
-      <Header/>
-      <h1>뭐가 또 문제야</h1>
-      <Footer/>
-    </div>
-  );
+  return <RouterProvider router={root}/>;
+
 }
 
 export default App;
