@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import UserGuide from "./UserGuide";
 import ModalPortal from "../Modal/Portal";
 import { Transition } from "react-transition-group";
-import GuideModalFrame from "../Modal/GuideModalFrame";
+import GuideModalFrame from "../Modal/guide/GuideModalFrame.js";
 import GameGuide from "./GameGuide";
 import Beer1 from "../animation/Beer1.js";
 import Header from "../../layouts/Header.js";
