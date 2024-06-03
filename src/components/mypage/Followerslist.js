@@ -2,12 +2,12 @@ import React from "react";
 import { FaUser } from "react-icons/fa"; // 리액트 아이콘 추가
 
 // 홍길동 배열을 컴포넌트 바깥에 선언
-const names = ["홍길동", "김길동", "김민수", "이철수", "박지성", "홍길동"];
+const names = ["홍길동", "김길동", "김민수", "이철수"];
 
 function Followerslist() {
   return (
-    <div className="flex flex-col lg:flex-row w-full">
-      <div className="w-full lg:w-1/2 h-60 lg:h-80 text-lg lg:text-xl text-white font-GmarketSans flex flex-col items-center justify-center p-4 lg:p-8">
+    <div className="flex flex-col lg:flex-row w-full ">
+      <div className="w-full lg:w-1/2 h-60 lg:h-80 text-6xl lg:text-2xl text-white font-GmarketSans flex flex-col items-center justify-center p-4 lg:p-8">
         <div className="text-pink-500 mb-4 lg:mb-8">팔로잉 목록</div>
         <hr className="w-full border-pink-500 mb-4 lg:mb-8" />
         <div className="w-full overflow-x-auto">
@@ -36,8 +36,7 @@ function Followerslist() {
 
       <div className="hidden lg:block w-1 border-pink-500 border-l-2 h-80" />
 
-      <div className="w-full lg:w-1/2 h-60 lg:h-80 text-lg lg:text-xl text-white font-GmarketSans flex flex-col items-center justify-center p-4 lg:p-8">
-      <div className="w-full lg:w-1/2 h-60 lg:h-80 text-lg lg:text-xl text-white font-GmarketSans flex flex-col items-center justify-center p-4 lg:p-8">
+      <div className="w-full lg:w-1/2 h-60 lg:h-80 text-6xl lg:text-2xl text-white font-GmarketSans flex flex-col items-center justify-center p-4 lg:p-8">
         <div className="text-pink-500 mb-4 lg:mb-8">팔로잉 목록</div>
         <hr className="w-full border-pink-500 mb-4 lg:mb-8" />
         <div className="w-full overflow-x-auto">
@@ -62,7 +61,6 @@ function Followerslist() {
             </tbody>
           </table>
         </div>
-      </div>
       </div>
     </div>
   );
