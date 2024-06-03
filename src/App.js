@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
-import Mypage from './components/mypage/Mypage';
-import Intro from './components/intro/Intro';
+import './App.css';
+import { RouterProvider } from 'react-router-dom';
+import root from './router/root';
 
-const App = () => {
+function App() {
+  return <RouterProvider router={root}/>;
 
 
-    return (
-        <div>
-          {/* <Mypage /> */}
-          <Mypage />
-        </div>
-    );
-};
+}
 
 export default App;

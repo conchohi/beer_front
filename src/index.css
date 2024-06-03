@@ -1,17 +1,78 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  margin: 0;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+body{
+  background-image: url('assets/image/background.jpg');
+  background-size: cover;
+    margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/*footer.css*/
+.footer {
+    background-color: #e2e8f0; /* bg-blueGray-200 */
+    padding-top: 2rem; /* pt-8 */
+    padding-bottom: 1.5rem; /* pb-6 */
+  }
+  .footer h4 {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 600; /* font-semibold */
+    color: #2d3748; /* text-blueGray-700 */
+  }
+  .footer h5 {
+    font-size: 1.125rem; /* text-lg */
+    margin-top: 0; /* mt-0 */
+    margin-bottom: 0.5rem; /* mb-2 */
+    color: #718096; /* text-blueGray-600 */
+  }
+  .footer button {
+    background-color: #fff; /* bg-white */
+    color: #3b82f6; /* text-lightBlue-400 */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+    font-weight: 400; /* font-normal */
+    height: 2.5rem; /* h-10 */
+    width: 2.5rem; /* w-10 */
+    display: flex;
+    align-items: center; /* items-center */
+    justify-content: center; /* justify-center */
+    border-radius: 9999px; /* rounded-full */
+    outline: none;
+    margin-right: 0.5rem; /* mr-2 */
+    margin-bottom: 0.5rem; /* mb-2 (for small screens) */
+  }
+  .footer button i {
+    font-size: 1rem;
+  }
+  .footer hr {
+    border-color: #cbd5e0; /* border-blueGray-300 */
+    margin-top: 1.5rem; /* my-6 */
+    margin-bottom: 1.5rem; /* my-6 */
+  }
+  .footer span,
+  .footer a {
+    color: #718096; /* text-blueGray-600 */
+    font-weight: 600; /* font-semibold */
+  }
+  .footer a:hover {
+    color: #2d3748; /* text-blueGray-800 */
+  }
+  .footer .text-center {
+    text-align: center;
+  }
+  .footer .text-sm {
+    font-size: 0.875rem; /* text-sm */
+  }
+  .footer .font-semibold {
+    font-weight: 600; /* font-semibold */
+  }
+  .footer .py-1 {
+    padding-top: 0.25rem; /* py-1 */
+    padding-bottom: 0.25rem; /* py-1 */
+  }
