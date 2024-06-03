@@ -1,7 +1,7 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import Loading from "../component/load/Loading";
 
-const Loading = <div>Loading....</div>;
 const Info = lazy(() => import("../pages/InfoPage"));
 const Game = lazy(() => import("../pages/GameInfo"));
 const Main = lazy(() => import("../components/VideoPage")); // 추가
@@ -12,7 +12,7 @@ const root = createBrowserRouter([
   {
     path: "/info",
     element: (
-      <Suspense fallback={Loading}>
+      <Suspense fallback={<Loading />}>
         <Info />
       </Suspense>
     ),
@@ -20,7 +20,7 @@ const root = createBrowserRouter([
   {
     path: "", // 추가
     element: (
-      <Suspense fallback={Loading}>
+      <Suspense fallback={<Loading />}>
         <Main />
       </Suspense>
     ),
@@ -28,7 +28,7 @@ const root = createBrowserRouter([
   {
     path: "/game", // 추가
     element: (
-      <Suspense fallback={Loading}>
+      <Suspense fallback={<Loading />}>
         <Game />
       </Suspense>
     ),
@@ -36,7 +36,7 @@ const root = createBrowserRouter([
   {
     path: "/chat/list",
     element: (
-      <Suspense fallback={<Loding />}>
+      <Suspense fallback={<Loading />}>
         <ChatList />
       </Suspense>
     )
