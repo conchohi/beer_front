@@ -2,10 +2,10 @@ import ChatList from "../components/chatlist/ChatList";
 import Loading from "../components/load/Loading";
 import VideoComponent from "../components/test/RtcTest";
 
-const IndexPage = () => {
+const VideoPage = () => {
     return ( <>
         <VideoComponent/>
     </> );
 }
  
-export default IndexPage;
+export default VideoPage;

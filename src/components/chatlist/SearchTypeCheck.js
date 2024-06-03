@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { FaCaretDown, FaSortDown } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 
 function SearchTypeCheck({setSearchType}) {
     //선택된 지역의 값 설정
