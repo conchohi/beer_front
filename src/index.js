@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ReportUser from './modal/ReportUser';
+import UserDetail from './modal/UserDetail';
+import CreateRoom from './modal/CreateRoom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <CreateRoom/>
+    {/* <ReportUser/> */}
+    {/* <UserDetail/> */}
   </React.StrictMode>
 );
 
