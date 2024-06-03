@@ -1,10 +1,10 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-
-
-
-
+body{
+  background-image: url('assets/image/background.jpg');
+  background-size: cover;
+}
 
 /*footer.css*/
 .footer {
@@ -67,11 +67,3 @@
     padding-top: 0.25rem; /* py-1 */
     padding-bottom: 0.25rem; /* py-1 */
   }
-  
-
-
-body{
-    background-image: url('assets/image/background.jpg');
-    background-size: cover;
-}
-

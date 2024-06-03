@@ -20,7 +20,7 @@ const ChatCard = ({chat}) => {
     //chat = {category : "", title : "", nickname : "", create: "2024-05-30 14:33", participants:2, totalParticipants: 6 }
     return ( 
         <div className="flex flex-col bg-white w-full py-5 px-10 my-5 rounded-xl">
-            <img className="w-full h-48 border shadow-lg mb-5" src={checkCategory(chat.category)} alt={chat.category}/>
+            <img className="w-full border shadow-lg mb-5" src={checkCategory(chat.category)} alt={chat.category}/>
             <div className="flex justify-between">
                 <span className="text-gray-500">{chat.category}</span>
                 <span className="text-sm">{chat.nickname}</span>

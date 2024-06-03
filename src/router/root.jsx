@@ -1,6 +1,6 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import Loading from "../component/load/Loading";
+import Loading from "../components/load/Loading";
 
 const Info = lazy(() => import("../pages/InfoPage"));
 const Game = lazy(() => import("../pages/GameInfo"));

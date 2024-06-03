@@ -1,4 +1,4 @@
-import ChatList from "../component/chatlist/ChatList";
+import ChatList from "../components/chatlist/ChatList";
 
 const ChatListPage = () => {
     return ( <div>

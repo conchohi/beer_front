@@ -45,7 +45,7 @@ const GameModal = ({ isOpen, closeModal, title }) => {
     if (currentStep < modalContents.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      navigate("/info"); // 게임 페이지로 페이지 이동
+      navigate("/chat/list"); // 게임 페이지로 페이지 이동
     }
   };
 
