@@ -1,28 +1,27 @@
-body {
-    margin: 0;
-    overflow-y: hidden;
-  }
-  
-  .outer {
-    height: 100vh;
-    overflow-y: auto;
-  }
-  
-  /* 화면에서 스크롤바 안보이게 */
-  .outer::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .inner {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .divider {
-    width: 100%;
-    height: 5px;
-    background-color: gray;
-  }
-  
+/* body {
+  margin: 0;
+  overflow-y: hidden;
+} */
+
+.outer {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* 화면에서 스크롤바 안보이게 */
+.outer::-webkit-scrollbar {
+  display: none;
+}
+
+.inner {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divider {
+  width: 100%;
+  height: 5px;
+  background-color: transparent;
+}
