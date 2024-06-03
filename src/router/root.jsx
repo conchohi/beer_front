@@ -4,7 +4,8 @@ import Loading from "../components/load/Loading";
 
 const Info = lazy(() => import("../pages/InfoPage"));
 const Game = lazy(() => import("../pages/GameInfo"));
-const Main = lazy(() => import("../components/VideoPage")); // 추가
+const Main = lazy(()=> import("../pages/MainPage"))
+// const Main = lazy(() => import("../components/VideoPage")); // 추가
 // const Index = lazy(()=>import("../pages/IndexPage"));
 const ChatList = lazy(() => import("../pages/ChatListPage"));
 

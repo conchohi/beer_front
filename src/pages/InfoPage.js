@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import InfoModal from "../components/InfoModal";
+import BasicLayout from "../layouts/BasicLayout";
 
 function InfoPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,7 +12,7 @@ function InfoPage() {
   };
 
   return (
-    <div className="main">
+    <BasicLayout>
       <h1 className="text-center font-bold text-3xl mb-4 mt-10">가이드</h1>
       {/* flex 클래스를 사용하여 아이템들을 가로 정렬합니다. */}
       <div className="flex justify-center gap-36 p-4">
@@ -65,7 +66,7 @@ function InfoPage() {
       >
         Content: {modalContent}
       </InfoModal>
-    </div>
+    </BasicLayout>
   );
 }
 

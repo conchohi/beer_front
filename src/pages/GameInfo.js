@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InfoModal from "../components/InfoModal";
 import GameModal from "../components/GameModal";
+import BasicLayout from "../layouts/BasicLayout";
 
 function GameInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,6 +13,7 @@ function GameInfo() {
   };
 
   return (
+    <BasicLayout>
     <div className="main">
       <h1 className="text-center font-bold text-3xl mb-4 mt-10">게임 가이드</h1>
       {/* flex 클래스를 사용하여 아이템들을 가로 정렬합니다. */}
@@ -81,6 +83,7 @@ function GameInfo() {
         title={modalContent}
       ></GameModal>
     </div>
+    </BasicLayout>
   );
 }
 

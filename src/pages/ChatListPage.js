@@ -1,9 +1,10 @@
 import ChatList from "../components/chatlist/ChatList";
+import BasicLayout from "../layouts/BasicLayout";
 
 const ChatListPage = () => {
-    return ( <div>
-        <ChatList/>
-    </div> );
+    return ( <BasicLayout>
+            <ChatList/>
+        </BasicLayout> );
 }
  
 export default ChatListPage;

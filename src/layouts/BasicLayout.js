@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import Header from './Header';
-import MainImage from './MainImage';
-import Introduction from './Introduction';
-import './Mainlayout.css'; 
+import Footer from "./Footer";
+import Header from "./Header";
 import Dots from "./Dots";
 
 const DIVIDER_HEIGHT = 5; 
 
-function Mainlayout() {
+const BasicLayout = ({children}) => {  
     const outerDivRef = useRef();
     const [currentPage, setCurrentPage] = useState(1);
     
@@ -72,19 +70,17 @@ function Mainlayout() {
         outerDivRefCurrent.removeEventListener("wheel", wheelHandler);
       };
     }, []);
-  
-    return (
-      <div className="App">
-        <div className="header"><Header /></div>
-        <div ref={outerDivRef} className="outer bg-cover bg-center" style={{ backgroundImage: `url('/img/backgroundImage.jpg')`, minHeight: '100vh' }}>
-          <Dots currentPage={currentPage} />
-          <div className="inner"><MainImage /></div>
-          <div className="divider"></div>
-          <div className="inner"><Introduction /></div>
-        </div>
-      </div>
-    );
-  }
-  
-  export default Mainlayout;
-  
+
+
+    return ( <>
+        <Header/>
+            <div ref={outerDivRef} className="outer bg-cover bg-center min-h-[960px] md:w-5/6 mx-auto">
+                <Dots currentPage={currentPage} />
+                {children}
+
+            </div>
+        <Footer/>
+    </> );
+}
+ 
+export default BasicLayout;

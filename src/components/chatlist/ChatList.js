@@ -25,7 +25,7 @@ const ChatList = () => {
     }, [])
 
     return (
-        <div className="w-4/5 mx-auto mb-10">
+        <div className="mx-auto mb-10">
             {/* 검색 창*/}
             <div className="my-8">
                 <SearchBar/>
