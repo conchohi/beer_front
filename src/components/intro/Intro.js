@@ -5,6 +5,8 @@ import { Transition } from "react-transition-group";
 import GuideModalFrame from "../Modal/GuideModalFrame";
 import GameGuide from "./GameGuide";
 import Beer1 from "../animation/Beer1.js";
+import Header from "../../layouts/Header.js";
+import Footer from "../../layouts/Footer.js";
 
 const Intro = () => {
   const [modalOn, setModalOn] = useState(false);
@@ -62,6 +64,7 @@ const Intro = () => {
 
   return (
     <>
+      <Header/>
       <div className="bg-[#1f2122] font-bold text-white font-gmarket-sans flex flex-col break-keep relative min-h-[100vh] overflow-hidden">
         <div
           className="absolute left-5 top-[75%] cursor-pointer opacity-50 text-3xl transition-opacity duration-500 hover:opacity-100"
@@ -129,6 +132,7 @@ const Intro = () => {
           </Transition>
         </ModalPortal>
       </div>
+      <Footer/>
     </>
   );
 };

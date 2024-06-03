@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import InfoModal from "../components/InfoModal";
+import InfoModal from "../components/Modal/InfoModal";
 import BasicLayout from "../layouts/BasicLayout";
 
 function InfoPage() {
