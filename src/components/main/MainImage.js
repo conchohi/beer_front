@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 
 const MainImage = () => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(true);
+    setTimeout(() => {
+      // 애니메이션이 끝난 후 실행할 코드 (예: 페이지 이동)
+      setIsClicked(false);
+    }, 1000); // 애니메이션 시간 (1초)
+  };
+
   return (
     <div className="flex flex-col justify-center items-center p-10 w-full">
-      <img src="/img/mainImage.png" alt="Main" className="w-1/2 mb-4" />
-      <button className="bg-gray-800 text-white px-4 py-2 mt-4">
-        참여 하기
+      <img src="/img/mainImage.png" alt="Main" className="w-1/2 mb-4 animated-zoom" />
+      <button
+        className={`bg-gray-900 text-white px-10 py-4 mt-6 rounded-lg font-semibold neon-button ${isClicked ? 'spin-and-disappear' : ''}`}
+        onClick={handleClick}
+      >
+        입장하기
       </button>
+
       <div className="mt-10 text-white text-lg"></div>
       <div className="animate-bounce mt-2">
         <svg
