@@ -1,17 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import Janus from "../../api/janus";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "../load/Loading";
 import { Spinner } from "spin.js";
 import { FaVideo, FaVideoSlash, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 
 const server = "https://janus.jsflux.co.kr/janus";
+
 var sfuClient = null
 var janus = null
+
 const VideoComponent = () => {
     //방에 최대 인원 수가 필요, 자신의 닉네임도 필요
     // const {roomNo} = useParams();
     // const myroom = Number(roomNo);
+
     const myroom = 11111;
     const publisher = 4;
     const myVideoRef = useRef(null);
@@ -88,7 +90,7 @@ const VideoComponent = () => {
                                         permanent: false,
                                         record: false,
                                         publishers: publisher, //방에 들어갈 수 있는 인원 수, 차후 수정
-                                        bitrate: 8000000,
+                                        bitrate: 16000000,
                                         fir_freq: 10,
                                         ptype: "publisher",
                                         description: "test",
@@ -277,7 +279,7 @@ const VideoComponent = () => {
         })
 
 
-        //페이지 닫을 때 자동으로 종료
+        // 페이지 닫을 때 자동으로 종료
         return () => {
             if(sfuClient){
                 sfuClient.detach()

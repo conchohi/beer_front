@@ -9,6 +9,8 @@ const Main = lazy(()=> import("../pages/MainPage"))
 // const Index = lazy(()=>import("../pages/IndexPage"));
 const ChatList = lazy(() => import("../pages/ChatListPage"));
 const MyPage =lazy(() => import("../pages/Mypage"));
+const Video =lazy(() => import("../pages/VideoPage"));
+
 const root = createBrowserRouter([
   {
     path: "/info",
@@ -47,6 +49,14 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={<Loading />}>
         <MyPage/>
+      </Suspense>
+    )
+  },
+  {
+    path: "/chat/:roomNo",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <Video/>
       </Suspense>
     )
   },
