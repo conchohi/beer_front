@@ -21,7 +21,7 @@ function InfoPage() {
         >
           <div className="bg-[#222222] rounded-lg p-8 sm:p-10 lg:p-12 my-1 mx-2 sm:mx-5 lg:mx-10 h-fit flex flex-col justify-center items-center min-h-[60vh] relative">
             <h1 className="text-center text-fuchsia-500 font-bold text-6xl mb-6 mt-6">
-              가이드
+              이용 안내
             </h1>
             <div className="flex justify-between items-center w-full mb-6">
               <div></div>
@@ -29,7 +29,7 @@ function InfoPage() {
                 to="/game"
                 className="bg-[#4b4b4b] hover:bg-[#5f5f5f] text-white font-bold py-2 px-2 rounded-md text-3xl mr-4"
               >
-                🎮 가이드
+                🎮 게임 방법
               </Link>
             </div>
 

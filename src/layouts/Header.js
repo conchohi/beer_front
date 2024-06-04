@@ -46,7 +46,7 @@ const Header = () => {
             <ul className="flex justify-between space-x-25 font-bold">
               <li>
                 <Link to="/info" className="text-white text-xl">
-                  가이드
+                  이용 안내
                 </Link>
               </li>
               <li>
@@ -118,7 +118,7 @@ const Header = () => {
                 to="/game"
                 className="block px-4 py-2 text-white bg-gray-900 rounded"
               >
-                가이드
+                이용 안내
               </Link>
             </li>
             <li>
