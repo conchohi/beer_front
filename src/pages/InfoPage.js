@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import InfoModal from "../components/Modal/InfoModal";
 import BasicLayout from "../layouts/BasicLayout";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import Intro from "../components/intro/Intro";
+
 
 function InfoPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
+  const introRef = useRef(null);
+  const location = useLocation();
 
   const openModal = (content) => {
     setIsModalOpen(true);
     setModalContent(content);
   };
+
+  useEffect(() => {
+    if (location.hash === "#intro") {
+      introRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [location]);
 
   return (
     <BasicLayout>
@@ -20,14 +30,14 @@ function InfoPage() {
           id="guidepage"
         >
           <div className="bg-[#222222] rounded-lg p-8 sm:p-10 lg:p-12 my-1 mx-2 sm:mx-5 lg:mx-10 h-fit flex flex-col justify-center items-center min-h-[60vh] relative">
-            <h1 className="text-center text-fuchsia-500 font-bold text-6xl mb-6 mt-6">
-              이용 안내
+            <h1 className="text-center text-white font-bold text-4xl mb-1 mt-3">
+              참여방법
             </h1>
             <div className="flex justify-between items-center w-full mb-6">
               <div></div>
               <Link
-                to="/game"
-                className="bg-[#4b4b4b] hover:bg-[#5f5f5f] text-white font-bold py-2 px-2 rounded-md text-3xl mr-4"
+                to="#intro"
+                className="bg-[#4b4b4b] hover:bg-[#5f5f5f] text-white font-bold py-2 px-2 rounded-md text-2xl mr-4"
               >
                 🎮 게임 방법
               </Link>
@@ -72,7 +82,13 @@ function InfoPage() {
             title={modalContent}
           ></InfoModal>
         </div>
+        
+        
+        
       </div>
+      <div ref={introRef}>
+          <Intro />
+          </div>
     </BasicLayout>
   );
 }

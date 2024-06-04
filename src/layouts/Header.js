@@ -46,7 +46,7 @@ const Header = () => {
             <ul className="flex justify-between space-x-25 font-bold">
               <li>
                 <Link to="/info" className="text-white text-xl">
-                  이용 안내
+                  참여방법
                 </Link>
               </li>
               <li>
@@ -115,10 +115,10 @@ const Header = () => {
           <ul className="mt-4 space-y-4">
             <li>
               <Link
-                to="/game"
+                to="/info"
                 className="block px-4 py-2 text-white bg-gray-900 rounded"
               >
-                이용 안내
+                참여 방법
               </Link>
             </li>
             <li>
