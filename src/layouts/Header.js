@@ -43,7 +43,7 @@ const Header = () => {
                 </a>
               </li>
               <li>
-                <a href="#board" className="text-white hover:underline">
+                <a href="/board" className="text-white hover:underline">
                   게시판
                 </a>
               </li>
@@ -63,7 +63,7 @@ const Header = () => {
               <li>
                 <div className="flex flex-col items-center">
                   <FiLogIn className="w-8 h-8 text-white text-xl" />
-                  <a href="#" className="text-white">
+                  <a href="/login" className="text-white">
                     로그인
                   </a>
                 </div>
@@ -71,7 +71,7 @@ const Header = () => {
               <li>
                 <div className="flex flex-col items-center">
                   <FaUserCircle className="w-8 h-8 text-white text-xl" />
-                  <a href="#" className="text-white">
+                  <a href="/signup" className="text-white">
                     회원가입
                   </a>
                 </div>
@@ -134,13 +134,13 @@ const Header = () => {
               </div>
               <div className="flex flex-col items-center">
                 <FiLogIn className="w-6 h-6 text-white" />
-                <a href="#" className="text-white text-sm">
+                <a href="/login" className="text-white text-sm">
                   로그인
                 </a>
               </div>
               <div className="flex flex-col items-center">
                 <FaUserCircle className="w-6 h-6 text-white" />
-                <a href="#" className="text-white text-sm">
+                <a href="/signup" className="text-white text-sm">
                   회원가입
                 </a>
               </div>

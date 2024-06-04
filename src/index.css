@@ -77,14 +77,14 @@ code {
     padding-top: 0.25rem; /* py-1 */
     padding-bottom: 0.25rem; /* py-1 */
   }
-  body {
+  /* body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: black;
     margin: 0;
-}
+} */
 
 .animated-container {
     display: flex;
