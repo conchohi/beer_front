@@ -24,7 +24,7 @@ const Header = () => {
 
           <nav className="flex-1 hidden md:flex justify-center">
             <ul className="flex space-x-8">
-              <li><a href="#guide" className="text-white hover:underline">가이드</a></li>
+              <li><a href="/game" className="text-white hover:underline">가이드</a></li>
               <li><a href="/chat/list" className="text-white hover:underline">채팅 리스트</a></li>
               <li><a href="#board" className="text-white hover:underline">게시판</a></li>
             </ul>
@@ -64,7 +64,7 @@ const Header = () => {
 
         <div className={`mobile-menu ${isMenuOpen ? '' : 'hidden'} md:hidden`}>
           <ul className="mt-4 space-y-4">
-            <li><a href="#guide" className="block px-4 py-2 text-white bg-gray-900 rounded">가이드</a></li>
+            <li><a href="/game" className="block px-4 py-2 text-white bg-gray-900 rounded">가이드</a></li>
             <li><a href="/chat/list" className="block px-4 py-2 text-white bg-gray-900 rounded">채팅 리스트</a></li>
             <li><a href="#board" className="block px-4 py-2 text-white bg-gray-900 rounded">게시판</a></li>
             <li className="flex justify-around">
