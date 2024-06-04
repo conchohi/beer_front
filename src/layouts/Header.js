@@ -55,7 +55,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="#board" className="text-white text-xl">
+                <Link to="/board" className="text-white text-xl">
                   게시판
                 </Link>
 
@@ -75,7 +75,7 @@ const Header = () => {
               <li>
                 <div className="flex flex-col items-center">
                   <FiLogIn className="w-8 h-8 text-white text-md" />
-                  <Link to="#" className="text-white">
+                  <Link to="/login" className="text-white">
                     로그인
                   </Link>
                 </div>
@@ -83,7 +83,7 @@ const Header = () => {
               <li>
                 <div className="flex flex-col items-center">
                   <FaUserPlus className="w-8 h-8 text-white text-md" />
-                  <Link to="#" className="text-white">
+                  <Link to="/signup" className="text-white">
                     회원가입
                   </Link>
                 </div>
@@ -146,13 +146,13 @@ const Header = () => {
               </div>
               <div className="flex flex-col items-center">
                 <FiLogIn className="w-6 h-6 text-white" />
-                <Link to="#" className="text-white text-sm">
+                <Link to="/login" className="text-white text-sm">
                   로그인
                 </Link>
               </div>
               <div className="flex flex-col items-center">
                 <FaUserPlus className="w-6 h-6 text-white" />
-                <Link to="#" className="text-white text-sm">
+                <Link to="/signup" className="text-white text-sm">
                   회원가입
                 </Link>
               </div>
