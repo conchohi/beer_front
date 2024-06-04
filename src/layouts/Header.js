@@ -20,8 +20,8 @@ const Header = () => {
   return (<>
     {createRoom && <CreateRoom close={handleCreate}/>}
     <header className="w-full bg-none">
-      <nav className="container mx-auto px-6 py-3">
-        <div className="flex items-center justify-between">
+  <nav className="w-full pt-3 px-4 py-4">
+        <div className="w-full flex items-center justify-between">
           <div className=" flex items-center h-full">
 
             <Link to="/">
@@ -62,11 +62,11 @@ const Header = () => {
               </li>
             </ul>
           </nav>
-          <div className="hidden md:flex items-center">
-            <ul className="flex items-center space-x-12">
+          <div className="hidden md:flex md:w-26 md:justify-end items-center">
+              <ul className="flex items-center space-x-12 ml-auto pr-0">
               <li>
                 <div className="flex flex-col items-center cursor-pointer" onClick={handleCreate}>
-                  <BiDoorOpen className="w-8 h-8 text-white text-md" onClick={handleCreate}/>
+                  <BiDoorOpen className="w-8 h-8 text-white text-md" />
                   <span to="#" className="text-white">
                     방 생성
                   </span>

@@ -26,9 +26,7 @@
     transform: scale(1.1);
   }
 }
-.spin-and-disappear {
-  animation: spin-and-disappear 1s forwards;
-}
+
 
 @keyframes spin-and-disappear {
   0% {
