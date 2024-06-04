@@ -76,7 +76,7 @@ function ProfilePageInfo({ handleOpen, profileImageUrl }) {
       </div>
 
       {/* 모달 */}
-      <EditProfileModal isOpen={modalOn} onRequestClose={closeModal} />
+      <EditProfileModal isOpen={modalOn} onRequestClose={closeModal} profileImageUrl={profileImageUrl} />
     </div>
   );
 }

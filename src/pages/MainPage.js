@@ -93,26 +93,18 @@ function MainPage() {
   }, []);
 
   return (
-    <>
-      <BasicLayout>
-        <div
-          ref={outerDivRef}
-          className="outer bg-cover bg-center"
-          style={{ backgroundImage: `url('/img/backgroundImage.jpg')` }}
-        >
-          <Dots currentPage={currentPage} />
-          <div className="inner">
-            <MainImage />
-          </div>
-          <div className="inner">
-            <Introduction />
-          </div>
-          <div>
-            <Footer />
-          </div>
-        </div>
-      </BasicLayout>
-    </>
+
+    <BasicLayout>
+      
+      <div ref={outerDivRef} className="outer bg-cover bg-center">
+        <Dots currentPage={currentPage} />
+        <div className="inner"><MainImage /></div>
+        <div className="inner"><Introduction /></div>
+
+      </div>
+
+
+    </BasicLayout>
   );
 }
 
