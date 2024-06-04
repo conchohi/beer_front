@@ -12,14 +12,14 @@ const Header = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  
-  const handleCreate = () =>{
+
+  const handleCreate = () => {
     setCreateRoom(!createRoom);
   }
 
   return (<>
-    {createRoom && <CreateRoom close={handleCreate}/>}
-    <header className="w-full bg-none">
+    {createRoom && <CreateRoom close={handleCreate} />}
+    <header className="w-full bg-none font-GmarketSansMedium">
       <nav className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           <div className=" flex items-center h-full">
@@ -73,20 +73,24 @@ const Header = () => {
                 </div>
               </li>
               <li>
-                <div className="flex flex-col items-center">
-                  <FiLogIn className="w-8 h-8 text-white text-md" />
-                  <Link to="/login" className="text-white">
+                <Link to="/login" className="text-white">
+                  <div className="flex flex-col items-center">
+                    <FiLogIn className="w-8 h-8 text-white text-md" />
+
                     로그인
-                  </Link>
-                </div>
+
+                  </div>
+                </Link>
               </li>
               <li>
-                <div className="flex flex-col items-center">
-                  <FaUserPlus className="w-8 h-8 text-white text-md" />
-                  <Link to="/signup" className="text-white">
+                <Link to="/signup" className="text-white">
+                  <div className="flex flex-col items-center">
+                    <FaUserPlus className="w-8 h-8 text-white text-md" />
+
                     회원가입
-                  </Link>
-                </div>
+
+                  </div>
+                </Link>
               </li>
             </ul>
           </div>
@@ -142,26 +146,28 @@ const Header = () => {
                 <BiDoorOpen className="w-6 h-6 text-white" />
                 <span className="text-white text-sm">
                   방 생성
-                  </span>
+                </span>
               </div>
-              <div className="flex flex-col items-center">
-                <FiLogIn className="w-6 h-6 text-white" />
-                <Link to="/login" className="text-white text-sm">
+              <Link to="/login" className="text-white text-sm">
+                <div className="flex flex-col items-center">
+                  <FiLogIn className="w-6 h-6 text-white" />
                   로그인
-                </Link>
-              </div>
-              <div className="flex flex-col items-center">
-                <FaUserPlus className="w-6 h-6 text-white" />
-                <Link to="/signup" className="text-white text-sm">
+                </div>
+              </Link>
+              <Link to="/signup" className="text-white text-sm">
+                <div className="flex flex-col items-center">
+                  <FaUserPlus className="w-6 h-6 text-white" />
+
                   회원가입
-                </Link>
-              </div>
+
+                </div>
+              </Link>
             </li>
           </ul>
         </div>
       </nav>
     </header>
-    </>
+  </>
   );
 };
 
