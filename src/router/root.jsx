@@ -63,14 +63,6 @@ const root = createBrowserRouter([
     )
   },
   {
-    path: "/livepage",
-    element: (
-      <Suspense fallback={<Loading />}>
-        <LivePage/>
-      </Suspense>
-    )
-  },
-  {
     path: "/login",
     element: (
       <Suspense fallback={<Loading />}>
