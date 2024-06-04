@@ -1,5 +1,5 @@
 import React from "react";
-import useCheckedState from "../../hook/useCheckedState";
+import useCheckedState from "../../hooks/useCheckedState";
 
 function InfoModal({ isOpen, closeModal, title }) {
   const [isChecked, handleCheckboxChange] = useCheckedState();

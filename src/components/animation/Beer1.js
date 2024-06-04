@@ -17,7 +17,7 @@ const Beer1 = () => {
     return () => animation.destroy(); // Clean up on unmount
   }, []);
 
-  return <div ref={animationContainer} style={{ width: '30vw', height: '20vw' }} />;
+  return <div ref={animationContainer} style={{ width: '40vw', height: '30vw' }} />;
 };
 
 export default Beer1;
