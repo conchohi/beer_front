@@ -1,7 +1,7 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Loading from "../components/load/Loading";
-
+const LivePage = lazy(() => import("../components/mypage/MyPageMain"));
 const Info = lazy(() => import("../pages/InfoPage"));
 const Game = lazy(() => import("../components/intro/Intro"));
 const Main = lazy(()=> import("../pages/MainPage"))

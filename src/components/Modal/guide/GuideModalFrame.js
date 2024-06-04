@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
-import GameGuideModal from "./GameGuideModal";
-import CatchMindModal from "./CatchMindModal";
-import ChattingGuideModal from "./ChattingGuideModal";
-import ImageGameGuideModal from "./ImageGameGuideModal";
-import LotteryGuideModal from "./LotteryGuideModal";
-import PersonQuizGuideModal from "./PersonQuizGuideModal";
-import PhotoGuideModal from "./PhotoGuideModal";
-import ShoutInSilenceGuideModal from "./ShoutInSilenceGuideModal";
+import GameGuideModal from "../game/GameGuideModal"; 
+import CatchMindModal from "../game/CatchMindModal";
+import ChattingGuideModal from "../game/ChattingGuideModal"; 
+import ImageGameGuideModal from "../game/ImageGameGuideModal";
+import LotteryGuideModal from "../guide/LotteryGuideModal";
+import PersonQuizGuideModal from "../game/PersonQuizGuideModal";
+import PhotoGuideModal from "../guide/PhotoGuideModal";
+import ShoutInSilenceGuideModal from "../game/ShoutInSilenceGuideModal";
 
 const GuideModalFrame = ({ show, closeModal, nowContent }) => {
   const [modalContent, setModalContent] = useState(0);

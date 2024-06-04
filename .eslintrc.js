@@ -13,7 +13,7 @@ module.exports = {
     },
     overrides: [
       {
-        files: ["src/components/api/janus.js"],
+        files: ["src/api/janus.js"],
         rules: {
           "no-undef": "off",
           "react-hooks/rules-of-hooks": "off",
@@ -22,4 +22,3 @@ module.exports = {
       }
     ]
   };
-  
