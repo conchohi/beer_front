@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FiLogIn } from "react-icons/fi";
-import { FaUserCircle, FaDoorOpen } from "react-icons/fa";
+import { FaUserPlus } from "react-icons/fa";
+import { BiDoorOpen } from "react-icons/bi";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,20 +11,20 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-none">
+    <header className="w-full bg-none">
       <nav className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center h-full">
+          <div className=" flex items-center h-full">
             <a href="/">
               <img
-                src="/image/logo.png"
+                src="/img/logo.png"
                 alt="Logo"
                 className="w-17 h-12 mr-0 mt-0"
               />
             </a>
             <a href="/">
               <img
-                src="/image/logoprint.png"
+                src="/img/title.png"
                 alt="Logo"
                 className="w-26 h-11 mt-1"
               />
@@ -31,9 +32,9 @@ const Header = () => {
           </div>
 
           <nav className="flex-1 hidden md:flex justify-center">
-            <ul className="flex space-x-8">
+            <ul className="flex justify-between space-x-8 font-bold">
               <li>
-                <a href="/game" className="text-white hover:underline">
+                <a href="/info" className="text-white hover:underline">
                   가이드
                 </a>
               </li>
@@ -54,7 +55,7 @@ const Header = () => {
             <ul className="flex items-center space-x-12">
               <li>
                 <div className="flex flex-col items-center">
-                  <FaDoorOpen className="w-8 h-8 text-white text-xl" />
+                <BiDoorOpen className="w-8 h-8 text-white text-xl" />
                   <a href="#" className="text-white">
                     방 생성
                   </a>
@@ -70,7 +71,7 @@ const Header = () => {
               </li>
               <li>
                 <div className="flex flex-col items-center">
-                  <FaUserCircle className="w-8 h-8 text-white text-xl" />
+                  <FaUserPlus className="w-8 h-8 text-white text-xl" />
                   <a href="#" className="text-white">
                     회원가입
                   </a>
@@ -127,7 +128,7 @@ const Header = () => {
             </li>
             <li className="flex justify-around">
               <div className="flex flex-col items-center">
-                <FaDoorOpen className="w-6 h-6 text-white" />
+                <BiDoorOpen className="w-6 h-6 text-white" />
                 <a href="#" className="text-white text-sm">
                   방 생성
                 </a>
@@ -139,7 +140,7 @@ const Header = () => {
                 </a>
               </div>
               <div className="flex flex-col items-center">
-                <FaUserCircle className="w-6 h-6 text-white" />
+                <FaUserPlus className="w-6 h-6 text-white" />
                 <a href="#" className="text-white text-sm">
                   회원가입
                 </a>

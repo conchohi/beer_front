@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "../../layouts/Header.js";
 import Footer from "../../layouts/Footer.js";
-import GameModal from "../Modal/GameModal.js";
+import GameModal from "../Modal/game/GameModal.js";
 
 const Intro = () => {
   const [modalOn, setModalOn] = useState(false);
