@@ -66,7 +66,7 @@ const Header = () => {
             <ul className="flex items-center space-x-12">
               <li>
                 <div className="flex flex-col items-center cursor-pointer" onClick={handleCreate}>
-                  <BiDoorOpen className="w-8 h-8 text-white text-md" />
+                  <BiDoorOpen className="w-8 h-8 text-white text-md" onClick={handleCreate}/>
                   <span to="#" className="text-white">
                     방 생성
                   </span>
@@ -74,16 +74,16 @@ const Header = () => {
               </li>
               <li>
                 <div className="flex flex-col items-center">
-                  <FiLogIn className="w-8 h-8 text-white text-md" />
                   <Link to="/login" className="text-white">
+                  <FiLogIn className="w-8 h-8 text-white text-md" />                  
                     로그인
                   </Link>
                 </div>
               </li>
               <li>
                 <div className="flex flex-col items-center">
-                  <FaUserPlus className="w-8 h-8 text-white text-md" />
                   <Link to="/signup" className="text-white">
+                  <FaUserPlus className="w-8 h-8 text-white text-md" />                  
                     회원가입
                   </Link>
                 </div>
@@ -139,21 +139,21 @@ const Header = () => {
             </li>
             <li className="flex justify-around">
               <div className="flex flex-col items-center" onClick={handleCreate}>
-                <BiDoorOpen className="w-6 h-6 text-white" />
+                <BiDoorOpen className="w-6 h-6 text-white" onClick={handleCreate}/>
                 <span className="text-white text-sm">
-                  방 생성
-                  </span>
+                방 생성
+                </span>
               </div>
               <div className="flex flex-col items-center">
-                <FiLogIn className="w-6 h-6 text-white" />
                 <Link to="/login" className="text-white text-sm">
-                  로그인
+                <FiLogIn className="w-6 h-6 text-white" />                
+                로그인
                 </Link>
               </div>
-              <div className="flex flex-col items-center">
-                <FaUserPlus className="w-6 h-6 text-white" />
+              <div className="flex flex-col items-center">                
                 <Link to="/signup" className="text-white text-sm">
-                  회원가입
+                <FaUserPlus className="w-6 h-6 text-white" />
+                회원가입
                 </Link>
               </div>
             </li>
