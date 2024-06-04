@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { SlUserFollow } from "react-icons/sl";
 import { AiFillAlert } from "react-icons/ai";
+import Draggable from "react-draggable";
+import ReportUser from "./ReportUser";
 
 // const UserDetail = ({ isOpen, onClose, userId }) => {
 //   const [userDetails, setUserDetails] = useState(null);
@@ -17,15 +19,23 @@ import { AiFillAlert } from "react-icons/ai";
 //   }, [isOpen, userId]);
 
 //   if (!isOpen || !userDetails) return null;
-function UserDetail(){
+function UserDetail({nickname, close}){
+  const [report, setReport] = useState(false);
+
+  const handleReport = () =>{
+    setReport(!report)
+  }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
-      <div className="bg-blue-950 text-white w-96 p-5 rounded-lg shadow-lg relative ">
+    <>
+    {report && <ReportUser nickname={nickname} close={handleReport}/>}
+    <Draggable>
+    <div className="fixed inset-0 flex items-center justify-center z-10">
+      <div className="bg-blue-950 text-white w-96 p-5 rounded-lg shadow-lg relative">
         {/* 닫기창 */}
         <div className="mb-4">
-          <button className="absolute top-2 right-2">
-            <AiOutlineClose className=""/>
+          <button className="absolute top-2 right-2" onClick={close}>
+            <AiOutlineClose  size="25" className=""/>
           </button>
         </div>
 
@@ -53,7 +63,7 @@ function UserDetail(){
           {/* 유저정보 불러온값 */}
           <div className="flex items-center justify-center ">
             <div className="flex flex-col justify-between w-28 text-gray-800">
-              <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1"> 얄라리 </div>
+              <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1"> {nickname} </div>
               <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1"> ENFP </div>
               <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1"> 미혼 </div>
               <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1"> 여 </div>
@@ -72,7 +82,7 @@ function UserDetail(){
         </div>
 
         <div className="mt-3 flex justify-between items-center">
-          <button className="bg-red-600 text-white py-2 px-4 rounded-lg flex items-center">
+          <button className="bg-red-600 text-white py-2 px-4 rounded-lg flex items-center" onClick={handleReport}>
             <AiFillAlert className="w-6 h-6 mr-2" /> 신고
           </button>
           <button className="bg-indigo-600 text-white py-2 px-4 rounded-lg flex items-center">
@@ -81,6 +91,8 @@ function UserDetail(){
         </div>
       </div>
     </div>
+    </Draggable>
+    </>
   );
 };
 
