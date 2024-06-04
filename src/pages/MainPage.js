@@ -1,18 +1,18 @@
-
-import './Mainlayout.css';
+import "./Mainlayout.css";
 
 import BasicLayout from "../layouts/BasicLayout";
-import MainImage from '../components/main/MainImage';
-import Introduction from '../components/main/Introduction';
-import { useEffect, useRef, useState } from 'react';
-import Dots from '../layouts/Dots';
+import MainImage from "../components/main/MainImage";
+import Introduction from "../components/main/Introduction";
+import { useEffect, useRef, useState } from "react";
+import Dots from "../layouts/Dots";
+import Footer from "../layouts/Footer";
 
-const DIVIDER_HEIGHT = 5; 
+const DIVIDER_HEIGHT = 5;
 
 function MainPage() {
   const outerDivRef = useRef();
   const [currentPage, setCurrentPage] = useState(1);
-  
+
   useEffect(() => {
     const wheelHandler = (e) => {
       e.preventDefault();
@@ -37,6 +37,15 @@ function MainPage() {
             left: 0,
             behavior: "smooth",
           });
+          setCurrentPage(3);
+        } else {
+          // 현재 3페이지
+          outerDivRef.current.scrollTo({
+            top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
+            left: 0,
+            behavior: "smooth",
+          });
+          setCurrentPage(4);
         }
       } else {
         // 스크롤 올릴 때
@@ -56,7 +65,7 @@ function MainPage() {
             behavior: "smooth",
           });
           setCurrentPage(1);
-        } else {
+        } else if (scrollTop >= pageHeight * 2 && scrollTop < pageHeight * 3) {
           // 현재 3페이지
           outerDivRef.current.scrollTo({
             top: pageHeight + DIVIDER_HEIGHT,
@@ -64,6 +73,14 @@ function MainPage() {
             behavior: "smooth",
           });
           setCurrentPage(2);
+        } else {
+          // 현재 4페이지 (Footer)
+          outerDivRef.current.scrollTo({
+            top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
+            left: 0,
+            behavior: "smooth",
+          });
+          setCurrentPage(3);
         }
       }
     };
@@ -75,8 +92,8 @@ function MainPage() {
     };
   }, []);
 
-
   return (
+
     <BasicLayout>
       
       <div ref={outerDivRef} className="outer bg-cover bg-center">

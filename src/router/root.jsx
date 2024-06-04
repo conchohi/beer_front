@@ -12,6 +12,7 @@ const Main = lazy(()=> import("../pages/MainPage"))
 const ChatList = lazy(() => import("../pages/ChatListPage"));
 const MyPage =lazy(() => import("../pages/Mypage"));
 const Video =lazy(() => import("../pages/VideoPage"));
+const BoardDetail =lazy(() => import("../modal/BoardDetail"));
 
 const root = createBrowserRouter([
   {
@@ -75,6 +76,14 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={<Loading />}>
         <Signup/>
+      </Suspense>
+          )
+  },
+  {
+    path: "/board/detail",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <BoardDetail/>
       </Suspense>
     )
   },

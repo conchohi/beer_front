@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import SearchTypeCheck from "./SearchTypeCheck";
 import useChatMove from "../../hooks/useChatMove";
 import { FaPlus, FaPlusSquare } from "react-icons/fa";
+import CreateRoom from "../../modal/CreateRoom";
 
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchType, setSearchType] = useState("");
     const [orderBy, setOrderBy] = useState("");
     const { moveToList, ordeyBy } = useChatMove();
+    const [createRoom, setCreateRoom] = useState(false);
 
     const handleInput = (event) => {
         setSearchTerm(event.target.value);
@@ -29,9 +31,13 @@ const SearchBar = () => {
         moveToList({ searchType: searchType, searchTerm: searchTerm, ordeyBy: ordeyBy })
     }, [searchType])
 
+    const handleCreate = () =>{
+        setCreateRoom(!createRoom);
+    }
 
     return (
         <div className="flex flex-row gap-4 justify-center items-center">
+            {createRoom && <CreateRoom close={handleCreate}/>}
             {/* 검색 유형*/}
             <SearchTypeCheck setSearchType={handleType} />
 
@@ -67,7 +73,7 @@ const SearchBar = () => {
                 </button>
             </div>
             <div>
-                <button className="bg-[#BE2222] px-3 rounded-lg text-white py-2 lg:px-10">
+                <button className="bg-[#BE2222] px-3 rounded-lg text-white py-2 lg:px-10" onClick={handleCreate}>
                     <span className="hidden lg:block text-lg font-semibold">방 생성</span>
                     <span className="block lg:hidden"><FaPlus size="30" /></span>
                 </button>
