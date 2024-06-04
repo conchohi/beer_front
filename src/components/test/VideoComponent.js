@@ -1,19 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import Janus from "../../api/janus";
 import { useNavigate, useParams } from "react-router-dom";
-import Loading from "../load/Loading";
 import { Spinner } from "spin.js";
-import { FaVideo, FaVideoSlash, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+import { FaMicrophoneAlt, FaMicrophoneAltSlash, FaRegUser, FaRegUserCircle, FaVideo, FaVideoSlash, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+import { FaUserLarge } from "react-icons/fa6";
+import DestoryRoomModal from "../Modal/room/DestoryRoomModal";
+import DestoryCheckModal from "../Modal/room/DestroyCheckModal";
+import UserDetail from "../../modal/UserDetail";
 
 const server = "https://janus.jsflux.co.kr/janus";
+
 var sfuClient = null
 var janus = null
+
 const VideoComponent = () => {
     //방에 최대 인원 수가 필요, 자신의 닉네임도 필요
     // const {roomNo} = useParams();
     // const myroom = Number(roomNo);
+
     const myroom = 11111;
-    const publisher = 4;
+    const publisher = 6;
     const myVideoRef = useRef(null);
     const remoteFeedRef = useRef([]);
     const remoteVideoRef = useRef([]);
@@ -31,10 +37,20 @@ const VideoComponent = () => {
 
     //현재 화면 상태
     const [publish, setPublish] = useState(false);
-    
+
     //현재 참여자
     const [feeds, setFeeds] = useState([]);
 
+    //방 폭파 여부
+    const [isDestory, setIsDestory] = useState(false);
+    //방 폭파할지 확인하는 모달
+    const [checkDestory, setCheckDestory] = useState(false);
+
+        
+    //유저 정보 모달
+    const [userDetail, setUserDetail] = useState(false);
+    //클릭한 사람의 닉네임
+    const [clickUserNick, setClickUserNick] = useState("")
 
     const [nickname, setNickname] = useState("닉네임");
     const navigate = useNavigate();
@@ -47,7 +63,7 @@ const VideoComponent = () => {
         navigate("/chat/list"); //나가기 버튼 시 세션 삭제 및 이동
     }
 
-    const destoryRoom = () =>{
+    const destoryRoom = () => {
         var destroyRoom = {
             request: "destroy",
             room: myroom
@@ -88,7 +104,7 @@ const VideoComponent = () => {
                                         permanent: false,
                                         record: false,
                                         publishers: publisher, //방에 들어갈 수 있는 인원 수, 차후 수정
-                                        bitrate: 8000000,
+                                        bitrate: 16000000,
                                         fir_freq: 10,
                                         ptype: "publisher",
                                         description: "test",
@@ -168,8 +184,7 @@ const VideoComponent = () => {
                                         } else if (event === "destroyed") {
                                             Janus.warn("The room has been destroyed!");
                                             //모달로 방이 폭파되었다는 모달을 띄우고 navigate 시키면 될 듯?
-                                            alert("The room has been destroyed")
-                                            navigate('/chat/list')
+                                            setIsDestory(true)
                                             //그 외 다양한 이벤트 처리
                                         } else if (event === "event") {
                                             //Janus에서 서버로부터 수신된 메시지에서 발송자(publisher) 목록을 나타냄
@@ -184,13 +199,13 @@ const VideoComponent = () => {
                                                     Janus.debug("  >> [" + id + "] " + display + " (audio: " + audio + ", video: " + video + ")");
                                                     newRemoteFeed(id, display, audio, video);
                                                 }
-                                            //특정 발송자가 방송에서 퇴장했음을 나타내는 데 사용
+                                                //특정 발송자가 방송에서 퇴장했음을 나타내는 데 사용
                                             } else if (msg["leaving"]) {
                                                 var leaving = msg["leaving"];
                                                 Janus.log("Publisher left: " + leaving);
                                                 setleaveId(leaving)
 
-                                            // 발송자가 발행한 스트림이 중지되었음을 나타내는 이벤트, 방송을 중지했을 때 발생
+                                                // 발송자가 발행한 스트림이 중지되었음을 나타내는 이벤트, 방송을 중지했을 때 발생
                                             } else if (msg["unpublished"]) {
                                                 // One of the publishers has unpublished?
                                                 var unpublished = msg["unpublished"];
@@ -270,25 +285,25 @@ const VideoComponent = () => {
                         alert(error)
                     },
                     destroyed: function () {
-                        navigate('/chat/list')
+                        setIsDestory(true);
                     }
                 })
             }
         })
 
 
-        //페이지 닫을 때 자동으로 종료
+        // 페이지 닫을 때 자동으로 종료
         return () => {
-            if(sfuClient){
+            if (sfuClient) {
                 sfuClient.detach()
             }
             if (janus) {
                 janus.destroy({
-                    success: function() {
+                    success: function () {
                         console.log("Janus instance destroyed successfully");
                         janus = null; // 인스턴스를 null로 설정하여 메모리에서 해제
                     },
-                    error: function(error) {
+                    error: function (error) {
                         console.error("Error destroying Janus instance", error);
                     }
                 });
@@ -391,6 +406,12 @@ const VideoComponent = () => {
 
         })
     }, [feeds])
+
+    useEffect(()=>{
+        if(clickUserNick){
+            setUserDetail(true)
+        }
+    }, [clickUserNick])
 
     //[jsflux] 내 화상화면 시작, 다른 사용자에게 보내주는 역할
     const publishOwnFeed = (useAudio) => {
@@ -554,23 +575,37 @@ const VideoComponent = () => {
 
 
     return (<>
-        <div className="w-full flex flex-row flex-wrap bg-stone-300">
-            <div className="w-1/12 flex flex-col">
+        <div className="w-full flex flex-row flex-wrap ">
+            {/* 방 폭파 확인 모달 */}
+            {checkDestory && <DestoryCheckModal setCheckDestroy={setCheckDestory} destroy={destoryRoom}/>}
+            {/* 방 폭파 모달 */}
+            {isDestory && <DestoryRoomModal/>}
+            {/* 회원 정보 모달 */}
+            {userDetail && <UserDetail nickname={clickUserNick} close={()=>{
+                setClickUserNick(""); 
+                setUserDetail(false);}
+                }/>}
+
+            <div className="w-1/12 flex flex-col gap-5 text-white">
                 <button onClick={toggleMute}>{muted ?
-                    <div className="flex flex-col justify-center items-center text-center"><FaVolumeMute /><span>음소거 해제</span></div>
-                    : <div className="flex flex-col justify-center items-center text-center"><FaVolumeUp /><span>음소거</span></div>}
+                    <div className="flex flex-col justify-center items-center text-center"><FaMicrophoneAltSlash color="white" size="40" /><span>음소거 해제</span></div>
+                    : <div className="flex flex-col justify-center items-center text-center"><FaMicrophoneAlt color="white" size="40" /><span>음소거</span></div>}
                 </button>
                 <button onClick={publish ? unpublishOwnFeed : () => { setPublish(true) }}>{publish ?
-                    <div className="flex flex-col justify-center items-center text-center"><FaVideoSlash /><span>비디오 종료</span></div>
-                    : <div className="flex flex-col justify-center items-center text-center"><FaVideo /><span>비디오 시작</span></div>}
+                    <div className="flex flex-col justify-center items-center text-center"><FaVideoSlash color="white" size="40" /><span>비디오 종료</span></div>
+                    : <div className="flex flex-col justify-center items-center text-center"><FaVideo color="white" size="40" /><span>비디오 시작</span></div>}
 
 
                 </button>
             </div>
-            <div className="w-5/6 flex flex-row flex-wrap">
-                <div className={"flex flex-col justify-center items-center text-center " + (publisher <= 4 ? "w-1/2" : "w-1/3")}>
-                    <video ref={myVideoRef} id="myvideo" className="w-full h-full" autoPlay playsInline muted />
-                    <span>{nickname}</span>
+            <div className="w-5/6 flex flex-row flex-wrap  bg-stone-300">
+                <div className={"flex flex-col justify-center items-center text-center p-6 " + (publisher <= 4 ? "w-1/2" : "w-1/3")}>
+                    <div className="relative">
+                        <video ref={myVideoRef} id="myvideo" className="w-full h-full" autoPlay playsInline muted />
+                        <span className="absolute bottom-6 right-6 cursor-pointer" onClick={()=>{setClickUserNick(nickname)}}><FaUserLarge size="40" /></span>
+                    </div>
+                    <span className="font-bold text-lg pt-2" >{nickname}</span>
+
                 </div>
 
                 {feeds.map((feed) => {
@@ -579,18 +614,30 @@ const VideoComponent = () => {
                     }
 
                     return (
-                        <div ref={(el) => remoteFeedRef.current[feed.rfindex] = el} className={"flex flex-col justify-center items-center text-center " + (publisher <= 4 ? "w-1/2" : "w-1/3")}>
-                            <video ref={(el) => remoteVideoRef.current[feed.rfindex] = el} className="w-full h-full" autoPlay playsInline muted />
-                            <span>{feed?.rfdisplay}</span>
+                        <div ref={(el) => remoteFeedRef.current[feed.rfindex] = el} className={"flex flex-col justify-center items-center text-center p-6 " + (publisher <= 4 ? "w-1/2" : "w-1/3")}>
+                            <div className="relative">
+                                <video ref={(el) => remoteVideoRef.current[feed.rfindex] = el} className="w-full h-full" autoPlay playsInline muted />
+                                <span className="absolute bottom-6 right-6 cursor-pointer" onClick={()=>{setClickUserNick(feed?.rfdisplay)}}><FaUserLarge size="40" /></span>
+                            </div>
+                            <span className="font-bold text-lg pt-2">{feed?.rfdisplay}</span>
                         </div>
                     )
 
                 })}
             </div>
         </div>
-        <button onClick={exitRoom}>나가기</button>
-        <button className="bg-white" onClick={destoryRoom}>방 폭파</button>
-
+        <div className="flex w-5/6 mx-auto mt-12">
+            {/* 채팅 컴포넌트 */}
+            <div className="w-3/4 flex flex-col">
+                <div className="w-full bg-white h-60 flex justify-center items-center">채팅창</div>
+                <div className="w-full bg-[#BE2222] my-5 text-white font-bold text-lg"><input className="w-4/5" type="text"/><button className="w-1/5">입력</button></div>
+            </div>
+            <div className="w-1/4 flex flex-col items-center gap-5 ps-5 text-lg font-bold">
+                <button className="w-full py-5 bg-gray-600 text-white">게임 선택</button>
+                <button className="w-full py-5 bg-[#BE2222] text-white" onClick={exitRoom}>나가기</button>
+                <button className="w-full py-5 bg-white" onClick={()=>{setCheckDestory(true)}}>방 폭파</button>
+            </div>
+        </div>
     </>);
 }
 

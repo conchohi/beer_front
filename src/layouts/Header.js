@@ -16,12 +16,15 @@ const Header = () => {
       <nav className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           <div className=" flex items-center h-full">
+
             <Link to="/">
+
               <img
                 src="/img/logo.png"
                 alt="Logo"
                 className="w-17 h-12 mr-0 mt-0"
               />
+
             </Link>
             <Link to="/">
               <img
@@ -48,10 +51,10 @@ const Header = () => {
                 <Link to="#board" className="text-white text-xl">
                   게시판
                 </Link>
+
               </li>
             </ul>
           </nav>
-
           <div className="hidden md:flex items-center">
             <ul className="flex items-center space-x-12">
               <li>
