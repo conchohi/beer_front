@@ -6,39 +6,73 @@ const EditProfileModal = ({ isOpen, onRequestClose }) => {
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      contentLabel="정보 수정"
-      className="fixed inset-0 flex items-center justify-center"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+      contentLabel="Edit Profile Modal"
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
     >
-      <div className="bg-black text-white p-6 rounded-lg shadow-lg w-full max-w-md mx-auto">
-        <h2 className="text-2xl mb-4">정보 수정</h2>
+      <div className="bg-black p-8 rounded-lg border-2 border-pink-500 w-full max-w-md mx-auto text-white">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl text-pink-500">정보 수정</h2>
+          <button onClick={onRequestClose} className="text-pink-500 text-2xl">&times;</button>
+        </div>
         <form>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-400">닉네임</label>
-            <input type="text" className="mt-1 block w-full p-2 border border-gray-700 rounded-md bg-gray-800 text-white" />
+            <label className="block text-white text-sm font-bold mb-2">
+              닉네임
+            </label>
+            <input
+              type="text"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+            />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-400">성명</label>
-            <input type="text" className="mt-1 block w-full p-2 border border-gray-700 rounded-md bg-gray-800 text-white" />
+            <label className="block text-white text-sm font-bold mb-2">
+              이름
+            </label>
+            <input
+              type="text"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+            />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-400">MBTI</label>
-            <input type="text" className="mt-1 block w-full p-2 border border-gray-700 rounded-md bg-gray-800 text-white" />
+            <label className="block text-white text-sm font-bold mb-2">
+              MBTI
+            </label>
+            <input
+              type="text"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+            />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-400">나이</label>
-            <input type="number" className="mt-1 block w-full p-2 border border-gray-700 rounded-md bg-gray-800 text-white" />
+            <label className="block text-white text-sm font-bold mb-2">
+              나이
+            </label>
+            <input
+              type="text"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+            />
           </div>
-          <div className="flex justify-end">
+          <div className="mb-4">
+            <label className="block text-white text-sm font-bold mb-2">
+              한줄소개
+            </label>
+            <textarea
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="flex items-center justify-between">
             <button
               type="button"
+              className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               onClick={onRequestClose}
-              className="bg-gray-500 text-white rounded-lg px-4 py-2 mr-2"
+            >
+              저장
+            </button>
+            <button
+              type="button"
+              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              onClick={onRequestClose}
             >
               취소
-            </button>
-            <button type="submit" className="bg-pink-500 text-white rounded-lg px-4 py-2">
-              저장
             </button>
           </div>
         </form>
