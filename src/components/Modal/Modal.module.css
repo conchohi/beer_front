@@ -1,0 +1,302 @@
+.modalcontainer {
+  /* padding-right: 4rem; */
+  display: block;
+  text-align: center;
+  justify-content: space-around;
+  width: 30vw;
+  min-height: 55vh;
+  max-height: 90vh;
+  position: relative;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  background-color: #222222;
+  border: solid 0.3rem #f400b0;
+  border-radius: 1rem;
+  color: white;
+  font-size: 5rem;
+  z-index: 3;
+}
+
+
+.rightArrow {
+  position: fixed;
+  top: 45%;
+  left: 68%;
+  cursor: pointer;
+  color: white;
+  font-size: 5rem;
+  opacity: 0.8;
+  z-index: 5;
+}
+
+.leftArrow {
+  position: fixed;
+  top: 45%;
+  left: 28%;
+  cursor: pointer;
+  color: white;
+  font-size: 5rem;
+  opacity: 0.8;
+  z-index: 5;
+}
+
+.modaltitle {
+  margin: 5%;
+  font-size: 4rem;
+  text-align: center;
+}
+
+.modaltxt {
+  padding-left: 4rem;
+  padding-right: 4rem;
+  font-size: 2.5rem;
+  font-weight: 100;
+  word-break: keep-all;
+  text-align: start;
+}
+
+.modaltxt li {
+  margin-bottom: 1rem;
+}
+
+.ModalOpen {
+  opacity: 1;
+  animation: FadeIn .3s ease-in;
+  z-index: 10;
+}
+
+.ModalClose {
+  opacity: 0;
+  pointer-events: none;
+  animation: FadeOut .3s ease-out;
+  z-index: 10;
+}
+
+.ModalSlideIn {
+  animation: SlideIn .3s ease-in;
+}
+
+.ModalSlideOut {
+  animation: SlideOut .3s ease-out;
+}
+
+@keyframes FadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+@keyframes FadeOut {
+  0% {
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+@keyframes SlideIn {
+  0% {
+    transform: translateY(-2%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes SlideOut {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-2%);
+  }
+}
+
+#outside {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+#modalCloseBtn {
+  position: absolute;
+  top: 1rem;
+  right: .5rem;
+  border: none;
+  color: #f400b0;
+  background-color: transparent;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+
+.highlight {
+  color: #f400b0;
+}
+
+.zindex{
+  position: relative;
+}
+
+/* ============================================= Searchmodal 용==================================================== */
+
+
+.searchforms {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+}
+
+.searchPerson {
+  color: white;
+  border-radius: 5px;
+  border: none;
+  background-color: #353839;
+  height: 4rem;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 2rem;
+}
+
+.searchPerson::placeholder {
+  font-size: 2rem;
+  text-align: start;
+  align-self: center;
+}
+
+.lens {
+  position: absolute;
+  right: 3%;
+  top: 25%;
+  font-size: 2rem;
+  background-color: #353839;
+}
+
+.searchBody{
+  margin-top: 3rem;
+  overflow: scroll;
+  overflow-x: hidden;
+  height: 55vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchBody::-webkit-scrollbar {
+  width: 1rem;
+}
+
+.searchBody::-webkit-scrollbar-thumb  {
+  background-color: #f400b0;
+  border-radius: 1rem;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.searchBody::-webkit-scrollbar-track  {
+  background-color:#222222;
+}
+
+.searchBody::-webkit-scrollbar-corner{
+  display: none;
+}
+
+.spacebetween{
+  justify-content: start;
+  padding: 3rem;
+}
+
+.FollowingInfoFont {
+  font-size: 3rem;
+  margin: 1rem;
+}
+
+.FollowingInfoFont p {
+  margin: 0;
+}
+
+.ProfileImg {
+  width: 5rem;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  border: solid 0.4rem transparent;
+  background-image: linear-gradient(#fff, #fff), 
+  linear-gradient(to right, #8f00ff 0%,  #f400b0 100%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+.FollowingsInfo {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  gap: 1rem;
+}
+.FollowingsInfo:hover{
+  color: #f400b0;
+  cursor: pointer;
+  animation: changecolor 0.3s ease;
+}
+
+.noResult{
+  font-size: 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@keyframes changecolor {
+  0% {
+    color: white;
+  }
+  100% {
+    color: #f400b0;
+  }
+}
+
+.searchResultInfo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: first center;
+  margin-top: 2rem;
+}
+
+.followBtn{
+  margin-left: 2rem;
+  margin-right: 2rem;
+  font-size: 3rem;
+}
+
+.followBtn:hover{
+  color: #f400b0;
+  cursor: pointer;
+  animation: changecolor 0.3s ease;
+}
+
+.boldHighlight {
+  color: #f400b0;
+  font-weight: bold;
+}
+
+.notScroll{
+  overflow: hidden;
+
+}
