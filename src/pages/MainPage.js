@@ -78,6 +78,7 @@ function MainPage() {
 
   return (
     <BasicLayout>
+      
       <div ref={outerDivRef} className="outer bg-cover bg-center">
         <Dots currentPage={currentPage} />
         <div className="inner"><MainImage /></div>

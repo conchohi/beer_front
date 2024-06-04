@@ -1,6 +1,8 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Loading from "../components/load/Loading";
+const Signup = lazy(() => import("../pages/signup/Signup"));
+const Login = lazy(() => import("../pages/login/Login"));
 const LivePage = lazy(() => import("../components/mypage/MyPageMain"));
 const Info = lazy(() => import("../pages/InfoPage"));
 const Game = lazy(() => import("../components/intro/Intro"));
@@ -65,6 +67,22 @@ const root = createBrowserRouter([
     element: (
       <Suspense fallback={<Loading />}>
         <LivePage/>
+      </Suspense>
+    )
+  },
+  {
+    path: "/login",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <Login/>
+      </Suspense>
+    )
+  },
+  {
+    path: "signup",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <Signup/>
       </Suspense>
     )
   },
