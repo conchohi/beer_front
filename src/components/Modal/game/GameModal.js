@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaCamera, FaHandPaper } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const GameModal = ({ isOpen, closeModal, title }) => {
@@ -14,16 +15,80 @@ const GameModal = ({ isOpen, closeModal, title }) => {
     switch (title) {
       case "역전의 한방":
         return [
-          { content: "역전의 한방은 첫 번째 사용 설명서입니다." },
-          { content: "이것은 두 번째 사용 설명서입니다." },
-          { content: "마지막 페이지입니다." },
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">사진 촬영</span> 가이드{" "}
+                </div>
+                <FaCamera />
+                <ol className="px-10 text-2xl font-light text-start">
+                  <li>
+                    화면 하단의{" "}
+                    <span className="text-[#f400b0] font-bold">사진 버튼</span>
+                    을 누르면 5초 후 사진이 촬영됩니다.
+                  </li>
+                  <li>
+                    사진 촬영 후, 사진의{" "}
+                    <span className="text-[#f400b0] font-bold">
+                      프레임, 제목, 본문
+                    </span>
+                    을 설정할 수 있는 창이 출력됩니다.
+                  </li>
+                  <li>
+                    찍은 사진은{" "}
+                    <span className="text-[#f400b0] font-bold">
+                      '피드에 저장' 버튼
+                    </span>
+                    으로 프로필에 저장할 수 있습니다.
+                  </li>
+                  <li>취소 버튼을 누르면 찍었던 사진은 사라집니다.</li>
+                </ol>
+              </>
+            ),
+          },
         ];
       case "이미지 게임":
         return [
-          { content: "이미지 게임은 첫 번째 게임 규칙입니다." },
-          { content: "이미지 게임은 두 번째 게임 규칙입니다." },
-          { content: "이미지 게임은 세 번째 게임 규칙입니다." },
-          { content: "마지막 페이지입니다." },
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">게임 가이드 </span>
+                  이미지 게임
+                </div>
+                <FaHandPaper />
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+          {
+            content: (
+              <>
+                <FaHandPaper />
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  해당 키워드에{" "}
+                  <span className="text-[#f400b0] font-bold">
+                    해당하는 참가자
+                  </span>
+                  는{" "}
+                  <span className="text-[#f400b0] font-bold">
+                    손가락을 하나
+                  </span>{" "}
+                  접습니다. 손가락이 모두 접힌 사람이 나올 때 까지 반복합니다.
+                  을 펼쳐 보입니다. 손이{" "}
+                  <span className="text-[#f400b0] font-bold">
+                    모두 접힌 사람은 점수가 차감됩니다.
+                  </span>
+                  누구를 노릴지, 전략적으로 생각해 봅시다.
+                </h1>
+              </>
+            ),
+          },
         ];
       default:
         return [
@@ -59,15 +124,15 @@ const GameModal = ({ isOpen, closeModal, title }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-4 rounded-lg max-w-sm mx-auto relative">
+      <div className="bg-white p-4 rounded-lg max-w-sm mx-auto relative text-black">
         <button
           onClick={resetAndCloseModal}
           className="absolute top-2 right-2 text-black font-bold"
         >
           X
         </button>
-        <h2 className="text-lg font-bold">{title}</h2>
-        <p className="mt-2 mb-10">{modalContents[currentStep]?.content}</p>
+
+        <div className="mt-2 mb-10 ">{modalContents[currentStep]?.content}</div>
         <div className="flex justify-between mt-4 absolute bottom-2 left-2 right-2">
           <button
             onClick={prevModal}
