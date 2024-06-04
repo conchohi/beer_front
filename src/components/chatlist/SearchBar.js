@@ -41,7 +41,7 @@ const SearchBar = () => {
             {/* 검색 유형*/}
             <SearchTypeCheck setSearchType={handleType} />
 
-            <div className="flex w-3/5 border-2 border-gray-200 bg-white rounded overflow-hidden">
+            <div className="flex w-2/5 border-2 border-gray-200 bg-white rounded overflow-hidden">
                 <input
                     type="text"
                     placeholder="채팅방 검색"
@@ -55,7 +55,7 @@ const SearchBar = () => {
                     }} />
                 <button
                     onClick={handleSearchClick}
-                    className="flex w-1/5 items-center justify-center text-center gap-2 border-l text-white bg-[#BE2222] hover:bg-[#EB3030]" // 호버 효과 추가
+                    className="flex w-1/5 items-center justify-center text-center gap-2 border-l text-gray-800 bg-amber-400 hover:bg-amber-500 " // 호버 효과 추가
                 >
 
                     <svg
@@ -69,11 +69,11 @@ const SearchBar = () => {
                     >
                         <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
-                    <span className="hidden lg:block text-sm md:text-base font-semibold">검색</span>
+                    <span className="hidden lg:block text-base md:text-base font-semibold shadow-xl">검색</span>
                 </button>
             </div>
             <div>
-                <button className="bg-[#BE2222] px-3 rounded-lg text-white py-2 lg:px-10" onClick={handleCreate}>
+                <button className="bg-amber-400 px-3 rounded-lg text-gray-800 py-2 lg:px-10" onClick={handleCreate}>
                     <span className="hidden lg:block text-lg font-semibold">방 생성</span>
                     <span className="block lg:hidden"><FaPlus size="30" /></span>
                 </button>
