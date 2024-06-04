@@ -40,7 +40,7 @@ const ChatList = () => {
                 <div className="w-full flex flex-row flex-wrap items-center">
                     {chatList.map(chat => {
                         return (
-                            <div className="px-10 md:w-1/2 lg:w-1/3">
+                            <div className="px-5 md:w-1/2 lg:w-1/3">
                                 <Link to={`/chat/${chat.roomNo}`}>
                                     <ChatCard chat={chat} />
                                 </Link>

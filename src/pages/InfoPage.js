@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InfoModal from "../components/Modal/InfoModal";
 import BasicLayout from "../layouts/BasicLayout";
+import { Link } from "react-router-dom";
 
 function InfoPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,12 +25,12 @@ function InfoPage() {
             </h1>
             <div className="flex justify-between items-center w-full mb-6">
               <div></div>
-              <a
-                href="/game"
-                className="bg-[#4b4b4b] hover:bg-[#5f5f5f] text-white font-bold py-2 px-4 rounded-md text-4xl mr-6"
+              <Link
+                to="/game"
+                className="bg-[#4b4b4b] hover:bg-[#5f5f5f] text-white font-bold py-2 px-2 rounded-md text-3xl mr-4"
               >
                 🎮 가이드
-              </a>
+              </Link>
             </div>
 
             <div className="flex justify-center gap-12 sm:gap-16 lg:gap-20 p-6">

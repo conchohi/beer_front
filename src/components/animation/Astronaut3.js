@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import animationData from "./Beer1.json";
+import animationData from "./Astronaut3.json";
 
-const Beer1 = () => {
+const Astronaut3 = () => {
   const animationContainer = useRef(null);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const Beer1 = () => {
     return () => animation.destroy(); // Clean up on unmount
   }, []);
 
-  return <div ref={animationContainer} style={{ width: '40vw', height: '30vw' }} />;
+  return <div ref={animationContainer} style={{ width: '30vw', height: '30vw' }} />;
 };
 
-export default Beer1;
+export default Astronaut3;
