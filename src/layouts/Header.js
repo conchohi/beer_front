@@ -3,15 +3,22 @@ import { FiLogIn } from "react-icons/fi";
 import { FaUserPlus } from "react-icons/fa";
 import { BiDoorOpen } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import CreateRoom from "../modal/CreateRoom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [createRoom, setCreateRoom] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  
+  const handleCreate = () =>{
+    setCreateRoom(!createRoom);
+  }
 
-  return (
+  return (<>
+    {createRoom && <CreateRoom close={handleCreate}/>}
     <header className="w-full bg-none">
       <nav className="container mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
@@ -48,7 +55,7 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link to="#board" className="text-white text-xl">
+                <Link to="/board" className="text-white text-xl">
                   게시판
                 </Link>
 
@@ -58,17 +65,17 @@ const Header = () => {
           <div className="hidden md:flex items-center">
             <ul className="flex items-center space-x-12">
               <li>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center cursor-pointer" onClick={handleCreate}>
                   <BiDoorOpen className="w-8 h-8 text-white text-md" />
-                  <Link to="#" className="text-white">
+                  <span to="#" className="text-white">
                     방 생성
-                  </Link>
+                  </span>
                 </div>
               </li>
               <li>
                 <div className="flex flex-col items-center">
                   <FiLogIn className="w-8 h-8 text-white text-md" />
-                  <Link to="#" className="text-white">
+                  <Link to="/login" className="text-white">
                     로그인
                   </Link>
                 </div>
@@ -76,7 +83,7 @@ const Header = () => {
               <li>
                 <div className="flex flex-col items-center">
                   <FaUserPlus className="w-8 h-8 text-white text-md" />
-                  <Link to="#" className="text-white">
+                  <Link to="/signup" className="text-white">
                     회원가입
                   </Link>
                 </div>
@@ -131,21 +138,21 @@ const Header = () => {
               </Link>
             </li>
             <li className="flex justify-around">
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center" onClick={handleCreate}>
                 <BiDoorOpen className="w-6 h-6 text-white" />
-                <Link to="#" className="text-white text-sm">
+                <span className="text-white text-sm">
                   방 생성
-                </Link>
+                  </span>
               </div>
               <div className="flex flex-col items-center">
                 <FiLogIn className="w-6 h-6 text-white" />
-                <Link to="#" className="text-white text-sm">
+                <Link to="/login" className="text-white text-sm">
                   로그인
                 </Link>
               </div>
               <div className="flex flex-col items-center">
                 <FaUserPlus className="w-6 h-6 text-white" />
-                <Link to="#" className="text-white text-sm">
+                <Link to="/signup" className="text-white text-sm">
                   회원가입
                 </Link>
               </div>
@@ -154,6 +161,7 @@ const Header = () => {
         </div>
       </nav>
     </header>
+    </>
   );
 };
 
