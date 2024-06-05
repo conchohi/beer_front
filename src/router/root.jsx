@@ -1,19 +1,16 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Loading from "../components/load/Loading";
-const Chat = lazy(() => import("../components/test/Chat"));
-const BoardDetail = lazy(() => import("../modal/BoardDetail"));
-const Board = lazy(() => import("../pages/board/Board"));
 const Signup = lazy(() => import("../pages/signup/Signup"));
 const Login = lazy(() => import("../pages/login/Login"));
+const LivePage = lazy(() => import("../components/mypage/MyPageMain"));
 const Info = lazy(() => import("../pages/InfoPage"));
 const Game = lazy(() => import("../components/intro/Intro"));
 const Main = lazy(()=> import("../pages/MainPage"))
-// const Main = lazy(() => import("../components/VideoPage")); // 추가
-// const Index = lazy(()=>import("../pages/IndexPage"));
 const ChatList = lazy(() => import("../pages/ChatListPage"));
 const MyPage =lazy(() => import("../pages/Mypage"));
 const Video =lazy(() => import("../pages/VideoPage"));
+const Board = lazy(( )=> import("../pages/board/Board"))
 
 const root = createBrowserRouter([
   {
@@ -78,7 +75,7 @@ const root = createBrowserRouter([
       <Suspense fallback={<Loading />}>
         <Signup/>
       </Suspense>
-    )
+          )
   },
   {
   path: "board",
@@ -87,23 +84,8 @@ const root = createBrowserRouter([
       <Board/>
     </Suspense>
   )
-},
-{
-  path: "/board/detail",
-  element: (
-    <Suspense fallback={<Loading />}>
-      <BoardDetail/>
-    </Suspense>
-  )
-},
-{
-  path: "/chattest",
-  element: (
-    <Suspense fallback={<Loading />}>
-      <Chat/>
-    </Suspense>
-  )
-},
+}
+
 ]);
 
 export default root;

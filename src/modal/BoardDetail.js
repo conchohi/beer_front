@@ -1,7 +1,9 @@
 import React from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
+import { MdOutlineWatchLater } from "react-icons/md";
 import CommentSection from '../components/board/CommentSection';
+
 
 // 열렸을때만 실행되도록 함
 // function BoardDetail({ isOpen, onClose }) {
@@ -9,14 +11,14 @@ import CommentSection from '../components/board/CommentSection';
 
 function BoardDetail(){
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-gray-800 text-gray-200 rounded-lg w-11/12 max-w-2xl p-6 relative">
-        <button className="absolute top-4 right-4 text-amber-400">
+    <div className="fixed inset-0 flex justify-center items-center z-50">
+      <div className="bg-gray-800 border-2 border-pink-500 text-gray-200 rounded-lg w-11/12 max-w-2xl p-6 relative">
+        <button className="absolute top-4 right-4 text-pink-500 ">
           <AiOutlineClose size={24} />
         </button>
 
         {/* 게시판 제목 불러오기 */}
-        <div className="text-amber-400 text-xl mb-4 font-semibold">오늘 7시에 같이 소주마실분</div>
+        <div className="text-pink-500 text-xl mb-4 font-semibold">오늘 7시에 같이 소주마실분</div>
         
         <div className="flex justify-between mb-4">
           <div className="flex items-center">
@@ -25,6 +27,7 @@ function BoardDetail(){
           </div>
           <div className="flex items-center">
             {/* 게시판 작성일자 불러오기 */}
+            <MdOutlineWatchLater className="text-gray-400 mr-1" />
             <div className="text-gray-400"> 2024.06.03  16:30 </div>
           </div>
         </div>
@@ -36,12 +39,16 @@ function BoardDetail(){
           <p>전 안주는 해바라기씨로 먹으려구요ㅎㅎ</p>
         </div>
 
-        <hr className="border-amber-40 mb-4"/>
+        <div className="mb-4 flex justify-end" >
+          <button className="px-4 py-2 mr-2 bg-pink-500 text-white font-semibold rounded-lg">수정</button>
+          <button className="px-4 py-2 bg-pink-500 text-white font-semibold rounded-lg">삭제</button>
+        </div>
 
+        <hr className="border-amber-40 mb-4"/>
 
         <div className="flex items-center mb-4 ">
           {/* 유저이미지 */}
-          <CgProfile className="mr-2 text-amber-400 w-10 h-10"/>
+          <CgProfile className="mr-2 text-pink-500 w-10 h-10"/>
         {/* {user.profileImage ? 
         (<img src="" alt="Profile" className="w-8 h-8 rounded-full mr-2" />) 
         : (<CgProfile className="mr-2 text-blue-500" size={24} />)} */}
@@ -55,7 +62,7 @@ function BoardDetail(){
           // value={newComment}
           // onChange={(e) => setNewComment(e.target.value)}
         />
-        <button className="px-4 py-2 bg-amber-400 text-gray-700 font-semibold rounded-lg">등록</button>
+        <button className="px-4 py-2 bg-pink-500 text-white font-semibold rounded-lg">등록</button>
         </div>
         
         <CommentSection/>
