@@ -17,7 +17,7 @@ const SpaceCat = () => {
     return () => animation.destroy(); // Clean up on unmount
   }, []);
 
-  return <div ref={animationContainer} style={{ width: '35vw', height: '57vw' }} />;
+  return <div ref={animationContainer} style={{ width: '30vw', height: '40vw' }} />;
 };
 
 export default SpaceCat;

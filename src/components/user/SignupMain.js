@@ -194,44 +194,46 @@ const SignupMain = () => {
     return (
         <>
             <BasicLayout>
-            <div className="w-full h-auto font-bold text-2xl md:text-4xl text-black font-sans p-6 md:px-60 md:py-30 flex flex-col ">
-                    <div className="bg-gray-700 w-full h-auto rounded-2xl flex p-6 md:p-12 ">
-                        <div className="w-1/2 flex justify-center items-center bg-gray-900 rounded-2xl">
-                            <div className='row'>                         
+            <div className="w-full h-auto font-bold text-2xl md:text-4xl text-white font-sans p-6 md:px-60 md:py-18 flex flex-col ">
+                    <div className="bg-gray-700 w-full h-auto rounded-2xl flex p-6 md:p-10 ">
+                        
+                        {/* 왼쪽 애니메이션 */}
+                        <div className="w-1/2 my-5 flex justify-center items-center bg-gray-900 rounded-2xl ">
+                            <div className='row'>
                                <SpaceCat />
-                           
                             </div>
-
                         </div>
-                        <div className="w-1/2 rounded-2xl text-left">
+
+                        {/* 오른쪽 회원가입창 */}
+                        <div className="w-1/2 rounded-2xl text-left ">
                             {isOpen && <ModalComponent message={message} callbackFunction={customCallback} />}
-                            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+                            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-2 lg:px-8">
                                 
                                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                                    <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-pink-500">
+                                    <h2 className="text-center text-3xl font-bold leading-9 tracking-tight text-pink-500">
                                         회원가입
                                     </h2>
                                 </div>
 
-                                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md shadow-md rounded px-8 pt-6 pb-8">
-                                    <form onSubmit={handleSubmit} className="space-y-6">
-                                        <div>
-                                            <label className="block text-sm font-medium leading-6 text-pink-500">
+                                <div className=" mt-2 sm:mx-auto sm:w-full sm:max-w-md shadow-md rounded px-6 pt-6 pb-8">
+                                    <form onSubmit={handleSubmit} className="space-y-4">
+                                        {/* <div>
+                                            <div className="flex justify-center items-center">
+                                                <img src={preview} alt="Profile Preview" className="w-28 h-28 rounded-full border border-gray-300 object-cover" />
+                                            </div>
+                                            <label className="block text-sm font-medium leading-6 text-center text-pink-500 mt-1">
                                                 프로필 이미지
                                             </label>
-                                            <div className="mt-2 flex justify-center items-center">
-                                                <img src={preview} alt="Profile Preview" className="w-32 h-32 rounded-full border border-gray-300 object-cover" />
-                                            </div>
                                             <div className="mt-2">
                                                 <input
                                                     id="profileImage"
                                                     name="profileImage"
                                                     type="file"
                                                     onChange={handleFileChange}
-                                                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-500 file:text-black hover:file:bg-orange-600"
+                                                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-500 file:text-white hover:file:bg-pink-400"
                                                 />
                                             </div>
-                                        </div>
+                                        </div> */}
 
                                         <div>
                                             <label htmlFor="username" className="block text-sm font-medium leading-6 text-pink-500">
@@ -251,7 +253,7 @@ const SignupMain = () => {
                                                 <button
                                                     type="button"
                                                     onClick={checkUsernameAvailability}
-                                                    className="ml-4 px-4 py-2 w-32 rounded-md bg-pink-500 text-black text-sm font-semibold hover:bg-orange-600"
+                                                    className="ml-4 px-4 py-2 w-32 rounded-md bg-pink-500  text-sm font-semibold hover:bg-pink-600"
                                                 >
                                                     중복체크
                                                 </button>
@@ -318,7 +320,7 @@ const SignupMain = () => {
                                                 <button
                                                     type="button"
                                                     onClick={checkNicknameAvailability}
-                                                    className="ml-4 px-4 py-2 w-32 rounded-md bg-pink-500 text-black text-sm font-semibold hover:bg-orange-600"
+                                                    className="ml-4 px-4 py-2 w-32 rounded-md bg-pink-500  text-sm font-semibold hover:bg-pink-600"
                                                 >
                                                     중복체크
                                                 </button>
@@ -343,7 +345,7 @@ const SignupMain = () => {
                                                 <button
                                                     type="button"
                                                     onClick={sendVerificationEmail}
-                                                    className="ml-4 px-4 py-2 w-40 rounded-md bg-pink-500 text-black text-sm font-semibold hover:bg-orange-600"
+                                                    className="ml-4 px-4 py-2 w-40 rounded-md bg-pink-500 text-sm font-semibold hover:bg-pink-600"
                                                 >
                                                     이메일 확인
                                                 </button>
@@ -368,19 +370,19 @@ const SignupMain = () => {
                                                 <button
                                                     type="button"
                                                     onClick={verifyEmailCode}
-                                                    className="ml-4 px-4 py-2 w-48 rounded-md bg-pink-500 text-black text-sm font-semibold hover:bg-orange-600"
+                                                    className="ml-4 px-4 py-2 w-48 rounded-md bg-pink-500  text-sm font-semibold hover:bg-pink-600"
                                                 >
                                                     인증번호 확인
                                                 </button>
                                             </div>
                                         </div>
 
-                                        <div>
+                                        <div className="pt-2">
                                             <button
                                                 type="submit"
                                                 disabled={!passwordsMatch || !passwordValid}
                                                 className={`flex w-full justify-center rounded-md px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
-                                                    passwordsMatch && passwordValid ? 'bg-pink-500 hover:bg-orange-600' : 'bg-gray-400 cursor-not-allowed'
+                                                    passwordsMatch && passwordValid ? 'bg-pink-500 hover:bg-pink-600' : 'bg-gray-400 cursor-not-allowed'
                                                 }`}
                                             >
                                                 회원가입
@@ -388,8 +390,8 @@ const SignupMain = () => {
                                         </div>
                                     </form>
 
-                                    <p className="mt-4 text-center text-sm text-gray-500">
-                                        <a href="/login" className="font-semibold leading-6 text-pink-500 hover:text-orange-600">
+                                    <p className="mt-8 text-center text-sm text-gray-500 bg-gray-100 hover:bg-pink-400 rounded-md py-2 shadow-sm">
+                                        <a href="/login" className="font-semibold leading-6 text-gray-600 ">
                                             로그인하러 가기
                                         </a>
                                     </p>
@@ -397,7 +399,7 @@ const SignupMain = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> 
               
             </BasicLayout>
         </>
