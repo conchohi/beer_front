@@ -7,6 +7,7 @@ import { FaUserLarge } from "react-icons/fa6";
 import DestoryRoomModal from "../Modal/room/DestoryRoomModal";
 import DestoryCheckModal from "../Modal/room/DestroyCheckModal";
 import UserDetail from "../../modal/UserDetail";
+import Chat from "./Chat";
 
 const server = "https://janus.jsflux.co.kr/janus";
 
@@ -15,10 +16,9 @@ var janus = null
 
 const VideoComponent = () => {
     //방에 최대 인원 수가 필요, 자신의 닉네임도 필요
-    // const {roomNo} = useParams();
-    // const myroom = Number(roomNo);
+    const {roomNo} = useParams();
+    const myroom = Number(roomNo);
 
-    const myroom = 11111;
     const publisher = 6;
     const myVideoRef = useRef(null);
     const remoteFeedRef = useRef([]);
@@ -631,11 +631,8 @@ const VideoComponent = () => {
             </div>
         </div>
         <div className="flex w-5/6 mx-auto mt-12">
-            {/* 채팅 컴포넌트 */}
-            <div className="w-3/4 flex flex-col">
-                <div className="w-full bg-white h-60 flex justify-center items-center">채팅창</div>
-                <div className="w-full bg-[#BE2222] my-5 text-white font-bold text-lg"><input className="w-4/5" type="text"/><button className="w-1/5">입력</button></div>
-            </div>
+           <Chat roomId={roomNo} />
+      
             <div className="w-1/4 flex flex-col items-center gap-5 ps-5 text-lg font-bold">
                 <button className="w-full py-5 bg-gray-600 text-white">게임 선택</button>
                 <button className="w-full py-5 bg-[#BE2222] text-white" onClick={exitRoom}>나가기</button>

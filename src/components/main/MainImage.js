@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import SpaceCat2 from "../animation/SpaceCat2";
+import Space from "../animation/Space";
 
 const MainImage = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -12,13 +14,14 @@ const MainImage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-10 w-full">
+    <div className="relative flex flex-col justify-center items-center p-10 w-full">
+      <Space />
       <img
         src="/img/mainImage.png"
         alt="Main"
-        className="w-1/2 animated-zoom"
+        className="w-1/2 animated-zoom pb-96"
       />{" "}
-      <img src="/img/title.png" alt="Title" className="w-3/12" />
+
       <button
         className={`bg-gray-900 text-white px-10 py-4 mt-6 rounded-lg font-semibold neon-button ${
           isClicked ? "spin-and-disappear" : ""

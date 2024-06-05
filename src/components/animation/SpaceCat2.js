@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import animationData from "./Space.json";
+import animationData from "./SpaceCat.json";
 
-const Space = () => {
+const SpaceCat2 = () => {
   const animationContainer = useRef(null);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const Space = () => {
     return () => animation.destroy(); // Clean up on unmount
   }, []);
 
-  return <div className="absolute ps-9" ref={animationContainer} style={{ width: '100vw', height: '100vw' }} />;
+  return <div className="absolute" ref={animationContainer} style={{ width: '100vw', height: '100vw' }} />;
 };
 
-export default Space;
+export default SpaceCat2;
