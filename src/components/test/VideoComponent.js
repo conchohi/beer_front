@@ -619,7 +619,7 @@ const VideoComponent = () => {
                         <div ref={(el) => remoteFeedRef.current[feed.rfindex] = el} className={"flex flex-col justify-center items-center text-center p-6 " + (publisher <= 4 ? "w-1/2" : "w-1/3")}>
                             <div className="w-full  bg-black border-2 border-white rounded-xl">
                             <div className="relative">
-                                <video ref={(el) => remoteVideoRef.current[feed.rfindex] = el} className="w-full h-full box-border p-3" autoPlay playsInline muted />
+                                <video ref={(el) => remoteVideoRef.current[feed.rfindex] = el} className="w-full h-full box-border p-3" autoPlay playsInline/>
                                 <span className="absolute bottom-6 right-6 cursor-pointer" onClick={()=>{setClickUserNick(feed?.rfdisplay)}}><FaUserLarge size="40" /></span>
                             </div>
                             <span className="font-bold text-lg py-3 text-white">{feed?.rfdisplay}</span>
