@@ -33,7 +33,7 @@ const ChatList = () => {
             {/* 채팅방 리스트 */}
             <div className="bg-[#D9D9D9] py-3 px-5 rounded-xl">
                 <div className="flex justify-between px-6">
-                    <p className="font-bold px-3 py-2">현재 개설된 방 ( {total} )</p>
+                    <p className="font-bold px-3 py-2 text-lg">현재 개설된 방 ( {total} )</p>
                     <OrderByeheck/>
                 </div>
                 
