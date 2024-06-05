@@ -12,14 +12,14 @@ const Header = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  
-  const handleCreate = () =>{
+
+  const handleCreate = () => {
     setCreateRoom(!createRoom);
   }
 
   return (<>
     {createRoom && <CreateRoom close={handleCreate}/>}
-    <header className="w-full bg-none">
+    <header className="w-full bg-none font-GmarketSansMedium">
   <nav className="w-full pt-3 px-4 py-4">
         <div className="w-full flex items-center justify-between">
           <div className=" flex items-center h-full">
@@ -73,20 +73,21 @@ const Header = () => {
                 </div>
               </li>
               <li>
-                <div className="flex flex-col items-center">
-                  <Link to="/login" className="text-white">
-                  <FiLogIn className="w-8 h-8 text-white text-md" />                  
+                <Link to="/login" className="text-white">
+                  <div className="flex flex-col items-center">
+                    <FiLogIn className="w-8 h-8 text-white text-md" />
                     로그인
-                  </Link>
-                </div>
+                  </div>
+                </Link>
               </li>
               <li>
-                <div className="flex flex-col items-center">
-                  <Link to="/signup" className="text-white">
-                  <FaUserPlus className="w-8 h-8 text-white text-md" />                  
+                <Link to="/signup" className="text-white">
+                  <div className="flex flex-col items-center">
+                    <FaUserPlus className="w-8 h-8 text-white text-md" />
                     회원가입
-                  </Link>
-                </div>
+
+                  </div>
+                </Link>
               </li>
             </ul>
           </div>
@@ -141,27 +142,27 @@ const Header = () => {
               <div className="flex flex-col items-center" onClick={handleCreate}>
                 <BiDoorOpen className="w-6 h-6 text-white" onClick={handleCreate}/>
                 <span className="text-white text-sm">
-                방 생성
+                  방 생성
                 </span>
               </div>
-              <div className="flex flex-col items-center">
-                <Link to="/login" className="text-white text-sm">
-                <FiLogIn className="w-6 h-6 text-white" />                
-                로그인
-                </Link>
-              </div>
-              <div className="flex flex-col items-center">                
-                <Link to="/signup" className="text-white text-sm">
-                <FaUserPlus className="w-6 h-6 text-white" />
-                회원가입
-                </Link>
-              </div>
+              <Link to="/login" className="text-white text-sm">
+                <div className="flex flex-col items-center">
+                  <FiLogIn className="w-6 h-6 text-white" />
+                  로그인
+                </div>
+              </Link>
+              <Link to="/signup" className="text-white text-sm">
+                <div className="flex flex-col items-center">
+                  <FaUserPlus className="w-6 h-6 text-white" />
+                  회원가입
+                </div>
+              </Link>
             </li>
           </ul>
         </div>
       </nav>
     </header>
-    </>
+  </>
   );
 };
 
