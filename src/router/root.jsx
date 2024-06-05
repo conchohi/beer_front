@@ -12,6 +12,8 @@ const Main = lazy(()=> import("../pages/MainPage"))
 const ChatList = lazy(() => import("../pages/ChatListPage"));
 const MyPage =lazy(() => import("../pages/Mypage"));
 const Video =lazy(() => import("../pages/VideoPage"));
+const BoardDetail =lazy(() => import("../modal/BoardDetail"));
+const BoardModify =lazy(() => import("../modal/BoardModify"));
 
 const root = createBrowserRouter([
   {
@@ -86,6 +88,23 @@ const root = createBrowserRouter([
     </Suspense>
   )
 },
+{
+path: "/board/detail",
+element: (
+  <Suspense fallback={<Loading />}>
+    <BoardDetail/>
+  </Suspense>
+)
+},
+{
+  path: "/board/modify",
+  element: (
+    <Suspense fallback={<Loading />}>
+      <BoardModify/>
+    </Suspense>
+  )
+  },
+
 ]);
 
 export default root;

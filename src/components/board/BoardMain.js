@@ -82,7 +82,7 @@ const BoardMain = () => {
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
-    const postsPerPage = 3;
+    const postsPerPage = 5;
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
@@ -181,20 +181,20 @@ const BoardMain = () => {
 
     return (
         <BasicLayout>
-            <div className="w-full h-auto font-bold text-2xl md:text-4xl text-black font-sans p-6 md:px-60 md:py-30 flex flex-col ">
-                <div className="bg-gray-700 w-full h-auto rounded-2xl flex flex-col justify-between p-6 md:p-12">
-                    <div className="bg-gray-900 w-full h-auto rounded-2xl p-10 md:p-20 text-left mb-6  md:mb-12 ">
+            <div className="w-full h-auto text-lg md:text-4xl text-black font-sans p-6 md:px-80 md:py-30 flex flex-col ">
+                <div className="bg-gray-700 w-full h-auto rounded-2xl flex flex-col justify-between p-6 md:p-12 min-w-[500px] min-h-[600px]">
+                    <div className="bg-gray-900 w-full h-auto rounded-2xl p-5 md:p-18 text-left mb-6  md:mb-12 min-w-[250px]">
                       
-                        <div className="flex justify-between items-center mb-4 p-6 rounded-md shadow-md">
-                           
-                        <h1 className="text-4xl text-pink-500 mb-8 flex items-center justify-center">
-                        <Astronaut4 />
-                        <span className="ml-2">커뮤니티</span>
+                        <h1 className="text-2xl font-semibold text-pink-500 mb-2 flex items-center justify-center">
+                            <Astronaut4 />
+                            <span className="ml-2">커뮤니티</span>
                         </h1>
 
-                            <div className="flex space-x-4 items-center justify-center">
+                        {/* 검색창 */}
+                        <div className="flex justify-center items-center mb-2 px-6 py-2 rounded-md shadow-md font-semibold ">
+                            <div className="flex space-x-4 items-center justify-center w-full md:w-2/3">
                                 <select
-                                    className="border rounded-md"
+                                    className="border rounded-md bg-gray-300 text-gray-700 drop-shadow-md "
                                     value={searchCategory}
                                     onChange={(e) => setSearchCategory(e.target.value)}
                                 >
@@ -207,23 +207,35 @@ const BoardMain = () => {
                                     placeholder="검색"
                                     value={searchTerm}
                                     onChange={handleSearch}
-                                    className="border rounded-md"
+                                    className="border rounded-md min-w-[150px] max-w-[300px] w-full"
                                 />
                             </div>
                         </div>
-                        <div className="p-6 rounded-md shadow-md">
+
+                        {/* 등록버튼 */}
+                        <div className='flex justify-end mr-4 mb-4'>
+                            <button
+                                className=" ml-4 px-3 py-2 bg-pink-500 text-white text-base font-semibold rounded-md hover:bg-pink-600 bottom-10 mt-4 md:mt-0"
+                                onClick={() => setIsModalOpen(true)}
+                            >
+                                글 등록
+                            </button>
+                        </div>
+
+                        {/* 게시글 */}
+                        <div className="p-4 m-4 rounded-md shadow-md min-w-[300px]">
                             {currentPosts.map((item) => (
                                 <div
                                     key={item.id}
-                                    className="mb-6 p-4 border-b border-pink-300 cursor-pointer"
+                                    className="mb-2 p-2 border-b border-pink-300 cursor-pointer"
                                     onClick={() => {
                                         setSelectedPost(item);
                                         setIsDetailModalOpen(true);
                                     }}
                                 >
-                                    <h2 className="text-2xl font-bold text-pink-500">{truncateText(item.title, 20)}</h2>
-                                    <p className="text-white">{truncateText(item.content, 20)}</p>
-                                    <div className="text-sm text-gray-500 mt-2">
+                                    <h2 className="text-base font-bold text-pink-500">{truncateText(item.title, 20)}</h2>
+                                    <p className="text-white text-sm">{truncateText(item.content, 20)}</p>
+                                    <div className="text-sm text-gray-500 mt-1 min-w-[350px]">
                                         <span className="mr-4">작성자: {item.author}</span>
                                         <span className="mr-4">등록일: {item.date}</span>
                                         <span>조회수: {item.views}</span>
@@ -231,7 +243,8 @@ const BoardMain = () => {
                                 </div>
                             ))}
                         </div>
-                        <div className="flex justify-center mt-4">
+
+                        <div className="flex justify-center mt-1 mb-2">
                             {Array.from({ length: totalPages }, (_, index) => (
                                 <button
                                     key={index + 1}
@@ -242,14 +255,7 @@ const BoardMain = () => {
                                 </button>
                             ))}
                         </div>
-                        <div className='flex justify-end'>
-                            <button
-                                className=" ml-4 px-4 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600 bottom-10 right-10"
-                                onClick={() => setIsModalOpen(true)}
-                            >
-                                글 등록
-                            </button>
-                        </div>
+
                     </div>
                     <div className="flex justify-end">
                     </div>
