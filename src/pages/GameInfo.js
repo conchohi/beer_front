@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-// import InfoModal from "../components/Modal/InfoModal";
 import GameModal from "../components/Modal/game/GameModal";
-import BasicLayout from "../layouts/BasicLayout";
-import Intro from "../components/intro/Intro";
 
 function GameInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,7 +11,6 @@ function GameInfo() {
   };
 
   return (
-     
     <div className="main">
       <h1 className="text-center font-bold text-3xl mb-4 mt-10">게임 가이드</h1>
       {/* flex 클래스를 사용하여 아이템들을 가로 정렬합니다. */}
@@ -77,6 +73,22 @@ function GameInfo() {
           />
         </div>
       </div>
+      <div className="animate-bounce mt-2">
+        <svg
+          className="w-12 h-12 text-white"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M19 9l-7 7-7-7"
+          ></path>
+        </svg>
+      </div>
 
       <GameModal
         isOpen={isModalOpen}
@@ -84,7 +96,6 @@ function GameInfo() {
         title={modalContent}
       ></GameModal>
     </div>
-   
   );
 }
 
