@@ -7,13 +7,9 @@ const LivePage = lazy(() => import("../components/mypage/MyPageMain"));
 const Info = lazy(() => import("../pages/InfoPage"));
 const Game = lazy(() => import("../components/intro/Intro"));
 const Main = lazy(()=> import("../pages/MainPage"))
-// const Main = lazy(() => import("../components/VideoPage")); // 추가
-// const Index = lazy(()=>import("../pages/IndexPage"));
 const ChatList = lazy(() => import("../pages/ChatListPage"));
 const MyPage =lazy(() => import("../pages/Mypage"));
 const Video =lazy(() => import("../pages/VideoPage"));
-const BoardDetail =lazy(() => import("../modal/BoardDetail"));
-const BoardModify =lazy(() => import("../modal/BoardModify"));
 const Board = lazy(( )=> import("../pages/board/Board"))
 
 const root = createBrowserRouter([
@@ -88,23 +84,8 @@ const root = createBrowserRouter([
       <Board/>
     </Suspense>
   )
-},
-{
-path: "/board/detail",
-element: (
-  <Suspense fallback={<Loading />}>
-    <BoardDetail/>
-  </Suspense>
-)
-},
-{
-  path: "/board/modify",
-  element: (
-    <Suspense fallback={<Loading />}>
-      <BoardModify/>
-    </Suspense>
-  )
-  }
+}
+
 ]);
 
 export default root;
