@@ -18,10 +18,10 @@ const Header = () => {
   }
 
   return (<>
-    {createRoom && <CreateRoom close={handleCreate} />}
+    {createRoom && <CreateRoom close={handleCreate}/>}
     <header className="w-full bg-none font-GmarketSansMedium">
-      <nav className="container mx-auto px-6 py-3">
-        <div className="flex items-center justify-between">
+  <nav className="w-full pt-3 px-4 py-4">
+        <div className="w-full flex items-center justify-between">
           <div className=" flex items-center h-full">
 
             <Link to="/">
@@ -46,7 +46,7 @@ const Header = () => {
             <ul className="flex justify-between space-x-25 font-bold">
               <li>
                 <Link to="/info" className="text-white text-xl">
-                  가이드
+                  참여방법
                 </Link>
               </li>
               <li>
@@ -62,8 +62,8 @@ const Header = () => {
               </li>
             </ul>
           </nav>
-          <div className="hidden md:flex items-center">
-            <ul className="flex items-center space-x-12">
+          <div className="hidden md:flex md:w-26 md:justify-end items-center">
+              <ul className="flex items-center space-x-12 ml-auto pr-0">
               <li>
                 <div className="flex flex-col items-center cursor-pointer" onClick={handleCreate}>
                   <BiDoorOpen className="w-8 h-8 text-white text-md" />
@@ -76,9 +76,7 @@ const Header = () => {
                 <Link to="/login" className="text-white">
                   <div className="flex flex-col items-center">
                     <FiLogIn className="w-8 h-8 text-white text-md" />
-
                     로그인
-
                   </div>
                 </Link>
               </li>
@@ -86,7 +84,6 @@ const Header = () => {
                 <Link to="/signup" className="text-white">
                   <div className="flex flex-col items-center">
                     <FaUserPlus className="w-8 h-8 text-white text-md" />
-
                     회원가입
 
                   </div>
@@ -119,10 +116,10 @@ const Header = () => {
           <ul className="mt-4 space-y-4">
             <li>
               <Link
-                to="/game"
+                to="/info"
                 className="block px-4 py-2 text-white bg-gray-900 rounded"
               >
-                가이드
+                참여 방법
               </Link>
             </li>
             <li>
@@ -143,7 +140,7 @@ const Header = () => {
             </li>
             <li className="flex justify-around">
               <div className="flex flex-col items-center" onClick={handleCreate}>
-                <BiDoorOpen className="w-6 h-6 text-white" />
+                <BiDoorOpen className="w-6 h-6 text-white" onClick={handleCreate}/>
                 <span className="text-white text-sm">
                   방 생성
                 </span>
@@ -157,9 +154,7 @@ const Header = () => {
               <Link to="/signup" className="text-white text-sm">
                 <div className="flex flex-col items-center">
                   <FaUserPlus className="w-6 h-6 text-white" />
-
                   회원가입
-
                 </div>
               </Link>
             </li>
