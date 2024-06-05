@@ -576,6 +576,7 @@ const VideoComponent = () => {
 
     return (<>
         <div className="w-full flex flex-row flex-wrap ">
+        
             {/* 방 폭파 확인 모달 */}
             {checkDestory && <DestoryCheckModal setCheckDestroy={setCheckDestory} destroy={destoryRoom}/>}
             {/* 방 폭파 모달 */}

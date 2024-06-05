@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import animationData from "./SpaceCat.json";
+import animationData from "./Astronaut5.json";
 
-const SpaceCat = () => {
+const Astronaut5 = () => {
   const animationContainer = useRef(null);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const SpaceCat = () => {
     return () => animation.destroy(); // Clean up on unmount
   }, []);
 
-  return <div ref={animationContainer} style={{ width: '25vw', height: '25vw' }} />;
+  return <div ref={animationContainer} style={{ width: '30vw', height: '30vw' }} />;
 };
 
-export default SpaceCat;
+export default Astronaut5;

@@ -3,6 +3,7 @@ import InfoModal from "../components/Modal/InfoModal";
 import BasicLayout from "../layouts/BasicLayout";
 import { Link, useLocation } from "react-router-dom";
 import Intro from "../components/intro/Intro";
+import SpaceCat3 from "../components/animation/SpaceCat3";
 
 
 function InfoPage() {
@@ -24,6 +25,7 @@ function InfoPage() {
 
   return (
     <BasicLayout>
+      <SpaceCat3 />
       <div className="font-bold text-white font-gmarket-sans flex flex-col justify-center items-center break-keep relative min-h-screen overflow-hidden">
         <div
           className="rounded-lg text-left mx-4 sm:mx-[5%] md:mx-[8%] lg:mx-[12%] xl:mx-[15%] flex flex-wrap justify-center items-center overflow-hidden relative w-full sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[65%] h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] xl:h-[90vh]"

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
 import animationData from "./SpaceCat.json";
 
-const SpaceCat = () => {
+const SpaceCat3 = () => {
   const animationContainer = useRef(null);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const SpaceCat = () => {
     return () => animation.destroy(); // Clean up on unmount
   }, []);
 
-  return <div ref={animationContainer} style={{ width: '25vw', height: '25vw' }} />;
+  return <div className="absolute -z-50" ref={animationContainer} style={{ width: '100vw', height: '50vw' }} />;
 };
 
-export default SpaceCat;
+export default SpaceCat3;
