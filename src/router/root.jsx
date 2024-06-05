@@ -14,6 +14,7 @@ const MyPage =lazy(() => import("../pages/Mypage"));
 const Video =lazy(() => import("../pages/VideoPage"));
 const BoardDetail =lazy(() => import("../modal/BoardDetail"));
 const BoardModify =lazy(() => import("../modal/BoardModify"));
+const Board = lazy(( )=> import("../pages/board/Board"))
 
 const root = createBrowserRouter([
   {
@@ -103,13 +104,6 @@ element: (
       <BoardModify/>
     </Suspense>
   )
-  },
-    path: "/board/detail",
-    element: (
-      <Suspense fallback={<Loading />}>
-        <BoardDetail/>
-      </Suspense>
-    )
   }
 ]);
 
