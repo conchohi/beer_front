@@ -598,13 +598,15 @@ const VideoComponent = () => {
 
                 </button>
             </div>
-            <div className="w-5/6 flex flex-row flex-wrap  bg-stone-300">
-                <div className={"flex flex-col justify-center items-center text-center p-6 " + (publisher <= 4 ? "w-1/2" : "w-1/3")}>
-                    <div className="relative">
-                        <video ref={myVideoRef} id="myvideo" className="w-full h-full" autoPlay playsInline muted />
+            <div className="w-5/6 flex flex-row flex-wrap ">
+                <div className={"flex flex-col justify-center rounded-lg items-center text-center p-4 " + (publisher <= 4 ? "w-1/2" : "w-1/3")}>
+                    <div className="w-full  bg-black border-2 border-white rounded-xl">
+                        <div className="relative">
+                        <video ref={myVideoRef} id="myvideo" className="w-full h-full box-border p-3" autoPlay playsInline muted />
                         <span className="absolute bottom-6 right-6 cursor-pointer" onClick={()=>{setClickUserNick(nickname)}}><FaUserLarge size="40" /></span>
                     </div>
-                    <span className="font-bold text-lg pt-2" >{nickname}</span>
+                    <span className="font-bold text-xl py-3 text-white" >{nickname}</span>
+                    </div>
 
                 </div>
 
@@ -615,11 +617,13 @@ const VideoComponent = () => {
 
                     return (
                         <div ref={(el) => remoteFeedRef.current[feed.rfindex] = el} className={"flex flex-col justify-center items-center text-center p-6 " + (publisher <= 4 ? "w-1/2" : "w-1/3")}>
+                            <div className="w-full  bg-black border-2 border-white rounded-xl">
                             <div className="relative">
-                                <video ref={(el) => remoteVideoRef.current[feed.rfindex] = el} className="w-full h-full" autoPlay playsInline muted />
+                                <video ref={(el) => remoteVideoRef.current[feed.rfindex] = el} className="w-full h-full box-border p-3" autoPlay playsInline muted />
                                 <span className="absolute bottom-6 right-6 cursor-pointer" onClick={()=>{setClickUserNick(feed?.rfdisplay)}}><FaUserLarge size="40" /></span>
                             </div>
-                            <span className="font-bold text-lg pt-2">{feed?.rfdisplay}</span>
+                            <span className="font-bold text-lg py-3 text-white">{feed?.rfdisplay}</span>
+                        </div>
                         </div>
                     )
 

@@ -1,9 +1,9 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Loading from "../components/load/Loading";
-const Board = lazy(() => import("../pages/board/Board"));
 const Signup = lazy(() => import("../pages/signup/Signup"));
 const Login = lazy(() => import("../pages/login/Login"));
+const LivePage = lazy(() => import("../components/mypage/MyPageMain"));
 const Info = lazy(() => import("../pages/InfoPage"));
 const Game = lazy(() => import("../components/intro/Intro"));
 const Main = lazy(()=> import("../pages/MainPage"))
@@ -78,7 +78,7 @@ const root = createBrowserRouter([
       <Suspense fallback={<Loading />}>
         <Signup/>
       </Suspense>
-    )
+          )
   },
   {
   path: "board",
@@ -104,7 +104,13 @@ element: (
     </Suspense>
   )
   },
-
+    path: "/board/detail",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <BoardDetail/>
+      </Suspense>
+    )
+  }
 ]);
 
 export default root;

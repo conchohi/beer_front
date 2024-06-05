@@ -8,8 +8,8 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="footer text-white">
-      <div className="container mx-auto px-4">
+    <footer className="w-full footer text-white">
+      <div className="w-full container mx-auto px-4">
         <div className="flex flex-wrap text-left lg:text-left">
           <div className="w-full lg:w-6/12 px-4">
             <h4 className="text-xl text-white">
