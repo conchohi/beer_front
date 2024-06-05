@@ -13,14 +13,20 @@ const MainImage = () => {
 
   return (
     <div className="flex flex-col justify-center items-center p-10 w-full">
-      <img src="/img/mainImage.png" alt="Main" className="w-1/2 mb-4 animated-zoom" />
+      <img
+        src="/img/mainImage.png"
+        alt="Main"
+        className="w-1/2 animated-zoom"
+      />{" "}
+      <img src="/img/title.png" alt="Title" className="w-3/12" />
       <button
-        className={`bg-gray-900 text-white px-10 py-4 mt-6 rounded-lg font-semibold neon-button ${isClicked ? 'spin-and-disappear' : ''}`}
+        className={`bg-gray-900 text-white px-10 py-4 mt-6 rounded-lg font-semibold neon-button ${
+          isClicked ? "spin-and-disappear" : ""
+        }`}
         onClick={handleClick}
       >
         입장하기
       </button>
-
       <div className="mt-10 text-white text-lg"></div>
       <div className="animate-bounce mt-2">
         <svg

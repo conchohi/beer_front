@@ -1,11 +1,10 @@
 import "./Mainlayout.css";
-
 import BasicLayout from "../layouts/BasicLayout";
 import MainImage from "../components/main/MainImage";
 import Introduction from "../components/main/Introduction";
 import { useEffect, useRef, useState } from "react";
-import Dots from "../layouts/Dots";
 import Footer from "../layouts/Footer";
+import Header from "../layouts/Header";
 
 const DIVIDER_HEIGHT = 5;
 
@@ -38,14 +37,6 @@ function MainPage() {
             behavior: "smooth",
           });
           setCurrentPage(3);
-        } else {
-          // 현재 3페이지
-          outerDivRef.current.scrollTo({
-            top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
-            left: 0,
-            behavior: "smooth",
-          });
-          setCurrentPage(4);
         }
       } else {
         // 스크롤 올릴 때
@@ -65,7 +56,7 @@ function MainPage() {
             behavior: "smooth",
           });
           setCurrentPage(1);
-        } else if (scrollTop >= pageHeight * 2 && scrollTop < pageHeight * 3) {
+        } else {
           // 현재 3페이지
           outerDivRef.current.scrollTo({
             top: pageHeight + DIVIDER_HEIGHT,
@@ -73,14 +64,6 @@ function MainPage() {
             behavior: "smooth",
           });
           setCurrentPage(2);
-        } else {
-          // 현재 4페이지 (Footer)
-          outerDivRef.current.scrollTo({
-            top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
-            left: 0,
-            behavior: "smooth",
-          });
-          setCurrentPage(3);
         }
       }
     };
@@ -93,18 +76,20 @@ function MainPage() {
   }, []);
 
   return (
-
-    <BasicLayout>
-      
+    <>
+      <Header />
       <div ref={outerDivRef} className="outer bg-cover bg-center">
-        <Dots currentPage={currentPage} />
-        <div className="inner"><MainImage /></div>
-        <div className="inner"><Introduction /></div>
-
+        <div className="inner">
+          <MainImage />
+        </div>
+        <div className="inner">
+          <Introduction />
+        </div>
+        <div className="inner">
+          <Footer />
+        </div>
       </div>
-
-
-    </BasicLayout>
+    </>
   );
 }
 

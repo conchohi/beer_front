@@ -33,14 +33,14 @@ const ChatList = () => {
             {/* 채팅방 리스트 */}
             <div className="bg-[#D9D9D9] py-3 px-5 rounded-xl">
                 <div className="flex justify-between px-6">
-                    <p className="font-bold px-3 py-2">현재 개설된 방 ( {total} )</p>
+                    <p className="font-bold px-3 py-2 text-lg">현재 개설된 방 ( {total} )</p>
                     <OrderByeheck/>
                 </div>
                 
                 <div className="w-full flex flex-row flex-wrap items-center">
                     {chatList.map(chat => {
                         return (
-                            <div className="px-10 md:w-1/2 lg:w-1/3">
+                            <div className="px-5 md:w-1/2 lg:w-1/3">
                                 <Link to={`/chat/${chat.roomNo}`}>
                                     <ChatCard chat={chat} />
                                 </Link>
