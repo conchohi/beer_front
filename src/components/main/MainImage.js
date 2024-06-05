@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import SpaceCat2 from "../animation/SpaceCat2";
-import Space from "../animation/Space";
+import { useNavigate } from "react-router-dom";
 
-const MainImage = () => {
+const MainImage = ({clickDown}) => {
   const [isClicked, setIsClicked] = useState(false);
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setIsClicked(true);
@@ -11,16 +11,17 @@ const MainImage = () => {
       // 애니메이션이 끝난 후 실행할 코드 (예: 페이지 이동)
       setIsClicked(false);
     }, 1000); // 애니메이션 시간 (1초)
+    navigate('/chat/list')
   };
 
   return (
-    <div className="relative flex flex-col justify-center items-center p-10 w-full">
-      <Space />
+  <div className="flex flex-col justify-center items-center p-10 pb-20 w-full">
       <img
         src="/img/mainImage.png"
         alt="Main"
-        className="w-1/2 animated-zoom pb-96"
+        className="w-1/2 animated-zoom"
       />{" "}
+      <img src="/img/title.png" alt="Title" className="w-3/12" />
 
       <button
         className={`bg-gray-900 text-white px-10 py-4 mt-6 rounded-lg font-semibold neon-button ${
@@ -31,7 +32,7 @@ const MainImage = () => {
         입장하기
       </button>
       <div className="mt-10 text-white text-lg"></div>
-      <div className="animate-bounce mt-2">
+      <div className="animate-bounce mt-2 cursor-pointer" onClick={clickDown}>
         <svg
           className="w-12 h-12 text-white"
           fill="none"
