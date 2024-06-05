@@ -7,6 +7,7 @@ import { FaUserLarge } from "react-icons/fa6";
 import DestoryRoomModal from "../Modal/room/DestoryRoomModal";
 import DestoryCheckModal from "../Modal/room/DestroyCheckModal";
 import UserDetail from "../../modal/UserDetail";
+import Chat from "./Chat";
 
 const server = "https://janus.jsflux.co.kr/janus";
 
@@ -15,10 +16,9 @@ var janus = null
 
 const VideoComponent = () => {
     //방에 최대 인원 수가 필요, 자신의 닉네임도 필요
-    // const {roomNo} = useParams();
-    // const myroom = Number(roomNo);
+    const {roomNo} = useParams();
+    const myroom = Number(roomNo);
 
-    const myroom = 11111;
     const publisher = 6;
     const myVideoRef = useRef(null);
     const remoteFeedRef = useRef([]);
@@ -598,13 +598,15 @@ const VideoComponent = () => {
 
                 </button>
             </div>
-            <div className="w-5/6 flex flex-row flex-wrap  bg-stone-300">
-                <div className={"flex flex-col justify-center items-center text-center p-6 " + (publisher <= 4 ? "w-1/2" : "w-1/3")}>
-                    <div className="relative">
-                        <video ref={myVideoRef} id="myvideo" className="w-full h-full" autoPlay playsInline muted />
+            <div className="w-5/6 flex flex-row flex-wrap ">
+                <div className={"flex flex-col justify-center rounded-lg items-center text-center p-4 " + (publisher <= 4 ? "w-1/2" : "w-1/3")}>
+                    <div className="w-full  bg-black border-2 border-white rounded-xl">
+                        <div className="relative">
+                        <video ref={myVideoRef} id="myvideo" className="w-full h-full box-border p-3" autoPlay playsInline muted />
                         <span className="absolute bottom-6 right-6 cursor-pointer" onClick={()=>{setClickUserNick(nickname)}}><FaUserLarge size="40" /></span>
                     </div>
-                    <span className="font-bold text-lg pt-2" >{nickname}</span>
+                    <span className="font-bold text-xl py-3 text-white" >{nickname}</span>
+                    </div>
 
                 </div>
 
@@ -615,11 +617,13 @@ const VideoComponent = () => {
 
                     return (
                         <div ref={(el) => remoteFeedRef.current[feed.rfindex] = el} className={"flex flex-col justify-center items-center text-center p-6 " + (publisher <= 4 ? "w-1/2" : "w-1/3")}>
+                            <div className="w-full  bg-black border-2 border-white rounded-xl">
                             <div className="relative">
-                                <video ref={(el) => remoteVideoRef.current[feed.rfindex] = el} className="w-full h-full" autoPlay playsInline muted />
+                                <video ref={(el) => remoteVideoRef.current[feed.rfindex] = el} className="w-full h-full box-border p-3" autoPlay playsInline/>
                                 <span className="absolute bottom-6 right-6 cursor-pointer" onClick={()=>{setClickUserNick(feed?.rfdisplay)}}><FaUserLarge size="40" /></span>
                             </div>
-                            <span className="font-bold text-lg pt-2">{feed?.rfdisplay}</span>
+                            <span className="font-bold text-lg py-3 text-white">{feed?.rfdisplay}</span>
+                        </div>
                         </div>
                     )
 
@@ -627,11 +631,8 @@ const VideoComponent = () => {
             </div>
         </div>
         <div className="flex w-5/6 mx-auto mt-12">
-            {/* 채팅 컴포넌트 */}
-            <div className="w-3/4 flex flex-col">
-                <div className="w-full bg-white h-60 flex justify-center items-center">채팅창</div>
-                <div className="w-full bg-[#BE2222] my-5 text-white font-bold text-lg"><input className="w-4/5" type="text"/><button className="w-1/5">입력</button></div>
-            </div>
+           <Chat roomId={roomNo} />
+      
             <div className="w-1/4 flex flex-col items-center gap-5 ps-5 text-lg font-bold">
                 <button className="w-full py-5 bg-gray-600 text-white">게임 선택</button>
                 <button className="w-full py-5 bg-[#BE2222] text-white" onClick={exitRoom}>나가기</button>

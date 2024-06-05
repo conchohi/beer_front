@@ -1,6 +1,8 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Loading from "../components/load/Loading";
+const Chat = lazy(() => import("../components/test/Chat"));
+const BoardDetail = lazy(() => import("../modal/BoardDetail"));
 const Board = lazy(() => import("../pages/board/Board"));
 const Signup = lazy(() => import("../pages/signup/Signup"));
 const Login = lazy(() => import("../pages/login/Login"));
@@ -83,6 +85,22 @@ const root = createBrowserRouter([
   element: (
     <Suspense fallback={<Loading />}>
       <Board/>
+    </Suspense>
+  )
+},
+{
+  path: "/board/detail",
+  element: (
+    <Suspense fallback={<Loading />}>
+      <BoardDetail/>
+    </Suspense>
+  )
+},
+{
+  path: "/chattest",
+  element: (
+    <Suspense fallback={<Loading />}>
+      <Chat/>
     </Suspense>
   )
 },
