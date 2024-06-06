@@ -585,8 +585,8 @@ const VideoComponent = () => {
                 setClickUserNick(""); 
                 setUserDetail(false);}
                 }/>}
-
-            <div className="w-1/12 flex flex-col gap-5 text-white">
+            <div className="w-full font-bold text-3xl text-white mb-2 ms-40 ">캔맥들고 모여</div>
+            <div className="w-1/12 flex flex-col gap-5 text-white mt-4">
                 <button onClick={toggleMute}>{muted ?
                     <div className="flex flex-col justify-center items-center text-center"><FaMicrophoneAltSlash color="white" size="40" /><span>음소거 해제</span></div>
                     : <div className="flex flex-col justify-center items-center text-center"><FaMicrophoneAlt color="white" size="40" /><span>음소거</span></div>}
