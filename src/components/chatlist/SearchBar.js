@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import SearchTypeCheck from "./SearchTypeCheck";
 import useChatMove from "../../hooks/useChatMove";
-import { FaPlus, FaPlusSquare } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import CreateRoom from "../../modal/CreateRoom";
 import CategorySelector from "./CategorySelector";
 
@@ -9,7 +9,7 @@ const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchType, setSearchType] = useState("방제목");
     const [category, setCategory] = useState("");
-    const { moveToList, ordeyBy } = useChatMove();
+    const { moveToList, orderBy } = useChatMove();
     const [createRoom, setCreateRoom] = useState(false);
 
     const handleInput = (event) => {
@@ -25,12 +25,12 @@ const SearchBar = () => {
     })
 
     const handleSearchClick = () => {
-        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: ordeyBy, category:category })
+        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: orderBy, category:category })
     }
 
     useEffect(() => {
-        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: ordeyBy,category:category })
-    }, [category, ordeyBy])
+        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: orderBy,category:category })
+    }, [category])
 
     const handleCreate = () =>{
         setCreateRoom(!createRoom);
