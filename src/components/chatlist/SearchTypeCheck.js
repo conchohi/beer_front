@@ -3,7 +3,7 @@ import { FaCaretDown, FaSortDown } from 'react-icons/fa';
 
 function SearchTypeCheck({setSearchType}) {
     //선택된 지역의 값 설정
-    const [viewSearchType, setViewSearchType] = useState("검색기준");
+    const [viewSearchType, setViewSearchType] = useState("방제목");
 
     //드롭다운 여부값 설정
     const [isOpen, setIsOpen] = useState(false);

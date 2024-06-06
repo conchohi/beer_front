@@ -3,10 +3,12 @@ import SearchTypeCheck from "./SearchTypeCheck";
 import useChatMove from "../../hooks/useChatMove";
 import { FaPlus, FaPlusSquare } from "react-icons/fa";
 import CreateRoom from "../../modal/CreateRoom";
+import CategorySelector from "./CategorySelector";
 
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchType, setSearchType] = useState("");
+    const [searchType, setSearchType] = useState("방제목");
+    const [category, setCategory] = useState("");
     const { moveToList, ordeyBy } = useChatMove();
     const [createRoom, setCreateRoom] = useState(false);
 
@@ -18,20 +20,24 @@ const SearchBar = () => {
         setSearchType(searchType);
     }
 
+    const handleCategory = ((category)=>{
+        setCategory(category);
+    })
+
     const handleSearchClick = () => {
-        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: ordeyBy })
+        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: ordeyBy, category:category })
     }
 
     useEffect(() => {
-        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: ordeyBy })
-    }, [searchType])
+        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: ordeyBy,category:category })
+    }, [category, ordeyBy])
 
     const handleCreate = () =>{
         setCreateRoom(!createRoom);
     }
 
-    return (
-        <div className="flex flex-row gap-4 justify-center items-center">
+    return (<>
+        <div className="flex flex-row gap-4 justify-center items-center mb-8">
             {createRoom && <CreateRoom close={handleCreate}/>}
             {/* 검색 유형*/}
             <SearchTypeCheck setSearchType={handleType} />
@@ -73,7 +79,9 @@ const SearchBar = () => {
                     <span className="block lg:hidden"><FaPlus size="30" /></span>
                 </button>
             </div>
-        </div>);
+        </div>
+        <CategorySelector handleCategory={handleCategory}/>
+        </>);
 }
 
 export default SearchBar;

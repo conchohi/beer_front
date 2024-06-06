@@ -84,11 +84,13 @@ function CreateRoom({close}) {
               <select
                 className="w-full p-2 mt-2 rounded-lg bg-gray-700 text-gray-300 focus:ring-1 focus:ring-amber-400 focus:border-amber-400">
                 <option>선택하세요</option>
-                <option value="favorite">운동</option>
-                <option value="favorite">음악</option>
-                <option value="favorite">요리</option>
-                <option value="favorite">주식</option>
-                <option value="favorite">미용</option>
+                <option value="favorite">게임</option>
+                <option value="favorite">고민상담</option>
+                <option value="favorite">대학생</option>
+                <option value="favorite">여행</option>
+                <option value="favorite">친목</option>
+                <option value="favorite">피트니스</option>
+                <option value="favorite">회사생활</option>
               </select>
             </div>
             <div className="mb-4">
