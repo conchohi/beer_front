@@ -17,7 +17,7 @@ const CategorySelector = ({handleCategory}) => {
         {items.map((item, index) => (
           <div className="flex flex-col justify-center text-center items-center w-[12.5%]" key={index} onClick={() => handleCategory(item.id)}>
             <div className="cursor-pointer">
-              <img src={`/img/chatlist/category/${item.icon}`} alt={item.name} className="w-2/3 mx-auto rounded-full mb-3"/>
+              <img src={`/img/chatlist/category/${item.icon}`} alt={item.name} className="w-1/2 mx-auto rounded-full mb-3"/>
               <p className="text-base text-white">{item.name}</p>
             </div>
           </div>
