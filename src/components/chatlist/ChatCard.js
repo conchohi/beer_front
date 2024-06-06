@@ -7,12 +7,12 @@ const ChatCard = ({chat}) => {
             <img className="w-full border shadow-lg mb-5" src={`/img/chatlist/${chat.category}.png`} alt={chat.category}/>
             <div className="flex justify-between">
                 <span className="text-gray-500 text-xl">{chat.category}</span>
-                <span className="text">{chat.nickname}</span>
+                <span className="text">{chat.master}</span>
             </div>
             <p className="font-black text-2xl my-1">{chat.title}</p>
             <div className="flex justify-between text-sm">
-                <span>{chat.create}</span>
-                <span className="flex flex-row gap-2 items-center"><FaUser/>{`${chat.participants}/${chat.totalParticipants}`}</span>
+                <span>{chat.createDate}</span>
+                <span className="flex flex-row gap-2 items-center"><FaUser/>{`${chat.currentUser}/${chat.maximumUser}`}</span>
             </div>
 
         </div>
