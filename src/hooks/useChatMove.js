@@ -36,7 +36,7 @@ const useChatMove = () => {
     if(pageParam){
       const pageNum = getNum(pageParam.page, 1)
       const sizeNum = getNum(pageParam.size, 6)
-      queryStr = createSearchParams({page:pageNum, size: sizeNum, category : pageParam.category, searchTerm:pageParam.searchTerm, searchType:pageParam.searchType, ordeyBy:pageParam.ordeyBy}).toString()
+      queryStr = createSearchParams({page:pageNum, size: sizeNum, category : pageParam.category, searchTerm:pageParam.searchTerm, searchType:pageParam.searchType, orderBy:pageParam.orderBy}).toString()
     }else {
       queryStr = queryDefault
     }

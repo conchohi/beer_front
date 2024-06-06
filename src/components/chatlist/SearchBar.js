@@ -7,7 +7,6 @@ import CreateRoom from "../../modal/CreateRoom";
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchType, setSearchType] = useState("");
-    const [orderBy, setOrderBy] = useState("");
     const { moveToList, ordeyBy } = useChatMove();
     const [createRoom, setCreateRoom] = useState(false);
 
@@ -19,16 +18,12 @@ const SearchBar = () => {
         setSearchType(searchType);
     }
 
-    const handleOrder = (orderBy) =>{
-        setOrderBy(orderBy)
-    }
-
     const handleSearchClick = () => {
-        moveToList({ searchType: searchType, searchTerm: searchTerm, ordeyBy: ordeyBy })
+        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: ordeyBy })
     }
 
     useEffect(() => {
-        moveToList({ searchType: searchType, searchTerm: searchTerm, ordeyBy: ordeyBy })
+        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: ordeyBy })
     }, [searchType])
 
     const handleCreate = () =>{
