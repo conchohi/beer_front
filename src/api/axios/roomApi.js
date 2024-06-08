@@ -33,3 +33,11 @@ export const destoryRoom = async (roomNo) => {
     )
     return response.data;
 };
+
+export const checkPassword = async (data) => {
+    // const token = localStorage.getItem("access")
+    const response = await axios.post(`${prefix}/checkPw`, data
+        // , {headers:{"access" : token }}
+    )
+    return response.data;
+};

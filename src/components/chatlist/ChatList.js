@@ -42,9 +42,7 @@ const ChatList = () => {
                     {chatList.map(chat => {
                         return (
                             <div className="px-5 md:w-1/2 lg:w-1/3">
-                                <Link to={`/chat/${chat.roomNo}`}>
                                     <ChatCard chat={chat} />
-                                </Link>
                             </div>
                         )
                     })}
