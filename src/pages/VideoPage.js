@@ -1,4 +1,5 @@
 import VideoComponent from "../components/video/VideoComponent";
+import VideoComponentV2 from "../components/video/VideoComponentV2";
 
 const VideoPage = () => {
     return ( <>

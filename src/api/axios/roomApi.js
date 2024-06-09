@@ -29,7 +29,7 @@ export const join = async (roomNo) => {
 };
 export const exit = async (roomNo) => {
     // const token = localStorage.getItem("access")
-    const response = await axios.delete(`${prefix}/join/${roomNo}`,
+    const response = await axios.delete(`${prefix}/exit/${roomNo}`,
         // , {headers:{"access" : token }}
     );
     return response.data;

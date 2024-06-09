@@ -22,6 +22,8 @@ const ChatList = () => {
             setChatList(result.dtoList);
             setTotal(result.totalCount);
             setServerData(result)
+        }).catch(error=>{
+            console.log('error : ' + error)
         })
     }, [page,size, category,orderBy,searchTerm,searchType,refresh])
 

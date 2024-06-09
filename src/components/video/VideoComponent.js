@@ -8,6 +8,7 @@ import DestoryRoomModal from "../Modal/room/DestoryRoomModal";
 import DestoryCheckModal from "../Modal/room/DestroyCheckModal";
 import UserDetail from "../../modal/UserDetail";
 import Chat from "./Chat";
+import GameSelectModal from "../Modal/game/GameSelectModal";
 
 const server = "https://janus.jsflux.co.kr/janus";
 
@@ -46,6 +47,8 @@ const VideoComponent = () => {
     //방 폭파할지 확인하는 모달
     const [checkDestory, setCheckDestory] = useState(false);
 
+    //게임 선택 모달
+    const [openGame, setOpenGame] = useState(false);
         
     //유저 정보 모달
     const [userDetail, setUserDetail] = useState(false);
@@ -69,7 +72,10 @@ const VideoComponent = () => {
             room: myroom
         };
         sfuClient.send({ message: destroyRoom });
+    }
 
+    const clickGame = () =>{
+        setOpenGame(true);
     }
 
     useEffect(() => {
@@ -576,6 +582,8 @@ const VideoComponent = () => {
 
     return (<>
         <div className="w-full flex flex-row flex-wrap ">
+            {/* 게임 선택 모달 */}
+            {openGame && <GameSelectModal close={()=>{setOpenGame(false)}}/>}
             {/* 방 폭파 확인 모달 */}
             {checkDestory && <DestoryCheckModal setCheckDestroy={setCheckDestory} destroy={destoryRoom}/>}
             {/* 방 폭파 모달 */}
@@ -634,7 +642,7 @@ const VideoComponent = () => {
            <Chat roomId={roomNo} />
       
             <div className="w-1/4 flex flex-col items-center gap-5 ps-5 text-lg font-bold">
-                <button className="w-full py-5 bg-gray-600 text-white">게임 선택</button>
+                <button className="w-full py-5 bg-gray-600 text-white" onClick={clickGame}>게임 선택</button>
                 <button className="w-full py-5 bg-[#BE2222] text-white" onClick={exitRoom}>나가기</button>
                 <button className="w-full py-5 bg-white" onClick={()=>{setCheckDestory(true)}}>방 폭파</button>
             </div>
