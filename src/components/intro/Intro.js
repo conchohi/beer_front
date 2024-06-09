@@ -31,7 +31,6 @@ const Intro = () => {
       src: "./img/Landing/PersonQuizGuide.webp",
       alt: "Person Quiz Guide",
     },
-
   ];
 
   return (
@@ -56,22 +55,20 @@ const Intro = () => {
         {gameGuides.map((guide) => (
           <div
             key={guide.id}
-            className="bg-yellow-400 p-40 rounded-xl shadow-lg w-64 h-48 flex flex-col justify-center items-center cursor-pointer transform transition duration-300 hover:scale-105"
+            className="flex flex-col justify-center items-center bg-yellow-400 p-6 rounded-xl shadow-lg w-64 h-auto cursor-pointer transform transition duration-300 hover:scale-105"
             onClick={() => openModal(guide.id)}
           >
             <div className="text-2xl font-bold text-white mb-4">
               {guide.id}
             </div>
             <img
-              className="mb-2 rounded-lg shadow-lg w-32 h-32 object-cover"
+              className="rounded-lg shadow-lg w-40 h-auto object-cover"
               src={guide.src}
               alt={guide.alt}
             />
           </div>
         ))}
       </div>
-
-
 
       <GameModal
         isOpen={isModalOpen}
