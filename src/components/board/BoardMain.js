@@ -1,70 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BasicLayout from '../../layouts/BasicLayout';
 import AddPostModalComponent from './modal/AddPostModalComponent';
 import DetailPostModalComponent from './modal/DetailPostModalComponent';
 import EditPostModalComponent from './modal/EditPostModalComponent';
 import Astronaut4 from '../animation/Astronaut4';
+import { getAllBoards, registerBoard, updateBoard, deleteBoard, addComment, deleteComment } from '../../api/BoardApi';
 
-const initialBoardData = [
-    {
-        id: 1,
-        title: '11시에 술드실분 1/4',
-        content: '오늘 11시에 술드실분',
-        author: '사용자',
-        date: '2024-06-04',
-        views: 10,
-        comments: []
-    },
-    {
-        id: 2,
-        title: '7시에 급벙하실분 2/4',
-        content: '7시에 노실분 구해요!',
-        author: '유저',
-        date: '2024-06-03',
-        views: 20,
-        comments: []
-    },
-    {
-        id: 3,
-        title: '10시에 게임하실분',
-        content: '게임 고고',
-        author: '작성자',
-        date: '2024-06-02',
-        views: 30,
-        comments: []
-    },
-    // Add more dummy data for demonstration
-    {
-        id: 4,
-        title: 'New Title 1',
-        content: 'New Content 1',
-        author: 'Author 1',
-        date: '2024-06-01',
-        views: 15,
-        comments: []
-    },
-    {
-        id: 5,
-        title: 'New Title 2',
-        content: 'New Content 2',
-        author: 'Author 2',
-        date: '2024-06-01',
-        views: 25,
-        comments: []
-    },
-    {
-        id: 6,
-        title: 'New Title 3',
-        content: 'New Content 3',
-        author: 'Author 3',
-        date: '2024-06-01',
-        views: 35,
-        comments: []
-    }
-];
+// const initialBoardData = [
+//     {
+//         id: 1,
+//         title: '11시에 술드실분 1/4',
+//         content: '오늘 11시에 술드실분',
+//         author: '사용자',
+//         date: '2024-06-04',
+//         views: 10,
+//         comments: []
+//     },
+//     {
+//         id: 2,
+//         title: '7시에 급벙하실분 2/4',
+//         content: '7시에 노실분 구해요!',
+//         author: '유저',
+//         date: '2024-06-03',
+//         views: 20,
+//         comments: []
+//     },
+//     {
+//         id: 3,
+//         title: '10시에 게임하실분',
+//         content: '게임 고고',
+//         author: '작성자',
+//         date: '2024-06-02',
+//         views: 30,
+//         comments: []
+//     },
+//     // Add more dummy data for demonstration
+//     {
+//         id: 4,
+//         title: 'New Title 1',
+//         content: 'New Content 1',
+//         author: 'Author 1',
+//         date: '2024-06-01',
+//         views: 15,
+//         comments: []
+//     },
+//     {
+//         id: 5,
+//         title: 'New Title 2',
+//         content: 'New Content 2',
+//         author: 'Author 2',
+//         date: '2024-06-01',
+//         views: 25,
+//         comments: []
+//     },
+//     {
+//         id: 6,
+//         title: 'New Title 3',
+//         content: 'New Content 3',
+//         author: 'Author 3',
+//         date: '2024-06-01',
+//         views: 35,
+//         comments: []
+//     }
+// ];
+
 
 const BoardMain = () => {
-    const [boardData, setBoardData] = useState(initialBoardData);
+    const [boardData, setBoardData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchCategory, setSearchCategory] = useState('title');
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -74,14 +76,18 @@ const BoardMain = () => {
     const [newPost, setNewPost] = useState({
         title: '',
         content: '',
-        author: '',
-        date: '',
-        views: 0
+        writer: '',
+        regDate: '',
+        modifyDate: '',
+        count: 0,
+        commentEntityList: []
     });
+
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 5;
+
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
@@ -93,8 +99,8 @@ const BoardMain = () => {
             return item.title.toLowerCase().includes(searchTerm.toLowerCase());
         } else if (searchCategory === 'content') {
             return item.content.toLowerCase().includes(searchTerm.toLowerCase());
-        } else if (searchCategory === 'author') {
-            return item.author.toLowerCase().includes(searchTerm.toLowerCase());
+        } else if (searchCategory === 'writer') {
+            return item.writer.toLowerCase().includes(searchTerm.toLowerCase());
         }
         return false;
     });
@@ -108,7 +114,7 @@ const BoardMain = () => {
     const handleAddPost = () => {
         const updatedBoardData = [...boardData, { ...newPost, id: boardData.length + 1, date: new Date().toISOString().split('T')[0] }];
         setBoardData(updatedBoardData);
-        setNewPost({ title: '', content: '', author: '', date: '', views: 0 });
+        setNewPost({ title: '', content: '', writer: '', regDate: '', count: 0 });
         setIsModalOpen(false);
     };
 
@@ -128,50 +134,63 @@ const BoardMain = () => {
         setSelectedPost(null);
     };
 
+
+
     const handleAddComment = (content) => {
         const updatedBoardData = boardData.map((post) => {
             if (post.id === selectedPost.id) {
+                const updatedComments = Array.isArray(post.comments) ? post.comments : [];
                 return {
                     ...post,
-                    comments: [...post.comments, {
-                        id: post.comments.length + 1,
+                    comments: [...updatedComments, {
+                        id: updatedComments.length + 1,
                         content,
-                        author: 'current_user',
-                        date: new Date().toISOString().split('T')[0]
+                        writer: 'current_user',
+                        createDate: new Date().toISOString().split('T')[0]
                     }]
                 };
             }
             return post;
         });
         setBoardData(updatedBoardData);
-        setSelectedPost({ ...selectedPost, comments: [...selectedPost.comments, { id: selectedPost.comments.length + 1, content, author: 'current_user', date: new Date().toISOString().split('T')[0] }] });
+        const updatedSelectedPostComments = Array.isArray(selectedPost.comments) ? selectedPost.comments : [];
+        setSelectedPost({ ...selectedPost, comments: [...selectedPost.comments, { id: selectedPost.comments.length + 1, content, writer: 'current_user', date: new Date().toISOString().split('T')[0] }] });
     };
 
     const handleEditComment = (commentId, content) => {
         const updatedBoardData = boardData.map((post) => {
             if (post.id === selectedPost.id) {
-                const updatedComments = post.comments.map((comment) =>
+                const updatedComments = Array.isArray(post.comments) ? post.comments.map((comment) =>
                     comment.id === commentId ? { ...comment, content } : comment
-                );
+            ) : [];
                 return { ...post, comments: updatedComments };
             }
             return post;
         });
         setBoardData(updatedBoardData);
-        setSelectedPost({ ...selectedPost, comments: selectedPost.comments.map((comment) => comment.id === commentId ? { ...comment, content } : comment) });
+        setSelectedPost({ ...selectedPost, comments: Array.isArray(selectedPost.comments) ? selectedPost.comments.map((comment) => comment.id === commentId ? { ...comment, content } : comment) : [] });
     };
 
     const handleDeleteComment = (commentId) => {
         const updatedBoardData = boardData.map((post) => {
             if (post.id === selectedPost.id) {
-                const updatedComments = post.comments.filter((comment) => comment.id !== commentId);
+                const updatedComments = Array.isArray(post.comments) ? post.comments.filter((comment) => comment.id !== commentId) : [];
                 return { ...post, comments: updatedComments };
             }
             return post;
         });
         setBoardData(updatedBoardData);
-        setSelectedPost({ ...selectedPost, comments: selectedPost.comments.filter((comment) => comment.id !== commentId) });
+        setSelectedPost({ ...selectedPost, comments: Array.isArray(selectedPost.comments) ? selectedPost.comments.filter((comment) => comment.id !== commentId) : [] });
     };
+
+    const handlePostSelection = (post) => {
+        setSelectedPost({
+            ...post,
+            comments: Array.isArray(post.comments) ? post.comments : []
+        });
+        setIsDetailModalOpen(true);
+    };
+    
 
     const truncateText = (text, maxLength) => {
         if (text.length <= maxLength) return text;
@@ -228,15 +247,15 @@ const BoardMain = () => {
                                     key={item.id}
                                     className="mb-2 p-2 border-b border-pink-300 cursor-pointer"
                                     onClick={() => {
-                                        setSelectedPost(item);
+                                        handlePostSelection(item);
                                         setIsDetailModalOpen(true);
                                     }}
                                 >
                                     <h2 className="text-base font-bold text-pink-500">{truncateText(item.title, 20)}</h2>
                                     <p className="text-white text-sm">{truncateText(item.content, 20)}</p>
                                     <div className="text-sm text-gray-500 mt-1 min-w-[350px]">
-                                        <span className="mr-4">작성자: {item.author}</span>
-                                        <span className="mr-4">등록일: {item.date}</span>
+                                        <span className="mr-4">작성자: {item.writer}</span>
+                                        <span className="mr-4">등록일: {item.regDate}</span>
                                         <span>조회수: {item.views}</span>
                                     </div>
                                 </div>
