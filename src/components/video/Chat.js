@@ -4,44 +4,22 @@ import { Stomp } from "@stomp/stompjs";
 
 let stompClient = null;
 
-const Chat = ({ roomId }) => {
+const Chat = ({ roomNo, username }) => {
   const [publicChats, setPublicChats] = useState([]);
   const [userData, setUserData] = useState({
-    username: "user",
+    username: username,
     connected: false,
     message: "",
-    roomId: roomId,
+    roomNo: roomNo,
   });
   const [date, setDate] = useState("");
   const chatMessagesEndRef = useRef(null);
 
   useEffect(() => {
-    connect();
-  }, []);
-
-  useEffect(() => {
     if (userData.connected) {
-      fetch(`http://localhost:8080/chatroom/public/${roomId}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          if (Array.isArray(data)) {
-            setPublicChats(data);
-          } else {
-            setPublicChats([]);
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching public chats:", error);
-          setPublicChats([]);
-        });
-      setDate(getCurrentDate());
+      fetchMessages();
     }
-  }, [userData.connected, roomId]);
+  }, [userData.connected, roomNo]);
 
   useEffect(() => {
     scrollToBottom();
@@ -49,6 +27,28 @@ const Chat = ({ roomId }) => {
 
   const scrollToBottom = () => {
     chatMessagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const fetchMessages = () => {
+    fetch(`http://localhost:8080/chatroom/public/${roomNo}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setPublicChats(data);
+        } else {
+          setPublicChats([]);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching public chats:", error);
+        setPublicChats([]);
+      });
+    setDate(getCurrentDate());
   };
 
   const connect = () => {
@@ -63,8 +63,9 @@ const Chat = ({ roomId }) => {
       ...prevState,
       connected: true,
     }));
-    stompClient.subscribe(`/chatroom/public`, onMessageReceived);
+    stompClient.subscribe(`/topic/room/${roomNo}`, onMessageReceived);
     userJoin();
+    window.addEventListener("beforeunload", userLeave);
   };
 
   const onError = (err) => {
@@ -81,12 +82,27 @@ const Chat = ({ roomId }) => {
   const userJoin = () => {
     console.log("User joining...");
     var chatMessage = {
-      roomId: roomId,
+      roomNo: roomNo,
       senderName: userData.username,
       status: "JOIN",
     };
     if (stompClient) {
-      stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+      stompClient.send("/app/chat.addUser", {}, JSON.stringify(chatMessage));
+    }
+  };
+
+  const userLeave = () => {
+    console.log("User leaving...");
+    var chatMessage = {
+      roomNo: roomNo,
+      senderName: userData.username,
+      status: "LEAVE",
+    };
+    if (stompClient) {
+      stompClient.send("/app/chat.removeUser", {}, JSON.stringify(chatMessage));
+      stompClient.disconnect(() => {
+        console.log("Disconnected");
+      });
     }
   };
 
@@ -98,14 +114,18 @@ const Chat = ({ roomId }) => {
   const sendValue = () => {
     if (stompClient && userData.message.trim() !== "") {
       var chatMessage = {
-        roomId: roomId,
+        roomNo: roomNo,
         senderName: userData.username,
         message: userData.message,
         status: "MESSAGE",
         date: new Date().toISOString(),
       };
       console.log("Sending public message: ", chatMessage);
-      stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+      stompClient.send(
+        "/app/chat.sendRoomMessage",
+        {},
+        JSON.stringify(chatMessage)
+      );
       setUserData({ ...userData, message: "" });
     } else {
       console.error("Cannot send message. No STOMP connection.");
@@ -134,9 +154,21 @@ const Chat = ({ roomId }) => {
     }
   };
 
+  useEffect(() => {
+    connect();
+    return () => {
+      window.removeEventListener("beforeunload", userLeave);
+      userLeave();
+    };
+  }, []);
+
   return (
     <div className="container mx-auto p-4 flex flex-col h-screen">
-      {userData.connected ? (
+      {!userData.connected ? (
+        <div className="loading flex justify-center items-center h-full">
+          <span className="text-gray-500">연결 중...</span>
+        </div>
+      ) : (
         <div className="chat-box flex bg-slate-100 flex-col shadow-lg h-2/5 p-10">
           <div className="date-banner text-center mb-4">{date}</div>
           <div className="chat-content flex-1 overflow-y-scroll p-2">
@@ -209,10 +241,6 @@ const Chat = ({ roomId }) => {
               전송
             </button>
           </div>
-        </div>
-      ) : (
-        <div className="loading flex justify-center items-center h-full">
-          <span className="text-gray-500">연결 중...</span>
         </div>
       )}
     </div>
