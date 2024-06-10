@@ -1,18 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
-import EditProfileModal from "./EditProfileModal";
+import EditProfileModal from "./modal/EditProfileModal";
 
-// React Modal의 root element 설정
+// React Modal's root element setting
 Modal.setAppElement("#root");
 
-function ProfilePageInfo({ handleOpen, profileImageUrl }) {
-  // 모달 표시를 위한 함수
+function ProfilePageInfo({ handleOpen, userData }) {
   const [modalOn, setModalOn] = useState(false);
   const openModal = () => {
     setModalOn(true);
   };
 
-  // 모달을 닫는 함수
   const closeModal = () => {
     setModalOn(false);
   };
@@ -21,7 +19,7 @@ function ProfilePageInfo({ handleOpen, profileImageUrl }) {
     <div className="flex flex-col lg:flex-row justify-around p-4">
       <div className="flex flex-col justify-center items-center">
         <img
-          src={profileImageUrl || "/logo/basic.png"}
+          src={userData.profileImage || "/logo/basic.png"}
           className="w-36 h-36 md:w-48 md:h-48 lg:w-72 lg:h-60 rounded-full border-4 border-transparent"
           alt="프로필 이미지"
         />
@@ -39,13 +37,13 @@ function ProfilePageInfo({ handleOpen, profileImageUrl }) {
               <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-36 lg:h-24 rounded-full bg-pink-500 text-white">
                 닉네임
               </div>
-              <div className="ml-2">: 홍길동</div>
+              <div className="ml-2">: {userData.nickname}</div>
             </div>
             <div className="flex flex-1 items-center mt-2 lg:mt-0">
               <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-36 lg:h-24 rounded-full bg-pink-500 text-white">
                 이름
               </div>
-              <div className="ml-2">: 비공개</div>
+              <div className="ml-2">: {userData.name ? userData.name : '비공개'}</div>
             </div>
           </div>
           <div className="flex flex-wrap items-center mt-4 lg:mt-6">
@@ -53,13 +51,13 @@ function ProfilePageInfo({ handleOpen, profileImageUrl }) {
               <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-36 lg:h-24 rounded-full bg-pink-500 text-white">
                 Mbti
               </div>
-              <div className="ml-2">: ENFP</div>
+              <div className="ml-2">: {userData.mbti}</div>
             </div>
             <div className="flex flex-1 items-center mt-2 lg:mt-0">
               <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-36 lg:h-24 rounded-full bg-pink-500 text-white">
-                나이
+               성별
               </div>
-              <div className="ml-2">: 20</div>
+              <div className="ml-2">: {userData.gender}</div>
             </div>
           </div>
           <div className="flex flex-wrap items-center mt-4 lg:mt-6">
@@ -75,8 +73,8 @@ function ProfilePageInfo({ handleOpen, profileImageUrl }) {
         </div>
       </div>
 
-      {/* 모달 */}
-      <EditProfileModal isOpen={modalOn} onRequestClose={closeModal} profileImageUrl={profileImageUrl} />
+      {/* Modal */}
+      <EditProfileModal isOpen={modalOn} onRequestClose={closeModal} profileImageUrl={userData.profileImage} />
     </div>
   );
 }
