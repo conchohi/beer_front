@@ -41,11 +41,12 @@ const VideoComponentV2 = () => {
     //현재 화면 상태
     const [publish, setPublish] = useState(false);
 
-    //최대 참가자
-    const [maximumUser, setMaximumUser] = useState(6);
-
     //현재 참여자
     const [feeds, setFeeds] = useState([]);
+    const [participantList, setParticipantList] = useState([]);
+
+    //새로운 피드
+    const [newFeed, setNewFeed] = useState(null);
 
     //방 폭파할지 확인하는 모달
     const [checkDestory, setCheckDestory] = useState(false);
@@ -63,8 +64,9 @@ const VideoComponentV2 = () => {
     //클릭한 사람의 닉네임
     const [clickUserNick, setClickUserNick] = useState("")
 
-    //본인의 닉네임(로컬 스토리지로 저장 후 해당 닉네임 사용?)
-    const [nickname, setNickname] = useState("닉네임");
+    //본인의 닉네임(로컬 스토리지로 저장 후 해당 닉네임 사용)
+    const nickname = localStorage.getItem("nickname")
+
     const [master, setMaster] = useState("");
 
     const navigate = useNavigate();
@@ -115,8 +117,8 @@ const VideoComponentV2 = () => {
         }
     }
 
-    const setFeedsExceptMe = (feeds) => {
-        setFeeds(feeds.filter(item => item.nickname !== nickname))
+    const setParticipantListExceptMe = (participantList) => {
+        setParticipantList(participantList.filter(item => item.nickname !== nickname))
     }
 
     useEffect(() => {
@@ -125,13 +127,11 @@ const VideoComponentV2 = () => {
             //방에 대한 정보를 가져옴
             getRoom(roomNo).then(result => {
                 //참여자 정보 ( 자신의 닉네임 제외 )
-                setFeedsExceptMe(result.participantList)
-                //최대 참여자 수
-                setMaximumUser(result.maximumUser)
+                setParticipantListExceptMe(result.participantList)
                 //방 제목
                 setTitle(result.title)
                 //방장
-                setMaster(result.master)
+                setMaster(result.master || nickname)
 
                 //입장 성공 시 야누스 초기 설정
                 Janus.init({
@@ -226,7 +226,7 @@ const VideoComponentV2 = () => {
                                                     //Janus에서 서버로부터 수신된 메시지에서 발송자(publisher) 목록을 나타냄
                                                     if (msg["publishers"]) {
                                                         getParticipantList(roomNo).then(result => {
-                                                            setFeedsExceptMe(result);
+                                                            setParticipantListExceptMe(result);
                                                             let list = msg["publishers"];
                                                             Janus.debug("Got a list of available publishers/feeds:", list);
                                                             for (let f in list) {
@@ -252,7 +252,7 @@ const VideoComponentV2 = () => {
                                                     //Janus에서 서버로부터 수신된 메시지에서 발송자(publisher) 목록을 나타냄
                                                     if (msg["publishers"]) {
                                                         getParticipantList(roomNo).then(result => {
-                                                            setFeedsExceptMe(result);
+                                                            setParticipantListExceptMe(result);
                                                             let list = msg["publishers"];
                                                             Janus.debug("Got a list of available publishers/feeds:", list);
                                                             for (let f in list) {
@@ -268,19 +268,28 @@ const VideoComponentV2 = () => {
                                                         })
                                                         //특정 발송자가 방송에서 퇴장했음을 나타내는 데 사용
                                                     } else if (msg["leaving"]) {
-                                                        var leaving = msg["leaving"];
+                                                        getParticipantList(roomNo).then(result => {
+                                                            setParticipantListExceptMe(result);
+                                                            var leaving = msg["leaving"];
                                                         Janus.log("Publisher left: " + leaving);
-
-                                                        const updatedFeeds = [...feeds]; // 배열 복사
-                                                        for (let i = 0; i < updatedFeeds.length; i++) {
-                                                            if (updatedFeeds[i].id === leaving) {
-                                                                //플러그인 해제
-                                                                updatedFeeds[i].plugin.detach();
-                                                                updatedFeeds.splice(updatedFeeds[i].idx, 1);
-                                                                break; // 일치하는 객체를 찾으면 루프 종료
+                                                        
+                                                        let remoteFeed = null;
+                                                        for (var i = 0; i < 6; i++) {
+                                                            if (feeds[i] && feeds[i].rfid == leaving) {
+                                                                remoteFeed = feeds[i];
+                                                                break;
                                                             }
                                                         }
-                                                        setFeeds(updatedFeeds);
+
+                                                        if (remoteFeed != null) {
+                                                            Janus.debug("Feed " + remoteFeed.rfid + " (" + remoteFeed.rfdisplay + ") has left the room, detaching");
+                                                            remoteVideoRef.current[remoteFeed.rfindex].srcObject = null;
+                                                            const updatedFeeds = [...feeds];
+                                                            updatedFeeds.splice(remoteFeed.rfindex, 1);
+                                                            setFeeds(updatedFeeds);
+                                                            remoteFeed.detach();
+                                                        }
+                                                        })
                                                         // 발송자가 발행한 스트림이 중지되었음을 나타내는 이벤트, 방송을 중지했을 때 발생
                                                     } else if (msg["unpublished"]) {
                                                         // One of the publishers has unpublished?
@@ -291,15 +300,19 @@ const VideoComponentV2 = () => {
                                                             sfuClient.hangup();
                                                             return;
                                                         }
-                                                        const updatedFeeds = [...feeds]; // 배열 복사
-                                                        for (let i = 0; i < updatedFeeds.length; i++) {
-                                                            if (updatedFeeds[i].id === unpublished) {
-                                                                //스트림 제거 및 이미지로 변경
-                                                                updatedFeeds[i] = { ...updatedFeeds[i], ...{ isPublished: false, stream: null } };
-                                                                break; // 일치하는 객체를 찾으면 루프 종료
+                                                        let remoteFeed = null;
+                                                        for (var i = 0; i < 6; i++) {
+                                                            if (feeds[i] && feeds[i].rfid == leaveId) {
+                                                                remoteFeed = feeds[i];
+                                                                break;
                                                             }
                                                         }
-                                                        setFeeds(updatedFeeds);
+                                                        if (remoteFeed != null) {
+                                                            Janus.debug("Feed " + remoteFeed.rfid + " (" + remoteFeed.rfdisplay + ") has left the room, detaching");
+                                                            remoteVideoRef.current[remoteFeed.rfindex].srcObject = null;
+                                                            feeds.splice(remoteFeed.rfindex, 1);
+                                                            remoteFeed.detach();
+                                                        }
                                                     } else if (msg["error"]) {
                                                         if (msg["error_code"] === 426) {
                                                             // This is a "no such room" error: give a more meaningful description
@@ -359,6 +372,8 @@ const VideoComponentV2 = () => {
                     }
                 })
 
+            }).catch(error =>{
+                setMessage(error.response.data.message)
             })
         ).catch(error => {
             //방이 존재하지 않거나, 이미 꽉찼을 경우
@@ -371,9 +386,9 @@ const VideoComponentV2 = () => {
         // 페이지 닫을 때 자동으로 종료
         return () => {
             //서버에 나간 기록 전송
-            exit(roomNo).then(result=>{
+            exit(roomNo).then(result => {
                 janus?.destroy();
-            }).catch(error =>{
+            }).catch(error => {
                 console.log(error)
             })
 
@@ -413,23 +428,26 @@ const VideoComponentV2 = () => {
 
     }, [myStream]);
 
-
-
-
-
     useEffect(() => {
         feeds.forEach(feed => {
-            if (!feed || feed.idx) {
+            if (!feed) {
                 return;
             }
-            const videoElement = remoteVideoRef.current[feed.idx];
+            const videoElement = remoteVideoRef.current[feed.rfindex];
+
+            videoElement.addEventListener('playing', () => {
+                if (feed.spinner)
+                    feed.spinner.stop();
+                feed.spinner = null;
+            })
+
 
             try {
-                if (videoElement && feed.stream) {
-                    if ('srcObject' in videoElement) {
-                        videoElement.srcObject = feed.stream;
+                if (remoteVideoRef.current[feed.rfindex] && feed.stream) {
+                    if ('srcObject' in remoteVideoRef.current[feed.rfindex]) {
+                        remoteVideoRef.current[feed.rfindex].srcObject = feed.stream;
                     } else {
-                        videoElement.src = URL.createObjectURL(feed.stream);
+                        remoteVideoRef.current[feed.rfindex].src = URL.createObjectURL(feed.stream);
                     }
                 }
             } catch (error) {
@@ -540,15 +558,17 @@ const VideoComponentV2 = () => {
                             remoteFeed.rfid = msg["id"];
                             //사용자 이름
                             remoteFeed.rfdisplay = msg["display"];
-                            const updatedFeeds = [...feeds]; // 배열 복사
-                            for (let i = 0; i < updatedFeeds.length; i++) {
-                                if (updatedFeeds[i].nickname === msg["display"]) {
-                                    updatedFeeds[i] = { ...updatedFeeds[i], ...{ id: msg["id"], idx: i, plugin: remoteFeed } };
-                                    remoteFeed.rfindex = i;
-                                    break; // 일치하는 객체를 찾으면 루프 종료
+                            const updatedFeeds = [...feeds];
+                            for (let i = 0; i < 6; i++) {
+                                if (!feeds[i]) {
+                                    // 리모트 피드를 추가
+                                    updatedFeeds[i] = remoteFeed;
+                                    remoteFeed.rfindex = i
+                                    // 상태를 업데이트하고 함수 종료
+                                    setFeeds(updatedFeeds);
+                                    break;
                                 }
                             }
-                            setFeeds(updatedFeeds);
 
                             Janus.log("Successfully attached to feed " + remoteFeed.rfid + " (" + remoteFeed.rfdisplay + ") in room " + msg["room"]);
                         }
@@ -584,15 +604,7 @@ const VideoComponentV2 = () => {
                 },
                 onremotestream: function (stream) {
                     Janus.debug("Remote feed #" + remoteFeed.rfindex + ", stream:", stream);
-
-                    const updatedFeeds = [...feeds]; // 배열 복사
-                    for (let i = 0; i < updatedFeeds.length; i++) {
-                        if (updatedFeeds[i].nickname === remoteFeed.rfdisplay) {
-                            updatedFeeds[i] = { ...updatedFeeds[i], ...{ isPublished: true, stream: stream } };
-                            break; // 일치하는 객체를 찾으면 루프 종료
-                        }
-                    }
-                    setFeeds(updatedFeeds);
+                    remoteFeed.stream = stream;
                 },
                 oncleanup: function () {
                     Janus.log(" ::: Got a cleanup notification (remote feed " + id + ") :::");
@@ -631,10 +643,12 @@ const VideoComponentV2 = () => {
                 </button>
             </div>
             <div className="w-5/6 flex flex-row flex-wrap ">
-                <div className={"flex flex-col justify-center rounded-lg items-center text-center p-4 " + (feeds.length <= 4 ? "w-1/2" : "w-1/3")}>
+                <div className={"flex flex-col justify-center rounded-lg items-center text-center p-4 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
                     <div className="w-full  bg-black border-2 border-white rounded-xl">
                         <div className="relative">
-                            <video ref={myVideoRef} id="myvideo" className="w-full h-full box-border p-3" autoPlay playsInline muted />
+                            <div className="pb-[56.25%] h-0 relative">
+                                <video ref={myVideoRef} id="myvideo" className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline muted />
+                            </div>
                             <span className="absolute bottom-6 right-6 cursor-pointer" onClick={() => { setClickUserNick(nickname) }}><FaUserLarge size="40" /></span>
                         </div>
                         <span className="font-bold text-xl py-3 text-white" >{nickname}</span>
@@ -644,17 +658,17 @@ const VideoComponentV2 = () => {
 
                 {feeds.map((feed) => {
                     return (
-                        <div className={"flex flex-col justify-center items-center text-center p-6 " + (feeds.length <= 4 ? "w-1/2" : "w-1/3")}>
+                        <div className={"flex flex-col justify-center items-center text-center p-6 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
                             <div className="w-full  bg-black border-2 border-white rounded-xl">
                                 <div className="relative">
                                     <div className="pb-[56.25%] h-0 relative">
-                                        {feed.isPublished ?
-                                            <video ref={(el) => remoteVideoRef.current[feed.idx] = el} className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline />
-                                            : <img className="w-full h-full box-border p-3 absolute object-cover" src={feed.profileImage ? `API_SERVER_HOST/api/user/${feed.profileImage}` : '/logo/basic.png'} />}
+                                        {/* {feed.isPublished ? */}
+                                            <video ref={(el) => remoteVideoRef.current[feed.rfindex] = el} className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline />
+                                            {/* : <img className="w-full h-full box-border p-3 absolute object-cover" src={feed.profileImage ? `API_SERVER_HOST/api/user/${feed.profileImage}` : '/logo/basic.png'} />} */}
                                     </div>
-                                    <span className="absolute bottom-6 right-6 cursor-pointer" onClick={() => { setClickUserNick(feed.nickname) }}><FaUserLarge size="40" /></span>
+                                    <span className="absolute bottom-6 right-6 cursor-pointer" onClick={() => { setClickUserNick(feed.rfdisplay) }}><FaUserLarge size="40" /></span>
                                 </div>
-                                <span className="font-bold text-lg py-3 text-white">{feed.nickname}</span>
+                                <span className="font-bold text-lg py-3 text-white">{feed.rfdisplay}</span>
                             </div>
                         </div>
                     )
