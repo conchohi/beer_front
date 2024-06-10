@@ -3,210 +3,129 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BasicLayout from '../../layouts/BasicLayout';
 import ModalComponent from '../../components/common/ModalComponent';
-import Astronaut2 from '../animation/Astronaut2';
-import Locket from '../animation/Locket';
-import SpaceShip from '../animation/SpaceShip';
 import SpaceCat from '../animation/SpaceCat';
-import Astronaut3 from '../animation/Astronaut3';
-import Space from '../animation/Space';
-import Beer2 from '../animation/Beer2';
-import Astronaut4 from '../animation/Astronaut4';
 
 const SignupMain = () => {
-    const [user, setUser] = useState({
+    const [formData, setFormData] = useState({
         username: '',
         password: '',
         passwordChk: '',
         nickname: '',
         email: '',
-        profileImage: null,
-        verificationCode: '',
+        role: 'USER',
+        profileFile: null,
+        isDelete: 'false'
     });
+
     const [preview, setPreview] = useState('/logo/basic.png');
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [isUsernameAvailable, setIsUsernameAvailable] = useState(null);
-    const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
-    const [isEmailVerified, setIsEmailVerified] = useState(false);
-    const [sentVerificationCode, setSentVerificationCode] = useState('');
     const [passwordsMatch, setPasswordsMatch] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUser({ ...user, [name]: value });
+        const { name, value, files } = e.target;
+        if (name === 'profileFile') {
+            setFormData({
+                ...formData,
+                profileFile: files[0]
+            });
 
-        if (name === 'password' || name === 'passwordChk') {
-            setPasswordsMatch(value === user.passwordChk || value === user.password);
-        }
-
-        if (name === 'password') {
-            const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-            setPasswordValid(passwordRegex.test(value));
-        }
-    };
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setUser({ ...user, profileImage: file });
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreview(reader.result);
-            };
-            reader.readAsDataURL(file);
+            if (files[0]) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setPreview(reader.result);
+                };
+                reader.readAsDataURL(files[0]);
+            } else {
+                setPreview('/logo/basic.png');
+            }
         } else {
-            setPreview('/logo/basic.png');
-        }
-    };
+            setFormData({
+                ...formData,
+                [name]: value
+            });
 
-    const customCallback = () => {
-        if (message === '회원가입 성공!') {
-            navigate("/login");
-        } else {
-            setIsOpen(false);
+            if (name === 'password' || name === 'passwordChk') {
+                setPasswordsMatch(formData.password === value || formData.password === formData.passwordChk);
+            }
+
+            if (name === 'password') {
+                const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+                setPasswordValid(passwordRegex.test(value));
+            }
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!user.username || !user.password || !user.nickname || !user.email) {
-            alert("모든 필드를 입력해주세요.");
+        if (!passwordValid) {
+            alert("비밀번호는 영문, 숫자를 포함하여 8자 이상이어야 합니다.");
             return;
         }
-
-        if (!isUsernameAvailable) {
-            alert("아이디 중복체크를 해주세요.");
-            return;
-        }
-
-        if (!isNicknameAvailable) {
-            alert("닉네임 중복체크를 해주세요.");
-            return;
-        }
-
-        if (!isEmailVerified) {
-            alert("이메일 인증을 완료해주세요.");
-            return;
-        }
-
         if (!passwordsMatch) {
             alert("비밀번호가 일치하지 않습니다.");
             return;
         }
 
-        if (!passwordValid) {
-            alert("비밀번호는 영문과 숫자를 포함하여 8자 이상이어야 합니다.");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('username', user.username);
-        formData.append('password', user.password);
-        formData.append('nickname', user.nickname);
-        formData.append('email', user.email);
-        if (user.profileImage) {
-            formData.append('profileFile', user.profileImage);
-        }
+        const form = new FormData();
+        Object.keys(formData).forEach(key => {
+            form.append(key, formData[key]);
+        });
 
         try {
-            const response = await axios.post('http://localhost:8080/api/auth/join', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-            setMessage("회원가입 성공!");
+            const response = await axios.post('http://localhost:8080/api/v1/auth/join', form);
+            console.log(response.data);
+            setMessage('회원가입이 완료되었습니다.');
             setIsOpen(true);
         } catch (error) {
-            setMessage('회원가입 실패. 다시 시도해주세요.');
+            console.error(error);
+            setMessage('회원가입에 실패했습니다.');
             setIsOpen(true);
-            console.error('회원가입 오류:', error);
         }
     };
 
     const checkUsernameAvailability = async () => {
-        if (!user.username) {
+        if (!formData.username) {
             alert("아이디를 입력해주세요.");
             return;
         }
 
         try {
-            const response = await axios.get(`http://localhost:8080/api/auth/check-username?username=${user.username}`);
-            if (response.data.available) {
-                setIsUsernameAvailable(true);
+            const response = await axios.post('http://localhost:8080/api/v1/auth/id-check', { id: formData.username });
+            if (response.data.message === 'Success.') {
+                setIsUsernameAvailable(false);
                 alert("사용 가능한 아이디입니다.");
             } else {
-                setIsUsernameAvailable(false);
+                setIsUsernameAvailable(true);
                 alert("이미 사용 중인 아이디입니다.");
             }
         } catch (error) {
             console.error('아이디 중복체크 오류:', error);
+            setIsUsernameAvailable(false);
+            alert("아이디 중복체크 오류가 발생했습니다.");
         }
     };
 
-    const checkNicknameAvailability = async () => {
-        if (!user.nickname) {
-            alert("닉네임을 입력해주세요.");
-            return;
-        }
-
-        try {
-            const response = await axios.get(`http://localhost:8080/api/auth/check-nickname?nickname=${user.nickname}`);
-            if (response.data.available) {
-                setIsNicknameAvailable(true);
-                alert("사용 가능한 닉네임입니다.");
-            } else {
-                setIsNicknameAvailable(false);
-                alert("이미 사용 중인 닉네임입니다.");
-            }
-        } catch (error) {
-            console.error('닉네임 중복체크 오류:', error);
-        }
-    };
-
-    const sendVerificationEmail = async () => {
-        if (!user.email) {
-            alert("이메일을 입력해주세요.");
-            return;
-        }
-
-        try {
-            const response = await axios.post('http://localhost:8080/api/auth/send-verification-email', { email: user.email });
-            setSentVerificationCode(response.data.verificationCode);
-            alert("인증 이메일이 발송되었습니다.");
-        } catch (error) {
-            console.error('이메일 인증 오류:', error);
-        }
-    };
-
-    const verifyEmailCode = () => {
-        if (user.verificationCode === sentVerificationCode) {
-            setIsEmailVerified(true);
-            alert("이메일 인증이 완료되었습니다.");
-        } else {
-            setIsEmailVerified(false);
-            alert("인증번호가 올바르지 않습니다.");
-        }
+    const customCallback = () => {
+        setIsOpen(false);
     };
 
     return (
         <>
             <BasicLayout>
-            <div className="w-full h-auto font-bold text-2xl md:text-4xl text-black font-sans p-6 md:px-60 md:py-30 flex flex-col ">
+                <div className="w-full h-auto font-bold text-2xl md:text-4xl text-black font-sans p-6 md:px-60 md:py-30 flex flex-col ">
                     <div className="bg-gray-700 w-full h-auto rounded-2xl flex p-6 md:p-12 ">
                         <div className="w-1/2 flex justify-center items-center bg-gray-900 rounded-2xl">
-                            <div className='row'>                         
-                               <SpaceCat />
-                           
+                            <div className='row'>
+                                <SpaceCat />
                             </div>
-
                         </div>
                         <div className="w-1/2 rounded-2xl text-left">
                             {isOpen && <ModalComponent message={message} callbackFunction={customCallback} />}
                             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-                                
                                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                                     <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-pink-500">
                                         회원가입
@@ -224,10 +143,10 @@ const SignupMain = () => {
                                             </div>
                                             <div className="mt-2">
                                                 <input
-                                                    id="profileImage"
-                                                    name="profileImage"
+                                                    id="profileFile"
+                                                    name="profileFile"
                                                     type="file"
-                                                    onChange={handleFileChange}
+                                                    onChange={handleChange}
                                                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-500 file:text-black hover:file:bg-orange-600"
                                                 />
                                             </div>
@@ -244,7 +163,7 @@ const SignupMain = () => {
                                                     type="text"
                                                     placeholder="아이디를 입력하세요"
                                                     required
-                                                    value={user.username}
+                                                    value={formData.username}
                                                     onChange={handleChange}
                                                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
                                                 />
@@ -256,6 +175,9 @@ const SignupMain = () => {
                                                     중복체크
                                                 </button>
                                             </div>
+                                            {isUsernameAvailable === false && (
+                                                <div className="text-red-500 text-sm mt-1">이미 사용 중인 아이디입니다.</div>
+                                            )}
                                         </div>
 
                                         <div>
@@ -269,16 +191,15 @@ const SignupMain = () => {
                                                     type="password"
                                                     placeholder="비밀번호를 입력하세요"
                                                     required
-                                                    value={user.password}
+                                                    value={formData.password}
                                                     onChange={handleChange}
                                                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
                                                 />
                                             </div>
                                             {!passwordValid && (
-                                                <div className="text-red-500 text-sm mt-1">비밀번호는 영문과 숫자를 포함하여 8자 이상이어야 합니다.</div>
+                                                <div className="text-red-500 text-sm mt-1">비밀번호는 영문, 숫자 및 특수 문자를 포함하여 8자 이상이어야 합니다.</div>
                                             )}
                                         </div>
-
                                         <div>
                                             <label htmlFor="passwordChk" className="block text-sm font-medium leading-6 text-pink-500">
                                                 비밀번호 확인
@@ -290,12 +211,12 @@ const SignupMain = () => {
                                                     type="password"
                                                     placeholder="비밀번호를 다시 입력하세요"
                                                     required
-                                                    value={user.passwordChk}
+                                                    value={formData.passwordChk}
                                                     onChange={handleChange}
                                                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
                                                 />
                                             </div>
-                                            {!passwordsMatch && (
+                                            {formData.passwordChk && !passwordsMatch && (
                                                 <div className="text-red-500 text-sm mt-1">비밀번호가 일치하지 않습니다.</div>
                                             )}
                                         </div>
@@ -311,17 +232,10 @@ const SignupMain = () => {
                                                     type="text"
                                                     placeholder="닉네임을 입력하세요"
                                                     required
-                                                    value={user.nickname}
+                                                    value={formData.nickname}
                                                     onChange={handleChange}
                                                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
                                                 />
-                                                <button
-                                                    type="button"
-                                                    onClick={checkNicknameAvailability}
-                                                    className="ml-4 px-4 py-2 w-32 rounded-md bg-pink-500 text-black text-sm font-semibold hover:bg-orange-600"
-                                                >
-                                                    중복체크
-                                                </button>
                                             </div>
                                         </div>
 
@@ -336,52 +250,17 @@ const SignupMain = () => {
                                                     type="email"
                                                     placeholder="이메일을 입력하세요"
                                                     required
-                                                    value={user.email}
+                                                    value={formData.email}
                                                     onChange={handleChange}
                                                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
                                                 />
-                                                <button
-                                                    type="button"
-                                                    onClick={sendVerificationEmail}
-                                                    className="ml-4 px-4 py-2 w-40 rounded-md bg-pink-500 text-black text-sm font-semibold hover:bg-orange-600"
-                                                >
-                                                    이메일 확인
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor="verificationCode" className="block text-sm font-medium leading-6 text-pink-500">
-                                                인증번호
-                                            </label>
-                                            <div className="mt-2 flex">
-                                                <input
-                                                    id="verificationCode"
-                                                    name="verificationCode"
-                                                    type="text"
-                                                    placeholder="인증번호를 입력하세요"
-                                                    required
-                                                    value={user.verificationCode}
-                                                    onChange={handleChange}
-                                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    onClick={verifyEmailCode}
-                                                    className="ml-4 px-4 py-2 w-48 rounded-md bg-pink-500 text-black text-sm font-semibold hover:bg-orange-600"
-                                                >
-                                                    인증번호 확인
-                                                </button>
                                             </div>
                                         </div>
 
                                         <div>
                                             <button
                                                 type="submit"
-                                                disabled={!passwordsMatch || !passwordValid}
-                                                className={`flex w-full justify-center rounded-md px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
-                                                    passwordsMatch && passwordValid ? 'bg-pink-500 hover:bg-orange-600' : 'bg-gray-400 cursor-not-allowed'
-                                                }`}
+                                                className={`flex w-full justify-center rounded-md px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 bg-pink-500 hover:bg-orange-600`}
                                             >
                                                 회원가입
                                             </button>
@@ -398,7 +277,6 @@ const SignupMain = () => {
                         </div>
                     </div>
                 </div>
-              
             </BasicLayout>
         </>
     );
