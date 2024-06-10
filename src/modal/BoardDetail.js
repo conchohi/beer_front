@@ -13,37 +13,41 @@ function BoardDetail(){
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="bg-gray-800 border-2 border-pink-500 text-gray-200 rounded-lg w-11/12 max-w-2xl p-6 relative">
-        <button className="absolute top-4 right-4 text-pink-500 ">
-          <AiOutlineClose size={24} />
-        </button>
-
+   
         {/* 게시판 제목 불러오기 */}
-        <div className="text-pink-500 text-xl mb-4 font-semibold">오늘 7시에 같이 소주마실분</div>
+        <div className="text-pink-500 text-xl mb-4 font-semibold">{selectedPost.title}</div>
         
         <div className="flex justify-between mb-4">
           <div className="flex items-center">
             <div className="text-gray-400 font-semibold">
-                <div className="fas fa-user"></div> 햄토리</div>
+                <div className="fas fa-user"></div> {selectedPost.author}</div>
           </div>
           <div className="flex items-center">
             {/* 게시판 작성일자 불러오기 */}
             <MdOutlineWatchLater className="text-gray-400 mr-1" />
-            <div className="text-gray-400"> 2024.06.03  16:30 </div>
+            <div className="text-gray-400"> {selectedPost.date}  {selectedPost.views}</div>
           </div>
         </div>
         
         <div className="bg-gray-700 p-4 rounded-lg mb-4 h-52">
             {/* 게시판 내용 불러오기 */}
-          <p>인생이 햄드네요</p>
-          <p>같이 소주 한잔 하실 분 구합니다~</p>
-          <p>전 안주는 해바라기씨로 먹으려구요ㅎㅎ</p>
+            {selectedPost.content}
         </div>
 
-        <div className="mb-4 flex justify-end" >
-          <button className="px-4 py-2 mr-2 bg-pink-500 text-white font-semibold rounded-lg">수정</button>
-          <button className="px-4 py-2 bg-pink-500 text-white font-semibold rounded-lg">삭제</button>
-        </div>
-
+        <div className="mb-4 flex justify-end">
+                <button
+                    className="px-4 py-2 mr-2 bg-pink-500 text-white font-semibold rounded-lg hover:bg-blue-600"
+                    onClick={onEdit}
+                >
+                    수정
+                </button>
+                <button
+                    className="px-4 py-2 bg-pink-500 text-white font-semibold rounded-lg hover:bg-red-600"
+                    onClick={onDelete}
+                >
+                    삭제
+                </button>
+            </div>
         <hr className="border-amber-40 mb-4"/>
 
         <div className="flex items-center mb-4 ">
@@ -54,7 +58,7 @@ function BoardDetail(){
         : (<CgProfile className="mr-2 text-blue-500" size={24} />)} */}
 
         {/* 유저닉네임 */}
-        <div className="text-gray-200 font-semibold mr-2">햄토리</div>
+        <div className="text-gray-200 font-semibold mr-2">{selectedPost.author}</div>
         <input
           type="text"
           placeholder="댓글을 입력해주세요"
@@ -65,7 +69,7 @@ function BoardDetail(){
         <button className="px-4 py-2 bg-pink-500 text-white font-semibold rounded-lg">등록</button>
         </div>
         
-        <CommentSection/>
+      
 
       </div>
     </div>

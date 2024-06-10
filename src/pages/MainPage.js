@@ -5,6 +5,7 @@ import Introduction from "../components/main/Introduction";
 import { useEffect, useRef, useState } from "react";
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
+import SpaceCat3 from "../components/animation/SpaceCat3";
 
 const DIVIDER_HEIGHT = 5;
 

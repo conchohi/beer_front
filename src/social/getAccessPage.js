@@ -1,12 +1,16 @@
 import axios from "axios";
-import Loading from "component/common/Loading"
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/load/Loading";
 
 const GetAccessPage = () => {
     const navigate = useNavigate();
     useEffect(() => {
         const getAccessToken = async () => {
+
+
+
+          
           try {
             // refresh 토큰을 사용하여 access 토큰을 요청
             const response = await axios.post('http://localhost:8080/reissue', {}, {

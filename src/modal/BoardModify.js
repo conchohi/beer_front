@@ -22,8 +22,8 @@ function BoardModify(){
                 type="text"
                 name="title"
                 placeholder="제목"
-                // value={selectedPost.title}
-                // onChange={(e) => setSelectedPost({ ...selectedPost, title: e.target.value })}
+                value={selectedPost.title}
+                onChange={(e) => setSelectedPost({ ...selectedPost, title: e.target.value })}
                 className="mb-4 p-2 border rounded w-full  text-pink-500 font-semibold"
             />
         </div>
@@ -45,13 +45,15 @@ function BoardModify(){
             {/* 선택게시판 내용 불러오기 */}
             <textarea
                 placeholder="내용"
-                // value={selectedPost.content}
-                // onChange={(e) => setSelectedPost({ ...selectedPost, content: e.target.value })}
+                value={selectedPost.content}
+                onChange={(e) => setSelectedPost({ ...selectedPost, content: e.target.value })}
                 className="mb-4 p-2 border rounded w-full bg-gray-700 h-52 "
             />
 
         <div className="mb-4 flex justify-end" >
-          <button className="px-4 py-2 mr-2 bg-pink-500 text-white font-semibold rounded-lg"> 완료 </button>
+          <button className="px-4 py-2 mr-2 bg-pink-500 text-white font-semibold rounded-lg"
+          onClick={handleEditPost}
+          > 수정 </button>
         </div>
         </div>
     </div>
