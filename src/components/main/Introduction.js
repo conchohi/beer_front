@@ -14,15 +14,17 @@ const Introduction = () => {
         >
           서비스 소개
         </p>
-        <p className="m-0 text-[4rem] lg:text-[5rem] bg-gradient-to-r from-[#8f00ff] to-[#f400b0] bg-clip-text text-transparent w-fit">
+        <p className="m-0 text-[4rem] lg:text-[5rem] bg-gradient-to-r from-[#ffd82d] to-[#ffffff] bg-clip-text text-transparent w-fit">
           우리집 Beer
         </p>
-        <p className="m-0 text-[2rem] lg:text-[3rem] font-normal">화상을 통한 술모임</p>
+        <p className="m-0 text-[2rem] lg:text-[3rem] font-normal">
+          화상을 통한 술모임
+        </p>
         <div className="flex flex-row justify-between mt-4 sm:mt-8">
           <div className="flex flex-col justify-center mt-2 mb-0 font-light text-[1rem] lg:text-[1.5rem] leading-[200%]">
-            우리집 비어는 집에서 편안하게 술을 즐길 수 있도록
-            도와주는 온라인 플랫폼입니다. 화상 통화 기능을 통해 같은 공간에서 술을 마시는 것 같은
-            경험을 제공합니다.
+            우리집 비어는 집에서 편안하게 술을 즐길 수 있도록 도와주는 온라인
+            플랫폼입니다. 화상 통화 기능을 통해 같은 공간에서 술을 마시는 것
+            같은 경험을 제공합니다.
           </div>
         </div>
       </div>
