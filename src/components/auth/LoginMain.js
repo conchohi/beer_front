@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import BasicLayout from '../../layouts/BasicLayout';
 import Astronaut2 from '../animation/Astronaut2';
 import BasicModalComponent from '../common/BasicModalComponent';
-
 const LoginMain = () => {
     const [id, setId] = useState('');
     const [username, setUsername] = useState('123');
@@ -84,7 +83,6 @@ const LoginMain = () => {
                             <Astronaut2 />
                         </div>
                         <div className="w-1/2 rounded-2xl text-left">
-                           
                             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                                 <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-pink-500">
                                     로그인

@@ -50,5 +50,4 @@ const CommentListComponent = ({
           </div>
       );
   };
-
 export default CommentListComponent;

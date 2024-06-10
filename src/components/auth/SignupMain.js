@@ -21,9 +21,11 @@ const SignupMain = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState("");
-    const [isidAvailable, setIsidAvailable] = useState(null);
+    const [isIdAvailable, setIsIdAvailable] = useState(null);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
+    const [idValid, setIdValid] = useState(false);
+
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -43,10 +45,32 @@ const SignupMain = () => {
             const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
             setPasswordValid(passwordRegex.test(value));
         }
+
+        if (name === 'id') {
+            handleIdChange(e);
+        }
+    };
+
+    const handleIdChange = (e) => {
+        const { value } = e.target;
+        setFormData({
+            ...formData,
+            id: value
+        });
+        const regex = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{5,10}$/;
+        if (regex.test(value)) {
+            setIdValid(true);
+        } else {
+            setIdValid(false);
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!idValid) {
+            alert("유효한 아이디를 입력해주세요.");
+            return;
+        }
         if (!passwordValid) {
             alert("비밀번호는 영문, 숫자를 포함하여 8자 이상이어야 합니다.");
             return;
@@ -77,7 +101,7 @@ const SignupMain = () => {
         }
     };
 
-    const checkidAvailability = async () => {
+    const checkIdAvailability = async () => {
         if (!formData.id) {
             alert("아이디를 입력해주세요.");
             return;
@@ -86,15 +110,15 @@ const SignupMain = () => {
         try {
             const response = await axios.post('http://localhost:8080/api/v1/auth/id-check', { id: formData.id });
             if (response.data.message === 'Success.') {
-                setIsidAvailable(true);
+                setIsIdAvailable(true);
                 alert("사용 가능한 아이디입니다.");
             } else {
-                setIsidAvailable(false);
+                setIsIdAvailable(false);
                 alert("이미 사용 중인 아이디입니다.");
             }
         } catch (error) {
             console.error('아이디 중복체크 오류:', error);
-            setIsidAvailable(false);
+            setIsIdAvailable(false);
             alert("아이디 중복체크 오류가 발생했습니다.");
         }
     };
@@ -142,15 +166,22 @@ const SignupMain = () => {
                                             />
                                             <button
                                                 type="button"
-                                                onClick={checkidAvailability}
+                                                onClick={checkIdAvailability}
                                                 className="ml-4 px-4 py-2 w-40 rounded-md bg-pink-500 text-black text-xl font-semibold hover:bg-blue-600"
                                             >
                                                 중복체크
                                             </button>
                                         </div>
-                                        {isidAvailable === false && (
+                                        {isIdAvailable === false && (
                                             <div className="text-red-500 text-sm mt-1">이미 사용 중인 아이디입니다.</div>
                                         )}
+                                        <div className='errorMessageWrap'>
+                                            {
+                                                !idValid && formData.id.length > 0 && (
+                                                    <div className="text-xs text-red-500">올바른 아이디를 입력해주세요.</div>
+                                                )
+                                            }
+                                        </div>
                                     </div>
 
                                     <div>
@@ -170,8 +201,7 @@ const SignupMain = () => {
                                             />
                                         </div>
                                         {!passwordValid && (
-                                            <div className="text-red-500 text-sm mt-1">비밀번호는 영문, 숫자 및 특수 문자를 포함하여 8자 이상이어야 합니다.</div>
-                                        )}
+                                            <div className="text-red-500 text-sm mt-1">비밀번호는 영문, 숫자를 포함하여 8자 이상이어야 합니다.</div>
                                     </div>
                                     <div>
                                         <label htmlFor="passwordChk" className="block text-xl font-medium leading-6 text-pink-500">
@@ -246,7 +276,7 @@ const SignupMain = () => {
                                                         onChange={handleChange}
                                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                                     />
-                                                    <label htmlFor="male" className="ml-2 block font-medium text-pink-500">
+                                                    <label htmlFor="남자" className="ml-2 block font-medium text-pink-500">
                                                         남
                                                     </label>
                                                 </div>
@@ -260,7 +290,7 @@ const SignupMain = () => {
                                                         onChange={handleChange}
                                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                                     />
-                                                    <label htmlFor="female" className="ml-2 block font-medium text-pink-500">
+                                                    <label htmlFor="여자" className="ml-2 block font-medium text-pink-500">
                                                         여
                                                     </label>
                                                 </div>

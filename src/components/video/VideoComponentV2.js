@@ -227,6 +227,7 @@ const VideoComponentV2 = () => {
                                                     if (msg["publishers"]) {
                                                         getParticipantList(roomNo).then(result => {
                                                             setParticipantListExceptMe(result);
+
                                                             let list = msg["publishers"];
                                                             Janus.debug("Got a list of available publishers/feeds:", list);
                                                             for (let f in list) {
@@ -569,7 +570,6 @@ const VideoComponentV2 = () => {
                                     break;
                                 }
                             }
-
                             Janus.log("Successfully attached to feed " + remoteFeed.rfid + " (" + remoteFeed.rfdisplay + ") in room " + msg["room"]);
                         }
                     }
