@@ -2,16 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Janus from "../../api/janus";
 import { useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "spin.js";
-import {
-  FaMicrophoneAlt,
-  FaMicrophoneAltSlash,
-  FaRegUser,
-  FaRegUserCircle,
-  FaVideo,
-  FaVideoSlash,
-  FaVolumeMute,
-  FaVolumeUp,
-} from "react-icons/fa";
+import { FaMicrophoneAlt, FaMicrophoneAltSlash, FaRegUser, FaRegUserCircle, FaVideo, FaVideoSlash, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { FaUserLarge } from "react-icons/fa6";
 import DestoryRoomModal from "./modal/room/DestoryRoomModal";
 import DestoryCheckModal from "./modal/room/DestroyCheckModal";

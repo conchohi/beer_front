@@ -1,13 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Draggable from "react-draggable";
+import axios from "axios";
 
-const EditProfileModal = ({ isOpen, onRequestClose, profileImageUrl }) => {
-  const [image, setImage] = useState(null);
+const EditProfileModal = ({ isOpen, onRequestClose, userData }) => {
+  const [image, setImage] = useState(userData?.profileImage || null);
+  const [nickname, setNickname] = useState(userData?.nickname || "");
+  const [name, setName] = useState(userData?.name || "");
+  const [mbti, setMbti] = useState(userData?.mbti || "");
+  const [age, setAge] = useState(userData?.age || "");
+  const [intro, setIntro] = useState(userData?.intro || "");
+
+  useEffect(() => {
+    if (userData) {
+      setNickname(userData.nickname);
+      setName(userData.name);
+      setMbti(userData.mbti);
+      setAge(userData.age);
+      setIntro(userData.intro);
+      setImage(userData.profileImage);
+    }
+  }, [userData]);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImage(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const token = localStorage.getItem("access");
+      const nickname = localStorage.getItem("nickname");
+      const updatedUser = {
+        nickname,
+        name,
+        mbti,
+        age,
+        intro,
+        profileImage: image,
+      };
+
+      const response = await axios.put(`http://localhost:8080/api/user/update/${nickname}`, updatedUser, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        onRequestClose();
+      } else {
+        console.error("Failed to update user");
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
     }
   };
 
@@ -31,16 +77,19 @@ const EditProfileModal = ({ isOpen, onRequestClose, profileImageUrl }) => {
                 <label className="block text-white text-sm font-bold mb-2">
                   프로필 이미지
                 </label>
-                <img
-                  src={image || profileImageUrl || "/logo/basic.png"}
-                  alt="Preview"
-                  className="mb-4 w-full h-auto rounded-lg"
-                />
+                <label htmlFor="file-input">
+                  <img
+                    src={image || userData?.profileImage || "/logo/basic.png"}
+                    alt="Preview"
+                    className="mb-4 w-full h-auto rounded-lg cursor-pointer"
+                  />
+                </label>
                 <input
+                  id="file-input"
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                  className="hidden"
                 />
               </div>
             </div>
@@ -51,7 +100,10 @@ const EditProfileModal = ({ isOpen, onRequestClose, profileImageUrl }) => {
                 </label>
                 <input
                   type="text"
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                  readOnly
                 />
               </div>
               <div className="mb-4">
@@ -60,6 +112,8 @@ const EditProfileModal = ({ isOpen, onRequestClose, profileImageUrl }) => {
                 </label>
                 <input
                   type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
@@ -69,6 +123,8 @@ const EditProfileModal = ({ isOpen, onRequestClose, profileImageUrl }) => {
                 </label>
                 <input
                   type="text"
+                  value={mbti}
+                  onChange={(e) => setMbti(e.target.value)}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
@@ -78,6 +134,8 @@ const EditProfileModal = ({ isOpen, onRequestClose, profileImageUrl }) => {
                 </label>
                 <input
                   type="text"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
@@ -86,6 +144,8 @@ const EditProfileModal = ({ isOpen, onRequestClose, profileImageUrl }) => {
                   한줄소개
                 </label>
                 <textarea
+                  value={intro}
+                  onChange={(e) => setIntro(e.target.value)}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
@@ -95,7 +155,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, profileImageUrl }) => {
             <button
               type="button"
               className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              onClick={onRequestClose}
+              onClick={handleSave}
             >
               저장
             </button>
@@ -112,5 +172,4 @@ const EditProfileModal = ({ isOpen, onRequestClose, profileImageUrl }) => {
     </Modal>
   );
 };
-
 export default EditProfileModal;
