@@ -73,21 +73,6 @@ const Header = () => {
               </Link>
             </div>
 
-<<<<<<< HEAD
-              <img
-                src="/img/logo.png"
-                alt="Logo"
-                className="w-17 h-12 mr-0 mt-0"
-              />
-            </Link>
-            <Link to="/">
-              <img
-                src="/img/title.png"
-                alt="Logo"
-                className="w-26 h-11 mt-1"
-              />
-            </Link>
-=======
             <nav className="flex-1 hidden md:flex justify-center ml-0 mr-0">
               <ul className="flex justify-between space-x-25 font-bold">
                 <li>
@@ -182,7 +167,6 @@ const Header = () => {
                 </svg>
               </button>
             </div>
->>>>>>> 201c051e3882cba44c672a2a033c0fc37f455db1
           </div>
 
           <div className={`mobile-menu ${isMenuOpen ? "" : "hidden"} md:hidden`}>
