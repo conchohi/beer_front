@@ -105,12 +105,6 @@ const BoardMain = () => {
         return false;
     });
 
-    // Pagination logic
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = filteredData.slice(indexOfFirstPost, indexOfLastPost);
-    const totalPages = Math.ceil(filteredData.length / postsPerPage);
-
     const handleAddPost = () => {
         const updatedBoardData = [...boardData, { ...newPost, id: boardData.length + 1, date: new Date().toISOString().split('T')[0] }];
         setBoardData(updatedBoardData);
@@ -123,20 +117,6 @@ const BoardMain = () => {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = filteredData.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(filteredData.length / postsPerPage);
-
-  const handleAddPost = () => {
-    const updatedBoardData = [
-      ...boardData,
-      {
-        ...newPost,
-        id: boardData.length + 1,
-        date: new Date().toISOString().split("T")[0],
-      },
-    ];
-    setBoardData(updatedBoardData);
-    setNewPost({ title: "", content: "", author: "", date: "", views: 0 });
-    setIsModalOpen(false);
-  };
 
     const handleAddComment = (content) => {
         const updatedBoardData = boardData.map((post) => {
@@ -159,31 +139,7 @@ const BoardMain = () => {
         setSelectedPost({ ...selectedPost, comments: [...selectedPost.comments, { id: selectedPost.comments.length + 1, content, writer: 'current_user', date: new Date().toISOString().split('T')[0] }] });
     };
 
-    const handleEditComment = (commentId, content) => {
-        const updatedBoardData = boardData.map((post) => {
-            if (post.id === selectedPost.id) {
-                const updatedComments = Array.isArray(post.comments) ? post.comments.map((comment) =>
-                    comment.id === commentId ? { ...comment, content } : comment
-            ) : [];
-                return { ...post, comments: updatedComments };
-            }
-            return post;
-        });
-        setBoardData(updatedBoardData);
-        setSelectedPost({ ...selectedPost, comments: Array.isArray(selectedPost.comments) ? selectedPost.comments.map((comment) => comment.id === commentId ? { ...comment, content } : comment) : [] });
-    };
-
-    const handleDeleteComment = (commentId) => {
-        const updatedBoardData = boardData.map((post) => {
-            if (post.id === selectedPost.id) {
-                const updatedComments = Array.isArray(post.comments) ? post.comments.filter((comment) => comment.id !== commentId) : [];
-                return { ...post, comments: updatedComments };
-            }
-            return post;
-        });
-        setBoardData(updatedBoardData);
-        setSelectedPost({ ...selectedPost, comments: Array.isArray(selectedPost.comments) ? selectedPost.comments.filter((comment) => comment.id !== commentId) : [] });
-    };
+  
 
     const handlePostSelection = (post) => {
         setSelectedPost({
