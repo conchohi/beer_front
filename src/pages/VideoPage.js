@@ -8,7 +8,7 @@ const VideoPage = () => {
                 <img className="h-20" src="/img/logo.png" alt="logo"/>
                 <img className="h-12" src="/img/title.png" alt="title"/>
             </div>
-            <VideoComponent/>
+            <VideoComponentV2/>
             
         </div>
     </> );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const MainImage = ({clickDown}) => {
+const MainImage = ({ clickDown }) => {
   const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
 
@@ -11,20 +11,19 @@ const MainImage = ({clickDown}) => {
       // 애니메이션이 끝난 후 실행할 코드 (예: 페이지 이동)
       setIsClicked(false);
     }, 1000); // 애니메이션 시간 (1초)
-    navigate('/chat/list')
+    navigate("/chat/list");
   };
 
   return (
-  <div className="flex flex-col justify-center items-center p-10 pb-20 w-full">
+    <div className="flex flex-col justify-center items-center p-10 pb-20 w-full">
       <img
         src="/img/mainImage.png"
         alt="Main"
         className="w-1/2 animated-zoom"
       />{" "}
       <img src="/img/title.png" alt="Title" className="w-3/12" />
-
       <button
-        className={`bg-gray-900 text-white px-10 py-4 mt-6 rounded-lg font-semibold neon-button ${
+        className={`bg-gray-900 bg-opacity-40 text-white px-10 py-4 mt-6 rounded-lg font-semibold neon-button ${
           isClicked ? "spin-and-disappear" : ""
         }`}
         onClick={handleClick}
