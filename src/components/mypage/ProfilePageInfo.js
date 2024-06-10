@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from "react-modal";
-import EditProfileModal from "./EditProfileModal";
+import EditProfileModal from "./modal/EditProfileModal";
 
 // React Modal의 root element 설정
 Modal.setAppElement("#root");

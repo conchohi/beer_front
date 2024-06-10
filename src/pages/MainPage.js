@@ -1,5 +1,4 @@
 import "./Mainlayout.css";
-import BasicLayout from "../layouts/BasicLayout";
 import MainImage from "../components/main/MainImage";
 import Introduction from "../components/main/Introduction";
 import { useEffect, useRef, useState } from "react";

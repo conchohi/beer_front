@@ -1,10 +1,9 @@
-import FollowingList from "../Followings/FollowingList";
-import HostFollowings from "../Followings/HostFollowingGames";
 import { useLocation } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import ProfilePageInfo from "./ProfilePageInfo";
 import { useState } from "react";
-import Space from "../animation/Space";
+import HostFollowingGames from "./follow/HostFollowingGames";
+import FollowingList from "./follow/FollowingList";
 
 
 const MyPageMain = () => {
@@ -28,7 +27,7 @@ const MyPageMain = () => {
             <div className="text-pink-500 mb-8">
               <b>친구가 참여 중인 방 목록</b>
             </div>
-            <HostFollowings />
+            <HostFollowingGames />
           </div>
           <div className="bg-gray-900 rounded-2xl p-20 text-left w-5/12 flex flex-col">
             <div className="flex items-center justify-between mb-8">
