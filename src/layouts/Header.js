@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FiLogIn } from "react-icons/fi";
-import { FaUserPlus } from "react-icons/fa";
+import { FaUserPlus, FaCaretDown } from "react-icons/fa";
 import { BiDoorOpen } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import CreateRoom from "../components/chatlist/modal/CreateRoom";
+import axios from "axios";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [createRoom, setCreateRoom] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const token = localStorage.getItem("access");
   const nickname = localStorage.getItem("nickname");
+  const dropdownRef = useRef(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -19,37 +22,46 @@ const Header = () => {
     setCreateRoom(!createRoom);
   };
 
-  const logoutFunction =  async () => {
+  const logoutFunction = async () => {
     try {
-      // 서버에 로그아웃 요청을 보냅니다.
       const response = await axios.post('http://localhost:8080/logout', {}, {
         withCredentials: true // 쿠키를 포함하여 요청
       });
   
       if (response.status === 200) {
-        // 로그아웃 성공 시, 로컬 스토리지에서 토큰 제거
         localStorage.removeItem('access');
         localStorage.removeItem("nickname");
-        
-        // 홈으로 이동
         window.location.href = '/';
       } else {
         localStorage.removeItem('access');
         localStorage.removeItem("nickname");
-        
-        // 홈으로 이동
         window.location.href = '/';
       }
     } catch (error) {
       console.error('로그아웃 오류', error);
       localStorage.removeItem('access');
       localStorage.removeItem("nickname");
-        
-        // 홈으로 이동
-        window.location.href = '/';
-
+      window.location.href = '/';
     }
   };
+
+  const handleDropdownToggle = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       {createRoom && <CreateRoom close={handleCreate} />}
@@ -94,36 +106,41 @@ const Header = () => {
             </nav>
             <div className="hidden md:flex md:w-26 md:justify-end items-center">
               <ul className="flex items-center space-x-12 ml-auto pr-0">
-
                 {token ? (
                   <>
-                  <li className="text-white">
-                    {nickname} 님
-                  </li>
-                  <li>
-                  <div
-                    className="flex flex-col items-center cursor-pointer"
-                    onClick={handleCreate}
-                  >
-                    <BiDoorOpen className="w-8 h-8 text-white text-md" />
-                    <span to="#" className="text-white">방 생성</span>
-                  </div>
-                </li>
-                    <li>
-                    <button onClick={logoutFunction} className="text-white">
-                        <div className="flex flex-col items-center">
-                          <FaUserPlus className="w-8 h-8 text-white text-md" />
-                          로그아웃
+                    <li className="relative" ref={dropdownRef}>
+                      <div
+                        className="flex flex-col items-center cursor-pointer text-white"
+                        onClick={handleDropdownToggle}
+                      >
+                        <span>{nickname} 님</span>
+                        <FaCaretDown />
+                      </div>
+                      {dropdownOpen && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                          <Link
+                            to="/mypage"
+                            className="block px-4 py-2 text-black hover:bg-gray-200"
+                          >
+                            마이페이지
+                          </Link>
+                          <button
+                            onClick={logoutFunction}
+                            className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200"
+                          >
+                            로그아웃
+                          </button>
                         </div>
-                      </button>
+                      )}
                     </li>
                     <li>
-                      <Link to="/mypage" className="text-white">
-                        <div className="flex flex-col items-center">
-                          <FaUserPlus className="w-8 h-8 text-white text-md" />
-                          마이페이지
-                        </div>
-                      </Link>
+                      <div
+                        className="flex flex-col items-center cursor-pointer"
+                        onClick={handleCreate}
+                      >
+                        <BiDoorOpen className="w-8 h-8 text-white text-md" />
+                        <span className="text-white">방 생성</span>
+                      </div>
                     </li>
                   </>
                 ) : (
@@ -208,18 +225,18 @@ const Header = () => {
                 </div>
                 {token ? (
                   <>
-                    <Link to="/logout" className="text-white text-sm">
-                      <div className="flex flex-col items-center">
-                        <FaUserPlus className="w-6 h-6 text-white" />
-                        로그아웃
-                      </div>
-                    </Link>
                     <Link to="/mypage" className="text-white text-sm">
                       <div className="flex flex-col items-center">
                         <FaUserPlus className="w-6 h-6 text-white" />
                         마이페이지
                       </div>
                     </Link>
+                    <button onClick={logoutFunction} className="text-white text-sm">
+                      <div className="flex flex-col items-center">
+                        <FaUserPlus className="w-6 h-6 text-white" />
+                        로그아웃
+                      </div>
+                    </button>
                   </>
                 ) : (
                   <>
