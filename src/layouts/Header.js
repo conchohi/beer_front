@@ -9,6 +9,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [createRoom, setCreateRoom] = useState(false);
   const token = localStorage.getItem("access");
+  const nickname = localStorage.getItem("nickname");
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -90,7 +91,13 @@ const Header = () => {
             </nav>
             <div className="hidden md:flex md:w-26 md:justify-end items-center">
               <ul className="flex items-center space-x-12 ml-auto pr-0">
-                <li>
+
+                {token ? (
+                  <>
+                  <li className="text-white">
+                    {nickname} 님
+                  </li>
+                  <li>
                   <div
                     className="flex flex-col items-center cursor-pointer"
                     onClick={handleCreate}
@@ -99,8 +106,6 @@ const Header = () => {
                     <span to="#" className="text-white">방 생성</span>
                   </div>
                 </li>
-                {token ? (
-                  <>
                     <li>
                     <button onClick={logoutFunction} className="text-white">
                         <div className="flex flex-col items-center">

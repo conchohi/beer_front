@@ -62,7 +62,8 @@ const LoginMain = () => {
             });
             setMessage("로그인 성공!");
             setIsOpen(true);
-            localStorage.setItem('access', response.headers.get('access'));
+            localStorage.setItem('access', response.headers['access']);
+            localStorage.setItem('nickname', response.headers['nickname']);
 
         } catch (error) {
             if (error.response.status === 401) setMessage('아이디 혹은 비밀번호가 틀렸습니다.');
