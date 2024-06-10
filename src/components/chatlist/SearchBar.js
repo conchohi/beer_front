@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import SearchTypeCheck from "./SearchTypeCheck";
 import useChatMove from "../../hooks/useChatMove";
-import { FaPlus, FaPlusSquare } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import CreateRoom from "../../modal/CreateRoom";
+import CategorySelector from "./CategorySelector";
 
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchType, setSearchType] = useState("");
-    const [orderBy, setOrderBy] = useState("");
-    const { moveToList, ordeyBy } = useChatMove();
+    const [searchType, setSearchType] = useState("방제목");
+    const [category, setCategory] = useState("");
+    const { moveToList, orderBy } = useChatMove();
     const [createRoom, setCreateRoom] = useState(false);
 
     const handleInput = (event) => {
@@ -19,24 +20,24 @@ const SearchBar = () => {
         setSearchType(searchType);
     }
 
-    const handleOrder = (orderBy) =>{
-        setOrderBy(orderBy)
-    }
+    const handleCategory = ((category)=>{
+        setCategory(category);
+    })
 
     const handleSearchClick = () => {
-        moveToList({ searchType: searchType, searchTerm: searchTerm, ordeyBy: ordeyBy })
+        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: orderBy, category:category })
     }
 
     useEffect(() => {
-        moveToList({ searchType: searchType, searchTerm: searchTerm, ordeyBy: ordeyBy })
-    }, [searchType])
+        moveToList({ searchType: searchType, searchTerm: searchTerm, orderBy: orderBy,category:category })
+    }, [category])
 
     const handleCreate = () =>{
         setCreateRoom(!createRoom);
     }
 
-    return (
-        <div className="flex flex-row gap-4 justify-center items-center">
+    return (<>
+        <div className="flex flex-row gap-4 justify-center items-center mb-8">
             {createRoom && <CreateRoom close={handleCreate}/>}
             {/* 검색 유형*/}
             <SearchTypeCheck setSearchType={handleType} />
@@ -78,7 +79,9 @@ const SearchBar = () => {
                     <span className="block lg:hidden"><FaPlus size="30" /></span>
                 </button>
             </div>
-        </div>);
+        </div>
+        <CategorySelector handleCategory={handleCategory}/>
+        </>);
 }
 
 export default SearchBar;
