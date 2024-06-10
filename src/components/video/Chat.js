@@ -237,7 +237,7 @@ const Chat = ({ roomNo, username }) => {
   const renderGame = () => (
     <div className="game-box flex bg-slate-100 flex-col shadow-lg p-10">
       <div className="text-center text-gray-700">Game Screen Placeholder</div>
-      <Game31 />
+      <Game31 username={username} />
     </div>
   );
 
