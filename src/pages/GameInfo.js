@@ -31,33 +31,23 @@ function GameInfo() {
 
       <div className="flex justify-center items-center gap-8 flex-wrap">
         <Card
-          color="bg-yellow-300"
           onClick={() => openModal("이미지 게임")}
           title="이미지 게임"
           imageSrc={`${process.env.PUBLIC_URL}/img/방 개설.png`}
         />
         <Card
-          color="bg-yellow-400"
           onClick={() => openModal("캐치 마인드")}
           title="캐치 마인드"
           imageSrc={`${process.env.PUBLIC_URL}/img/방 개설.png`}
         />
         <Card
-          color="bg-yellow-500"
           onClick={() => openModal("고요 속의 외침")}
           title="고요 속의 외침"
           imageSrc={`${process.env.PUBLIC_URL}/img/방 개설.png`}
         />
         <Card
-          color="bg-yellow-600"
           onClick={() => openModal("인물 퀴즈")}
           title="인물 퀴즈"
-          imageSrc={`${process.env.PUBLIC_URL}/img/방 개설.png`}
-        />
-        <Card
-          color="bg-yellow-700"
-          onClick={() => openModal("역전의 한방")}
-          title="역전의 한방"
           imageSrc={`${process.env.PUBLIC_URL}/img/방 개설.png`}
         />
       </div>
