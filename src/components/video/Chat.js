@@ -1,95 +1,222 @@
-import React, { useState, useEffect, useRef } from 'react';
-import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
+import React, { useState, useEffect, useRef } from "react";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
+
+let stompClient = null;
 
 const Chat = ({ roomId }) => {
-    const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState('');
-    const stompClientRef = useRef(null);
-    const username = "user"; // 닉네임 고정
+  const [publicChats, setPublicChats] = useState([]);
+  const [userData, setUserData] = useState({
+    username: "user",
+    connected: false,
+    message: "",
+    roomId: roomId,
+  });
+  const [date, setDate] = useState("");
+  const chatMessagesEndRef = useRef(null);
 
-    useEffect(() => {
-        const socket = new SockJS('http://localhost:8080/ws');
-        const stompClient = Stomp.over(socket);
-        stompClientRef.current = stompClient;
+  useEffect(() => {
+    connect();
+  }, []);
 
-        stompClient.connect({}, (frame) => {
-            console.log('Connected: ' + frame);
-            stompClient.subscribe(`/topic/${roomId}`, (message) => {
-                if (message.body) {
-                    setMessages(prevMessages => [...prevMessages, JSON.parse(message.body)]);
-                }
-            });
-
-            // 새로운 사용자가 입장했음을 알리는 메시지 전송
-            stompClient.send(`/app/chat.addUser/${roomId}`, {}, JSON.stringify({ sender: username, type: 'JOIN' }));
-        }, (error) => {
-            console.error('Connection error: ', error);
+  useEffect(() => {
+    if (userData.connected) {
+      fetch(`http://localhost:8080/chatroom/public/${roomId}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setPublicChats(data);
+          } else {
+            setPublicChats([]);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching public chats:", error);
+          setPublicChats([]);
         });
+      setDate(getCurrentDate());
+    }
+  }, [userData.connected, roomId]);
 
-        return () => {
-            if (stompClientRef.current) {
-                // 퇴장 메시지 전송
-                stompClientRef.current.send(`/app/chat.leaveUser/${roomId}`, {}, JSON.stringify({ sender: username, type: 'LEAVE' }));
-                stompClientRef.current.disconnect();
-            }
-        };
-    }, [roomId, username]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [publicChats]);
 
-    const handleSendMessage = () => {
-        if (stompClientRef.current && stompClientRef.current.connected) {
-            const chatMessage = {
-                sender: username,
-                content: newMessage,
-                type: 'CHAT'
-            };
-            stompClientRef.current.send(`/app/chat.sendMessage/${roomId}`, {}, JSON.stringify(chatMessage));
-            setNewMessage('');
-        } else {
-            console.error("STOMP client is not connected");
-        }
+  const scrollToBottom = () => {
+    chatMessagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const connect = () => {
+    const socket = new SockJS("http://localhost:8080/ws");
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, onConnected, onError);
+  };
+
+  const onConnected = () => {
+    console.log("Connected to WebSocket");
+    setUserData((prevState) => ({
+      ...prevState,
+      connected: true,
+    }));
+    stompClient.subscribe(`/chatroom/public`, onMessageReceived);
+    userJoin();
+  };
+
+  const onError = (err) => {
+    console.log("Error: ", err);
+  };
+
+  const onMessageReceived = (payload) => {
+    var payloadData = JSON.parse(payload.body);
+    console.log("Message received: ", payloadData);
+
+    setPublicChats((prevChats) => [...prevChats, payloadData]);
+  };
+
+  const userJoin = () => {
+    console.log("User joining...");
+    var chatMessage = {
+      roomId: roomId,
+      senderName: userData.username,
+      status: "JOIN",
     };
+    if (stompClient) {
+      stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+    }
+  };
 
-    const enter = (event) => {
-        if (event.key === 'Enter') {
-            handleSendMessage();
-        }
-    };
+  const handleMessage = (event) => {
+    const { value } = event.target;
+    setUserData({ ...userData, message: value });
+  };
 
-    return (
-        <div className="w-3/4 flex flex-col">
-            <div className="w-full bg-white h-80 flex flex-col justify-center items-center border rounded-lg shadow-md">
-                <ul className="w-full p-4 overflow-y-auto h-full text-lg text-black">
-                    {messages.map((message, index) => (
-                        <li key={index}>
-                            {message.type === 'JOIN' ? (
-                                <span className="text-pink-500 font-bold">{message.sender}님이 입장하셨습니다.</span>
-                            ) : message.type === 'LEAVE' ? (
-                                <span className="text-pink-500 font-bold">{message.sender}님이 퇴장하셨습니다.</span>
-                            ) : (
-                                <><span className="text-pink-500 font-bold">{message.sender}</span>: {message.content}</>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="w-full bg-[#BE2222] my-5 text-white font-bold text-lg flex">
-                <input 
-                    className="w-4/5 p-2 text-black" 
-                    type="text" 
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    onKeyDown={enter}
-                />
-                <button 
-                    className="w-1/5 p-2" 
-                    onClick={handleSendMessage}
-                >
-                    입력
-                </button>
-            </div>
+  const sendValue = () => {
+    if (stompClient && userData.message.trim() !== "") {
+      var chatMessage = {
+        roomId: roomId,
+        senderName: userData.username,
+        message: userData.message,
+        status: "MESSAGE",
+        date: new Date().toISOString(),
+      };
+      console.log("Sending public message: ", chatMessage);
+      stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+      setUserData({ ...userData, message: "" });
+    } else {
+      console.error("Cannot send message. No STOMP connection.");
+    }
+  };
+
+  const getCurrentDate = () => {
+    const today = new Date();
+    return `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}.${String(today.getDate()).padStart(2, "0")}`;
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return "Invalid Date";
+    }
+    return date.toLocaleTimeString();
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      sendValue();
+    }
+  };
+
+  return (
+    <div className="container mx-auto p-4 flex flex-col h-screen">
+      {userData.connected ? (
+        <div className="chat-box flex bg-slate-100 flex-col shadow-lg h-2/5 p-10">
+          <div className="date-banner text-center mb-4">{date}</div>
+          <div className="chat-content flex-1 overflow-y-scroll p-2">
+            <ul className="chat-messages">
+              {publicChats.map((chat, index) =>
+                chat.status === "JOIN" ? (
+                  <li
+                    key={index}
+                    className="text-center text-blue-600 font-bold"
+                  >
+                    {chat.senderName}님이 입장하셨습니다.
+                  </li>
+                ) : chat.status === "LEAVE" ? (
+                  <li
+                    key={index}
+                    className="text-center text-pink-500 font-bold"
+                  >
+                    {chat.senderName}님이 퇴장하셨습니다.
+                  </li>
+                ) : (
+                  <li
+                    className={`message flex items-start ${
+                      chat.senderName === userData.username ? "justify-end" : ""
+                    }`}
+                    key={index}
+                  >
+                    {chat.senderName !== userData.username && (
+                      <div className="flex flex-col items-start">
+                        <div className="avatar bg-blue-500 text-white p-2 rounded">
+                          {chat.senderName}
+                        </div>
+                        <span className="text-gray-500 text-sm w-10">
+                          {formatDate(chat.date)}
+                        </span>
+                      </div>
+                    )}
+                    <div className="message-data p-2 bg-gray-200 rounded ml-2">
+                      {chat.message}
+                    </div>
+                    {chat.senderName === userData.username && (
+                      <div className="flex flex-col items-end">
+                        <div className="avatar self bg-green-500 text-black p-2 rounded">
+                          {chat.senderName}
+                        </div>
+                        <span className="text-gray-500 text-sm w-20">
+                          {formatDate(chat.date)}
+                        </span>
+                      </div>
+                    )}
+                  </li>
+                )
+              )}
+              <div ref={chatMessagesEndRef} />
+            </ul>
+          </div>
+          <div className="send-message flex mt-4">
+            <input
+              type="text"
+              className="input-message flex-1 rounded-full bg-slate-200 px-4 py-2"
+              placeholder="메시지를 입력하세요"
+              value={userData.message}
+              onChange={handleMessage}
+              onKeyPress={handleKeyPress}
+            />
+            <button
+              type="button"
+              className="send-button bg-green-500 text-white rounded-full px-4 ml-2"
+              onClick={sendValue}
+            >
+              전송
+            </button>
+          </div>
         </div>
-    );
+      ) : (
+        <div className="loading flex justify-center items-center h-full">
+          <span className="text-gray-500">연결 중...</span>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Chat;
