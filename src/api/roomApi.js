@@ -5,32 +5,32 @@ export const API_SERVER_HOST = 'http://localhost:8080'
 const prefix = `${API_SERVER_HOST}/api/room`
 
 export const getRoom = async (roomNo) => {
-    // const token = localStorage.getItem("access")
+    const token = localStorage.getItem("access")
     const response = await axios.get(`${prefix}/${roomNo}`
-        // , {headers:{"access" : token }}
+        , {headers:{"access" : token }}
     );
     return response.data;
 };
 
 export const getParticipantList = async (roomNo) => {
-    // const token = localStorage.getItem("access")
+    const token = localStorage.getItem("access")
     const response = await axios.get(`${prefix}/${roomNo}/participant`
-        // , {headers:{"access" : token }}
+        ,{headers:{"access":token}}
     );
     return response.data;
 };
 
 export const join = async (roomNo) => {
-    // const token = localStorage.getItem("access")
+    const token = localStorage.getItem("access")
     const response = await axios.post(`${prefix}/join/${roomNo}`,{},
-        // , {headers:{"access" : token }}
+        {headers:{"access":token}}
     );
     return response.data;
 };
 export const exit = async (roomNo) => {
-    // const token = localStorage.getItem("access")
+    const token = localStorage.getItem("access")
     const response = await axios.delete(`${prefix}/exit/${roomNo}`,
-        // , {headers:{"access" : token }}
+                {headers:{"access":token}}
     );
     return response.data;
 };
@@ -42,25 +42,25 @@ export const getRoomList = async (pageParam) => {
 };
 
 export const createRoom = async (data) => {
-    // const token = localStorage.getItem("access")
+    const token = localStorage.getItem("access")
     const response = await axios.post(`${prefix}`, data
-        // , {headers:{"access" : token }}
+        , {headers:{"access" : token }}
     )
     return response.data;
 };
 
 export const destoryRoom = async (roomNo) => {
-    // const token = localStorage.getItem("access")
+    const token = localStorage.getItem("access")
     const response = await axios.delete(`${prefix}/${roomNo}`
-        // , {headers:{"access" : token }}
+        , {headers:{"access" : token }}
     )
     return response.data;
 };
 
 export const checkPassword = async (data) => {
-    // const token = localStorage.getItem("access")
+    const token = localStorage.getItem("access")
     const response = await axios.post(`${prefix}/checkPw`, data
-        // , {headers:{"access" : token }}
+        , {headers:{"access" : token }}
     )
     return response.data;
 };

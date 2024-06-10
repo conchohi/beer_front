@@ -4,6 +4,8 @@ import { FaUserPlus } from "react-icons/fa";
 import { BiDoorOpen } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import CreateRoom from "../components/chatlist/modal/CreateRoom";
+import { API_SERVER_HOST } from "../api/roomApi";
+import axios from "axios";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,7 +24,7 @@ const Header = () => {
   const logoutFunction =  async () => {
     try {
       // 서버에 로그아웃 요청을 보냅니다.
-      const response = await axios.post('http://localhost:8080/logout', {}, {
+      const response = await axios.post(`${API_SERVER_HOST}/logout`, {}, {
         withCredentials: true // 쿠키를 포함하여 요청
       });
   
@@ -42,11 +44,11 @@ const Header = () => {
       }
     } catch (error) {
       console.error('로그아웃 오류', error);
-      localStorage.removeItem('access');
-      localStorage.removeItem("nickname");
+      // localStorage.removeItem('access');
+      // localStorage.removeItem("nickname");
         
-        // 홈으로 이동
-        window.location.href = '/';
+      //   // 홈으로 이동
+      //   window.location.href = '/';
 
     }
   };

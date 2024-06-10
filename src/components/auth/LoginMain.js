@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BasicLayout from '../../layouts/BasicLayout';
-import ModalComponent from '../common/ModalComponent';
 import Astronaut2 from '../animation/Astronaut2';
+import BasicModalComponent from '../common/BasicModalComponent';
 
 const LoginMain = () => {
     const [id, setId] = useState('');
@@ -76,6 +76,7 @@ const LoginMain = () => {
 
     return (
         <>
+         {isOpen && <BasicModalComponent message={message} callbackFunction={customCallback} />}
             <BasicLayout>
                 <div className="w-full h-auto font-bold text-2xl md:text-4xl text-black font-sans p-6 md:px-60 md:py-30 flex flex-col ">
                     <div className="bg-gray-700 w-full h-auto rounded-2xl flex p-6 md:p-12 ">
@@ -83,7 +84,7 @@ const LoginMain = () => {
                             <Astronaut2 />
                         </div>
                         <div className="w-1/2 rounded-2xl text-left">
-                            {isOpen && <ModalComponent message={message} callbackFunction={customCallback} />}
+                           
                             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                                 <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-pink-500">
                                     로그인
