@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';import { TbArrowsSort } from 'react-icons/tb';
+import useChatMove from '../../hooks/useChatMove';
 ;
 function OrderByeheck() {
+    const { moveToList, searchTerm, searchType ,category } = useChatMove();
     //선택된 지역의 값 설정
     const [orderBy, setOrderBy] = useState("최신순");
     //드롭다운 여부값 설정
@@ -12,14 +14,14 @@ function OrderByeheck() {
         setIsOpen(!isOpen); 
     };
 
+    useEffect(()=>{
+        moveToList({searchTerm:searchTerm, searchType:searchType, category:category, orderBy:orderBy})
+    },[orderBy])
+
     // 클릭할 때마다 clickValue의 상태를 변경
     const handleDropdownClick = () => {
         setIsOpen(!isOpen); 
     };
-
-    useEffect(()=>{
-        
-    }, [orderBy])
 
     return (
         <div className="relative inline-block">
