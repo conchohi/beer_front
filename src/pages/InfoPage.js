@@ -3,7 +3,6 @@ import InfoModal from "../components/Modal/InfoModal";
 import BasicLayout from "../layouts/BasicLayout";
 import { Link, useLocation } from "react-router-dom";
 import Intro from "../components/intro/Intro";
-import SpaceCat from "../components/animation/SpaceCat";
 import SpaceCat3 from "../components/animation/InfoCat/SpaceCat3";
 
 function InfoPage() {

@@ -1,21 +1,13 @@
 import React, { useState } from "react";
-import Header from "../../layouts/Header.js";
-import Footer from "../../layouts/Footer.js";
-import GameModal from "../Modal/game/GameModal.js";
+import GameModal from "../Modal/game/GameModal";
 
 const Intro = () => {
-  const [modalOn, setModalOn] = useState(false);
-  const [nowContent, setNowContent] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
 
   const openModal = (content) => {
     setIsModalOpen(true);
     setModalContent(content);
-  };
-
-  const closeModal = () => {
-    setModalOn(false);
   };
 
   const gameGuides = [
@@ -39,42 +31,51 @@ const Intro = () => {
       src: "./img/Landing/PersonQuizGuide.webp",
       alt: "Person Quiz Guide",
     },
-    
   ];
 
   return (
-    
-      <div className="font-bold text-white font-gmarket-sans flex flex-col justify-center items-center break-keep relative min-h-screen overflow-hidden">
-        <div
-          className="rounded-lg text-left mx-4 sm:mx-[5%] md:mx-[8%] lg:mx-[12%] xl:mx-[15%] flex flex-wrap justify-center items-center overflow-hidden relative w-full sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[65%] h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] xl:h-[90vh]"
-          id="guidepage"
-        >
-          <div className="bg-[#222222] rounded-lg p-8 sm:p-10 lg:p-12 my-1 mx-2 sm:mx-5 lg:mx-10 h-fit flex flex-col justify-center items-center min-h-[60vh] relative">
-            <h1 className="text-center text-white font-bold text-4xl mt-1 mb-5">
-              게임 가이드
-            </h1>
-            <div className="flex justify-between items-center space-x-8 w-full mb-6">
-              {gameGuides.map((guide) => (
-                <img
-                  key={guide.id}
-                  src={guide.src}
-                  alt={guide.alt}
-                  id={guide.id}
-                  onClick={() => openModal(guide.id)}
-                  className="cursor-pointer h-[25vw] w-[13.3vw] rounded-2xl object-cover transition-transform duration-500 hover:scale-110"
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-        <GameModal
-          isOpen={isModalOpen}
-          closeModal={() => setIsModalOpen(false)}
-          title={modalContent}
-        ></GameModal>
+    <div className="font-bold text-gray-200 flex flex-col pt-16 break-keep relative min-h-screen">
+      <div className="text-center py-10">
+        <h1 className="text-4xl font-bold mb-2">
+          게임 가이드{" "}
+          <span role="img" aria-label="game">
+            🎮
+          </span>
+        </h1>
+        <div className="h-1 w-20 bg-yellow-400 mx-auto my-4"></div>
+        <p className="text-gray-500 mb-6">
+          다양한 게임 가이드를 확인하고 즐겨보세요!
+        </p>
+        <h2 className="text-2xl font-bold mb-10">
+          게임 방법을 알아보고 즐겨보세요!
+        </h2>
       </div>
-    
-    
+
+      <div className="flex justify-center items-center gap-8 flex-wrap">
+        {gameGuides.map((guide) => (
+          <div
+            key={guide.id}
+            className="flex flex-col justify-center items-center bg-yellow-400 p-6 rounded-xl shadow-lg w-64 h-auto cursor-pointer transform transition duration-300 hover:scale-105"
+            onClick={() => openModal(guide.id)}
+          >
+            <div className="text-2xl font-bold text-white mb-4">
+              {guide.id}
+            </div>
+            <img
+              className="rounded-lg shadow-lg w-40 h-auto object-cover"
+              src={guide.src}
+              alt={guide.alt}
+            />
+          </div>
+        ))}
+      </div>
+
+      <GameModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        title={modalContent}
+      ></GameModal>
+    </div>
   );
 };
 
