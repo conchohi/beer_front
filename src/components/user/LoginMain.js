@@ -7,6 +7,8 @@ import Astronaut2 from '../animation/Astronaut2';
 
 const LoginMain = () => {
     const [id, setId] = useState('');
+    const [username, setUsername] = useState('123');
+    const [userid, setUserid] = useState('234');
     const [password, setPassword] = useState('');
 
     const [idValid, setIdValid] = useState(false);
@@ -173,12 +175,12 @@ const LoginMain = () => {
                                 </p>
                                 <hr className="my-8" />
                                 <div className="flex flex-col justify-center items-center mt-3 space-y-4">
-                                    <a href='http://localhost:4040/oauth2/authorization/kakao' className="w-full">
+                                    <a href='http://localhost:8080/oauth2/authorization/kakao' className="w-full">
                                         <button className="w-full flex items-center justify-center bg-yellow-400 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-black shadow-sm hover:bg-yellow-500">
                                             카카오 로그인
                                         </button>
                                     </a>
-                                    <a href='http://localhost:4040/oauth2/authorization/naver' className="w-full">
+                                    <a href='http://localhost:8080/oauth2/authorization/naver' className="w-full">
                                         <button className="w-full flex items-center justify-center bg-green-500 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600">
                                             네이버 로그인
                                         </button>

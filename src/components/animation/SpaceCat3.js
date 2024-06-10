@@ -17,7 +17,7 @@ const SpaceCat3 = () => {
     return () => animation.destroy(); // Clean up on unmount
   }, []);
 
-  return <div className="absolute -z-50" ref={animationContainer} style={{ width: '100vw', height: '50vw' }} />;
+  return <div className="absolute -z-50" ref={animationContainer} style={{ width: '100vw', height: '100vw' }} />;
 };
 
 export default SpaceCat3;

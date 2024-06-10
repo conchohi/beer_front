@@ -8,7 +8,7 @@ import Astronaut5 from '../animation/Astronaut5';
 
 const SignupMain = () => {
     const [formData, setFormData] = useState({
-        username: '',
+        id: '',
         password: '',
         passwordChk: '',
         nickname: '',
@@ -22,7 +22,7 @@ const SignupMain = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState("");
-    const [isUsernameAvailable, setIsUsernameAvailable] = useState(null);
+    const [isidAvailable, setIsidAvailable] = useState(null);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
     const navigate = useNavigate();
@@ -57,11 +57,11 @@ const SignupMain = () => {
             return;
         }
 
-        const { username, password, nickname, email, mbti, gender } = formData;
+        const { id, password, nickname, email, mbti, gender } = formData;
 
         try {
             const response = await axios.post('http://localhost:8080/api/v1/auth/join', {
-                username,
+                id,
                 password,
                 nickname,
                 email,
@@ -78,24 +78,24 @@ const SignupMain = () => {
         }
     };
 
-    const checkUsernameAvailability = async () => {
-        if (!formData.username) {
+    const checkidAvailability = async () => {
+        if (!formData.id) {
             alert("아이디를 입력해주세요.");
             return;
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/auth/id-check', { id: formData.username });
+            const response = await axios.post('http://localhost:8080/api/v1/auth/id-check', { id: formData.id });
             if (response.data.message === 'Success.') {
-                setIsUsernameAvailable(true);
+                setIsidAvailable(true);
                 alert("사용 가능한 아이디입니다.");
             } else {
-                setIsUsernameAvailable(false);
+                setIsidAvailable(false);
                 alert("이미 사용 중인 아이디입니다.");
             }
         } catch (error) {
             console.error('아이디 중복체크 오류:', error);
-            setIsUsernameAvailable(false);
+            setIsidAvailable(false);
             alert("아이디 중복체크 오류가 발생했습니다.");
         }
     };
@@ -127,29 +127,29 @@ const SignupMain = () => {
                             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md shadow-md rounded px-8 pt-6 pb-8">
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     <div>
-                                        <label htmlFor="username" className="block text-xl font-medium leading-6 text-pink-500">
+                                        <label htmlFor="id" className="block text-xl font-medium leading-6 text-pink-500">
                                             아이디
                                         </label>
                                         <div className="mt-2 flex">
                                             <input
-                                                id="username"
-                                                name="username"
+                                                id="id"
+                                                name="id"
                                                 type="text"
                                                 placeholder="아이디를 입력하세요"
                                                 required
-                                                value={formData.username}
+                                                value={formData.id}
                                                 onChange={handleChange}
                                                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
                                             />
                                             <button
                                                 type="button"
-                                                onClick={checkUsernameAvailability}
+                                                onClick={checkidAvailability}
                                                 className="ml-4 px-4 py-2 w-40 rounded-md bg-pink-500 text-black text-xl font-semibold hover:bg-blue-600"
                                             >
                                                 중복체크
                                             </button>
                                         </div>
-                                        {isUsernameAvailable === false && (
+                                        {isidAvailable === false && (
                                             <div className="text-red-500 text-sm mt-1">이미 사용 중인 아이디입니다.</div>
                                         )}
                                     </div>
