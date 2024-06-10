@@ -4,6 +4,7 @@ import { FaUserPlus, FaCaretDown } from "react-icons/fa";
 import { BiDoorOpen } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import CreateRoom from "../components/chatlist/modal/CreateRoom";
+import { API_SERVER_HOST } from "../api/roomApi";
 import axios from "axios";
 
 const Header = () => {
@@ -24,7 +25,8 @@ const Header = () => {
 
   const logoutFunction = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/logout', {}, {
+      // 서버에 로그아웃 요청을 보냅니다.
+      const response = await axios.post(`${API_SERVER_HOST}/logout`, {}, {
         withCredentials: true // 쿠키를 포함하여 요청
       });
   

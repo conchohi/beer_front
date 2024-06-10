@@ -202,7 +202,6 @@ const SignupMain = () => {
                                         </div>
                                         {!passwordValid && (
                                             <div className="text-red-500 text-sm mt-1">비밀번호는 영문, 숫자를 포함하여 8자 이상이어야 합니다.</div>
-                                        )}
                                     </div>
                                     <div>
                                         <label htmlFor="passwordChk" className="block text-xl font-medium leading-6 text-pink-500">

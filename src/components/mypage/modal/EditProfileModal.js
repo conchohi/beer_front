@@ -172,5 +172,4 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData }) => {
     </Modal>
   );
 };
-
 export default EditProfileModal;
