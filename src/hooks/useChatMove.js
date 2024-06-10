@@ -25,9 +25,9 @@ const useChatMove = () => {
   const category = getString(queryParams.get('category'))
   const searchTerm = getString(queryParams.get('searchTerm'))
   const searchType = getString(queryParams.get('searchType'))
-  const ordeyBy = getString(queryParams.get('orderBy'))
+  const orderBy = getString(queryParams.get('orderBy'))
 
-  const queryDefault = createSearchParams({page, size, category, searchTerm, ordeyBy, searchType}).toString() 
+  const queryDefault = createSearchParams({page, size, category, searchTerm, orderBy, searchType}).toString() 
 
   const moveToList = (pageParam) => {
 
@@ -36,7 +36,7 @@ const useChatMove = () => {
     if(pageParam){
       const pageNum = getNum(pageParam.page, 1)
       const sizeNum = getNum(pageParam.size, 6)
-      queryStr = createSearchParams({page:pageNum, size: sizeNum, category : pageParam.category, searchTerm:pageParam.searchTerm, searchType:pageParam.searchType, ordeyBy:pageParam.ordeyBy}).toString()
+      queryStr = createSearchParams({page:pageNum, size: sizeNum, category : pageParam.category, searchTerm:pageParam.searchTerm, searchType:pageParam.searchType, orderBy:pageParam.orderBy}).toString()
     }else {
       queryStr = queryDefault
     }
@@ -50,7 +50,7 @@ const useChatMove = () => {
   }
 
 
-  return  {moveToList, page, size, category, searchTerm, searchType, ordeyBy}
+  return  {moveToList, page, size, category, searchTerm, searchType, orderBy, refresh}
 }
 
 export default useChatMove
