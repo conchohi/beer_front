@@ -3,7 +3,7 @@ import { FiLogIn } from "react-icons/fi";
 import { FaUserPlus } from "react-icons/fa";
 import { BiDoorOpen } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import CreateRoom from "../modal/CreateRoom";
+import CreateRoom from "../components/chatlist/modal/CreateRoom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

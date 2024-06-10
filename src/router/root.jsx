@@ -1,17 +1,17 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import Loading from "../components/load/Loading";
-const Signup = lazy(() => import("../pages/signup/Signup"));
-const Login = lazy(() => import("../pages/login/Login"));
-const Logout = lazy(() => import("../pages/login/Logout"));
+import Loading from "../components/loading/Loading";
+const Signup = lazy(() => import("../pages/SignupPage"));
+const Login = lazy(() => import("../pages/LoginPage"));
+const Logout = lazy(() => import("../pages/LogoutPage"));
 const Info = lazy(() => import("../pages/InfoPage"));
-const Game = lazy(() => import("../components/intro/Intro"));
+const Game = lazy(() => import("../components/guide/Intro"));
 const Main = lazy(()=> import("../pages/MainPage"))
 const ChatList = lazy(() => import("../pages/ChatListPage"));
 const MyPage =lazy(() => import("../pages/Mypage"));
 const Video =lazy(() => import("../pages/VideoPage"));
-const Board = lazy(( )=> import("../pages/board/Board"))
-const AccessToken = lazy(() => import("../social/getAccessPage"));
+const Board = lazy(( )=> import("../pages/BoardPage"))
+const AccessToken = lazy(() => import("../pages/getAccessPage"));
 
 const root = createBrowserRouter([
   {

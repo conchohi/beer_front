@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import SearchTypeCheck from "./SearchTypeCheck";
 import useChatMove from "../../hooks/useChatMove";
 import { FaPlus } from "react-icons/fa";
-import CreateRoom from "../../modal/CreateRoom";
+import CreateRoom from "./modal/CreateRoom";
 import CategorySelector from "./CategorySelector";
 
 const SearchBar = () => {

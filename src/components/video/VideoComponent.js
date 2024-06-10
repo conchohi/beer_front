@@ -4,11 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Spinner } from "spin.js";
 import { FaMicrophoneAlt, FaMicrophoneAltSlash, FaRegUser, FaRegUserCircle, FaVideo, FaVideoSlash, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { FaUserLarge } from "react-icons/fa6";
-import DestoryRoomModal from "../Modal/room/DestoryRoomModal";
-import DestoryCheckModal from "../Modal/room/DestroyCheckModal";
-import UserDetail from "../../modal/UserDetail";
+import DestoryRoomModal from "./modal/room/DestoryRoomModal";
+import DestoryCheckModal from "./modal/room/DestroyCheckModal";
+import UserDetail from "./modal/UserDetail";
 import Chat from "./Chat";
-import GameSelectModal from "../Modal/game/GameSelectModal";
+import GameSelectModal from "./modal/game/GameSelectModal";
 
 const server = "https://janus.jsflux.co.kr/janus";
 

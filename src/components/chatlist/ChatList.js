@@ -5,7 +5,7 @@ import useChatMove from "../../hooks/useChatMove";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import OrderByeheck from "./OrderByCheck";
-import { getRoomList } from "../../api/axios/roomApi";
+import { getRoomList } from "../../api/roomApi";
 
 const ChatList = () => {
     //차후 데이터는 한번에 받을 듯

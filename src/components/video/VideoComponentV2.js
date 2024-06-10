@@ -3,12 +3,12 @@ import Janus from "../../api/janus";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaMicrophoneAlt, FaMicrophoneAltSlash, FaVideo, FaVideoSlash, } from "react-icons/fa";
 import { FaUserLarge } from "react-icons/fa6";
-import DestoryCheckModal from "../Modal/room/DestroyCheckModal";
-import UserDetail from "../../modal/UserDetail";
+import DestoryCheckModal from "./modal/room/DestroyCheckModal";
+import UserDetail from "./modal/UserDetail";
 import Chat from "./Chat";
-import { API_SERVER_HOST, destoryRoom, exit, getParticipantList, getRoom, join } from "../../api/axios/roomApi";
-import BasicModalComponent from "../Modal/BasicModalComponent";
-import GameSelectModal from "../Modal/game/GameSelectModal";
+import { destoryRoom, exit, getParticipantList, getRoom, join } from "../../api/roomApi";
+import BasicModalComponent from "../common/BasicModalComponent";
+import GameSelectModal from "./modal/game/GameSelectModal";
 
 const server = "https://janus.jsflux.co.kr/janus";
 

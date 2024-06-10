@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import animationData from "../SpaceCat.json";
+import animationData from "./SpaceCat.json";
 
 const SpaceCat3 = () => {
   const animationContainer = useRef(null);

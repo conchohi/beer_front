@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import BasicLayout from '../../layouts/BasicLayout';
-import AddPostModalComponent from '../Modal/board/AddPostModalComponent';
-import DetailPostModalComponent from '../Modal/board/DetailPostModalComponent';
-import EditPostModalComponent from '../Modal/board/EditPostModalComponent';
-import Astronaut from '../animation/Astronaut';
+import AddPostModalComponent from './modal/AddPostModalComponent';
+import DetailPostModalComponent from './modal/DetailPostModalComponent';
+import EditPostModalComponent from './modal/EditPostModalComponent';
 import Astronaut4 from '../animation/Astronaut4';
 
 const initialBoardData = [

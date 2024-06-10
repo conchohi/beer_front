@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import PasswordModalComponent from "../Modal/room/PasswordModalComponent";
+import PasswordModalComponent from "./modal/PasswordModalComponent";
 
 const ChatCard = ({chat}) => {
     const navigate = useNavigate();
