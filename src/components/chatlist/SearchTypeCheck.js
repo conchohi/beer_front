@@ -29,15 +29,15 @@ function SearchTypeCheck({setSearchType}) {
             </div>
             {isOpen && (
             <div className="absolute left-0 z-10 mt-2 bg-white border border-gray-300 rounded-md shadow-lg">
-                <ul className='text-center text-lg font-bold px-4'>
+                <ul className='w-28 font-bold px-4'>
                     <li id="방제목"
                         onClick={handleItemClick}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        className="py-2 hover:bg-gray-100 cursor-pointer">
                       방제목
                     </li>
                     <li id="닉네임"
                         onClick={handleItemClick}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        className="py-2 hover:bg-gray-100 cursor-pointer">
                       닉네임
                     </li>
                 </ul>

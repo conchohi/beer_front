@@ -13,7 +13,7 @@ const items = [
 const CategorySelector = ({handleCategory}) => {
 
   return (
-    <div className="w-4/5 mx-auto relative flex flex-row">
+    <div className="w-2/3 mx-auto relative flex flex-row">
         {items.map((item, index) => (
           <div className="flex flex-col justify-center text-center items-center w-[12.5%]" key={index} onClick={() => handleCategory(item.id)}>
             <div className="cursor-pointer">
