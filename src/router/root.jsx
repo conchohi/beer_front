@@ -1,6 +1,8 @@
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Loading from "../components/loading/Loading";
+const FindPwdForm = lazy(() => import("../components/find/FindPwdForm"));
+const FindIdForm = lazy(() => import("../components/find/FindIdForm"));
 const Signup = lazy(() => import("../pages/SignupPage"));
 const Login = lazy(() => import("../pages/LoginPage"));
 const Logout = lazy(() => import("../pages/LogoutPage"));
@@ -107,6 +109,24 @@ const root = createBrowserRouter([
   element: (
     <Suspense fallback={<Loading />}>
       <AccessToken />
+
+    </Suspense>
+  )
+},
+{
+  path: "/find/id",
+  element: (
+    <Suspense fallback={<Loading />}>
+      <FindIdForm />
+
+    </Suspense>
+  )
+},
+{
+  path: "/find/pwd",
+  element: (
+    <Suspense fallback={<Loading />}>
+      <FindPwdForm />
 
     </Suspense>
   )

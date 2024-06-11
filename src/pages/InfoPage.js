@@ -69,6 +69,7 @@ function InfoPage() {
         </div>
         {/*화살표*/}
         <div className=" animate-bounce mt-32">
+          <Link to="#intro">
           <svg
             className="mx-auto w-12 h-12 text-white"
             fill="none"
@@ -83,6 +84,7 @@ function InfoPage() {
               d="M19 9l-7 7-7-7"
             ></path>
           </svg>
+          </Link>
         </div>
 
         <InfoModal

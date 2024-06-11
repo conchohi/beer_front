@@ -20,7 +20,7 @@ const CommentInputComponent = ({ handleAddComment }) => {
         <div className="mt-4 flex items-center">
             <input
                 type="text"
-                placeholder="댓글을 입력하세요..."
+                placeholder="댓글을 입력하세요"
                 value={newComment}
                 onChange={handleNewCommentChange}
                 onMouseDown={handleMouseDown}
