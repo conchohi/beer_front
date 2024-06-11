@@ -15,6 +15,7 @@ const PasswordModalComponent = ({ roomNo, close }) => {
         }).catch(error => {
             setOpenError(true);
             setMessage(error.response.data.message)
+            console.log(error)
         })
 
     }
