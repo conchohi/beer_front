@@ -35,14 +35,20 @@ export const deleteBoard = async (id) => {
     return response.data;
 };
 
-// 특정 게시글에 댓글 추가하는 함수
+// 특정 게시글에 댓글 추가
 export const addComment = async (boardNo, data) => {
-    const response = await axios.post(`${prefix}/${boardNo}/comments`, data);
+    const response = await axios.post(`${prefix}/${boardNo}`, data);
     return response.data;
 };
 
-// 특정 게시글에 댓글 삭제하는 함수
+// 특정 게시글에 댓글 삭제
 export const deleteComment = async (boardNo, commentNo) => {
     const response = await axios.delete(`${prefix}/${boardNo}/comments/${commentNo}`);
+    return response.data;
+};
+
+// 특정 게시글에 댓글 조회
+export const getCommentsByBoardNo = async (boardNo, commentNo) => {
+    const response = await axios.get(`${prefix}/${boardNo}`);
     return response.data;
 };

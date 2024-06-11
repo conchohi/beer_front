@@ -36,7 +36,7 @@ const CommentListComponent = ({
                                       <div className="bg-gray-600 p-2 rounded-lg flex items-center mb-2">
                                           <CgProfile className="w-10 h-10 mr-2" />
                                           <div className="bg-gray-700 p-2 rounded-lg flex-grow mr-1">
-                                              <div className="text-pink-500 font-semibold justify-between">{comment.author} {comment.date}</div>
+                                              <div className="text-pink-500 font-semibold justify-between">{comment.writer} {comment.createDate}</div>
                                               <div className="text-gray-200">{comment.content}</div>
                                           </div>
                                           <AiOutlineCloseCircle className="w-6 h-6 ml-2" onClick={() => handleDeleteComment(comment.id)} />

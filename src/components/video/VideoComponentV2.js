@@ -719,115 +719,152 @@ const VideoComponentV2 = () => {
               remoteFeed.send({ message: body, jsep: jsep });
             },
             error: function (error) {
-              Janus.error("WebRTC error:", error);
-              alert("WebRTC error... " + error.message);
-            },
-          });
-        }
-      },
-      iceState: function (state) {
-        Janus.log(
-          "ICE state of this WebRTC PeerConnection (feed #" +
-            remoteFeed.rfindex +
-            ") changed to " +
-            state
-        );
-      },
-      webrtcState: function (on) {
-        Janus.log(
-          "Janus says this WebRTC PeerConnection (feed #" +
-            remoteFeed.rfindex +
-            ") is " +
-            (on ? "up" : "down") +
-            " now"
-        );
-      },
-      onlocalstream: function (stream) {
-        // The subscriber stream is recvonly, we don't expect anything here
-      },
-      onremotestream: function (stream) {
-        Janus.debug("Remote feed #" + remoteFeed.rfindex + ", stream:", stream);
-        remoteFeed.stream = stream;
-      },
-      oncleanup: function () {
-        Janus.log(
-          " ::: Got a cleanup notification (remote feed " + id + ") :::"
-        );
-      },
-    });
-  }
+                Janus.error("WebRTC error:", error);
+                //에러 시 오디오를 true로 해놨다면 오디오를 사용하지 않는 방식으로 재귀
+                if (useAudio) {
+                    publishOwnFeed(false);
+                } else {
+                    alert("WebRTC error... " + error.message);
+                }
+            }
+        });
+    }
 
-  return (
-    <>
-      <div className="w-full flex flex-row flex-wrap ">
-        {/* 게임 선택 모달 */}
-        {openGame && (
-          <GameSelectModal roomNo={roomNo} close={basicModalClose} />
-        )}
-        {/* 방 폭파 확인 모달 */}
-        {checkDestory && (
-          <DestoryCheckModal
-            setCheckDestroy={setCheckDestory}
-            destroy={destory}
-          />
-        )}
-        {/* 메세지 모달 */}
-        {openModal && (
-          <BasicModalComponent
-            message={message}
-            callbackFunction={basicModalClose}
-          />
-        )}
-        {/* 회원 정보 모달 */}
-        {userDetail && (
-          <UserDetail
-            nickname={clickUserNick}
-            close={() => {
-              setClickUserNick("");
-              setUserDetail(false);
-            }}
-          />
-        )}
-        <div className="w-full font-bold text-3xl text-white mb-2 ms-40 ">
-          {title}
-        </div>
-        <div className="w-1/12 flex flex-col gap-5 text-white mt-4">
-          <button onClick={toggleMute}>
-            {muted ? (
-              <div className="flex flex-col justify-center items-center text-center">
-                <FaMicrophoneAltSlash color="white" size="40" />
-                <span>음소거 해제</span>
-              </div>
-            ) : (
-              <div className="flex flex-col justify-center items-center text-center">
-                <FaMicrophoneAlt color="white" size="40" />
-                <span>음소거</span>
-              </div>
-            )}
-          </button>
-          <button
-            onClick={() => {
-              publish ? unpublishOwnFeed() : publishOwnFeed(true);
-            }}
-          >
-            {publish ? (
-              <div className="flex flex-col justify-center items-center text-center">
-                <FaVideoSlash color="white" size="40" />
-                <span>비디오 종료</span>
-              </div>
-            ) : (
-              <div className="flex flex-col justify-center items-center text-center">
-                <FaVideo color="white" size="40" />
-                <span>비디오 시작</span>
-              </div>
-            )}
-          </button>
-        </div>
-        <div className="w-5/6 flex flex-row flex-wrap ">
-          <div
-            className={
-              "flex flex-col justify-center rounded-lg items-center text-center p-4 " +
-              (participantList.length <= 4 ? "w-1/2" : "w-1/3")
+    // [jsflux] 화면 끄기
+    function unpublishOwnFeed() {
+        setPublish(false)
+        var unpublish = { request: "unpublish" };
+        sfuClient.send({ message: unpublish });
+    }
+
+    // [jsflux] 음소거
+    function toggleMute() {
+        Janus.log((muted ? "Unmuting" : "Muting") + " local stream...");
+        if (muted)
+            sfuClient.unmuteAudio();
+        else
+            sfuClient.muteAudio();
+        setMuted(sfuClient.isAudioMuted())
+    }
+
+
+    // [jsflux] 새로운 유저 들어왔을때
+    function newRemoteFeed(id, display, audio, video) {
+        let remoteFeed = null;
+
+        janus.attach(
+            {
+                plugin: "janus.plugin.videoroom",
+                opaqueId: opaqueId,
+                success: function (pluginHandle) {
+                    remoteFeed = pluginHandle;
+                    remoteFeed.simulcastStarted = true;
+                    Janus.log("Plugin attached! (" + remoteFeed.getPlugin() + ", id=" + remoteFeed.getId() + ")");
+                    Janus.log("  -- This is a subscriber");
+                    //"join"을 사용하여 구독 요청을 생성
+                    var subscribe = {
+                        request: "join",
+                        room: myroom,
+                        ptype: "subscriber",
+                        feed: id,
+                        private_id: Number(pvtId)
+                    };
+                    // 브라우저가 Safari이고 퍼블리셔가 지원하지 않는 코덱을 사용하는 경우 비디오를 비활성화하는 부분도 처리
+                    if (Janus.webRTCAdapter.browserDetails.browser === "safari" &&
+                        (video === "vp9" || (video === "vp8" && !Janus.safariVp8))) {
+                        if (video)
+                            video = video.toUpperCase()
+                        alert.warning("Publisher is using " + video + ", but Safari doesn't support it: disabling video");
+                        subscribe["offer_video"] = false;
+                    }
+                    remoteFeed.videoCodec = video;
+                    remoteFeed.send({ message: subscribe });
+                },
+                error: function (error) {
+                    Janus.error("  -- Error attaching plugin...", error);
+                    alert("Error attaching plugin... " + error);
+                },
+                onmessage: function (msg, jsep) {
+                    Janus.debug(" ::: Got a message (subscriber) :::", msg);
+                    var event = msg["videoroom"];
+                    Janus.debug("Event: " + event);
+                    if (msg["error"]) {
+                        alert(msg["error"]);
+                    } else if (event) {
+                        //구독자가 특정 피드에 성공적으로 연결되었음을 나타냄
+                        if (event === "attached") {
+                            //원격 피드
+                            remoteFeed.rfid = msg["id"];
+                            //사용자 이름
+                            remoteFeed.rfdisplay = msg["display"];
+                            const updatedFeeds = [...feeds];
+                            for (let i = 0; i < 6; i++) {
+                                if (!feeds[i]) {
+                                    // 리모트 피드를 추가
+                                    updatedFeeds[i] = remoteFeed;
+                                    remoteFeed.rfindex = i
+                                    // 상태를 업데이트하고 함수 종료
+                                    setFeeds(updatedFeeds);
+                                    break;
+                                }
+                            }
+                            Janus.log("Successfully attached to feed " + remoteFeed.rfid + " (" + remoteFeed.rfdisplay + ") in room " + msg["room"]);
+                        }
+                    }
+                    if (jsep) {
+                        Janus.debug("Handling SDP as well...", jsep);
+                        // 로컬 미디어 스트림을 수신하기 위한 응답을 생성
+                        remoteFeed.createAnswer(
+                            {
+                                jsep: jsep,
+                                //오디오랑 비디오 수신만
+                                media: { audioSend: false, videoSend: false },	// We want recvonly audio/video
+                                success: function (jsep) {
+                                    Janus.debug("Got SDP!", jsep);
+                                    var body = { request: "start", room: myroom };
+                                    remoteFeed.send({ message: body, jsep: jsep });
+                                },
+                                error: function (error) {
+                                    Janus.error("WebRTC error:", error);
+                                    alert("WebRTC error... " + error.message);
+                                }
+                            });
+                    }
+                },
+                iceState: function (state) {
+                    Janus.log("ICE state of this WebRTC PeerConnection (feed #" + remoteFeed.rfindex + ") changed to " + state);
+                },
+                webrtcState: function (on) {
+                    Janus.log("Janus says this WebRTC PeerConnection (feed #" + remoteFeed.rfindex + ") is " + (on ? "up" : "down") + " now");
+                },
+                onlocalstream: function (stream) {
+                    // The subscriber stream is recvonly, we don't expect anything here
+                },
+                onremotestream: function (stream) {
+                    Janus.debug("Remote feed #" + remoteFeed.rfindex + ", stream:", stream);
+                    remoteFeed.stream = stream;
+                },
+                oncleanup: function () {
+                    Janus.log(" ::: Got a cleanup notification (remote feed " + id + ") :::");
+                }
+            });
+    }
+
+
+
+
+    return (<>
+        <div className="w-full flex flex-row flex-wrap ">
+            {/* 게임 선택 모달 */}
+            {openGame && <GameSelectModal roomNo={roomNo} close={()=>{setOpenGame(false)}} />}
+            {/* 방 폭파 확인 모달 */}
+            {checkDestory && <DestoryCheckModal setCheckDestroy={setCheckDestory} destroy={destory} />}
+            {/* 메세지 모달 */}
+            {openModal && <BasicModalComponent message={message} callbackFunction={basicModalClose} />}
+            {/* 회원 정보 모달 */}
+            {userDetail && <UserDetail nickname={clickUserNick} close={() => {
+                setClickUserNick("");
+                setUserDetail(false);
             }
           >
             <div className="w-full  bg-black border-2 border-white rounded-xl">
