@@ -30,18 +30,6 @@ const EditPostModalComponent = ({ isOpen, onClose, selectedPost, setSelectedPost
                         />
                     </div>
 
-                    <div className="flex justify-between mb-4" onMouseDown={handleMouseDown}>
-                        <div className="flex items-center">
-                            <div className="text-gray-400 font-semibold" >
-                                <div className="fas fa-user"></div> 햄토리
-                            </div>
-                        </div>
-                        <div className="flex items-center">
-                            <MdOutlineWatchLater className="text-gray-400 mr-1" />
-                            <div className="text-gray-400"> 2024.06.03  16:30 </div>
-                        </div>
-                    </div>
-
                     {/* 선택게시판 내용 불러오기 */}
                     <textarea
                         placeholder="내용"
@@ -52,7 +40,7 @@ const EditPostModalComponent = ({ isOpen, onClose, selectedPost, setSelectedPost
                     />
 
                     <div className="mb-4 flex justify-center">
-                        <button className="px-4 py-2 mr-2 bg-pink-500 text-white font-semibold rounded-lg" onClick={handleEditPost}>
+                        <button className="px-4 py-2 mr-2 bg-pink-500 text-white font-semibold rounded-lg hover:bg-pink-600" onClick={handleEditPost}>
                             수정
                         </button>
                     </div>
