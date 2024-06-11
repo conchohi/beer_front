@@ -7,10 +7,13 @@ import { BiSolidLogOut } from "react-icons/bi";
 import CreateRoom from "../components/chatlist/modal/CreateRoom";
 import axios from "axios";
 import { API_SERVER_HOST } from "../api/axios_intercepter";
+import BasicModalComponent from "../components/common/BasicModalComponent";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [createRoom, setCreateRoom] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
   const navigate = useNavigate();
   const token = localStorage.getItem("access");
   const nickname = localStorage.getItem("nickname");
@@ -21,6 +24,10 @@ const Header = () => {
   };
 
   const handleCreate = () => {
+    if(!token){
+      setOpenModal(true);
+      return;
+    }
     setCreateRoom(!createRoom);
   };
 
@@ -61,6 +68,9 @@ const Header = () => {
   };
   return (
     <>
+      {openModal && <BasicModalComponent message="로그인 후 이용 가능합니다." callbackFunction={()=>{
+        setOpenModal(!openModal)
+        navigate('/login')}}/>}
       {createRoom && <CreateRoom close={handleCreate} />}
       <header className="w-full bg-none font-GmarketSansMedium">
         <nav className="w-full pt-3 px-4 py-4">
