@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
-import Game31 from "./modal/game/Game31";
+
+import BaskinRobbins31 from "./modal/game/BaskinRobbins31";
+import GameComponent from "./modal/game/GameComponent";
 
 let stompClient = null;
 
-const Chat = ({ roomNo, username }) => {
+const Chat = ({ roomNo, nickname }) => {
   const [publicChats, setPublicChats] = useState([]);
   const [userData, setUserData] = useState({
-    username: username,
+    nickname: nickname,
     connected: false,
     message: "",
     roomNo: roomNo,
@@ -85,7 +87,7 @@ const Chat = ({ roomNo, username }) => {
     console.log("User joining...");
     var chatMessage = {
       roomNo: roomNo,
-      senderName: userData.username,
+      senderName: userData.nickname,
       status: "JOIN",
     };
     if (stompClient) {
@@ -97,7 +99,7 @@ const Chat = ({ roomNo, username }) => {
     console.log("User leaving...");
     var chatMessage = {
       roomNo: roomNo,
-      senderName: userData.username,
+      senderName: userData.nickname,
       status: "LEAVE",
     };
     if (stompClient) {
@@ -117,7 +119,7 @@ const Chat = ({ roomNo, username }) => {
     if (stompClient && userData.message.trim() !== "") {
       var chatMessage = {
         roomNo: roomNo,
-        senderName: userData.username,
+        senderName: userData.nickname,
         message: userData.message,
         status: "MESSAGE",
         date: new Date().toISOString(),
@@ -181,11 +183,11 @@ const Chat = ({ roomNo, username }) => {
             ) : (
               <li
                 className={`message flex items-start ${
-                  chat.senderName === userData.username ? "justify-end" : ""
+                  chat.senderName === userData.nickname ? "justify-end" : ""
                 }`}
                 key={index}
               >
-                {chat.senderName !== userData.username && (
+                {chat.senderName !== userData.nickname && (
                   <div className="flex flex-col items-start">
                     <div className="avatar bg-blue-500 text-white p-2 rounded">
                       {chat.senderName}
@@ -198,7 +200,7 @@ const Chat = ({ roomNo, username }) => {
                 <div className="message-data p-2 bg-gray-200 rounded ml-2">
                   {chat.message}
                 </div>
-                {chat.senderName === userData.username && (
+                {chat.senderName === userData.nickname && (
                   <div className="flex flex-col items-end">
                     <div className="avatar self bg-green-500 text-black p-2 rounded">
                       {chat.senderName}
@@ -237,7 +239,7 @@ const Chat = ({ roomNo, username }) => {
   const renderGame = () => (
     <div className="game-box flex bg-slate-100 flex-col shadow-lg p-10">
       <div className="text-center text-gray-700">Game Screen Placeholder</div>
-      <Game31 />
+      <BaskinRobbins31 nickname={nickname} roomNo={roomNo} />
     </div>
   );
 
