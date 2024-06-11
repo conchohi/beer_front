@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 import ConfirmDeleteModal from "../modal/ConfirmDeleteModal"; // ConfirmDeleteModal 컴포넌트 가져오기
 
@@ -19,10 +20,27 @@ const FollowingListItem = (props) => {
     setIsModalOpen(false);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     console.log(`Deleting user with userNo: ${props.userNo}`);
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/follow/unfollow",
+        {
+          followerId: props.userId, // props에서 followerId를 받음
+          followeeId: props.userNo,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${props.token}`, // JWT 토큰을 props로 전달
+          },
+        }
+      );
+      console.log("User unfollowed:", response.data);
+      // 성공적으로 언팔로우된 후, 리스트에서 제거하는 등의 추가 작업을 여기에 추가하세요.
+    } catch (error) {
+      console.error("Error unfollowing user:", error);
+    }
     setIsModalOpen(false);
-    // 여기에 실제 삭제 로직을 추가하세요.
   };
 
   return (
