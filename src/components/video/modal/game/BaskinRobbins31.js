@@ -4,7 +4,7 @@ import { Stomp } from "@stomp/stompjs";
 
 let stompClient = null;
 
-const BaskinRobbins31 = ({ username }) => {
+const BaskinRobbins31 = ({ nickname }) => {
   const [move, setMove] = useState([]);
   const [gameState, setGameState] = useState({
     moves: [],
@@ -27,8 +27,8 @@ const BaskinRobbins31 = ({ username }) => {
       setConnected(true);
       stompClient.subscribe("/topic/game", onMessageReceived);
 
-      // Join the game with the username
-      const joinMessage = { player: username };
+      // Join the game with the nickname
+      const joinMessage = { player: nickname };
       stompClient.send("/app/join", {}, JSON.stringify(joinMessage));
     };
 
@@ -57,14 +57,16 @@ const BaskinRobbins31 = ({ username }) => {
     };
 
     connect();
-  }, [username]);
+  }, [nickname]);
 
   const sendMove = () => {
-    if (connected && username && move.length > 0) {
-      const gameMessage = { player: username, numbers: move };
+    if (connected && nickname && move.length > 0) {
+      const gameMessage = { player: nickname, numbers: move };
       console.log("Sending move: ", gameMessage);
       stompClient.send("/app/move", {}, JSON.stringify(gameMessage));
       setMove([]);
+    } else {
+      console.log("Cannot send move: ", { connected, nickname, move });
     }
   };
 
@@ -72,6 +74,8 @@ const BaskinRobbins31 = ({ username }) => {
     if (connected) {
       console.log("Resetting game");
       stompClient.send("/app/reset", {}, JSON.stringify({}));
+    } else {
+      console.log("Cannot reset game: Not connected");
     }
   };
 
@@ -95,7 +99,7 @@ const BaskinRobbins31 = ({ username }) => {
             key={number}
             onClick={() => handleNumberClick(number)}
             className="m-2 p-2 bg-blue-500 text-white rounded"
-            disabled={gameState.currentTurn !== username} // Disable buttons if game is over or not current turn
+            // Disable buttons if game is over or not current turn
           >
             {number}
           </button>
@@ -104,12 +108,14 @@ const BaskinRobbins31 = ({ username }) => {
       <button
         onClick={sendMove}
         className="mb-4 p-2 bg-green-500 text-white rounded"
-        disabled={move.length === 0 || gameState.currentTurn !== username} // Disable send button if game is over, no numbers are selected, or not current turn
+        // disabled={
+        //   !connected || gameState.currentTurn !== nickname || move.length === 0
+        //} // Disable send button if game is over, no numbers are selected, or not current turn
       >
         Send Move
       </button>
 
-      {username === "닉네임" && ( // 방장만 리셋 가능하게
+      {nickname === nickname && ( // 방장만 리셋 가능하게
         <button
           onClick={resetGame}
           className="mb-4 p-2 bg-red-500 text-white rounded"

@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
-
 import BaskinRobbins31 from "./modal/game/BaskinRobbins31";
-import GameComponent from "./modal/game/GameComponent";
 
 let stompClient = null;
 
 const Chat = ({ roomNo, nickname }) => {
   const [publicChats, setPublicChats] = useState([]);
   const [userData, setUserData] = useState({
-    nickname: nickname,
+    sender: nickname,
     connected: false,
     message: "",
     roomNo: roomNo,
@@ -67,7 +65,7 @@ const Chat = ({ roomNo, nickname }) => {
       ...prevState,
       connected: true,
     }));
-    stompClient.subscribe(`/topic/room/${roomNo}`, onMessageReceived);
+    stompClient.subscribe(`/topic/${roomNo}`, onMessageReceived);
     userJoin();
     window.addEventListener("beforeunload", userLeave);
   };
@@ -86,24 +84,32 @@ const Chat = ({ roomNo, nickname }) => {
   const userJoin = () => {
     console.log("User joining...");
     var chatMessage = {
-      roomNo: roomNo,
-      senderName: userData.nickname,
-      status: "JOIN",
+      sender: userData.sender,
+      type: "JOIN",
+      date: new Date().toISOString(), // 추가: ISO 형식으로 날짜 설정
     };
     if (stompClient) {
-      stompClient.send("/app/chat.addUser", {}, JSON.stringify(chatMessage));
+      stompClient.send(
+        `/app/chat.addUser/${roomNo}`,
+        {},
+        JSON.stringify(chatMessage)
+      );
     }
   };
 
   const userLeave = () => {
     console.log("User leaving...");
     var chatMessage = {
-      roomNo: roomNo,
-      senderName: userData.nickname,
-      status: "LEAVE",
+      sender: userData.sender,
+      type: "LEAVE",
+      date: new Date().toISOString(), // 추가: ISO 형식으로 날짜 설정
     };
     if (stompClient) {
-      stompClient.send("/app/chat.removeUser", {}, JSON.stringify(chatMessage));
+      stompClient.send(
+        `/app/chat.leaveUser/${roomNo}`,
+        {},
+        JSON.stringify(chatMessage)
+      );
       stompClient.disconnect(() => {
         console.log("Disconnected");
       });
@@ -118,15 +124,14 @@ const Chat = ({ roomNo, nickname }) => {
   const sendValue = () => {
     if (stompClient && userData.message.trim() !== "") {
       var chatMessage = {
-        roomNo: roomNo,
-        senderName: userData.nickname,
-        message: userData.message,
-        status: "MESSAGE",
-        date: new Date().toISOString(),
+        sender: userData.sender,
+        content: userData.message,
+        type: "CHAT",
+        date: new Date().toISOString(), // 추가: ISO 형식으로 날짜 설정
       };
       console.log("Sending public message: ", chatMessage);
       stompClient.send(
-        "/app/chat.sendRoomMessage",
+        `/app/chat.sendMessage/${roomNo}`,
         {},
         JSON.stringify(chatMessage)
       );
@@ -172,25 +177,25 @@ const Chat = ({ roomNo, nickname }) => {
       <div className="chat-content flex-1 overflow-y-scroll p-2">
         <ul className="chat-messages">
           {publicChats.map((chat, index) =>
-            chat.status === "JOIN" ? (
+            chat.type === "JOIN" ? (
               <li key={index} className="text-center text-blue-600 font-bold">
-                {chat.senderName}님이 입장하셨습니다.
+                {chat.sender}님이 입장하셨습니다.
               </li>
-            ) : chat.status === "LEAVE" ? (
+            ) : chat.type === "LEAVE" ? (
               <li key={index} className="text-center text-pink-500 font-bold">
-                {chat.senderName}님이 퇴장하셨습니다.
+                {chat.sender}님이 퇴장하셨습니다.
               </li>
             ) : (
               <li
                 className={`message flex items-start ${
-                  chat.senderName === userData.nickname ? "justify-end" : ""
+                  chat.sender === userData.sender ? "justify-end" : ""
                 }`}
                 key={index}
               >
-                {chat.senderName !== userData.nickname && (
+                {chat.sender !== userData.sender && (
                   <div className="flex flex-col items-start">
                     <div className="avatar bg-blue-500 text-white p-2 rounded">
-                      {chat.senderName}
+                      {chat.sender}
                     </div>
                     <span className="text-gray-500 text-sm w-10">
                       {formatDate(chat.date)}
@@ -198,12 +203,12 @@ const Chat = ({ roomNo, nickname }) => {
                   </div>
                 )}
                 <div className="message-data p-2 bg-gray-200 rounded ml-2">
-                  {chat.message}
+                  {chat.content}
                 </div>
-                {chat.senderName === userData.nickname && (
+                {chat.sender === userData.sender && (
                   <div className="flex flex-col items-end">
                     <div className="avatar self bg-green-500 text-black p-2 rounded">
-                      {chat.senderName}
+                      {chat.sender}
                     </div>
                     <span className="text-gray-500 text-sm w-20">
                       {formatDate(chat.date)}
