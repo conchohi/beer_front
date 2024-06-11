@@ -4,7 +4,7 @@ import { Stomp } from "@stomp/stompjs";
 
 let stompClient = null;
 
-const Game31 = ({ username }) => {
+const BaskinRobbins31 = ({ username }) => {
   const [move, setMove] = useState([]);
   const [gameState, setGameState] = useState({
     moves: [],
@@ -137,4 +137,4 @@ const Game31 = ({ username }) => {
   );
 };
 
-export default Game31;
+export default BaskinRobbins31;
