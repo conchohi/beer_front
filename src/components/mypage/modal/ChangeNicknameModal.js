@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import axios from "axios";
 
 const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNicknameChange }) => {
   const [nickname, setNickname] = useState(currentNickname);
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
+  const [saveStatus, setSaveStatus] = useState(null);
 
   const handleNicknameCheck = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/api/user/nickname-check", { nickname });
-      if (response.data.message === "Success.") {
+      // 서버 요청을 통해 닉네임 중복 체크 로직
+      // 임의의 중복 체크 로직 (예: 길이가 3 이상이면 사용 가능)
+      if (nickname.length >= 3) {
         setIsNicknameAvailable(true);
       } else {
         setIsNicknameAvailable(false);
@@ -20,27 +21,13 @@ const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNickna
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     if (isNicknameAvailable) {
-      try {
-        const token = localStorage.getItem("access");
-        const response = await axios.put("http://localhost:8080/api/user/update-nickname", { nickname }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (response.status === 200) {
-          onNicknameChange(nickname);
-          onRequestClose();
-        } else {
-          console.error("Failed to update nickname");
-        }
-      } catch (error) {
-        console.error("Error updating nickname:", error);
-      }
+      onNicknameChange(nickname);
+      setSaveStatus("success");
+      onRequestClose();
     } else {
-      alert("닉네임 중복체크를 해주세요.");
+      setSaveStatus("nickname-check-failed");
     }
   };
 
@@ -93,6 +80,9 @@ const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNickna
             취소
           </button>
         </div>
+        {saveStatus === "nickname-check-failed" && (
+          <div className="text-red-500 text-sm mt-2">닉네임 중복 체크를 완료해주세요.</div>
+        )}
       </div>
     </Modal>
   );
