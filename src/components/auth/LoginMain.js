@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import BasicLayout from '../../layouts/BasicLayout';
-import ModalComponent from '../common/ModalComponent';
 import Astronaut2 from '../animation/Astronaut2';
-
+import BasicModalComponent from '../common/BasicModalComponent';
 const LoginMain = () => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');

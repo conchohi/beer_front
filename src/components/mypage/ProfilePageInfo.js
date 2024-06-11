@@ -55,7 +55,7 @@ function ProfilePageInfo({ handleOpen, userData }) {
             </div>
             <div className="flex flex-1 items-center mt-2 lg:mt-0">
               <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-36 lg:h-24 rounded-full bg-pink-500 text-white">
-                나이
+               나이
               </div>
               <div className="ml-2">: {userData.age}</div>
             </div>

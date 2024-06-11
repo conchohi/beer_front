@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FiLogIn } from "react-icons/fi";
-import { FaUserPlus } from "react-icons/fa";
+import { FaUserPlus, FaCaretDown } from "react-icons/fa";
 import { BiDoorOpen } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { BiSolidLogOut } from "react-icons/bi";
 import CreateRoom from "../components/chatlist/modal/CreateRoom";
+import { API_SERVER_HOST } from "../api/roomApi";
 import axios from "axios";
 
 const Header = () => {
@@ -13,6 +14,7 @@ const Header = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("access");
   const nickname = localStorage.getItem("nickname");
+  const dropdownRef = useRef(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -25,7 +27,7 @@ const Header = () => {
   const logoutFunction = async () => {
     try {
       // 서버에 로그아웃 요청을 보냅니다.
-      const response = await axios.post('http://localhost:8080/logout', {}, {
+      const response = await axios.post(`${API_SERVER_HOST}/logout`, {}, {
         withCredentials: true // 쿠키를 포함하여 요청
       });
 
@@ -57,7 +59,6 @@ const Header = () => {
       navigate('/');
     }
   };
-
   return (
     <>
       {createRoom && <CreateRoom close={handleCreate} />}

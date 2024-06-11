@@ -14,6 +14,7 @@ const SignupMain = () => {
                         </div>
                         <div className="w-full md:w-1/2 rounded-xl text-left px-6">
                             <SignupForm />
+
                         </div>
                     </div>
                 </div>
