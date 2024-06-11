@@ -618,7 +618,7 @@ const VideoComponentV2 = () => {
     return (<>
         <div className="w-full flex flex-row flex-wrap ">
             {/* 게임 선택 모달 */}
-            {openGame && <GameSelectModal roomNo={roomNo} close={basicModalClose} />}
+            {openGame && <GameSelectModal roomNo={roomNo} close={()=>{setOpenGame(false)}} />}
             {/* 방 폭파 확인 모달 */}
             {checkDestory && <DestoryCheckModal setCheckDestroy={setCheckDestory} destroy={destory} />}
             {/* 메세지 모달 */}

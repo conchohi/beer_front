@@ -4,8 +4,8 @@ import { FaUserPlus, FaCaretDown } from "react-icons/fa";
 import { BiDoorOpen } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import CreateRoom from "../components/chatlist/modal/CreateRoom";
-import { API_SERVER_HOST } from "../api/roomApi";
 import axios from "axios";
+import { API_SERVER_HOST } from "../api/axios_intercepter";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
