@@ -30,25 +30,30 @@ const Header = () => {
       });
 
       if (response.status === 200) {
-        // 로그아웃 성공 시, 로컬 스토리지에서 토큰 제거
+        // 로그아웃 성공 시, 로컬 스토리지에서 토큰 및 자동로그인 정보 제거
         localStorage.removeItem('access');
         localStorage.removeItem('nickname');
+        localStorage.removeItem('auto_login');
+        localStorage.removeItem('saved_password');
         
-        // 홈으로 이동
-        navigate('/');
+        // 로그인 페이지로 이동
+        navigate('/login');
       } else {
         localStorage.removeItem('access');
         localStorage.removeItem('nickname');
+        localStorage.removeItem('auto_login');
+        localStorage.removeItem('saved_password');
         
-        // 홈으로 이동
-        navigate('/');
+        // 로그인 페이지로 이동
+        navigate('/login');
       }
     } catch (error) {
       console.error('로그아웃 오류', error);
       localStorage.removeItem('access');
       localStorage.removeItem('nickname');
+
         
-      // 홈으로 이동
+      // 메인 페이지로 이동
       navigate('/');
     }
   };

@@ -257,9 +257,9 @@ const FindPwdForm = () => {
                                 )}
 
                                 <p className="mt-4 text-center text-sm text-gray-500">
-                                    <a href="/find/id" className="font-semibold leading-6 text-pink-500 hover:text-orange-600">
+                                    <span onClick={() => navigate('/find/id')} className="font-semibold leading-6 text-pink-500 hover:text-orange-600 cursor-pointer">
                                         아이디를 잊어 버리셨나요?
-                                    </a>
+                                    </span>
                                 </p>
                             </div>
                         </div>

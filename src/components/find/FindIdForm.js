@@ -45,6 +45,7 @@ function FindIdForm() {
             setUserIds(response.data);
             setMessage(`가입되어 있는 아이디는 : ${response.data.join(', ')} 입니다.`);
             setVerificationSuccess(true);
+            setIsOpen(true); // Show modal with success message
         } catch (error) {
             setMessage(error.response?.data || "이메일이 존재하지 않습니다.");
             setIsOpen(true);
@@ -57,6 +58,9 @@ function FindIdForm() {
 
     const closeModal = () => {
         setIsOpen(false);
+        if (verificationSuccess) {
+            navigate('/login');
+        }
     };
 
     return (

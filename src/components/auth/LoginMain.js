@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import BasicLayout from '../../layouts/BasicLayout';
 import ModalComponent from '../common/ModalComponent';
 import Astronaut2 from '../animation/Astronaut2';
 
 const LoginMain = () => {
     const [id, setId] = useState('');
-    const [username, setUsername] = useState('123');
-    const [userid, setUserid] = useState('234');
     const [password, setPassword] = useState('');
+    const [saveId, setSaveId] = useState(false);
+    const [autoLogin, setAutoLogin] = useState(false);
 
     const [idValid, setIdValid] = useState(false);
     const [passwordValid, setPasswordValid] = useState(false);
@@ -28,21 +28,60 @@ const LoginMain = () => {
 
     const handleId = (e) => {
         setId(e.target.value);
-        const regex = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{5,10}$/;
-        if (regex.test(e.target.value)) {
-            setIdValid(true);
-        } else {
-            setIdValid(false);
-        }
+        validateId(e.target.value);
     };
 
     const handlePassword = (e) => {
         setPassword(e.target.value);
+        validatePassword(e.target.value);
+    };
+
+    const validateId = (value) => {
+        const regex = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{5,10}$/;
+        setIdValid(regex.test(value));
+    };
+
+    const validatePassword = (value) => {
         const regex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,13}$/;
-        if (regex.test(e.target.value)) {
-            setPasswordValid(true);
-        } else {
-            setPasswordValid(false);
+        setPasswordValid(regex.test(value));
+    };
+
+    useEffect(() => {
+        const savedId = localStorage.getItem("saved_id");
+        const autoLoginEnabled = localStorage.getItem("auto_login") === 'true';
+        const savedPassword = localStorage.getItem("saved_password");
+
+        if (savedId) {
+            setId(savedId);
+            setSaveId(true);
+            validateId(savedId);
+        }
+        if (autoLoginEnabled && savedPassword) {
+            setAutoLogin(true);
+            setPassword(savedPassword);
+            validatePassword(savedPassword);
+            autoLoginSubmit(savedId, savedPassword);
+        }
+    }, []);
+
+    const autoLoginSubmit = async (autoId, autoPassword) => {
+        try {
+            let formData = new FormData();
+            formData.append('username', autoId);
+            formData.append('password', autoPassword);
+            const response = await axios.post('http://localhost:8080/login', formData, {
+                withCredentials: true
+            });
+            setMessage("로그인 성공!");
+            setIsOpen(true);
+            const { access, nickname } = response.data;
+            localStorage.setItem('access', access);
+            localStorage.setItem('nickname', nickname);
+        } catch (error) {
+            if (error.response.status === 401) setMessage('아이디 혹은 비밀번호가 틀렸습니다.');
+            else setMessage('서버 오류');
+            setIsOpen(true);
+            console.error('로그인 오류:', error);
         }
     };
 
@@ -51,6 +90,20 @@ const LoginMain = () => {
         if (!idValid || !passwordValid) {
             alert("유효한 아이디와 비밀번호를 입력해주세요.");
             return;
+        }
+
+        if (saveId) {
+            localStorage.setItem("saved_id", id);
+        } else {
+            localStorage.removeItem("saved_id");
+        }
+
+        if (autoLogin) {
+            localStorage.setItem("auto_login", 'true');
+            localStorage.setItem("saved_password", password);
+        } else {
+            localStorage.removeItem("auto_login");
+            localStorage.removeItem("saved_password");
         }
 
         try {
@@ -74,9 +127,17 @@ const LoginMain = () => {
         }
     };
 
+    const onNaverLogin = () => {
+        window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
+    }
+
+    const onKakaoLogin = () => {
+        window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
+    }
+
     return (
         <>
-        {isOpen && <ModalComponent message={message} callbackFunction={customCallback} />}
+            {isOpen && <ModalComponent message={message} callbackFunction={customCallback} />}
             <BasicLayout>
                 <div className="w-full h-auto font-bold text-2xl md:text-4xl text-black font-sans p-6 md:px-60 md:py-30 flex flex-col ">
                     <div className="bg-gray-700 w-full h-auto rounded-2xl flex p-6 md:p-12 ">
@@ -84,7 +145,6 @@ const LoginMain = () => {
                             <Astronaut2 />
                         </div>
                         <div className="w-1/2 rounded-2xl text-left">
-                            
                             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                                 <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-pink-500">
                                     로그인
@@ -99,9 +159,9 @@ const LoginMain = () => {
                                                 아이디
                                             </label>
                                             <div className="text-sm">
-                                                <a href="/find/id" className="font-semibold text-pink-500 hover:text-pink-200">
+                                                <Link to="/find/id" className="font-semibold text-pink-500 hover:text-pink-200">
                                                     아이디를 잊으셨나요?
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                         <div className="mt-2">
@@ -132,11 +192,10 @@ const LoginMain = () => {
                                                 비밀번호
                                             </label>
                                             <div className="text-sm">
-                                                <a href="/find/pwd" className="font-semibold text-pink-500 hover:text-pink-200">
+                                                <Link to="/find/pwd" className="font-semibold text-pink-500 hover:text-pink-200">
                                                     비밀번호를 잊으셨나요?
-                                                </a>
+                                                </Link>
                                             </div>
-
                                         </div>
                                         <div className="mt-2">
                                             <input
@@ -160,9 +219,37 @@ const LoginMain = () => {
                                         </div>
                                     </div>
 
+                                    <div className="mt-4 flex items-center justify-between">
+                                        <div className="flex items-center">
+                                            <input
+                                                id="saveId"
+                                                name="saveId"
+                                                type="checkbox"
+                                                checked={saveId}
+                                                onChange={(e) => setSaveId(e.target.checked)}
+                                                className="h-4 w-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
+                                            />
+                                            <label htmlFor="saveId" className="ml-2 block text-sm text-gray-900">
+                                                아이디 저장
+                                            </label>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <input
+                                                id="autoLogin"
+                                                name="autoLogin"
+                                                type="checkbox"
+                                                checked={autoLogin}
+                                                onChange={(e) => setAutoLogin(e.target.checked)}
+                                                className="h-4 w-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
+                                            />
+                                            <label htmlFor="autoLogin" className="ml-2 block text-sm text-gray-900">
+                                                자동 로그인
+                                            </label>
+                                        </div>
+                                    </div>
+
                                     <div>
                                         <button
-                                            onClick={handleSubmit}
                                             type="submit"
                                             className="flex w-full justify-center rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                         >
@@ -172,27 +259,23 @@ const LoginMain = () => {
                                 </form>
 
                                 <p className="mt-4 text-center text-sm text-gray-500">
-                                    <a href="/signup" className="font-semibold leading-6 text-pink-500 hover:text-orange-600">
+                                    <Link to="/signup" className="font-semibold leading-6 text-pink-500 hover:text-orange-600">
                                         회원가입하러 가기
-                                    </a>
+                                    </Link>
                                 </p>
                                 <hr className="my-8" />
                                 <div className="flex flex-col justify-center items-center mt-3 space-y-4">
-                                <a href='http://localhost:8080/oauth2/authorization/kakao' className="w-full">
-                                    <button className="w-full flex items-center bg-yellow-400 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-black shadow-sm hover:bg-yellow-500">
+                                    <button className="w-full flex items-center bg-yellow-400 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-black shadow-sm hover:bg-yellow-500"
+                                        onClick={onKakaoLogin}>
                                         <img src="/login/kakaologin.png" alt="Kakao Logo" className="w-6 h-6 mr-2" />
                                         <span className="flex-grow text-center">카카오 로그인</span>
                                     </button>
-                                </a>
-                                <a href='http://localhost:8080/oauth2/authorization/naver' className="w-full">
-                                    <button className="w-full flex items-center bg-green-500 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600">
+                                    <button className="w-full flex items-center bg-green-500 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600"
+                                        onClick={onNaverLogin}>
                                         <img src="/login/naverlogin.png" alt="Naver Logo" className="w-6 h-6 mr-2" />
                                         <span className="flex-grow text-center">네이버 로그인</span>
                                     </button>
-                                </a>
-                            </div>
-
-
+                                </div>
                             </div>
                         </div>
                     </div>
