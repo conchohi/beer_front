@@ -1,71 +1,164 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import SpaceShip from "../animation/SpaceShip";
+import BasicLayout from "../../layouts/BasicLayout";
+import ModalComponent from "../common/ModalComponent";
 
 function FindIdForm() {
-    const [email, setEmail] = useState("");
-    const [isCertificationSent, setIsCertificationSent] = useState(false);
+    const [email, setEmail] = useState('');
+    const [verificationCode, setVerificationCode] = useState('');
+    const [userIds, setUserIds] = useState([]);
+    const [emailSent, setEmailSent] = useState(false);
+    const [verificationSuccess, setVerificationSuccess] = useState(false);
     const [message, setMessage] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
+    const [timeLeft, setTimeLeft] = useState(300); // 5 minutes countdown
 
     const navigate = useNavigate();
 
-    const changeEmail = (e) => {
-        setEmail(e.target.value);
-    };
+    useEffect(() => {
+        if (emailSent && timeLeft > 0) {
+            const timer = setInterval(() => {
+                setTimeLeft((prevTime) => prevTime - 1);
+            }, 1000);
+            return () => clearInterval(timer);
+        }
+    }, [emailSent, timeLeft]);
 
-    const sendCertificationEmail = async () => {
+    const sendVerificationEmail = async () => {
         try {
-            const response = await axios.post("http://localhost:8080/api/v1/auth/findId-email-certification", { email:email });
-            if (response.status==200) {
-                setIsCertificationSent(true);
-                setMessage("아이디가 이메일로 전송되었습니다.");
-            } 
+            await axios.post('http://localhost:8080/api/v1/auth/email-verify', { email });
+            setEmailSent(true);
+            setMessage("인증번호가 전송되었습니다.");
+            setIsOpen(true); // Show modal
+            setTimeLeft(300); // Reset countdown timer
         } catch (error) {
-            if(error.response.status==400){
-                setMessage(error.response.data.code);
-            } else{
-                setMessage("서버 오류가 발생했습니다. 다시 시도해주세요.");
-            }
+            setMessage(error.response?.data || "메일 전송에 오류가 발생했습니다.");
+            setIsOpen(true); // Show modal
         }
     };
 
+    const retrieveUserIds = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/api/v1/auth/retrieve-ids', { email, code: verificationCode });
+            setUserIds(response.data);
+            setMessage(`가입되어 있는 아이디는 : ${response.data.join(', ')} 입니다.`);
+            setVerificationSuccess(true);
+        } catch (error) {
+            setMessage(error.response?.data || "이메일이 존재하지 않습니다.");
+            setIsOpen(true);
+        }
+    };
+
+    const handleLoginClick = () => {
+        navigate('/login');
+    };
+
+    const closeModal = () => {
+        setIsOpen(false);
+    };
 
     return (
-        <div className="h-full w-full flex flex-col items-center justify-center">
-            <div className="w-1/3 text-center mt-10 p-5 text-2xl font-bold border-b border-b-black">아이디 찾기</div>
-            <div className="flex flex-col mt-5 mb-10 w-1/3">
-                <p className="py-3 mb-5 font-light text-sm">
-                    가입시 등록한 이메일 입력시 <br /> 아이디의 일부를 알려드립니다.
-                </p>
-                <label htmlFor="email" className="mb-4">이메일 주소</label>
-                <input
-                    id="email"
-                    name="email"
-                    type="text"
-                    value={email}
-                    onChange={changeEmail}
-                    className="border-b border-gray-700 py-1 focus:border-b-2 focus:border-blue-950 transition-colors focus:outline-none"
-                    placeholder="ex)abc123@example.com"
-                />
+        <BasicLayout>
+            <div className="w-full h-auto font-bold text-2xl md:text-4xl text-black font-sans p-6 md:px-60 md:py-30 flex flex-col">
+                <div className="bg-gray-700 w-full h-auto rounded-2xl flex p-6 md:p-12">
+                    <div className="w-1/2 flex justify-center items-center bg-gray-900 rounded-2xl">
+                        <SpaceShip />
+                    </div>
+                    <div className="w-1/2 rounded-2xl text-left">
+                        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                            <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-pink-500">
+                                아이디 찾기
+                            </h2>
+                        </div>
+
+                        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md shadow-md rounded px-8 pt-6 pb-8">
+                            {!emailSent ? (
+                                <>
+                                    <div>
+                                        <label htmlFor="email" className="text-pink-500 block text-sm font-medium leading-6">
+                                            이메일
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                                id="email"
+                                                name="email"
+                                                type="text"
+                                                placeholder="이메일을 입력하세요"
+                                                autoComplete="email"
+                                                required
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <button
+                                            type="button"
+                                            onClick={sendVerificationEmail}
+                                            className="flex w-full justify-center rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                        >
+                                            인증 번호 전송
+                                        </button>
+                                    </div>
+                                </>
+                            ) : (
+                                !verificationSuccess ? (
+                                    <>
+                                        <div>
+                                            <label htmlFor="code" className="text-pink-500 block text-sm font-medium leading-6">
+                                                인증 코드
+                                            </label>
+                                            <div className="mt-2">
+                                                <input
+                                                    id="code"
+                                                    name="code"
+                                                    type="text"
+                                                    placeholder="인증 코드를 입력하세요"
+                                                    value={verificationCode}
+                                                    onChange={(e) => setVerificationCode(e.target.value)}
+                                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-2">
+                                            <button
+                                                type="button"
+                                                onClick={retrieveUserIds}
+                                                className="flex w-full justify-center rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            >
+                                                아이디 찾기
+                                            </button>
+                                        </div>
+                                        <div className="mt-2 text-center text-sm text-pink-500">
+                                            남은 시간: {Math.floor(timeLeft / 60)}분 {timeLeft % 60}초
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div>
+                                        <p className="mt-4 text-center text-2xl font-bold text-pink-500">{message}</p>
+                                        <div className="mt-4">
+                                            <button
+                                                type="button"
+                                                onClick={handleLoginClick}
+                                                className="flex w-full justify-center rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            >
+                                                로그인하러 가기
+                                            </button>
+                                        </div>
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="flex flex-wrap justify-between w-1/3">
-    
-                    <button
-                        className="bg-[#ffb13c] w-full p-3 mb-3 text-lg font-medium rounded-full hover:bg-[#ffc17f]"
-                        onClick={sendCertificationEmail}
-                    >
-                        아이디 찾기 이메일 요청
-                    </button>
-                
-                <button className="bg-[#c6c6c6] w-[48%] p-3 rounded-full hover:bg-[#e6e6e6]" onClick={() => navigate("/login")}>
-                    로그인
-                </button>
-                <button className="bg-[#c6c6c6] w-[48%] p-3 rounded-full hover:bg-[#e6e6e6]" onClick={() => navigate("/find/pwd")}>
-                    비밀번호 찾기
-                </button>
-            </div>
-            {message && <div className="mt-4 text-center text-red-500">{message}</div>}
-        </div>
+            {isOpen && <ModalComponent setIsOpen={setIsOpen} message={message} callbackFunction={closeModal} />}
+        </BasicLayout>
     );
 }
 

@@ -19,9 +19,9 @@ const DetailPostModalComponent = ({ isOpen, onClose, selectedPost, onEdit, onDel
 
     return (
         <BoardModalComponent isOpen={isOpen} onClose={onClose}>
-            <div className="fixed inset-0 flex justify-center items-center z-50">
+            <div className="fixed  flex justify-center items-center z-50">
                 <div className="bg-gray-800 border-2 border-pink-500 text-gray-200 rounded-lg w-11/12 max-w-2xl p-6 relative">
-                    <button className="absolute top-4 right-4 text-pink-500" onClick={onClose}>
+                <button className="absolute top-4 right-4 text-pink-500" onClick={onClose}>
                         <AiOutlineClose size={24} />
                     </button>
 

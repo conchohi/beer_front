@@ -76,6 +76,7 @@ const LoginMain = () => {
 
     return (
         <>
+        {isOpen && <ModalComponent message={message} callbackFunction={customCallback} />}
             <BasicLayout>
                 <div className="w-full h-auto font-bold text-2xl md:text-4xl text-black font-sans p-6 md:px-60 md:py-30 flex flex-col ">
                     <div className="bg-gray-700 w-full h-auto rounded-2xl flex p-6 md:p-12 ">
@@ -83,7 +84,7 @@ const LoginMain = () => {
                             <Astronaut2 />
                         </div>
                         <div className="w-1/2 rounded-2xl text-left">
-                            {isOpen && <ModalComponent message={message} callbackFunction={customCallback} />}
+                            
                             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                                 <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-pink-500">
                                     로그인
@@ -98,7 +99,7 @@ const LoginMain = () => {
                                                 아이디
                                             </label>
                                             <div className="text-sm">
-                                                <a href="/find/id" className="font-semibold text-indigo-400 hover:text-indigo-600">
+                                                <a href="/find/id" className="font-semibold text-pink-500 hover:text-pink-200">
                                                     아이디를 잊으셨나요?
                                                 </a>
                                             </div>
@@ -131,7 +132,7 @@ const LoginMain = () => {
                                                 비밀번호
                                             </label>
                                             <div className="text-sm">
-                                                <a href="/find/pwd" className="font-semibold text-indigo-400 hover:text-indigo-600">
+                                                <a href="/find/pwd" className="font-semibold text-pink-500 hover:text-pink-200">
                                                     비밀번호를 잊으셨나요?
                                                 </a>
                                             </div>
@@ -177,17 +178,21 @@ const LoginMain = () => {
                                 </p>
                                 <hr className="my-8" />
                                 <div className="flex flex-col justify-center items-center mt-3 space-y-4">
-                                    <a href='http://localhost:8080/oauth2/authorization/kakao' className="w-full">
-                                        <button className="w-full flex items-center justify-center bg-yellow-400 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-black shadow-sm hover:bg-yellow-500">
-                                            카카오 로그인
-                                        </button>
-                                    </a>
-                                    <a href='http://localhost:8080/oauth2/authorization/naver' className="w-full">
-                                        <button className="w-full flex items-center justify-center bg-green-500 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600">
-                                            네이버 로그인
-                                        </button>
-                                    </a>
-                                </div>
+                                <a href='http://localhost:8080/oauth2/authorization/kakao' className="w-full">
+                                    <button className="w-full flex items-center bg-yellow-400 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-black shadow-sm hover:bg-yellow-500">
+                                        <img src="/login/kakaologin.png" alt="Kakao Logo" className="w-6 h-6 mr-2" />
+                                        <span className="flex-grow text-center">카카오 로그인</span>
+                                    </button>
+                                </a>
+                                <a href='http://localhost:8080/oauth2/authorization/naver' className="w-full">
+                                    <button className="w-full flex items-center bg-green-500 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600">
+                                        <img src="/login/naverlogin.png" alt="Naver Logo" className="w-6 h-6 mr-2" />
+                                        <span className="flex-grow text-center">네이버 로그인</span>
+                                    </button>
+                                </a>
+                            </div>
+
+
                             </div>
                         </div>
                     </div>
