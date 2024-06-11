@@ -4,6 +4,8 @@ import useChatMove from "../../hooks/useChatMove";
 import { FaPlus } from "react-icons/fa";
 import CreateRoom from "./modal/CreateRoom";
 import CategorySelector from "./CategorySelector";
+import BasicModalComponent from "../common/BasicModalComponent";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -11,6 +13,11 @@ const SearchBar = () => {
     const [category, setCategory] = useState("");
     const { moveToList, orderBy } = useChatMove();
     const [createRoom, setCreateRoom] = useState(false);
+    const navigate = useNavigate();
+
+    const [openModal, setOpenModal] = useState(false);
+
+    const token = localStorage.getItem('access')
 
     const handleInput = (event) => {
         setSearchTerm(event.target.value);
@@ -33,10 +40,15 @@ const SearchBar = () => {
     }, [category])
 
     const handleCreate = () =>{
+        if(!token){
+            setOpenModal(true)
+            return;
+        }
         setCreateRoom(!createRoom);
     }
 
     return (<>
+        {openModal && <BasicModalComponent message="로그인 후 이용 가능합니다." callbackFunction={()=>navigate('/login')}/>}
         <div className="flex flex-row gap-4 justify-center items-center mb-8">
             {createRoom && <CreateRoom close={handleCreate}/>}
             {/* 검색 유형*/}
