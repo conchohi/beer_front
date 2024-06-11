@@ -134,7 +134,7 @@ const VideoComponentV2 = () => {
         join(roomNo).then(
             //방에 대한 정보를 가져옴
             getRoom(roomNo).then(result => {
-                //참여자 정보
+                //참여자 정보 ( 자신의 닉네임 제외 )
                 setParticipantList(result.participantList)
                 //방 제목
                 setTitle(result.title)
@@ -278,7 +278,7 @@ const VideoComponentV2 = () => {
                                                         //특정 발송자가 방송에서 퇴장했음을 나타내는 데 사용
                                                     } else if (msg["leaving"]) {
                                                         getParticipantList(roomNo).then(result => {
-                                                            setParticipantListExceptMe(result)
+                                                            setParticipantList(result)
                                                             //방장
                                                             setMaster(result.master)
                                                             var leaving = msg["leaving"];
@@ -648,13 +648,13 @@ const VideoComponentV2 = () => {
             setUserDetail(false);
         }
         } />}
-        <div className="w-full flex flex-row flex-wrap pb-5">
-            <div className="w-3/4 flex flex-col flex-wrap">
-                <div className="w-full h-24 px-12 flex flex-row justify-between items-center font-bold text-white">
-                    <span className=" text-5xl">{title}</span>
-                    <ParticipantList participantList={participantList} setClickUserNick={setClickUserNick} />
-                </div>
-                <div className="w-full flex flex-row flex-wrap items-start">
+        <div className="w-full flex flex-wrap">
+            <div className="w-3/4 flex flex-col flex-wrap min-h-[600px]">
+            <div className="w-full h-24 px-12 flex flex-row justify-between items-center font-bold text-5xl text-white">
+                <span className="">{title}</span>
+                <ParticipantList participantList={participantList} setClickUserNick={setClickUserNick} />
+            </div>
+                <div className="w-full flex flex-wrap items-start">
                     <div className={"flex flex-col justify-center rounded-lg items-center text-center p-6 " + (participantList.length <= 3 ? "w-1/2" : "w-1/3")}>
                         <div className="w-full  bg-black border-2 border-yellow-500 rounded-xl">
                             <div className="relative">
@@ -689,18 +689,18 @@ const VideoComponentV2 = () => {
             <div className="flex w-1/4 px-5">
                 <Chat roomId={roomNo} />
             </div>
-
         </div>
-        <div className="flex flex-row mx-12">
+
+          <div className="flex flex-row px-10">
             <div className="w-1/2 flex gap-5 text-white">
                 <VideoButton muted={muted} publish={publish} publishOwnFeed={publishOwnFeed} unpublishOwnFeed={unpublishOwnFeed} toggleMute={toggleMute} />
             </div>
             <div className="w-1/2 flex items-center justify-end gap-5 text-lg font-bold">
-                <button className="py-3 px-10 bg-gray-600 text-white" onClick={clickGame}>게임 선택</button>
-                <button className="py-3 px-10 bg-white" onClick={clickDestoryRoom}>방 폭파</button>
-                <button className="py-3 px-10 bg-[#BE2222] text-white" onClick={clickExitRoom}>나가기</button>
+                <button className="py-3 w-1/4 bg-gray-600 text-white" onClick={clickGame}>게임 선택</button>
+                <button className="py-3 w-1/4 bg-white" onClick={clickDestoryRoom}>방 폭파</button>
+                <button className="py-3 w-1/4 bg-[#BE2222] text-white" onClick={clickExitRoom}>나가기</button>
             </div>
-        </div>
+            </div>      
     </>);
 }
 
