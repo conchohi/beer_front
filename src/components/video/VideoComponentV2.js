@@ -687,7 +687,7 @@ const VideoComponentV2 = () => {
                 </div>
             </div>
             <div className="flex w-1/4 px-5">
-                <Chat roomId={roomNo} />
+                <Chat roomNo={roomNo} nickname={nickname}/>
             </div>
         </div>
 
