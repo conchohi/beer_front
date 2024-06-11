@@ -5,12 +5,10 @@ import { reportUser } from '../../../api/reportApi';
 import BasicModalComponent from '../../common/BasicModalComponent';
 
 
-function ReportUser({user, close}) {
+function ReportUser({user, close, setMessage, setOpenModal}) {
   const [title, setTitle] = useState("");
   const [reason, setReason] = useState("");
   const [content, setContent] = useState("");
-  const [message, setMessage] = useState("");
-  const [openModal, setOpenModal] = useState("");
 
   const handleTitle = (e) =>{
     setTitle(e.target.value)
@@ -46,6 +44,7 @@ function ReportUser({user, close}) {
     reportUser(data).then(result=>{
       setMessage("신고 완료...!")
       setOpenModal(true);
+      close();
     }).catch(error=>{
       if(error.response.status === 400){
         setMessage(error.response.data)
@@ -55,7 +54,6 @@ function ReportUser({user, close}) {
   }
 
   return (<>
-    {openModal && <BasicModalComponent message={message} callbackFunction={()=>{setOpenModal(false)}}/>}
     <Draggable>
       <div className="fixed inset-0 flex items-center justify-center z-40">
         <div className="bg-blue-950 p-6 rounded-lg shadow-lg w-full max-w-md relative">

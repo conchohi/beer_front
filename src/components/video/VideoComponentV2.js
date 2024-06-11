@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Janus from "../../api/janus";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaMicrophoneAlt, FaMicrophoneAltSlash, FaVideo, FaVideoSlash, } from "react-icons/fa";
+
 import { FaUserLarge } from "react-icons/fa6";
 import DestoryCheckModal from "./modal/room/DestroyCheckModal";
 import UserDetail from "./modal/UserDetail";
@@ -9,6 +9,8 @@ import Chat from "./Chat";
 import { destoryRoom, exit, getParticipantList, getRoom, join } from "../../api/roomApi";
 import BasicModalComponent from "../common/BasicModalComponent";
 import GameSelectModal from "./modal/game/GameSelectModal";
+import ParticipantList from "./ParticipantList";
+import VideoButton from "./VideoButton";
 
 const server = "https://janus.jsflux.co.kr/janus";
 
@@ -113,7 +115,7 @@ const VideoComponentV2 = () => {
     const basicModalClose = () => {
         if (message === "방장만 선택 가능합니다.") {
             setOpenModal(false)
-        } else if(message === "로그인 후 이용 가능합니다."){
+        } else if (message === "로그인 후 이용 가능합니다.") {
             navigate('/login')
         }
         else {
@@ -121,19 +123,9 @@ const VideoComponentV2 = () => {
         }
     }
 
-    const setParticipantListExceptMe = (participantList) => {
-        if(participantList){
-            setParticipantList(participantList.filter((element) => {
-                // 현재 요소가 이전에 등장하지 않은 경우만 true를 반환
-                return element.nickname !== nickname;
-            }))
-        } else{
-            setParticipantList([]);
-        }
-    }
 
     useEffect(() => {
-        if(!nickname){
+        if (!nickname) {
             setMessage('로그인 후 이용 가능합니다.')
             setOpenModal(true)
             return;
@@ -142,8 +134,8 @@ const VideoComponentV2 = () => {
         join(roomNo).then(
             //방에 대한 정보를 가져옴
             getRoom(roomNo).then(result => {
-                //참여자 정보 ( 자신의 닉네임 제외 )
-                setParticipantListExceptMe(result.participantList)
+                //참여자 정보
+                setParticipantList(result.participantList)
                 //방 제목
                 setTitle(result.title)
                 //방장
@@ -242,7 +234,7 @@ const VideoComponentV2 = () => {
                                                     //Janus에서 서버로부터 수신된 메시지에서 발송자(publisher) 목록을 나타냄
                                                     if (msg["publishers"]) {
                                                         getParticipantList(roomNo).then(result => {
-                                                            setParticipantListExceptMe(result);
+                                                            setParticipantList(result);
 
                                                             let list = msg["publishers"];
                                                             Janus.debug("Got a list of available publishers/feeds:", list);
@@ -269,7 +261,7 @@ const VideoComponentV2 = () => {
                                                     //Janus에서 서버로부터 수신된 메시지에서 발송자(publisher) 목록을 나타냄
                                                     if (msg["publishers"]) {
                                                         getRoom(roomNo).then(result => {
-                                                            setParticipantListExceptMe(result.participantList);
+                                                            setParticipantList(result.participantList);
                                                             let list = msg["publishers"];
                                                             Janus.debug("Got a list of available publishers/feeds:", list);
                                                             for (let f in list) {
@@ -291,7 +283,7 @@ const VideoComponentV2 = () => {
                                                             setMaster(result.master)
                                                             var leaving = msg["leaving"];
                                                             Janus.log("Publisher left: " + leaving);
-                                                            
+
                                                             setleaveId(leaving)
                                                         })
                                                         // 발송자가 발행한 스트림이 중지되었음을 나타내는 이벤트, 방송을 중지했을 때 발생
@@ -364,7 +356,7 @@ const VideoComponentV2 = () => {
                     }
                 })
 
-            }).catch(error =>{
+            }).catch(error => {
                 setMessage(error.response.data.message)
             })
         ).catch(error => {
@@ -447,42 +439,42 @@ const VideoComponentV2 = () => {
     useEffect(() => {
         //새로운 피드가 들어오면 시작
         if (!newFeed) {
-          return;
+            return;
         }
         const updatedFeeds = [...feeds];
         for (let i = 0; i < 6; i++) {
-          if (!updatedFeeds[i]) {
-            // 리모트 피드를 추가
-            updatedFeeds[i] = newFeed;
-            newFeed.rfindex = i;
-            // 상태를 업데이트하고 함수 종료
-            setFeeds(updatedFeeds);
-            break;
-          }
+            if (!updatedFeeds[i]) {
+                // 리모트 피드를 추가
+                updatedFeeds[i] = newFeed;
+                newFeed.rfindex = i;
+                // 상태를 업데이트하고 함수 종료
+                setFeeds(updatedFeeds);
+                break;
+            }
         }
-      }, [newFeed]);
+    }, [newFeed]);
 
     useEffect(() => {
         if (!leaveId) {
-          return;
+            return;
         }
         let remoteFeed = null;
         for (var i = 0; i < 6; i++) {
-          if (feeds[i] && feeds[i].rfid == leaveId) {
-            remoteFeed = feeds[i];
-            break;
-          }
+            if (feeds[i] && feeds[i].rfid == leaveId) {
+                remoteFeed = feeds[i];
+                break;
+            }
         }
         if (remoteFeed != null) {
-          Janus.debug("Feed " + remoteFeed.rfid + " (" + remoteFeed.rfdisplay + ") has left the room, detaching");
-          remoteVideoRef.current[remoteFeed.rfindex].srcObject = null;
-          const updatedFeeds = [...feeds];
-          updatedFeeds.splice(remoteFeed.rfindex, 1);
-          setFeeds(updatedFeeds);
-          remoteFeed.detach();
+            Janus.debug("Feed " + remoteFeed.rfid + " (" + remoteFeed.rfdisplay + ") has left the room, detaching");
+            remoteVideoRef.current[remoteFeed.rfindex].srcObject = null;
+            const updatedFeeds = [...feeds];
+            updatedFeeds.splice(remoteFeed.rfindex, 1);
+            setFeeds(updatedFeeds);
+            remoteFeed.detach();
         }
         setleaveId(null);
-      }, [leaveId]);
+    }, [leaveId]);
 
     useEffect(() => {
         if (clickUserNick) {
@@ -632,7 +624,7 @@ const VideoComponentV2 = () => {
                     } catch (error) {
                         console.error("Error attaching stream to element:", error);
                     }
-        
+
                 },
                 oncleanup: function () {
                     Janus.log(" ::: Got a cleanup notification (remote feed " + id + ") :::");
@@ -644,71 +636,69 @@ const VideoComponentV2 = () => {
 
 
     return (<>
-        <div className="w-full flex flex-row flex-wrap ">
-            {/* 게임 선택 모달 */}
-            {openGame && <GameSelectModal roomNo={roomNo} close={()=>{setOpenGame(false)}} />}
-            {/* 방 폭파 확인 모달 */}
-            {checkDestory && <DestoryCheckModal setCheckDestroy={setCheckDestory} destroy={destory} />}
-            {/* 메세지 모달 */}
-            {openModal && <BasicModalComponent message={message} callbackFunction={basicModalClose} />}
-            {/* 회원 정보 모달 */}
-            {userDetail && <UserDetail nickname={clickUserNick} close={() => {
-                setClickUserNick("");
-                setUserDetail(false);
-            }
-            } />}
-            <div className="w-full font-bold text-3xl text-white mb-2 ms-40 ">{title}</div>
-            <div className="w-1/12 flex flex-col gap-5 text-white mt-4">
-                <button onClick={toggleMute}>{muted ?
-                    <div className="flex flex-col justify-center items-center text-center"><FaMicrophoneAltSlash color="white" size="40" /><span>음소거 해제</span></div>
-                    : <div className="flex flex-col justify-center items-center text-center"><FaMicrophoneAlt color="white" size="40" /><span>음소거</span></div>}
-                </button>
-                <button onClick={() => { publish ? unpublishOwnFeed() : publishOwnFeed(true) }}>{publish ?
-                    <div className="flex flex-col justify-center items-center text-center"><FaVideoSlash color="white" size="40" /><span>비디오 종료</span></div>
-                    : <div className="flex flex-col justify-center items-center text-center"><FaVideo color="white" size="40" /><span>비디오 시작</span></div>}
-
-
-                </button>
-            </div>
-            <div className="w-5/6 flex flex-row flex-wrap ">
-                <div className={"flex flex-col justify-center rounded-lg items-center text-center p-4 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
-                    <div className="w-full  bg-black border-2 border-white rounded-xl">
-                        <div className="relative">
-                            <div className="pb-[56.25%] h-0 relative">
-                                <video ref={myVideoRef} id="myvideo" className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline muted />
+        {/* 게임 선택 모달 */}
+        {openGame && <GameSelectModal roomNo={roomNo} close={() => { setOpenGame(false) }} />}
+        {/* 방 폭파 확인 모달 */}
+        {checkDestory && <DestoryCheckModal setCheckDestroy={setCheckDestory} destroy={destory} />}
+        {/* 메세지 모달 */}
+        {openModal && <BasicModalComponent message={message} callbackFunction={basicModalClose} />}
+        {/* 회원 정보 모달 */}
+        {userDetail && <UserDetail nickname={clickUserNick} close={() => {
+            setClickUserNick("");
+            setUserDetail(false);
+        }
+        } />}
+        <div className="w-full flex flex-row flex-wrap pb-5">
+            <div className="w-3/4 flex flex-col flex-wrap">
+                <div className="w-full h-24 px-12 flex flex-row justify-between items-center font-bold text-white">
+                    <span className=" text-5xl">{title}</span>
+                    <ParticipantList participantList={participantList} setClickUserNick={setClickUserNick} />
+                </div>
+                <div className="w-full flex flex-row flex-wrap items-start">
+                    <div className={"flex flex-col justify-center rounded-lg items-center text-center p-6 " + (participantList.length <= 3 ? "w-1/2" : "w-1/3")}>
+                        <div className="w-full  bg-black border-2 border-yellow-500 rounded-xl">
+                            <div className="relative">
+                                <div className="pb-[56.25%] h-0 relative">
+                                    <video ref={myVideoRef} id="myvideo" className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline muted />
+                                </div>
+                                <span className="absolute bottom-6 right-6 cursor-pointer" onClick={() => { setClickUserNick(nickname) }}><FaUserLarge size="40" /></span>
                             </div>
-                            <span className="absolute bottom-6 right-6 cursor-pointer" onClick={() => { setClickUserNick(nickname) }}><FaUserLarge size="40" /></span>
+                            <span className="font-bold text-xl py-3 text-white" >{nickname}</span>
                         </div>
-                        <span className="font-bold text-xl py-3 text-white" >{nickname}</span>
+
                     </div>
 
-                </div>
-
-                {feeds.map((feed) => {
-                    return (
-                        <div className={"flex flex-col justify-center items-center text-center p-6 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
-                            <div className="w-full  bg-black border-2 border-white rounded-xl">
-                                <div className="relative">
-                                    <div className="pb-[56.25%] h-0 relative">
-                                        <video ref={(el) => remoteVideoRef.current[feed.rfindex] = el} className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline />
+                    {feeds.map((feed) => {
+                        return (
+                            <div className={"flex flex-col justify-center items-center text-center p-6 " + (participantList.length <= 3 ? "w-1/2" : "w-1/3")}>
+                                <div className="w-full  bg-black border-2 border-white rounded-xl">
+                                    <div className="relative">
+                                        <div className="pb-[56.25%] h-0 relative">
+                                            <video ref={(el) => remoteVideoRef.current[feed.rfindex] = el} className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline />
+                                        </div>
+                                        <span className="absolute bottom-6 right-6 cursor-pointer z-20" onClick={() => { setClickUserNick(feed.rfdisplay) }}><FaUserLarge size="40" /></span>
                                     </div>
-                                    <span className="absolute bottom-6 right-6 cursor-pointer z-20" onClick={() => { setClickUserNick(feed.rfdisplay) }}><FaUserLarge size="40" /></span>
+                                    <span className="font-bold text-lg py-3 text-white">{feed.rfdisplay}</span>
                                 </div>
-                                <span className="font-bold text-lg py-3 text-white">{feed.rfdisplay}</span>
                             </div>
-                        </div>
-                    )
+                        )
 
-                })}
+                    })}
+                </div>
             </div>
-        </div>
-        <div className="flex w-5/6 mx-auto mt-12">
-            <Chat roomId={roomNo} />
+            <div className="flex w-1/4 px-5">
+                <Chat roomId={roomNo} />
+            </div>
 
-            <div className="w-1/4 flex flex-col items-center gap-5 ps-5 text-lg font-bold">
-                <button className="w-full py-5 bg-gray-600 text-white" onClick={clickGame}>게임 선택</button>
-                <button className="w-full py-5 bg-[#BE2222] text-white" onClick={clickExitRoom}>나가기</button>
-                <button className="w-full py-5 bg-white" onClick={clickDestoryRoom}>방 폭파</button>
+        </div>
+        <div className="flex flex-row mx-12">
+            <div className="w-1/2 flex gap-5 text-white">
+                <VideoButton muted={muted} publish={publish} publishOwnFeed={publishOwnFeed} unpublishOwnFeed={unpublishOwnFeed} toggleMute={toggleMute} />
+            </div>
+            <div className="w-1/2 flex items-center justify-end gap-5 text-lg font-bold">
+                <button className="py-3 px-10 bg-gray-600 text-white" onClick={clickGame}>게임 선택</button>
+                <button className="py-3 px-10 bg-white" onClick={clickDestoryRoom}>방 폭파</button>
+                <button className="py-3 px-10 bg-[#BE2222] text-white" onClick={clickExitRoom}>나가기</button>
             </div>
         </div>
     </>);
