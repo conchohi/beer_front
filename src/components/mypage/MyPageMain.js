@@ -6,6 +6,7 @@ import HostFollowingGames from "./follow/HostFollowingGames";
 import FollowingList from "./follow/FollowingList";
 import EditProfileModal from "./modal/EditProfileModal";
 import axios from "axios";
+import privateApi from "../../api/axios_intercepter";
 
 const MyPageMain = () => {
   const { state } = useLocation();
@@ -22,11 +23,7 @@ const MyPageMain = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:8080/api/user/token/user", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await privateApi.get("/api/user");
 
         setUserData(response.data);
       } catch (error) {
