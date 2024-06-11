@@ -25,7 +25,7 @@ const ChatCard = ({chat}) => {
     
     return ( 
         <>
-        {openModal && <BasicModalComponent message="로그인 후 이용 가능합니다." callbackFunction={()=>{navigate('/login')}}/>}
+        {openModal && <BasicModalComponent message="로그인 후 이용 가능합니다." callbackFunction={()=>{setOpenModal(!openModal)}}/>}
         {passwordModal && <PasswordModalComponent roomNo={chat.roomNo} close={()=>{setPasswordModal(false)}}/>}
         <div className="flex flex-col bg-white w-full py-5 px-5 my-5 rounded-xl cursor-pointer" onClick={moveToChat}>
             <img className="w-full border shadow-lg mb-5" src={ `/img/chatlist/${chat.category}.png`} alt={chat.category}/>
