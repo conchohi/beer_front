@@ -172,7 +172,7 @@ const Chat = ({ roomNo, nickname }) => {
   }, []);
 
   const renderChat = () => (
-    <div className="chat-box flex bg-slate-100 flex-col shadow-lg p-10 h-[600px]">
+    <div className="chat-box flex bg-slate-100 flex-col shadow-lg p-10 h-full">
       <div className="date-banner text-center mb-4">{date}</div>
       <div className="chat-content flex-1 overflow-y-scroll p-2">
         <ul className="chat-messages">

@@ -16,11 +16,11 @@ function UserDetail({ nickname, close }) {
   const myNickname = localStorage.getItem('nickname')
 
   const handleReport = () => {
-    // if(myNickname && myNickname === nickname){
-    //   setMessage('본인은 신고할 수 없습니다.')
-    //   setOpenModal(true);
-    //   return;
-    // }
+    if(myNickname && myNickname === nickname){
+      setMessage('본인은 신고할 수 없습니다.')
+      setOpenModal(true);
+      return;
+    }
     setReport(!report)
   }
 
@@ -33,7 +33,7 @@ function UserDetail({ nickname, close }) {
   return (
     <>
       {openModal && <BasicModalComponent message={message} callbackFunction={()=>{setOpenModal(false)}}/>}
-      {report && <ReportUser user={userInfo} close={handleReport} />}
+      {report && <ReportUser user={userInfo} setMessage={setMessage} setOpenModal={setOpenModal} close={handleReport} />}
       <Draggable>
         <div className="fixed inset-0 flex items-center justify-center z-30">
           <div className="bg-blue-950 text-white w-96 p-5 rounded-lg shadow-lg relative">
