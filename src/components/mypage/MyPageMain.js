@@ -12,18 +12,17 @@ const MyPageMain = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState(null);
-  const nickname = localStorage.getItem("nickname");
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("access");
-        if (!token || !nickname) {
+        if (!token) {
           navigate("/login");
           return;
         }
 
-        const response = await axios.get(`http://localhost:8080/api/user/nickname/${nickname}`, {
+        const response = await axios.get("http://localhost:8080/api/user/token/user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -37,7 +36,7 @@ const MyPageMain = () => {
     };
 
     fetchUserData();
-  }, [nickname, navigate]);
+  }, [navigate]);
 
   const handleOpen = () => setOpen(true);
 
