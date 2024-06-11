@@ -136,7 +136,7 @@ const LoginMain = () => {
 
     return (
         <>
-            {isOpen && <ModalComponent message={message} callbackFunction={customCallback} />}
+            {isOpen && <BasicModalComponent message={message} callbackFunction={customCallback} />}
             <BasicLayout>
                 <div className="w-full h-auto font-bold text-2xl md:text-4xl text-black font-sans p-6 md:px-60 md:py-30 flex flex-col ">
                     <div className="bg-gray-700 w-full h-auto rounded-2xl flex p-6 md:p-12 ">
