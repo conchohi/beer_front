@@ -101,10 +101,10 @@ const VideoComponent = () => {
                 sfuClient = pluginHandle;
                 Janus.log(
                   "Plugin attached! (" +
-                    sfuClient.getPlugin() +
-                    ", id=" +
-                    sfuClient.getId() +
-                    ")"
+                  sfuClient.getPlugin() +
+                  ", id=" +
+                  sfuClient.getId() +
+                  ")"
                 );
                 Janus.log("  -- This is a publisher/manager");
 
@@ -160,9 +160,9 @@ const VideoComponent = () => {
               mediaState: function (medium, on) {
                 Janus.log(
                   "Janus " +
-                    (on ? "started" : "stopped") +
-                    " receiving our " +
-                    medium
+                  (on ? "started" : "stopped") +
+                  " receiving our " +
+                  medium
                 );
               },
               //전체 WebRTC 연결 상태 변화를 처리합니다.
@@ -170,8 +170,8 @@ const VideoComponent = () => {
               webrtcState: function (on) {
                 Janus.log(
                   "Janus says our WebRTC PeerConnection is " +
-                    (on ? "up" : "down") +
-                    " now"
+                  (on ? "up" : "down") +
+                  " now"
                 );
                 // setLoading(!on);
                 // if (!on)
@@ -193,9 +193,9 @@ const VideoComponent = () => {
 
                     Janus.log(
                       "Successfully joined room " +
-                        msg["room"] +
-                        " with ID " +
-                        msg["id"]
+                      msg["room"] +
+                      " with ID " +
+                      msg["id"]
                     );
 
                     setPublish(true);
@@ -214,14 +214,14 @@ const VideoComponent = () => {
                         let video = list[f]["video_codec"];
                         Janus.debug(
                           "  >> [" +
-                            id +
-                            "] " +
-                            display +
-                            " (audio: " +
-                            audio +
-                            ", video: " +
-                            video +
-                            ")"
+                          id +
+                          "] " +
+                          display +
+                          " (audio: " +
+                          audio +
+                          ", video: " +
+                          video +
+                          ")"
                         );
                         newRemoteFeed(id, display, audio, video);
                       }
@@ -247,14 +247,14 @@ const VideoComponent = () => {
                         let video = list[f]["video_codec"];
                         Janus.debug(
                           "  >> [" +
-                            id +
-                            "] " +
-                            display +
-                            " (audio: " +
-                            audio +
-                            ", video: " +
-                            video +
-                            ")"
+                          id +
+                          "] " +
+                          display +
+                          " (audio: " +
+                          audio +
+                          ", video: " +
+                          video +
+                          ")"
                         );
                         newRemoteFeed(id, display, audio, video);
                       }
@@ -280,13 +280,13 @@ const VideoComponent = () => {
                         // This is a "no such room" error: give a more meaningful description
                         alert(
                           "<p>Apparently room <code>" +
-                            myroom +
-                            "</code> (the one this demo uses as a test room) " +
-                            "does not exist...</p><p>Do you have an updated <code>janus.plugin.videoroom.jcfg</code> " +
-                            "configuration file? If not, make sure you copy the details of room <code>" +
-                            myroom +
-                            "</code> " +
-                            "from that sample in your current configuration file, then restart Janus and try again."
+                          myroom +
+                          "</code> (the one this demo uses as a test room) " +
+                          "does not exist...</p><p>Do you have an updated <code>janus.plugin.videoroom.jcfg</code> " +
+                          "configuration file? If not, make sure you copy the details of room <code>" +
+                          myroom +
+                          "</code> " +
+                          "from that sample in your current configuration file, then restart Janus and try again."
                         );
                       } else {
                         alert(msg["error"]);
@@ -445,10 +445,10 @@ const VideoComponent = () => {
     if (remoteFeed != null) {
       Janus.debug(
         "Feed " +
-          remoteFeed.rfid +
-          " (" +
-          remoteFeed.rfdisplay +
-          ") has left the room, detaching"
+        remoteFeed.rfid +
+        " (" +
+        remoteFeed.rfdisplay +
+        ") has left the room, detaching"
       );
       remoteVideoRef.current[remoteFeed.rfindex].srcObject = null;
       const updatedFeeds = [...feeds];
@@ -551,10 +551,10 @@ const VideoComponent = () => {
         remoteFeed.simulcastStarted = true;
         Janus.log(
           "Plugin attached! (" +
-            remoteFeed.getPlugin() +
-            ", id=" +
-            remoteFeed.getId() +
-            ")"
+          remoteFeed.getPlugin() +
+          ", id=" +
+          remoteFeed.getId() +
+          ")"
         );
         Janus.log("  -- This is a subscriber");
         //"join"을 사용하여 구독 요청을 생성
@@ -573,8 +573,8 @@ const VideoComponent = () => {
           if (video) video = video.toUpperCase();
           alert.warning(
             "Publisher is using " +
-              video +
-              ", but Safari doesn't support it: disabling video"
+            video +
+            ", but Safari doesn't support it: disabling video"
           );
           subscribe["offer_video"] = false;
         }
@@ -608,11 +608,11 @@ const VideoComponent = () => {
             setNewFeed(remoteFeed);
             Janus.log(
               "Successfully attached to feed " +
-                remoteFeed.rfid +
-                " (" +
-                remoteFeed.rfdisplay +
-                ") in room " +
-                msg["room"]
+              remoteFeed.rfid +
+              " (" +
+              remoteFeed.rfdisplay +
+              ") in room " +
+              msg["room"]
             );
           }
         }
@@ -638,18 +638,18 @@ const VideoComponent = () => {
       iceState: function (state) {
         Janus.log(
           "ICE state of this WebRTC PeerConnection (feed #" +
-            remoteFeed.rfindex +
-            ") changed to " +
-            state
+          remoteFeed.rfindex +
+          ") changed to " +
+          state
         );
       },
       webrtcState: function (on) {
         Janus.log(
           "Janus says this WebRTC PeerConnection (feed #" +
-            remoteFeed.rfindex +
-            ") is " +
-            (on ? "up" : "down") +
-            " now"
+          remoteFeed.rfindex +
+          ") is " +
+          (on ? "up" : "down") +
+          " now"
         );
       },
       onlocalstream: function (stream) {
@@ -733,8 +733,8 @@ const VideoComponent = () => {
               publish
                 ? unpublishOwnFeed
                 : () => {
-                    setPublish(true);
-                  }
+                  setPublish(true);
+                }
             }
           >
             {publish ? (
