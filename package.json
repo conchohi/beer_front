@@ -23,6 +23,7 @@
     "react-transition-group": "^4.4.5",
     "sockjs-client": "^1.6.1",
     "spin.js": "^4.1.1",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "web-vitals": "^2.1.4",
     "webrtc-adapter": "^9.0.1"
   },
