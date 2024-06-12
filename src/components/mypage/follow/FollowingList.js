@@ -1,43 +1,37 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { FaUsersSlash } from "react-icons/fa";
-import FollowingListItem from "./FollowingListItem.js";
+import privateApi from "../../../api/axios_intercepter";
+import FollowingListItem from "./FollowingListItem";
 
-export default function FollowingList() {
-  const [list, setList] = useState([]);
 
-  const getList = async () => {
+const FollowingList = ({ refreshTrigger }) => {
+  const [friends, setFriends] = useState([]);
+
+  useEffect(() => {
+    fetchFriends();
+  }, [refreshTrigger]);
+
+  const fetchFriends = async () => {
     try {
-      const userId = `${userId}`; // 여기에 실제 userId를 동적으로 설정하세요
-      const token = `Bearer ${token}`; // 여기에 실제 JWT 토큰을 설정하세요
-      const response = await axios.get(`http://localhost:8080/api/following/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setList(response.data);
+      const response = await privateApi.get("/api/friend/list");
+      setFriends(response.data);
     } catch (error) {
-      console.error("Error fetching following list", error);
+      console.error("Error fetching friends:", error);
     }
   };
 
-  useEffect(() => {
-    getList();
-  }, []);
+  const handleFriendDeleted = (userId) => {
+    setFriends(friends.filter(friend => friend.userId !== userId));
+  };
 
-  if (list.length > 0) {
+  if (friends.length > 0) {
     return (
       <div className="max-h-40rem w-full mt-4 overflow-auto">
-        {list.map((followInfo, idx) => (
+        {friends.map(friend => (
           <FollowingListItem
-            userNo={followInfo.userNo}
-            userName={followInfo.userName}
-            level={followInfo.level}
-            userImage={followInfo.userImageUrl}
-            online={followInfo.online}
-            key={idx}
-            token={`Bearer ${token}`} // 실제 JWT 토큰을 전달
-            userId={`${userId}`} // 실제 userId를 전달
+            key={friend.userId}
+            friend={friend}
+            onFriendDeleted={handleFriendDeleted}
           />
         ))}
       </div>
@@ -52,4 +46,6 @@ export default function FollowingList() {
       </div>
     );
   }
-}
+};
+
+export default FollowingList;

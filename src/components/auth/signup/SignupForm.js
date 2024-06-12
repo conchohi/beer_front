@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ModalComponent from '../../common/ModalComponent';
 import EmailVerification from './check/EmailVerification';
+import { publicApi } from '../../../api/axios_intercepter';
+
 
 const SignupForm = () => {
     const [formData, setFormData] = useState({
@@ -105,7 +106,7 @@ const SignupForm = () => {
         const { id, password, nickname, email, mbti, gender } = formData;
 
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/auth/join', {
+            const response = await publicApi.post('/api/user/join', {
                 id,
                 password,
                 nickname,
@@ -131,7 +132,7 @@ const SignupForm = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/api/user/id-check', { id: formData.id });
+            const response = await publicApi.post('/api/user/id-check', { id: formData.id });
             if (response.data.message === 'Success.') {
                 setIsIdAvailable(true);
                 setModalContent("사용 가능한 아이디입니다.");
@@ -157,7 +158,7 @@ const SignupForm = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/api/user/nickname-check', { nickname: formData.nickname });
+            const response = await publicApi.post('/api/user/nickname-check', { nickname: formData.nickname });
             if (response.data.message === 'Success.') {
                 setIsNicknameAvailable(true);
                 setModalContent("사용 가능한 닉네임입니다.");
