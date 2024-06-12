@@ -278,8 +278,8 @@ const VideoComponentV3 = () => {
                                                         })
                                                         //특정 발송자가 방송에서 퇴장했음을 나타내는 데 사용
                                                     } else if (msg["leaving"]) {
-                                                        getParticipantList(roomNo).then(result => {
-                                                            setParticipantList(result)
+                                                        getRoom(roomNo).then(result => {
+                                                            setParticipantList(result.participant)
                                                             //방장
                                                             setMaster(result.master)
                                                             var leaving = msg["leaving"];
