@@ -172,7 +172,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   }, []);
 
   const renderChat = () => (
-    <div className="chat-box flex bg-gray-600 rounded-lg flex-col shadow-lg p-4 h-[500px] ">
+    <div className="chat-box flex bg-white rounded-lg flex-col shadow-lg p-4 h-full ">
       <div className="date-banner text-center mb-2">{date}</div>
       <div className="chat-content flex-1 overflow-y-scroll p-1">
         <ul className="chat-messages space-y-2">
@@ -254,7 +254,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   );
 
   return (
-    <div className="container mx-auto p-4 flex flex-col h-[600px]">
+    <div className="container mx-auto p-4 flex flex-col h-full max-h-[800px]">
       <div className="tabs flex justify-start mb-4 space-x-4">
         <button
           className={`tab px-4 py-2 rounded ${
