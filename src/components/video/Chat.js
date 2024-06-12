@@ -172,17 +172,17 @@ const Chat = ({ roomNo, nickname }) => {
   }, []);
 
   const renderChat = () => (
-    <div className="chat-box flex bg-slate-100 flex-col shadow-lg p-10 h-full">
-      <div className="date-banner text-center mb-4">{date}</div>
-      <div className="chat-content flex-1 overflow-y-scroll p-2">
-        <ul className="chat-messages">
+    <div className="chat-box flex bg-gray-600 rounded-lg flex-col shadow-lg p-4 h-[500px] ">
+      <div className="date-banner text-center mb-2">{date}</div>
+      <div className="chat-content flex-1 overflow-y-scroll p-1">
+        <ul className="chat-messages space-y-2">
           {publicChats.map((chat, index) =>
             chat.type === "JOIN" ? (
-              <li key={index} className="text-center text-blue-600 font-bold">
+              <li key={index} className="text-center text-blue-500 font-semibold">
                 {chat.sender}님이 입장하셨습니다.
               </li>
             ) : chat.type === "LEAVE" ? (
-              <li key={index} className="text-center text-pink-500 font-bold">
+              <li key={index} className="text-center text-pink-500 font-semibold">
                 {chat.sender}님이 퇴장하셨습니다.
               </li>
             ) : (
@@ -197,7 +197,7 @@ const Chat = ({ roomNo, nickname }) => {
                     <div className="avatar bg-blue-500 text-white p-2 rounded">
                       {chat.sender}
                     </div>
-                    <span className="text-gray-500 text-sm w-10">
+                    <span className="text-gray-600 text-sm w-10">
                       {formatDate(chat.date)}
                     </span>
                   </div>
@@ -207,10 +207,10 @@ const Chat = ({ roomNo, nickname }) => {
                 </div>
                 {chat.sender === userData.sender && (
                   <div className="flex flex-col items-end">
-                    <div className="avatar self bg-green-500 text-black p-2 rounded">
-                      {chat.sender}
+                    <div className="avatar self  text-black p-2 rounded">
+                      {/* {chat.sender} */}
                     </div>
-                    <span className="text-gray-500 text-sm w-20">
+                    <span className="text-gray-500 text-xs font-thin w-20">
                       {formatDate(chat.date)}
                     </span>
                   </div>
@@ -232,7 +232,7 @@ const Chat = ({ roomNo, nickname }) => {
         />
         <button
           type="button"
-          className="send-button bg-green-500 text-white rounded-full px-4 ml-2"
+          className="send-button bg-yellow-500 text-gray-800 rounded-full px-4 ml-2"
           onClick={sendValue}
         >
           전송
@@ -254,8 +254,8 @@ const Chat = ({ roomNo, nickname }) => {
         <button
           className={`tab px-4 py-2 rounded ${
             activeTab === "chat"
-              ? "bg-purple-600 text-white"
-              : "bg-white text-purple-600"
+              ? "bg-yellow-500 text-gray-800"
+              : "bg-white text-gray-800"
           }`}
           onClick={() => setActiveTab("chat")}
         >
@@ -264,8 +264,8 @@ const Chat = ({ roomNo, nickname }) => {
         <button
           className={`tab px-4 py-2 rounded ${
             activeTab === "game"
-              ? "bg-purple-600 text-white"
-              : "bg-white text-purple-600"
+              ? "bg-yellow-500 text-gray-800"
+              : "bg-white text-gray-800"
           }`}
           onClick={() => setActiveTab("game")}
         >

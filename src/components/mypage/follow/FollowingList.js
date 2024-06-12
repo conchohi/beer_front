@@ -1,13 +1,19 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { FaUsersSlash } from "react-icons/fa";
-import FollowingListItem from "./FollowingListItem.js";
-
+import privateApi from "../../../api/axios_intercepter";
+import FollowingListItem from "./FollowingListItem";
 export default function FollowingList() {
   const [list, setList] = useState([]);
   const [error, setError] = useState(null);
 
-  const getList = async () => {
+const FollowingList = ({ refreshTrigger }) => {
+  const [friends, setFriends] = useState([]);
+
+  useEffect(() => {
+    fetchFriends();
+  }, [refreshTrigger]);
+
+  const fetchFriends = async () => {
     try {
       const userId = localStorage.getItem("saved_id");
       const token = localStorage.getItem("token");
@@ -28,9 +34,9 @@ export default function FollowingList() {
     }
   };
 
-  useEffect(() => {
-    getList();
-  }, []);
+  const handleFriendDeleted = (userId) => {
+    setFriends(friends.filter(friend => friend.userId !== userId));
+  };
 
   const handleUnfollow = (userNo) => {
     setList((prevList) => prevList.filter((item) => item.userNo !== userNo));
@@ -47,10 +53,9 @@ export default function FollowingList() {
   if (list.length > 0) {
     const userId = localStorage.getItem("userId");
     const token = `Bearer ${localStorage.getItem("token")}`;
-
     return (
       <div className="max-h-40rem w-full mt-4 overflow-auto">
-        {list.map((followInfo, idx) => (
+        {friends.map(friend => (
           <FollowingListItem
             userNo={followInfo.userNo}
             userName={followInfo.userName}
@@ -75,4 +80,6 @@ export default function FollowingList() {
       </div>
     );
   }
-}
+};
+
+export default FollowingList;

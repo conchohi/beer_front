@@ -181,11 +181,14 @@ const BoardMain = () => {
     const handleAddComment = async (content) => {
         try {
             const newComment = {
+                writerId: currentUser.id,
+                nickname: currentUser.nickname,
+                boardNo: selectedPost.id,
                 content,
-                writer: 'current_user',
                 createDate: new Date().toISOString().split('T')[0]
             };
             const addedComment = await addComment(selectedPost.boardNo, newComment);
+            
             const updatedBoardData = boardData.map((post) => {
                 if (post.boardNo === selectedPost.boardNo) {
                     const updatedComments = Array.isArray(post.commentEntityList) ? post.commentEntityList : [];
