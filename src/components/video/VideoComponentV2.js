@@ -686,7 +686,7 @@ const VideoComponentV2 = () => {
                     })}
                 </div>
             </div>
-            <div className="flex w-1/4 px-5">
+            <div className="hidden md:flex w-1/4 px-5">
                 <Chat roomNo={roomNo} nickname={nickname}/>
             </div>
         </div>
@@ -696,9 +696,9 @@ const VideoComponentV2 = () => {
                 <VideoButton muted={muted} publish={publish} publishOwnFeed={publishOwnFeed} unpublishOwnFeed={unpublishOwnFeed} toggleMute={toggleMute} />
             </div>
             <div className="w-1/2 flex items-center justify-end gap-5 text-lg font-bold">
-                <button className="py-3 w-1/4 bg-gray-600 text-white" onClick={clickGame}>게임 선택</button>
-                <button className="py-3 w-1/4 bg-white" onClick={clickDestoryRoom}>방 폭파</button>
-                <button className="py-3 w-1/4 bg-[#BE2222] text-white" onClick={clickExitRoom}>나가기</button>
+                <button className="py-3 w-28 bg-yellow-500 text-white rounded-xl" onClick={clickGame}>게임 선택</button>
+                <button className="py-3 w-28 bg-white rounded-xl" onClick={clickDestoryRoom}>방 폭파</button>
+                <button className="py-3 w-28 bg-[#BE2222] text-white rounded-xl" onClick={clickExitRoom}>나가기</button>
             </div>
             </div>      
     </>);

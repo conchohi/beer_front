@@ -821,7 +821,7 @@ const VideoComponent = () => {
           })}
         </div>
       </div>
-      <div className="flex w-5/6 mx-auto mt-12">
+      <div className="flex w-2/6 mx-auto mt-12">
         <Chat roomNo={roomNo} username={nickname} />
 
         <div className="w-1/4 flex flex-col items-center gap-5 ps-5 text-lg font-bold">
