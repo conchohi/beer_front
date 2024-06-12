@@ -5,18 +5,18 @@ import { FaWindowClose } from "react-icons/fa";
 const gameGuides = [
     {
         id: "이미지 게임",
-        src: "/img/imagegame.png",
+        src: "/img/imggame.png",
         alt: "Image Game Guide",
+    },
+    {
+        id: "고요 속의 외침",
+        src: "/img/whaechim.png",
+        alt: "Shout In Silence Guide",
     },
     {
         id: "밸런스 게임",
         src: "/img/balancegame.png",
         alt: "Balance Game Guide",
-    },
-    {
-        id: "고요 속의 외침",
-        src: "/img/goyogame.png",
-        alt: "Shout In Silence Guide",
     },
     {
         id: "라이어 게임",
