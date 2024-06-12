@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import BasicLayout from '../../layouts/BasicLayout';
 import ModalComponent from '../common/ModalComponent';
 import SpaceShip from '../animation/SpaceShip';
+import { publicApi } from '../../api/axios_intercepter';
 
 const FindPwdForm = () => {
     const [id, setId] = useState('');
@@ -40,20 +40,20 @@ const FindPwdForm = () => {
 
     const sendVerificationEmail = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/auth/send-password-reset-code', { userId: id, email });
+            await publicApi.post('/api/auth/send-password-reset-code', { userId: id, email });
             setEmailSent(true);
             setMessage("인증번호가 전송되었습니다.");
             setIsOpen(true);
             setTimeLeft(300); // Reset countdown timer
         } catch (error) {
-            setMessage(error.response?.data || "메일 전송에 오류가 발생했습니다.");
+            setMessage("유저가 존재하지않습니다.");
             setIsOpen(true);
         }
     };
 
     const verifyCode = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/auth/verify-reset-code', { id, email, certificationNumber: verificationCode });
+            await publicApi.post('/api/auth/verify-reset-code', { id, email, certificationNumber: verificationCode });
             setCodeVerified(true);
             setMessage("인증번호가 확인되었습니다. 비밀번호를 입력하세요.");
             setIsOpen(true);
@@ -82,7 +82,7 @@ const FindPwdForm = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/auth/update-password', { userId: id, email, newPassword });
+            await publicApi.post('/api/auth/update-password', { userId: id, email, newPassword });
             setMessage("비밀번호가 성공적으로 변경되었습니다.");
             setIsOpen(true);
             setTimeout(() => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
-import EditProfileModal from "./modal/EditProfileModal";
-import ImageDisplay from "./ImageDisplay.js";
+import EditProfileModal from "./modal/EditProfileModal.js";
+import ImageDisplay from "./image/ImageDisplay.js";
 
 // React Modal's root element setting
 Modal.setAppElement("#root");
@@ -23,14 +23,17 @@ function ProfilePageInfo({ handleOpen, userData }) {
   };
 
   const handleUpdateUserData = (updatedData) => {
+    // Create a unique URL for the updated image
+    if (updatedData.profileImage) {
+      updatedData.profileImage += `?timestamp=${new Date().getTime()}`;
+    }
     setUserDetails(updatedData);
   };
 
   return (
     <div className="flex flex-col lg:flex-row justify-around p-4">
       <div className="flex flex-col justify-center items-center">
-
-          <ImageDisplay fileName={userDetails?.profileImage} /> {/* Use ImageDisplay component */}
+        <ImageDisplay fileName={userDetails?.profileImage} />
         <button
           className="mt-5 bg-pink-500 text-white rounded-lg w-32 h-12 md:w-40 md:h-16 lg:w-40 lg:h-20 text-lg md:text-xl cursor-pointer"
           onClick={openModal}
@@ -73,9 +76,11 @@ function ProfilePageInfo({ handleOpen, userData }) {
               <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-44 lg:h-24 rounded-full bg-pink-500 text-white">
                 한줄소개
               </div>
-              <textarea className="ml-2 bg-black w-full" readOnly>
-                {userDetails?.intro || "자기소개를 작성해주세요"}
-              </textarea>
+              <textarea 
+                className="ml-2 bg-black w-full" 
+                readOnly
+                value={userDetails?.intro || "자기소개를 작성해주세요"}
+              />
             </div>
           </div>
         </div>

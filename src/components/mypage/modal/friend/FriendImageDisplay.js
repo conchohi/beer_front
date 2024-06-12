@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import privateApi from '../../api/axios_intercepter';
+import privateApi from '../../../../api/axios_intercepter';
 
-const ImageDisplay = ({ fileName }) => {
+const FriendImageDisplay = ({ fileName }) => {
     const [imageSrc, setImageSrc] = useState(null);
 
     useEffect(() => {
@@ -29,17 +29,17 @@ const ImageDisplay = ({ fileName }) => {
                 <img 
                     src={imageSrc} 
                     alt={fileName} 
-                    className='w-36 h-36 md:w-48 md:h-48 lg:w-72 lg:h-60 rounded-full border-4 border-transparent'
+                    className='w-10 h-10 md:w-22 md:h-22 lg:w-72 lg:h-60 rounded-full border-4 border-transparent'
                 />
             ) : (
                 <img 
                     src="/logo/basic.png" 
                     alt="default" 
-                    className='w-36 h-36 md:w-48 md:h-48 lg:w-72 lg:h-60 rounded-full border-4 border-transparent' 
+                    className='w-12 h-12 md:w-22 md:h-22 lg:w-72 lg:h-60 rounded-full border-4 border-transparent' 
                 />
             )}
         </div>
     );
 };
 
-export default ImageDisplay;
+export default FriendImageDisplay;

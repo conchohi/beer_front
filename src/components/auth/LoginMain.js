@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import BasicLayout from '../../layouts/BasicLayout';
 import Astronaut2 from '../animation/Astronaut2';
 import BasicModalComponent from '../common/BasicModalComponent';
+import { publicApi } from '../../api/axios_intercepter';
+import { onKakaoLogin, onNaverLogin } from '../../api/socialApi';
+
 const LoginMain = () => {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
@@ -64,26 +66,34 @@ const LoginMain = () => {
     }, []);
 
     const autoLoginSubmit = async (autoId, autoPassword) => {
+        await handleLogin(autoId, autoPassword);
+    };
+    const handleLogin = async (loginId, loginPassword) => {
         try {
             let formData = new FormData();
-            formData.append('username', autoId);
-            formData.append('password', autoPassword);
-            const response = await axios.post('http://localhost:8080/login', formData, {
+            formData.append('username', loginId);
+            formData.append('password', loginPassword);
+            const response = await publicApi.post('/login', formData, {
                 withCredentials: true
             });
+    
+            // 헤더에서 액세스 토큰 추출
+            const accessToken = response.headers['authorization'].split(' ')[1];
+    
             setMessage("로그인 성공!");
             setIsOpen(true);
-            const { access, nickname } = response.data;
-            localStorage.setItem('access', access);
-            localStorage.setItem('nickname', nickname);
+    
+            const { nickname } = response.data;
+            localStorage.setItem('access', accessToken); // 액세스 토큰 저장
+            localStorage.setItem('nickname', nickname); // 닉네임 저장
         } catch (error) {
-            if (error.response.status === 401) setMessage('아이디 혹은 비밀번호가 틀렸습니다.');
+            if (error.response?.status === 401) setMessage('아이디 혹은 비밀번호가 틀렸습니다.');
             else setMessage('서버 오류');
             setIsOpen(true);
             console.error('로그인 오류:', error);
         }
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!idValid || !passwordValid) {
@@ -105,34 +115,8 @@ const LoginMain = () => {
             localStorage.removeItem("saved_password");
         }
 
-        try {
-            let formData = new FormData();
-            formData.append('username', id);
-            formData.append('password', password);
-            const response = await axios.post('http://localhost:8080/login', formData, {
-                withCredentials: true
-            });
-            setMessage("로그인 성공!");
-            setIsOpen(true);
-            const { access, nickname } = response.data;
-            localStorage.setItem('access', access);
-            localStorage.setItem('nickname', nickname);
-
-        } catch (error) {
-            if (error.response.status === 401) setMessage('아이디 혹은 비밀번호가 틀렸습니다.');
-            else setMessage('서버 오류');
-            setIsOpen(true);
-            console.error('로그인 오류:', error);
-        }
+        await handleLogin(id, password);
     };
-
-    const onNaverLogin = () => {
-        window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
-    }
-
-    const onKakaoLogin = () => {
-        window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
-    }
 
     return (
         <>
