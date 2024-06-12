@@ -1,87 +1,51 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { FaTrash } from "react-icons/fa";
-import ConfirmDeleteModal from "../modal/ConfirmDeleteModal"; // ConfirmDeleteModal 컴포넌트 가져오기
+import privateApi from "../../../api/axios_intercepter";
+import ConfirmDeleteModal from "../modal/friend/ConfirmDeleteModal";
+import FriendImageDisplay from "../modal/friend/FriendImageDisplay";
 
-const FollowingListItem = (props) => {
-  const navigate = useNavigate();
+const FollowingListItem = ({ friend, onFriendDeleted }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const navigateToProfile = () => {
-    navigate(`/profile/${props.userNo}`);
+  const handleDelete = async () => {
+    try {
+      await privateApi.delete(`/api/friend/delete`, { data: { nickname: friend.nickname } });
+      onFriendDeleted(friend.userId);
+    } catch (error) {
+      console.error("Error deleting friend:", error);
+    }
   };
 
-  const handleDelete = () => {
+  const openModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
+  const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  const handleConfirmDelete = async () => {
-    console.log(`Deleting user with userNo: ${props.userNo}`);
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/follow/unfollow",
-        {
-          followerId: props.userId, // props에서 followerId를 받음
-          followeeId: props.userNo,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${props.token}`, // JWT 토큰을 props로 전달
-          },
-        }
-      );
-      console.log("User unfollowed:", response.data);
-      // 성공적으로 언팔로우된 후, 리스트에서 제거하는 등의 추가 작업을 여기에 추가하세요.
-    } catch (error) {
-      console.error("Error unfollowing user:", error);
-    }
-    setIsModalOpen(false);
+  const confirmDelete = () => {
+    handleDelete();
+    closeModal();
   };
 
   return (
-    <div>
-      <div
-        className="flex justify-center items-center mt-8 text-ellipsis whitespace-nowrap gap-4 transition-colors duration-300 ease-in-out hover:text-pink-500 cursor-pointer"
-        onClick={navigateToProfile}
-      >
-        <img
-          src={props.userImage || "/logo/basic.png"}
-          className="w-20 h-20 rounded-full border-4 border-transparent bg-gradient-to-r from-white to-white bg-clip-border"
-          alt="프로필"
-        />
-        <div className="text-2xl mx-2">
-          <p>{props.userName}</p>
-        </div>
-        <div>
-          <button
-            className="ml-4 text-red-500 hover:text-pink-700 transition-colors duration-300 ease-in-out text-4xl"
-            onClick={(e) => {
-              e.stopPropagation(); // 부모 요소 클릭 이벤트 방지
-              handleDelete();
-            }}
-          >
-            <FaTrash className="w-8 h-8" />
-          </button>
-        </div>
-        <div className="ml-auto flex items-center mr-4">
-          {props.online && (
-            <img className="w-14" src="Online.png" alt="Online" />
-          )}
-        </div>
+    <div className="flex items-center p-4 border-b border-gray-700">
+      <FriendImageDisplay fileName={friend.profileImage} />
+      <div className="flex-grow">
+        <p className="text-lg">{friend.nickname}</p>
       </div>
+      <button
+        className="text-red-500 hover:text-red-600"
+        onClick={openModal}
+      >
+        <FaTrash size={24} />
+      </button>
       {isModalOpen && (
-        <ConfirmDeleteModal
-          onClose={handleCloseModal}
-          onConfirm={handleConfirmDelete}
-        />
+        <ConfirmDeleteModal onClose={closeModal} onConfirm={confirmDelete} />
       )}
     </div>
   );
 };
 
-export default React.memo(FollowingListItem);
+export default FollowingListItem;

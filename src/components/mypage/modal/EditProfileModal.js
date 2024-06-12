@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Draggable from "react-draggable";
-import privateApi from "../../../api/axios_intercepter";
 import ChangeNicknameModal from "./ChangeNicknameModal"; // New component for changing nickname
-import ImageDisplay from "../ImageDisplay"; // Import ImageDisplay component
+import ImageEditDisplay from "../image/ImageEditDisplay";
+import privateApi from "../../../api/axios_intercepter";
 
 const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }) => {
   const [imageFile, setImageFile] = useState(null); // New state for the file
+  const [imageUrl, setImageUrl] = useState(userData?.profileImage || ""); // New state for the image URL
   const [nickname, setNickname] = useState(userData?.nickname || "");
   const [email, setEmail] = useState(userData?.email || "");
   const [mbti, setMbti] = useState(userData?.mbti || "");
@@ -15,6 +16,10 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
   const [gender, setGender] = useState(userData?.gender || ""); // New state for gender
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState(false);
 
+  const handleMouseDown = (e) => {
+    e.stopPropagation();
+  };
+
   useEffect(() => {
     if (userData) {
       setNickname(userData.nickname);
@@ -22,39 +27,47 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
       setMbti(userData.mbti);
       setAge(userData.age);
       setIntro(userData.intro);
-      setGender(userData.gender); // Initialize gender state
+      setGender(userData.gender);
+      setImageUrl(userData.profileImage); 
     }
   }, [userData]);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-        setImageFile(e.target.files[0]); // Store the file for upload
+      const file = e.target.files[0];
+      setImageFile(file);
+      setImageUrl(URL.createObjectURL(file));
     }
   };
 
   const handleSave = async () => {
     try {
       const formData = new FormData();
-      formData.append("userDto", new Blob([JSON.stringify({
-        nickname,
-        email,
-        mbti,
-        age,
-        intro,
-        gender
-      })], { type: "application/json" }));
+      formData.append("userId", userData.userId);
+      formData.append("nickname", nickname);
+      formData.append("email", email);
+      formData.append("mbti", mbti);
+      formData.append("age", age);
+      formData.append("intro", intro);
+      formData.append("gender", gender);
+
       if (imageFile) {
         formData.append("profileFile", imageFile); // Append the file to the form data
       }
 
-      const response = await privateApi.put(`/api/user/update/${nickname}`, formData, {
+      const response = await privateApi.patch(`/api/user`, formData, {
         headers: {
           "Content-Type": "multipart/form-data", // Specify the correct content type
         },
       });
 
       if (response.status === 200) {
-        onUpdateUserData(response.data); // Immediately reflect changes in ProfilePageInfo
+        const updatedData = response.data;
+        // Create a unique URL for the updated image
+        if (imageFile) {
+          updatedData.profileImage += `?timestamp=${new Date().getTime()}`;
+        }
+        onUpdateUserData(updatedData); // Immediately reflect changes in ProfilePageInfo
         onRequestClose();
       } else {
         console.error("Failed to update user");
@@ -81,8 +94,8 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Edit Profile Modal"
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+      className="fixed inset-0 flex items-center justify-center z-50"
+      overlayClassName="fixed inset-0 "
     >
       <Draggable>
         <div className="bg-black p-8 rounded-lg border-2 border-pink-500 w-full max-w-4xl mx-auto text-white cursor-move">
@@ -97,7 +110,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                   프로필 이미지
                 </label>
                 <label htmlFor="file-input">
-                  <ImageDisplay fileName={userData?.profileImage} /> {/* Use ImageDisplay component */}
+                  <ImageEditDisplay fileName={imageUrl} /> {/* Use ImageDisplay component */}
                 </label>
                 <input
                   id="file-input"
@@ -114,11 +127,14 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                   닉네임
                 </label>
                 <input
+                  id="nickname"
+                  name="nickname"
                   type="text"
                   value={nickname}
                   onClick={openNicknameModal}
                   readOnly
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+                  onMouseDown={handleMouseDown}
                 />
               </div>
               <div className="mb-4">
@@ -130,6 +146,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                  onMouseDown={handleMouseDown}
                 />
               </div>
               <div className="mb-4">
@@ -172,6 +189,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                    onMouseDown={handleMouseDown}
                   />
                 </div>
                 <div className="w-1/2 pl-2">
@@ -210,6 +228,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                   value={intro}
                   onChange={(e) => setIntro(e.target.value)}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                  onMouseDown={handleMouseDown}
                 />
               </div>
             </div>

@@ -1,57 +1,45 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import axios from "axios";
+import { publicApi } from "../../../api/axios_intercepter"; // 여기에 실제 파일 경로를 입력하세요.
+import Draggable from "react-draggable";
 
 const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNicknameChange }) => {
   const [nickname, setNickname] = useState(currentNickname);
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
+  const [saveStatus, setSaveStatus] = useState(null);
 
   const handleNicknameCheck = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/api/user/nickname-check", { nickname });
-      if (response.data.message === "Success.") {
-        setIsNicknameAvailable(true);
-      } else {
-        setIsNicknameAvailable(false);
-      }
+        const response = await publicApi.post("/api/user/nickname-check", { nickname });
+        setIsNicknameAvailable(response.data.message === "Success.");
     } catch (error) {
-      console.error("Error checking nickname:", error);
-      setIsNicknameAvailable(false);
+        console.error("Error checking nickname:", error);
+        setIsNicknameAvailable(false);
     }
-  };
+};
 
-  const handleSave = async () => {
+
+  const handleSave = () => {
     if (isNicknameAvailable) {
-      try {
-        const token = localStorage.getItem("access");
-        const response = await axios.put("http://localhost:8080/api/user/update-nickname", { nickname }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (response.status === 200) {
-          onNicknameChange(nickname);
-          onRequestClose();
-        } else {
-          console.error("Failed to update nickname");
-        }
-      } catch (error) {
-        console.error("Error updating nickname:", error);
-      }
+      onNicknameChange(nickname);
+      setSaveStatus("success");
+      onRequestClose();
     } else {
-      alert("닉네임 중복체크를 해주세요.");
+      setSaveStatus("nickname-check-failed");
     }
   };
-
+  const handleMouseDown = (e) => {
+    e.stopPropagation();
+};
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Change Nickname Modal"
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+      className="fixed inset-0 flex items-center justify-center  z-50"
+      overlayClassName="fixed inset-0 "
     >
+      <Draggable>
       <div className="bg-black p-8 rounded-lg border-2 border-pink-500 w-full max-w-md mx-auto text-white">
         <h2 className="text-xl text-pink-500 mb-4">닉네임 변경</h2>
         <div className="mb-4">
@@ -62,9 +50,10 @@ const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNickna
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+              onMouseDown={handleMouseDown}
             />
             <button
-              className="bg-pink-500 text-white rounded-lg ml-2 px-4 py-2"
+              className="bg-pink-500 text-white rounded-lg ml-2 px-4 py-2 w-4/12"
               onClick={handleNicknameCheck}
             >
               중복 체크
@@ -93,7 +82,14 @@ const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNickna
             취소
           </button>
         </div>
+        {saveStatus === "error" && (
+          <div className="text-red-500 text-sm mt-2">닉네임 저장 중 오류가 발생했습니다. 다시 시도해주세요.</div>
+        )}
+        {saveStatus === "nickname-check-failed" && (
+          <div className="text-red-500 text-sm mt-2">닉네임 중복 체크를 완료해주세요.</div>
+        )}
       </div>
+      </Draggable>
     </Modal>
   );
 };

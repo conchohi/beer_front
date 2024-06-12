@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { publicApi } from '../../../../api/axios_intercepter';
 
 const EmailVerification = ({ formData, setFormData, isEmailVerified, setIsEmailVerified, setModalContent, setIsOpen }) => {
     const [emailVerificationCode, setEmailVerificationCode] = useState('');
@@ -28,7 +28,7 @@ const EmailVerification = ({ formData, setFormData, isEmailVerified, setIsEmailV
         }
 
         try {
-            await axios.post('http://localhost:8080/api/v1/auth/email-verify', { email: formData.email });
+            await publicApi.post('/api/auth/email-verify', { email: formData.email });
             setModalContent("인증번호가 이메일로 전송되었습니다.");
             setIsOpen(true);
             setIsCodeSent(true);
@@ -48,7 +48,7 @@ const EmailVerification = ({ formData, setFormData, isEmailVerified, setIsEmailV
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/auth/email-verify-check', {
+            const response = await publicApi.post('/api/auth/email-verify-check', {
                 email: formData.email,
                 code: emailVerificationCode
             });
