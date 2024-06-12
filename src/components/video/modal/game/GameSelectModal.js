@@ -1,40 +1,60 @@
 import React from "react";
 import Draggable from "react-draggable";
-import {  FaWindowClose } from "react-icons/fa";
+import { FaWindowClose } from "react-icons/fa";
 
 const gameGuides = [
     {
         id: "이미지 게임",
-        src: "/img/Landing/ImageGameGuide.webp",
+        src: "/img/imagegame.png",
         alt: "Image Game Guide",
     },
     {
-        id: "캐치 마인드",
-        src: "/img/Landing/CatchMindGuide.webp",
-        alt: "Catch Mind Guide",
+        id: "밸런스 게임",
+        src: "/img/balancegame.png",
+        alt: "Balance Game Guide",
     },
     {
         id: "고요 속의 외침",
-        src: "/img/Landing/ShoutInSilenceGuide.webp",
+        src: "/img/goyogame.png",
         alt: "Shout In Silence Guide",
     },
     {
-        id: "인물 퀴즈",
-        src: "/img/Landing/PersonQuizGuide.webp",
-        alt: "Person Quiz Guide",
+        id: "라이어 게임",
+        src: "/img/liargame.png",
+        alt: "Liar Game Guide",
     },
-
 ];
 
-const GameSelectModal = ({ roomNo, close }) => {
-    const startGame = (e) =>{
-        //게임 이름
+const GameSelectModal = ({ close }) => {
+    const startGame = (e) => {
+        // 게임 이름
         let game = e.target.id;
 
-        //게임 실행 코드
+        // 게임 실행 코드
+        // 예: 선택한 게임에 따라 다른 로직 실행
+        switch (game) {
+            case "이미지 게임":
+                // 이미지 게임 실행 코드
+                console.log("이미지 게임 시작");
+                break;
+            case "밸런스 게임":
+                // 밸런스 게임 실행 코드
+                console.log("밸런스 게임 시작");
+                break;
+            case "고요 속의 외침":
+                // 고요 속의 외침 실행 코드
+                console.log("고요 속의 외침 시작");
+                break;
+            case "라이어 게임":
+                // 라이어 게임 실행 코드
+                console.log("라이어 게임 시작");
+                break;
+            default:
+                console.log("알 수 없는 게임");
+        }
 
-        close();
-    }
+        close(); // 모달 닫기
+    };
 
     return (
         <Draggable>
@@ -60,6 +80,6 @@ const GameSelectModal = ({ roomNo, close }) => {
         </div>
         </Draggable>
     );
-}
+};
 
 export default GameSelectModal;
