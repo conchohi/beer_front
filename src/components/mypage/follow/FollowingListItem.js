@@ -37,6 +37,7 @@ const FollowingListItem = (props) => {
       );
       console.log("User unfollowed:", response.data);
       // 성공적으로 언팔로우된 후, 리스트에서 제거하는 등의 추가 작업을 여기에 추가하세요.
+      props.onUnfollow(props.userNo); // 언팔로우 후 리스트 갱신
     } catch (error) {
       console.error("Error unfollowing user:", error);
     }
