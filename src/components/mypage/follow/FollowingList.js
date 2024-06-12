@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaUsersSlash } from "react-icons/fa";
 import privateApi from "../../../api/axios_intercepter";
 import FollowingListItem from "./FollowingListItem";
-export default function FollowingList() {
-  const [list, setList] = useState([]);
-  const [error, setError] = useState(null);
+
 
 const FollowingList = ({ refreshTrigger }) => {
   const [friends, setFriends] = useState([]);
@@ -15,22 +13,10 @@ const FollowingList = ({ refreshTrigger }) => {
 
   const fetchFriends = async () => {
     try {
-      const userId = localStorage.getItem("saved_id");
-      const token = localStorage.getItem("token");
-
-      if (!userId || !token) {
-        throw new Error("User not authenticated");
-      }
-
-      const response = await axios.get(`http://localhost:8080/api/following/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setList(response.data);
+      const response = await privateApi.get("/api/friend/list");
+      setFriends(response.data);
     } catch (error) {
-      console.error("Error fetching following list", error);
-      setError(error);
+      console.error("Error fetching friends:", error);
     }
   };
 
@@ -38,34 +24,14 @@ const FollowingList = ({ refreshTrigger }) => {
     setFriends(friends.filter(friend => friend.userId !== userId));
   };
 
-  const handleUnfollow = (userNo) => {
-    setList((prevList) => prevList.filter((item) => item.userNo !== userNo));
-  };
-
-  if (error) {
-    return (
-      <div className="text-center mt-16">
-        <p className="text-3xl font-thin text-red-500">Error: {error.message}</p>
-      </div>
-    );
-  }
-
-  if (list.length > 0) {
-    const userId = localStorage.getItem("userId");
-    const token = `Bearer ${localStorage.getItem("token")}`;
+  if (friends.length > 0) {
     return (
       <div className="max-h-40rem w-full mt-4 overflow-auto">
         {friends.map(friend => (
           <FollowingListItem
-            userNo={followInfo.userNo}
-            userName={followInfo.userName}
-            level={followInfo.level}
-            userImage={followInfo.userImageUrl}
-            online={followInfo.online}
-            key={idx}
-            token={token} // 실제 JWT 토큰을 전달
-            userId={userId} // 실제 userId를 전달
-            onUnfollow={handleUnfollow} // 언팔로우 후 리스트 갱신
+            key={friend.userId}
+            friend={friend}
+            onFriendDeleted={handleFriendDeleted}
           />
         ))}
       </div>
