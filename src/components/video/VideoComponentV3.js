@@ -261,8 +261,8 @@ const VideoComponentV3 = () => {
                                                 } else if (event === "event") {
                                                     //Janus에서 서버로부터 수신된 메시지에서 발송자(publisher) 목록을 나타냄
                                                     if (msg["publishers"]) {
-                                                        getRoom(roomNo).then(result => {
-                                                            setParticipantList(result.participantList);
+                                                        getParticipantList(roomNo).then(result => {
+                                                            setParticipantList(result);
                                                             let list = msg["publishers"];
                                                             Janus.debug("Got a list of available publishers/feeds:", list);
                                                             for (let f in list) {
