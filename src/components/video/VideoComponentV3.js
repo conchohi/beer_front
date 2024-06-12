@@ -666,7 +666,7 @@ const VideoComponentV3 = () => {
                 <ParticipantList participantList={participantList} setClickUserNick={setClickUserNick} />
             </div>
                 <div className="w-full flex flex-wrap items-start">
-                    <div className={"flex flex-col justify-center rounded-lg items-center text-center p-6 " + (participantList.length <= 3 ? "w-1/2" : "w-1/3")}>
+                    <div className={"flex flex-col justify-center rounded-lg items-center text-center p-6 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
                         <div className="w-full  bg-black border-2 border-yellow-500 rounded-xl">
                             <div className="relative">
                                 <div className="pb-[56.25%] h-0 relative">
@@ -684,7 +684,7 @@ const VideoComponentV3 = () => {
                             return;
                         }
                         return (
-                            <div className={"flex flex-col justify-center items-center text-center p-6 " + (participantList.length <= 3 ? "w-1/2" : "w-1/3")}>
+                            <div className={"flex flex-col justify-center items-center text-center p-6 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
                                 <div className="w-full  bg-black border-2 border-white rounded-xl">
                                     <div className="relative">
                                         <div className="pb-[56.25%] h-0 relative">
