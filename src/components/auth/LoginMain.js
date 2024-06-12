@@ -78,7 +78,7 @@ const LoginMain = () => {
             });
     
             // 헤더에서 액세스 토큰 추출
-            const accessToken = response.headers['authorization'].split(' ')[1];
+            const accessToken = response.headers['access'];
     
             setMessage("로그인 성공!");
             setIsOpen(true);
