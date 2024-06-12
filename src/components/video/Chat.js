@@ -5,7 +5,7 @@ import BaskinRobbins31 from "./modal/game/BaskinRobbins31";
 
 let stompClient = null;
 
-const Chat = ({ roomNo, nickname }) => {
+const Chat = ({ roomNo, nickname, participantList, master }) => {
   const [publicChats, setPublicChats] = useState([]);
   const [userData, setUserData] = useState({
     sender: nickname,
@@ -244,7 +244,12 @@ const Chat = ({ roomNo, nickname }) => {
   const renderGame = () => (
     <div className="game-box flex bg-slate-100 flex-col shadow-lg p-10">
       <div className="text-center text-gray-700">Game Screen Placeholder</div>
-      <BaskinRobbins31 nickname={nickname} roomNo={roomNo} />
+      <BaskinRobbins31
+        nickname={nickname}
+        roomNo={roomNo}
+        participantList={participantList}
+        master={master}
+      />
     </div>
   );
 
