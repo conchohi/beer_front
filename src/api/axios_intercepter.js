@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_SERVER_HOST = 'http://localhost:8080';
+export const API_SERVER_HOST = 'http://54.180.123.253:8080';
 
 export const publicApi = axios.create({
     baseURL: `${API_SERVER_HOST}`
