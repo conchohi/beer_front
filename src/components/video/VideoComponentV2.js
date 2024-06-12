@@ -1,7 +1,3 @@
-// import React, { useEffect, useRef, useState } from "react";
-// import Janus from "../../api/janus";
-// import { useNavigate, useParams } from "react-router-dom";
-
 // import { FaUserLarge } from "react-icons/fa6";
 // import DestoryCheckModal from "./modal/room/DestroyCheckModal";
 // import UserDetail from "./modal/UserDetail";
