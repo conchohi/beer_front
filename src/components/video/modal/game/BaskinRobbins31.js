@@ -4,7 +4,12 @@ import SockJS from "sockjs-client";
 
 let stompClient = null;
 
-const BaskinRobbins31 = ({ nickname, roomNo, participantList, master }) => {
+const BaskinRobbins31 = ({
+  nickname,
+  roomNo,
+  participantList = [],
+  master,
+}) => {
   const [move, setMove] = useState(null);
   const [currentTurn, setCurrentTurn] = useState("");
 
@@ -28,7 +33,6 @@ const BaskinRobbins31 = ({ nickname, roomNo, participantList, master }) => {
       console.log("Connected to WebSocket");
       setConnected(true);
       stompClient.subscribe(`/topic/game/${roomNo}`, onMessageReceived);
-      stompClient.send(`/app/game/join/${roomNo}`, {}, JSON.stringify({}));
     };
 
     const onError = (error) => {
@@ -37,7 +41,15 @@ const BaskinRobbins31 = ({ nickname, roomNo, participantList, master }) => {
 
     const onMessageReceived = (message) => {
       const gameMessage = JSON.parse(message.body);
-      setGameState(gameMessage);
+      console.log("Message received: ", gameMessage);
+
+      setGameState((prevState) => ({
+        ...prevState,
+        moves: gameMessage.moves,
+        losingPlayer: gameMessage.losingPlayer,
+        currentTurn: gameMessage.currentTurn,
+        players: gameMessage.players,
+      }));
 
       if (gameMessage.losingPlayer) {
         setCurrentRange([1, 2, 3]);
@@ -60,30 +72,36 @@ const BaskinRobbins31 = ({ nickname, roomNo, participantList, master }) => {
     if (gameState.players.length > 0) {
       connect();
     }
-  }, [nickname, roomNo, gameState.players]);
+  }, [nickname, roomNo, participantList, gameState.players]);
 
   const sendMove = () => {
-    if (connected && nickname && move !== null && nickname === currentTurn) {
+    if (
+      connected &&
+      nickname &&
+      move !== null &&
+      nickname === gameState.currentTurn
+    ) {
+      console.log("Sending move:", move);
       const startNumber = currentRange[0];
       const numbers = [];
       for (let i = startNumber; i <= move; i++) {
         numbers.push(i);
       }
       const gameMessage = { player: nickname, numbers };
-      stompClient.send(
-        `/app/game/move/${roomNo}`,
-        {},
-        JSON.stringify(gameMessage)
-      );
-      const lastNumber = move;
-      setCurrentRange([lastNumber + 1, lastNumber + 2, lastNumber + 3]);
+      stompClient.send(`/app/move/${roomNo}`, {}, JSON.stringify(gameMessage));
       setMove(null);
+    } else {
+      console.log("Cannot send move. Conditions not met.");
+      console.log("Connected:", connected);
+      console.log("Nickname:", nickname);
+      console.log("Move:", move);
+      console.log("Current Turn:", gameState.currentTurn);
     }
   };
 
   const resetGame = () => {
     if (connected) {
-      stompClient.send(`/app/game/reset/${roomNo}`, {}, JSON.stringify({}));
+      stompClient.send(`/app/reset/${roomNo}`, {}, JSON.stringify({}));
       setCurrentRange([1, 2, 3]);
       setCurrentTurn(gameState.players[0]);
     }
@@ -92,11 +110,8 @@ const BaskinRobbins31 = ({ nickname, roomNo, participantList, master }) => {
   const startGame = () => {
     if (connected && nickname === master) {
       const playerNames = participantList.map((player) => player.nickname);
-      stompClient.send(
-        `/app/game/start/${roomNo}`,
-        {},
-        JSON.stringify({ players: playerNames }) // 이 구조가 예상 형식과 일치하는지 확인
-      );
+      const gameMessage = { players: playerNames };
+      stompClient.send(`/app/start/${roomNo}`, {}, JSON.stringify(gameMessage));
     }
   };
 
@@ -128,28 +143,29 @@ const BaskinRobbins31 = ({ nickname, roomNo, participantList, master }) => {
       <button
         onClick={sendMove}
         className="mb-4 p-2 bg-green-500 text-white rounded"
-        disabled={move === null || nickname !== currentTurn}
       >
         Send Move
       </button>
       {nickname === master && (
-        <button
-          onClick={startGame}
-          className="mb-4 p-2 bg-blue-500 text-white rounded"
-        >
-          Start Game
-        </button>
-      )}
-      {nickname === master && (
-        <button
-          onClick={resetGame}
-          className="mb-4 p-2 bg-red-500 text-white rounded"
-        >
-          Reset Game
-        </button>
+        <>
+          <button
+            onClick={startGame}
+            className="mb-4 p-2 bg-blue-500 text-white rounded"
+          >
+            Start Game
+          </button>
+          <button
+            onClick={resetGame}
+            className="mb-4 p-2 bg-red-500 text-white rounded"
+          >
+            Reset Game
+          </button>
+        </>
       )}
       <div>
-        <ul className="list-disc list-inside">Turn Player: {players[i]}</ul>
+        <ul className="list-disc list-inside">
+          Turn Player: {gameState.currentTurn}
+        </ul>
         <ul className="list-disc list-inside">
           All Players: {gameState.players.join(", ")}
         </ul>
