@@ -42,7 +42,7 @@ function ProfilePageInfo({ handleOpen, userData }) {
         </button>
       </div>
       <div className="flex flex-col justify-center items-start gap-6 w-full">
-        <div className="w-full text-2xl md:text-4xl lg:text-6xl">
+        <div className="w-full text-2xl">
           <div className="flex flex-wrap items-center">
             <div className="flex flex-1 items-center">
               <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-36 lg:h-24 rounded-full bg-pink-500 text-white">
