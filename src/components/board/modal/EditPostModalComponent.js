@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BoardModalComponent from './BoardModalComponent';
 import { AiOutlineClose } from 'react-icons/ai';
-import { MdOutlineWatchLater } from "react-icons/md";
+import { updateBoard } from '../../../api/BoardApi';
 
-const EditPostModalComponent = ({ isOpen, onClose, selectedPost, setSelectedPost, handleEditPost }) => {
+const EditPostModalComponent = ({ onClose, boardNo, selectedPost, setSelectedPost }) => {
+    const [editPost, setEditPost] = useState(selectedPost)
+
     const handleMouseDown = (e) => {
         e.stopPropagation();
     };
+
+    const handleEditPost = ()=>{
+        updateBoard(boardNo, editPost).then(result=>{
+            setSelectedPost(editPost);
+            onClose();
+        })
+
+    }
     
     return (
-        <BoardModalComponent isOpen={isOpen} onClose={onClose}>
+        <BoardModalComponent>
             <div className="fixed inset-0 flex justify-center items-center z-50">
                 <div className="bg-gray-800 border-2 border-pink-500 text-gray-200 rounded-lg w-11/12 max-w-2xl p-6 relative">
                     <button className="absolute top-4 right-4 text-pink-500" onClick={onClose}>
@@ -24,8 +34,8 @@ const EditPostModalComponent = ({ isOpen, onClose, selectedPost, setSelectedPost
                             type="text"
                             name="title"
                             placeholder="제목"
-                            value={selectedPost.title}
-                            onChange={(e) => setSelectedPost({ ...selectedPost, title: e.target.value })}
+                            value={editPost.title}
+                            onChange={(e) => setEditPost({ ...editPost, title: e.target.value })}
                             className="mb-4 p-2 border rounded w-full text-pink-500 font-semibold"
                         />
                     </div>
@@ -33,8 +43,8 @@ const EditPostModalComponent = ({ isOpen, onClose, selectedPost, setSelectedPost
                     {/* 선택게시판 내용 불러오기 */}
                     <textarea
                         placeholder="내용"
-                        value={selectedPost.content}
-                        onChange={(e) => setSelectedPost({ ...selectedPost, content: e.target.value })}
+                        value={editPost.content}
+                        onChange={(e) => setEditPost({ ...editPost, content: e.target.value })}
                         className="mb-4 p-2 border rounded w-full bg-gray-700 h-52"
                         onMouseDown={handleMouseDown}
                     />
