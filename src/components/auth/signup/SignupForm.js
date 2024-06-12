@@ -199,7 +199,7 @@ const SignupForm = () => {
         />
       )}
       <div className="">
-        <h2 className=" text-center text-2xl font-bold leading-9 tracking-tight text-pink-500">
+        <h2 className=" text-center text-2xl font-bold leading-9 tracking-widest text-pink-500">
           JOIN
         </h2>
       </div>
@@ -418,7 +418,7 @@ const SignupForm = () => {
           <div>
             <button
               type="submit"
-              className={`flex w-full justify-center rounded-md px-4 py-2 text-base font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 bg-pink-500 hover:bg-blue-600 ${
+              className={`flex w-full justify-center rounded-md px-4 py-2 text-base tracking-widest font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 bg-pink-500 hover:bg-pink-600 ${
                 !isEmailVerified ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={!isEmailVerified}
@@ -428,10 +428,10 @@ const SignupForm = () => {
           </div>
         </form>
 
-        <p className="mt-4 text-center text-base text-gray-500">
+        <p className="mt-4 text-center text-base tracking-widest text-gray-500">
           <a
             href="/login"
-            className="font-semibold leading-6 text-pink-500 hover:text-blue-600"
+            className="font-semibold leading-6 text-pink-500 hover:text-pink-600"
           >
             LOGIN
           </a>

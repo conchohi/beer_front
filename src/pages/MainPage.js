@@ -4,6 +4,7 @@ import Introduction from "../components/main/Introduction";
 import { useEffect, useRef, useState } from "react";
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
+import Mars from "../components/animation/Mars";
 
 const DIVIDER_HEIGHT = 5;
 
@@ -88,6 +89,7 @@ function MainPage() {
       <div ref={outerDivRef} className="outer bg-cover bg-center">
         <div className="inner">
           <MainImage clickDown={clickDown}/>
+        <Mars />
         </div>
         <div className="inner">
           <Introduction />
