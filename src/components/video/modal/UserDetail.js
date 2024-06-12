@@ -4,16 +4,16 @@ import { SlUserFollow } from "react-icons/sl";
 import { AiFillAlert } from "react-icons/ai";
 import Draggable from "react-draggable";
 import ReportUser from "./ReportUser";
-import { getUserByNickname } from "../../../api/userApi";
-import { API_SERVER_HOST } from "../../../api/axios_intercepter";
+import { getUserByNickname, followUser } from "../../../api/userApi";
 import BasicModalComponent from "../../common/BasicModalComponent";
+import { API_SERVER_HOST } from "../../../api/axios_intercepter"; // API_SERVER_HOST 추가
 
 function UserDetail({ nickname, close }) {
   const [userInfo, setUserInfo] = useState({});
   const [openModal, setOpenModal] = useState(false);
   const [message, setMessage] = useState("");
   const [report, setReport] = useState(false);
-  const myNickname = localStorage.getItem('nickname')
+  const myNickname = localStorage.getItem('nickname');
 
   const handleReport = () => {
     if(myNickname && myNickname === nickname){
@@ -21,8 +21,20 @@ function UserDetail({ nickname, close }) {
       setOpenModal(true);
       return;
     }
-    setReport(!report)
-  }
+    setReport(!report);
+  };
+
+  const handleFollow = async () => {
+    try {
+      const response = await followUser(userInfo.id);
+      setMessage('팔로우 성공');
+      setOpenModal(true);
+    } catch (error) {
+      setMessage('팔로우 실패');
+      setOpenModal(true);
+      console.error("Error following user:", error);
+    }
+  };
 
   useEffect(() => {
     getUserByNickname(nickname).then(result => {
@@ -43,7 +55,6 @@ function UserDetail({ nickname, close }) {
                 <AiOutlineClose size="25" className="" />
               </button>
             </div>
-
 
             <div className="flex items-center ">
               {/* 프로필 이미지 */}
@@ -84,7 +95,6 @@ function UserDetail({ nickname, close }) {
                 <span>팔로잉</span>
                 <span>{userInfo.followerCount}</span>
               </div>
-
             </div>
 
             <div className="">
@@ -100,7 +110,7 @@ function UserDetail({ nickname, close }) {
               <button className="bg-red-600 text-white py-2 px-4 rounded-lg flex items-center" onClick={handleReport}>
                 <AiFillAlert className="w-6 h-6 mr-2" /> 신고
               </button>
-              <button className="bg-indigo-600 text-white py-2 px-4 rounded-lg flex items-center">
+              <button className="bg-indigo-600 text-white py-2 px-4 rounded-lg flex items-center" onClick={handleFollow}>
                 <SlUserFollow className="mr-4" /> 팔로우
               </button>
             </div>
