@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SpaceShip from "../animation/SpaceShip";
 import BasicLayout from "../../layouts/BasicLayout";
 import ModalComponent from "../common/ModalComponent";
+import { publicApi } from "../../api/axios_intercepter";
+
 
 function FindIdForm() {
     const [email, setEmail] = useState('');
@@ -28,7 +29,7 @@ function FindIdForm() {
 
     const sendVerificationEmail = async () => {
         try {
-            await axios.post('http://localhost:8080/api/v1/auth/email-verify', { email });
+            await publicApi.post('/api/auth/email-verify', { email });
             setEmailSent(true);
             setMessage("인증번호가 전송되었습니다.");
             setIsOpen(true); // Show modal
@@ -41,7 +42,7 @@ function FindIdForm() {
 
     const retrieveUserIds = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/auth/retrieve-ids', { email, code: verificationCode });
+            const response = await publicApi.post('/api/auth/retrieve-ids', { email, code: verificationCode });
             setUserIds(response.data);
             setMessage(`가입되어 있는 아이디는 : ${response.data.join(', ')} 입니다.`);
             setVerificationSuccess(true);
