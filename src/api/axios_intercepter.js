@@ -15,7 +15,7 @@ const privateApi = axios.create({
 
 // 리프레시 토큰 API
 export async function postRefreshToken() {
-    const response = await publicApi.post('/reissue', {}, {
+    const response = await publicApi.post('/api/reissue', {}, {
         withCredentials: true // 쿠키를 포함하여 요청
     });
     return response;
