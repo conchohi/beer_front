@@ -6,13 +6,12 @@
 .footer h4 {
   font-size: 1.875rem; /* text-3xl */
   font-weight: 600; /* font-semibold */
-  color: #2d3748; /* text-blueGray-700 */
+   /* text-blueGray-700 */
 }
 .footer h5 {
   font-size: 1.125rem; /* text-lg */
   margin-top: 0; /* mt-0 */
-  margin-bottom: 0.5rem; /* mb-2 */
-  color: #718096; /* text-blueGray-600 */
+  margin-bottom: 0.5rem; /* mb-2 */ /* text-blueGray-600 */
 }
 .footer button {
   background-color: #fff; /* bg-white */
@@ -40,7 +39,7 @@
 }
 .footer span,
 .footer a {
-  color: #718096; /* text-blueGray-600 */
+ /* text-blueGray-600 */
   font-weight: 600; /* font-semibold */
 }
 .footer a:hover {

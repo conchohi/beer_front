@@ -1,9 +1,7 @@
 import React from 'react';
 import Draggable from 'react-draggable';
 
-const BoardModalComponent = ({ isOpen, onClose, children }) => {
-    if (!isOpen) return null;
-
+const BoardModalComponent = ({ children }) => {
     return (
         <div className="fixed inset-0 z-50 overflow-auto  flex">
             <Draggable>
