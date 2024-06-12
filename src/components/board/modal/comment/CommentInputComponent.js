@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { addComment } from '../../../../api/BoardApi';
 
-const CommentInputComponent = ({ handleAddComment }) => {
+const CommentInputComponent = ({boardNo, comments, setComments}) => {
     const [newComment, setNewComment] = useState('');
 
     const handleNewCommentChange = (e) => {
@@ -8,7 +9,11 @@ const CommentInputComponent = ({ handleAddComment }) => {
     };
 
     const handleSubmit = () => {
-        handleAddComment(newComment);
+        addComment({boardNo:boardNo, content:newComment}).then(result=>{
+            const updateComments = [...comments];
+            updateComments.push(result)
+            setComments(updateComments);
+        })
         setNewComment('');
     };
 
