@@ -29,12 +29,22 @@ function UserDetail({ nickname, close }) {
       const response = await followUser(userInfo.id);
       setMessage('팔로우 성공');
       setOpenModal(true);
-    } catch (error) {
-      setMessage('팔로우 실패');
-      setOpenModal(true);
-      console.error("Error following user:", error);
-    }
-  };
+    }catch (error) {
+        if (error.response && error.response.data) {
+          if (error.response.data.includes('User cannot follow themselves')) {
+            setMessage('자기 자신은 팔로우할 수 없습니다.');
+          } else if (error.response.data.includes('is already following')) {
+            setMessage('이미 팔로우한 사용자입니다.');
+          } else {
+            setMessage('팔로우 실패: ' + error.response.data);
+          }
+        } else {
+          setMessage('팔로우 실패: 서버 오류');
+        }
+        setOpenModal(true);
+        console.error("Error following user:", error);
+      }
+    };
 
   useEffect(() => {
     getUserByNickname(nickname).then(result => {
