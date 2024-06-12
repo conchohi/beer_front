@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import BaskinRobbins31 from "./modal/game/BaskinRobbins31";
+// import GameA from "./modal/game/GameA"; // GameA 컴포넌트를 import
+// import GameB from "./modal/game/GameB"; // GameB 컴포넌트를 import
+// import GameC from "./modal/game/GameC"; // GameC 컴포넌트를 import
 
 let stompClient = null;
 
@@ -16,6 +19,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   const [date, setDate] = useState("");
   const chatMessagesEndRef = useRef(null);
   const [activeTab, setActiveTab] = useState("chat");
+  const [currentGame, setCurrentGame] = useState("BaskinRobbins31");
 
   useEffect(() => {
     if (userData.connected) {
@@ -126,6 +130,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
       var chatMessage = {
         sender: userData.sender,
         content: userData.message,
+        roomNo: roomNo,
         type: "CHAT",
         date: new Date().toISOString(), // 추가: ISO 형식으로 날짜 설정
       };
@@ -178,11 +183,17 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
         <ul className="chat-messages space-y-2">
           {publicChats.map((chat, index) =>
             chat.type === "JOIN" ? (
-              <li key={index} className="text-center text-blue-500 font-semibold">
+              <li
+                key={index}
+                className="text-center text-blue-500 font-semibold"
+              >
                 {chat.sender}님이 입장하셨습니다.
               </li>
             ) : chat.type === "LEAVE" ? (
-              <li key={index} className="text-center text-pink-500 font-semibold">
+              <li
+                key={index}
+                className="text-center text-pink-500 font-semibold"
+              >
                 {chat.sender}님이 퇴장하셨습니다.
               </li>
             ) : (
@@ -241,17 +252,53 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
     </div>
   );
 
-  const renderGame = () => (
-    <div className="game-box flex bg-slate-100 flex-col shadow-lg p-10">
-      <div className="text-center text-gray-700">Game Screen Placeholder</div>
-      <BaskinRobbins31
-        nickname={nickname}
-        roomNo={roomNo}
-        participantList={participantList}
-        master={master}
-      />
-    </div>
-  );
+  const renderGame = () => {
+    const games = {
+      BaskinRobbins31: BaskinRobbins31,
+      // GameA: GameA,
+      // GameB: GameB,
+      // GameC: GameC,
+    };
+
+    const GameComponent = games[currentGame];
+
+    return (
+      <div className="game-box flex bg-slate-100 flex-col shadow-lg p-10">
+        <div className="flex justify-center space-x-4 mb-4">
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+            onClick={() => setCurrentGame("BaskinRobbins31")}
+          >
+            BaskinRobbins31
+          </button>
+          <button
+            className="bg-green-500 text-white px-4 py-2 rounded"
+            onClick={() => setCurrentGame("GameA")}
+          >
+            Game A
+          </button>
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded"
+            onClick={() => setCurrentGame("GameB")}
+          >
+            Game B
+          </button>
+          <button
+            className="bg-purple-500 text-white px-4 py-2 rounded"
+            onClick={() => setCurrentGame("GameC")}
+          >
+            Game C
+          </button>
+        </div>
+        <GameComponent
+          nickname={nickname}
+          roomNo={roomNo}
+          participantList={participantList}
+          master={master}
+        />
+      </div>
+    );
+  };
 
   return (
     <div className="container mx-auto p-4 flex flex-col h-full max-h-[800px]">
