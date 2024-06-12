@@ -34,7 +34,7 @@ const Header = () => {
   const logoutFunction = async () => {
     try {
       // 서버에 로그아웃 요청을 보냅니다.
-      const response = await axios.post(`${API_SERVER_HOST}/logout`, {}, {
+      const response = await axios.post(`${API_SERVER_HOST}/api/logout`, {}, {
         withCredentials: true // 쿠키를 포함하여 요청
       });
 
