@@ -1,5 +1,6 @@
 import VideoComponent from "../components/video/VideoComponent";
 import VideoComponentV2 from "../components/video/VideoComponentV2";
+import VideoComponentV3 from "../components/video/VideoComponentV3";
 
 const VideoPage = () => {
     return ( <>
@@ -8,7 +9,7 @@ const VideoPage = () => {
                 <img className="h-20" src="/img/logo.png" alt="logo"/>
                 <img className="h-12" src="/img/title.png" alt="title"/>
             </div>
-            <VideoComponentV2/>
+            <VideoComponentV3/>
             
         </div>
     </> );

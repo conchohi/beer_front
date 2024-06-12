@@ -57,8 +57,8 @@ function UserDetail({ nickname, close }) {
       {openModal && <BasicModalComponent message={message} callbackFunction={()=>{setOpenModal(false)}}/>}
       {report && <ReportUser user={userInfo} setMessage={setMessage} setOpenModal={setOpenModal} close={handleReport} />}
       <Draggable>
-        <div className="fixed inset-0 flex items-center justify-center z-30">
-          <div className="bg-blue-950 text-white w-96 p-5 rounded-lg shadow-lg relative">
+        <div className="fixed inset-0 flex items-center justify-center z-30 ">
+          <div className="bg-gray-700 text-white w-96 p-5 rounded-lg shadow-lg relative">
             {/* 닫기창 */}
             <div className="mb-4">
               <button className="absolute top-2 right-2" onClick={close}>
@@ -78,7 +78,7 @@ function UserDetail({ nickname, close }) {
               {/* 유저정보유형 */}
               <div className="flex items-center justify-center">
                 <div className="flex flex-col justify-between text-right">
-                  <div className="flex justify-between mb-2 font-semibold px-3 py-1">닉네임</div>
+                  <div className="flex justify-between mb-2 font-semibold px-3 py-1 ">닉네임</div>
                    <div className="flex justify-between mb-2 font-semibold px-3 py-1">MBTI</div>
                   <div className="flex justify-between mb-2 font-semibold px-3 py-1">성별</div>
                   <div className="flex justify-between mb-2 font-semibold px-3 py-1">나이</div>
@@ -88,10 +88,10 @@ function UserDetail({ nickname, close }) {
               {/* 유저정보 불러온값 */}
               <div className="flex items-center justify-center ">
                 <div className="flex flex-col justify-between w-28 text-gray-800">
-                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1"> {nickname} </div>
-                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1"> {userInfo.mbti} </div>
-                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1"> {userInfo.gender} </div>
-                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1"> {userInfo.age} </div>
+                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1 min-h-[30px]"> {nickname} </div>
+                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1 min-h-[30px]"> {userInfo.mbti} </div>
+                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1 min-h-[30px]"> {userInfo.gender} </div>
+                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1 min-h-[30px]"> {userInfo.age} </div>
                 </div>
               </div>
             </div>
