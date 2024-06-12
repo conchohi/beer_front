@@ -126,6 +126,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
       var chatMessage = {
         sender: userData.sender,
         content: userData.message,
+        roomNo: roomNo,
         type: "CHAT",
         date: new Date().toISOString(), // 추가: ISO 형식으로 날짜 설정
       };
@@ -178,11 +179,17 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
         <ul className="chat-messages space-y-2">
           {publicChats.map((chat, index) =>
             chat.type === "JOIN" ? (
-              <li key={index} className="text-center text-blue-500 font-semibold">
+              <li
+                key={index}
+                className="text-center text-blue-500 font-semibold"
+              >
                 {chat.sender}님이 입장하셨습니다.
               </li>
             ) : chat.type === "LEAVE" ? (
-              <li key={index} className="text-center text-pink-500 font-semibold">
+              <li
+                key={index}
+                className="text-center text-pink-500 font-semibold"
+              >
                 {chat.sender}님이 퇴장하셨습니다.
               </li>
             ) : (
