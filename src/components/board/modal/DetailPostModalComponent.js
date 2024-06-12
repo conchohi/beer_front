@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BoardModalComponent from './BoardModalComponent';
 import { AiOutlineClose } from 'react-icons/ai';
 import { MdOutlineWatchLater } from "react-icons/md";
 import CommentListComponent from './comment/CommentListComponent';
 import CommentInputComponent from './comment/CommentInputComponent';
+import { getBoardById } from '../../../api/BoardApi';
 
-const DetailPostModalComponent = ({ isOpen, onClose, selectedPost, onEdit, onDelete, handleAddComment, handleDeleteComment }) => {
+const DetailPostModalComponent = ({ boardNo, onClose}) => {
+    const [selectedPost, setSelectedPost] = useState({});
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editingCommentContent, setEditingCommentContent] = useState('');
+    const [isEdit, setIsEdit] = useState(false);
+
+    useEffect(()=>{
+        getBoardById(boardNo).then(result=>{
+            setSelectedPost(result)
+        }).catch(error=>{
+            console.log(error)
+        })
+    },[boardNo])
 
     const handleEditCommentChange = (e) => {
         setEditingCommentContent(e.target.value);
@@ -17,8 +28,8 @@ const DetailPostModalComponent = ({ isOpen, onClose, selectedPost, onEdit, onDel
     };
     
 
-    return (
-        <BoardModalComponent isOpen={isOpen} onClose={onClose}>
+    return (<>
+        <BoardModalComponent>
             <div className="fixed inset-0 flex justify-center items-center z-50 ">
                 <div className="bg-gray-800 border-2 border-pink-500 text-gray-200 rounded-lg w-11/12 max-w-2xl p-6 relative">
                 <button className="absolute top-4 right-4 text-pink-500" onClick={onClose}>
@@ -29,7 +40,7 @@ const DetailPostModalComponent = ({ isOpen, onClose, selectedPost, onEdit, onDel
                     <div className="flex justify-between mb-4">
                         <div className="flex items-center">
                             <div className="text-gray-400 ">
-                                <div className="fas fa-user"onMouseDown={handleMouseDown}></div>작성자: {selectedPost.writer}
+                                <div className="fas fa-user mr-2"onMouseDown={handleMouseDown}></div>작성자: {selectedPost.writer}
                             </div>
                         </div>
                         <div className="flex items-center ">
@@ -56,7 +67,7 @@ const DetailPostModalComponent = ({ isOpen, onClose, selectedPost, onEdit, onDel
                     <div className="mb-4">
                         <h3 className="text-sm font-semibold text-pink-400 mb-2" onMouseDown={handleMouseDown}>댓글</h3>
                         <CommentListComponent
-                            comments={selectedPost.comments}
+                            comments={selectedPost.commentList}
                             editingCommentId={editingCommentId}
                             editingCommentContent={editingCommentContent}
                             handleEditCommentChange={handleEditCommentChange}
@@ -69,6 +80,8 @@ const DetailPostModalComponent = ({ isOpen, onClose, selectedPost, onEdit, onDel
                 </div>
             </div>
         </BoardModalComponent>
+        {isEdit}
+        </>
     );
 };
 

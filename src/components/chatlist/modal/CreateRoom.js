@@ -113,7 +113,7 @@ function CreateRoom({ close }) {
             <div className="mb-4">
               <label className="block text-gray-300 font-semibold">방 제목</label> 
               <input type="text" placeholder="방 제목을 입력하세요" value={title} onChange={(e) => { setTitle(e.target.value) }}
-                className="w-full p-2 mt-2 rounded-lg bg-gray-700 text-gray-800 focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400" />
+                className="w-full p-2 mt-2 rounded-lg text-gray-800 focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400" />
             </div>
             <div className="mb-4">
               <label className="block text-gray-300 font-semibold">관심사</label>
@@ -160,7 +160,7 @@ function CreateRoom({ close }) {
                 type="password"
                 placeholder="방 비밀번호를 입력하세요."
                 value={roomPw} onChange={(e) => { setRoomPw(e.target.value) }}
-                className="w-full p-3 mt-2 rounded-lg bg-gray-700 text-black focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400"
+                className="w-full p-3 mt-2 rounded-lg text-black focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400"
               />
             </div>
           </div>

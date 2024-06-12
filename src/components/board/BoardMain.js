@@ -6,82 +6,16 @@ import EditPostModalComponent from './modal/EditPostModalComponent';
 import Astronaut4 from '../animation/Astronaut4';
 import { getAllBoards, registerBoard, updateBoard, deleteBoard, addComment, deleteComment } from '../../api/BoardApi';
 
-// const initialBoardData = [
-//     {
-//         id: 1,
-//         title: '11시에 술드실분 1/4',
-//         content: '오늘 11시에 술드실분',
-//         writer: '사용자',
-//         regDate: '2024-06-04',
-//         count: 10,
-//         comments: []
-//     },
-//     {
-//         id: 2,
-//         title: '7시에 급벙하실분 2/4',
-//         content: '7시에 노실분 구해요!',
-//         author: '유저',
-//         date: '2024-06-03',
-//         views: 20,
-//         comments: []
-//     },
-//     {
-//         id: 3,
-//         title: '10시에 게임하실분',
-//         content: '게임 고고',
-//         author: '작성자',
-//         date: '2024-06-02',
-//         views: 30,
-//         comments: []
-//     },
-//     // Add more dummy data for demonstration
-//     {
-//         id: 4,
-//         title: 'New Title 1',
-//         content: 'New Content 1',
-//         author: 'Author 1',
-//         date: '2024-06-01',
-//         views: 15,
-//         comments: []
-//     },
-//     {
-//         id: 5,
-//         title: 'New Title 2',
-//         content: 'New Content 2',
-//         author: 'Author 2',
-//         date: '2024-06-01',
-//         views: 25,
-//         comments: []
-//     },
-//     {
-//         id: 6,
-//         title: 'New Title 3',
-//         content: 'New Content 3',
-//         author: 'Author 3',
-//         date: '2024-06-01',
-//         views: 35,
-//         comments: []
-//     }
-// ];
-
-
 const BoardMain = () => {
     const [boardData, setBoardData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchCategory, setSearchCategory] = useState('title');
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    //상세
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    //글 등록
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    //선택한 글 번호
     const [selectedPost, setSelectedPost] = useState(null);
-    const [newPost, setNewPost] = useState({
-        title: '',
-        content: '',
-        writer: '',
-        regDate: '',
-        modifyDate: '',
-        count: 0,
-        commentEntityList: []
-    });
 
     // useEffect를 사용하여 컴포넌트가 마운트될 때 API에서 전체리스트 데이터를 가져옴
     useEffect(() => {
@@ -124,131 +58,6 @@ const BoardMain = () => {
     const currentPosts = filteredData.slice(indexOfFirstPost, indexOfLastPost);
     const totalPages = Math.ceil(filteredData.length / postsPerPage);
 
-    //게시글 추가, 수정, 삭제
-    const handleAddPost = async () => {
-        try {
-            const newPostData = { ...newPost, date: new Date().toISOString().split('T')[0] };
-            const addedPost = await registerBoard(newPostData);
-
-            const updatedBoardData = await getAllBoards();
-
-            // setBoardData([...boardData, addedPost]);
-            setBoardData(updatedBoard);
-            setNewPost({ title: '', content: '', writer: '', regDate: '', count: 0 });
-            setIsModalOpen(false);
-        } catch (error) {
-            console.error('Error adding post:', error);
-        }
-    };
-
-    const handleEditPost = async () => {
-        try {
-            await updateBoard(selectedPost.id, selectedPost);
-            const updatedBoardData = boardData.map((post) =>
-                post.id === selectedPost.id ? selectedPost : post
-            );
-            setBoardData(updatedBoardData);
-            setIsEditModalOpen(false);
-            setSelectedPost(null);
-        } catch (error) {
-            console.error('Error editing post:', error);
-        }
-    };
-
-    const handleDeletePost = async () => {
-        try {
-            await deleteBoard(selectedPost.id);
-            const updatedBoardData = boardData.filter((post) => post.id !== selectedPost.id);
-            setBoardData(updatedBoardData);
-            setIsDetailModalOpen(false);
-            setSelectedPost(null);
-        } catch (error) {
-            console.error('Error deleting post:', error);
-        }
-    };
-
-
-    const handlePostSelection = (post) => {
-        setSelectedPost({
-            ...post,
-            comments: Array.isArray(post.comments) ? post.comments : []
-        });
-        setIsDetailModalOpen(true);
-    };
-
-
-    //댓글추가,삭제
-    const handleAddComment = async (content) => {
-        try {
-            const newComment = {
-                writerId: currentUser.id,
-                nickname: currentUser.nickname,
-                boardNo: selectedPost.id,
-                content,
-                createDate: new Date().toISOString().split('T')[0]
-            };
-            const addedComment = await addComment(selectedPost.boardNo, newComment);
-            
-            const updatedBoardData = boardData.map((post) => {
-                if (post.boardNo === selectedPost.boardNo) {
-                    const updatedComments = Array.isArray(post.commentEntityList) ? post.commentEntityList : [];
-                    return {
-                        ...post,
-                        comments: [...updatedComments, addedComment]
-                    };
-                }
-                return post;
-            });
-            setBoardData(updatedBoardData);
-            setSelectedPost({
-                ...selectedPost,
-                commentEntityList: [...selectedPost.commentEntityList, addedComment]
-            });
-        } catch (error) {
-            console.error('Error adding comment:', error);
-        }
-    };
-
-  const handleEditComment = (commentId, content) => {
-    const updatedBoardData = boardData.map((post) => {
-      if (post.boardNo === selectedPost.boardNo) {
-        const updatedComments = post.commentEntityList.map((comment) =>
-            comment.commentNo === commentId ? { ...comment, content } : comment
-        );
-        return { ...post, commentEntityList: updatedComments };
-      }
-      return post;
-    });
-    setBoardData(updatedBoardData);
-    setSelectedPost({
-      ...selectedPost,
-      comments: selectedPost.commentEntityList.map((comment) =>
-        comment.commentNo === commentId ? { ...comment, content } : comment
-      ),
-    });
-  };
-
-    const handleDeleteComment = async (commentId) => {
-        try {
-            await deleteComment(selectedPost.id, commentId);
-            const updatedBoardData = boardData.map((post) => {
-                if (post.boardNo === selectedPost.id) {
-                    const updatedComments = Array.isArray(post.commentEntityList) ? post.comments.filter((comment) => comment.commentNo !== commentId) : [];
-                    return { 
-                        ...post, 
-                        comments: updatedComments };
-                }
-                return post;
-            });
-            setBoardData(updatedBoardData);
-            setSelectedPost({
-                ...selectedPost,
-                commentEntityList: selectedPost.commentEntityList.filter((comment) => comment.commentNo !== commentId)
-            });
-        } catch (error) {
-            console.error('Error deleting comment:', error);
-        }
-    };
 
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) return text;
@@ -305,7 +114,7 @@ const BoardMain = () => {
                                 key={item.boardNo}
                                 className="mb-2 p-2 border-b border-pink-300 cursor-pointer"
                                 onClick={() => {
-                                    handlePostSelection(item);
+                                    setSelectedPost(item.boardNo);
                                     setIsDetailModalOpen(true);
                                 }}
                             >
@@ -339,39 +148,18 @@ const BoardMain = () => {
         </div>
 
 
-      <AddPostModalComponent
+      {isModalOpen && <AddPostModalComponent
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        newPost={newPost}
-        setNewPost={setNewPost}
-        handleAddPost={handleAddPost}
-      />
+      />}
 
-      {selectedPost && (
+      {isDetailModalOpen && (
         <DetailPostModalComponent
-          isOpen={isDetailModalOpen}
+          boardNo={selectedPost}
           onClose={() => setIsDetailModalOpen(false)}
-          selectedPost={selectedPost}
-          onEdit={() => {
-            setIsEditModalOpen(true);
-            setIsDetailModalOpen(false);
-          }}
-          onDelete={handleDeletePost}
-          handleAddComment={handleAddComment}
-          handleEditComment={handleEditComment}
-          handleDeleteComment={handleDeleteComment}
         />
       )}
 
-      {selectedPost && (
-        <EditPostModalComponent
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          selectedPost={selectedPost}
-          setSelectedPost={setSelectedPost}
-          handleEditPost={handleEditPost}
-        />
-      )}
     </BasicLayout>
   );
 };
