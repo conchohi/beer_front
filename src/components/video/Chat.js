@@ -177,9 +177,9 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   }, []);
 
   const renderChat = () => (
-    <div className="chat-box flex bg-white rounded-lg flex-col shadow-lg p-4 h-full ">
+    <div className="chat-box flex bg-white rounded-lg flex-col shadow-lg p-4 h-[700px]">
       <div className="date-banner text-center mb-2">{date}</div>
-      <div className="chat-content flex-1 overflow-y-scroll p-1">
+      <div className="chat-content flex-1 overflow-y-scroll scrollbar-hide p-1">
         <ul className="chat-messages space-y-2">
           {publicChats.map((chat, index) =>
             chat.type === "JOIN" ? (
