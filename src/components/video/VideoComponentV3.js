@@ -72,7 +72,7 @@ const VideoComponentV3 = () => {
 
     const [newFeed, setNewFeed] = useState(null);
     const [leaveId, setleaveId] = useState(null);
-
+    const [selectedGame, setSelectedGame] = useState(null);
     const navigate = useNavigate();
 
     const clickExitRoom = () => {
@@ -647,9 +647,17 @@ const VideoComponentV3 = () => {
             });
     }
 
+    const startSelectedGame = (game) => {
+        console.log("Selected game in VideoComponentV3:", game);
+        setSelectedGame(game);
+        setOpenGame(false);
+      };
+
     return (<>
         {/* 게임 선택 모달 */}
-        {openGame && <GameSelectModal roomNo={roomNo} close={() => { setOpenGame(false) }} />}
+        {/* {openGame && (<GameSelectModal close={() => {setOpenGame(false); }}startSelectedGame={setSelectedGame}  />)} */}
+        {openGame && (<GameSelectModal close={() => setOpenGame(false)} startSelectedGame={(game) => 
+            {console.log("Selected game in Videocomponentv3:", game);setSelectedGame(game);setOpenGame(false);}}/>)}       
         {/* 방 폭파 확인 모달 */}
         {checkDestory && <DestoryCheckModal setCheckDestroy={setCheckDestory} destroy={destory} />}
         {/* 메세지 모달 */}
@@ -712,6 +720,7 @@ const VideoComponentV3 = () => {
             roomNo={roomNo}
             participantList={participantList}
             master={master}
+            selectedGame={selectedGame} // Pass selectedGame to Chat
           />
                 <div className="w-full flex items-center px-4 justify-between text-center gap-5 font-bold">
                     <button className="py-3 w-28 bg-gray-600 text-white" onClick={clickGame}>게임 선택</button>

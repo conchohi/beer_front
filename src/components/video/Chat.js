@@ -8,7 +8,7 @@ import BaskinRobbins31 from "./modal/game/BaskinRobbins31";
 
 let stompClient = null;
 
-const Chat = ({ roomNo, nickname, participantList, master }) => {
+const Chat = ({ roomNo, nickname, participantList, master,selectedGame }) => {
   const [publicChats, setPublicChats] = useState([]);
   const [userData, setUserData] = useState({
     sender: nickname,
@@ -19,7 +19,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   const [date, setDate] = useState("");
   const chatMessagesEndRef = useRef(null);
   const [activeTab, setActiveTab] = useState("chat");
-  const [currentGame, setCurrentGame] = useState("BaskinRobbins31");
+  const [currentGame, setCurrentGame] = useState(selectedGame); // Set initial state to selectedGame
 
   useEffect(() => {
     if (userData.connected) {
@@ -30,6 +30,14 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   useEffect(() => {
     scrollToBottom();
   }, [publicChats]);
+
+  useEffect(() => {
+    console.log("Selected game in Chat:", selectedGame);
+    if (selectedGame) {
+      setCurrentGame(selectedGame);
+      setActiveTab("game");
+    }
+  }, [selectedGame]);
 
   const scrollToBottom = () => {
     chatMessagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -130,7 +138,6 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
       var chatMessage = {
         sender: userData.sender,
         content: userData.message,
-        roomNo: roomNo,
         type: "CHAT",
         date: new Date().toISOString(), // 추가: ISO 형식으로 날짜 설정
       };
@@ -255,50 +262,29 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   const renderGame = () => {
     const games = {
       BaskinRobbins31: BaskinRobbins31,
-      // GameA: GameA,
-      // GameB: GameB,
-      // GameC: GameC,
     };
 
     const GameComponent = games[currentGame];
 
     return (
       <div className="game-box flex bg-slate-100 flex-col shadow-lg p-10">
-        <div className="flex justify-center space-x-4 mb-4">
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-            onClick={() => setCurrentGame("BaskinRobbins31")}
-          >
-            BaskinRobbins31
-          </button>
-          <button
-            className="bg-green-500 text-white px-4 py-2 rounded"
-            onClick={() => setCurrentGame("GameA")}
-          >
-            Game A
-          </button>
-          <button
-            className="bg-red-500 text-white px-4 py-2 rounded"
-            onClick={() => setCurrentGame("GameB")}
-          >
-            Game B
-          </button>
-          <button
-            className="bg-purple-500 text-white px-4 py-2 rounded"
-            onClick={() => setCurrentGame("GameC")}
-          >
-            Game C
-          </button>
-        </div>
-        <GameComponent
-          nickname={nickname}
-          roomNo={roomNo}
-          participantList={participantList}
-          master={master}
-        />
-      </div>
-    );
-  };
+         {GameComponent && (
+
+<GameComponent
+
+  nickname={nickname}
+
+  roomNo={roomNo}
+
+  participantList={participantList}
+
+  master={master}
+
+/>)}
+
+</div>
+);
+};
 
   return (
     <div className="container mx-auto p-4 flex flex-col h-full max-h-[800px]">
