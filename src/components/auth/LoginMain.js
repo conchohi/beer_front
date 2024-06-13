@@ -21,11 +21,7 @@ const LoginMain = () => {
   const navigate = useNavigate();
 
   const customCallback = () => {
-    if (message === "로그인 성공!") {
-      navigate("/");
-    } else {
-      setIsOpen(false);
-    }
+    setIsOpen(false);
   };
 
   const handleId = (e) => {
@@ -81,12 +77,10 @@ const LoginMain = () => {
       // 헤더에서 액세스 토큰 추출
       const accessToken = response.headers["access"];
 
-      setMessage("로그인 성공!");
-      setIsOpen(true);
-
       const { nickname } = response.data;
       localStorage.setItem("access", accessToken); // 액세스 토큰 저장
       localStorage.setItem("nickname", nickname); // 닉네임 저장
+      navigate('/')
     } catch (error) {
       if (error.response?.status === 401)
         setMessage("아이디 혹은 비밀번호가 틀렸습니다.");

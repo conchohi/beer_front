@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaSearch, FaEnvelope } from "react-icons/fa";
 import ProfilePageInfo from "./ProfilePageInfo";
 import HostFollowingGames from "./follow/HostFollowingGames";
 import FollowingList from "./follow/FollowingList";
 import EditProfileModal from "./modal/EditProfileModal";
 import privateApi from "../../api/axios_intercepter";
-import SearchModal from "./modal/search/SearchModal";
-import FriendRequestsModal from "./modal/friend/FriendRequestModal";
 
 const MyPageMain = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const [friendRequestsOpen, setFriendRequestsOpen] = useState(false);
-  const [refreshTrigger, setRefreshTrigger] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -40,9 +34,6 @@ const MyPageMain = () => {
 
   const handleOpen = () => setOpen(true);
 
-  const handleFriendAccepted = () => {
-    setRefreshTrigger(!refreshTrigger);
-  };
 
   if (!userData) return <div>Loading...</div>;
 
@@ -62,27 +53,8 @@ const MyPageMain = () => {
             </div>
             <HostFollowingGames />
           </div>
-          <div className="bg-gray-900 rounded-2xl p-20 text-left w-5/12 flex flex-col">
-            <div className="flex items-center justify-between mb-8">
-              <div className="text-pink-500">
-                <b>친구 목록</b>
-              </div>
-              <div className="flex space-x-4">
-                <button
-                  className="text-white text-3xl hover:text-pink-500 transition duration-300 ease-in-out cursor-pointer"
-                  onClick={() => setSearchModalOpen(true)}
-                >
-                  <FaSearch />
-                </button>
-                <button
-                  className="text-white text-3xl hover:text-pink-500 transition duration-300 ease-in-out cursor-pointer"
-                  onClick={() => setFriendRequestsOpen(true)}
-                >
-                  <FaEnvelope />
-                </button>
-              </div>
-            </div>
-            <FollowingList refreshTrigger={refreshTrigger} />
+          <div className="bg-white rounded-2xl p-5 text-left w-5/12">
+            <FollowingList/>
           </div>
         </div>
       </div>
@@ -91,19 +63,8 @@ const MyPageMain = () => {
         onRequestClose={() => setOpen(false)}
         userData={userData}
       />
-      {searchModalOpen && (
-        <SearchModal
-          show={searchModalOpen}
-          closeModal={() => setSearchModalOpen(false)}
-        />
-      )}
-      {friendRequestsOpen && (
-        <FriendRequestsModal
-          show={friendRequestsOpen}
-          closeModal={() => setFriendRequestsOpen(false)}
-          onFriendAccepted={handleFriendAccepted}
-        />
-      )}
+
+
     </div>
   );
 };
