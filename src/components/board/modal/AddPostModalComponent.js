@@ -1,23 +1,37 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import BoardModalComponent from './BoardModalComponent';
 import { AiOutlineClose } from 'react-icons/ai';
+import { registerBoard } from '../../../api/BoardApi';
 
-const AddPostModalComponent = ({ isOpen, onClose, newPost, setNewPost, handleAddPost }) => {
+const AddPostModalComponent = ({ isOpen, onClose, refresh,setMessage, setBasicModal }) => {
+    const [newPost, setNewPost] = useState({writer:localStorage.getItem('nickname')});
+
     const handleMouseDown = (e) => {
         e.stopPropagation();
     };
 
-    // useEffect(() => {
-    //     // 모달이 열릴 때 작성자를 현재 유저의 닉네임으로 설정
-    //     if (isOpen && currentUser) {
-    //         setNewPost((prevNewPost) => ({ ...prevNewPost, writer: currentUser.nickname }));
-    //     }
-    // }, [isOpen, currentUser, setNewPost]);
-
+    const handleAddPost = (()=>{
+        if(!newPost.title || newPost.title.length === 0){
+            setMessage('제목을 입력하세요.')
+            setBasicModal(true)
+            return
+        }
+        if(!newPost.content || newPost.content.length === 0){
+            setMessage('내용을 입력하세요.')
+            setBasicModal(true)
+            return
+        }
+        registerBoard(newPost).then(result=>{
+            setMessage('게시글 등록 완료!')
+            setBasicModal(true)
+            onClose();
+            refresh();
+        })
+    })
 
     return (
         <BoardModalComponent isOpen={isOpen} onClose={onClose}>
-            <div className="fixed inset-0 flex justify-center items-center z-50 ">
+            <div className="fixed inset-0 flex justify-center items-center z-30 ">
                 <div className="bg-gray-800 border-2 border-pink-500 text-gray-600 rounded-lg w-11/12 max-w-2xl p-6 relative">
                     <button className="absolute top-4 right-4 text-pink-500" onClick={onClose}>
                         <AiOutlineClose size={24} />

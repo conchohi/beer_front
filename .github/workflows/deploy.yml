@@ -1,0 +1,39 @@
+name: Deploy React to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+
+      - name: Build and push Docker image for React app
+        run: |
+          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest" .
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest
+
+      - name: Deploy on EC2
+        run: |
+          echo "Deploying on EC2"
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            # Frontend deployment
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest
+            docker stop beer_front || true
+            docker rm beer_front || true
+            docker run -d --name beer_front -p 3000:80 ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest
+          EOF
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}

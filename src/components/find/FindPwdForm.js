@@ -46,7 +46,7 @@ const FindPwdForm = () => {
             setIsOpen(true);
             setTimeLeft(300); // Reset countdown timer
         } catch (error) {
-            setMessage("유저가 존재하지않습니다.");
+            setMessage("유저가 존재하지 않습니다.");
             setIsOpen(true);
         }
     };

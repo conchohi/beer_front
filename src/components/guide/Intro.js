@@ -12,26 +12,26 @@ const Intro = () => {
 
   const gameGuides = [
     {
-      id: "이미지 게임",
-      src: "./img/Landing/ImageGameGuide.webp",
-      alt: "Image Game Guide",
+        id: "이미지 게임",
+        src: "/img/imggame.png",
+        alt: "Image Game Guide",
     },
     {
-      id: "캐치 마인드",
-      src: "./img/Landing/CatchMindGuide.webp",
-      alt: "Catch Mind Guide",
+        id: "고요 속의 외침",
+        src: "/img/whaechim.png",
+        alt: "Shout In Silence Guide",
     },
     {
-      id: "고요 속의 외침",
-      src: "./img/Landing/ShoutInSilenceGuide.webp",
-      alt: "Shout In Silence Guide",
+        id: "밸런스 게임",
+        src: "/img/balancegame.png",
+        alt: "Balance Game Guide",
     },
     {
-      id: "인물 퀴즈",
-      src: "./img/Landing/PersonQuizGuide.webp",
-      alt: "Person Quiz Guide",
+        id: "라이어 게임",
+        src: "/img/liargame.png",
+        alt: "Liar Game Guide",
     },
-  ];
+];
 
   return (
     <div className="font-bold text-gray-200 flex flex-col pt-16 break-keep relative min-h-screen">

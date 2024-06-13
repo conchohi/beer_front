@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Janus from "../../api/janus";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { FaUserLarge } from "react-icons/fa6";
 import DestoryCheckModal from "./modal/room/DestroyCheckModal";
 import UserDetail from "./modal/UserDetail";
 import Chat from "./Chat";
@@ -12,6 +11,7 @@ import GameSelectModal from "./modal/game/GameSelectModal";
 import ParticipantList from "./ParticipantList";
 import VideoButton from "./VideoButton";
 import { API_SERVER_HOST } from "../../api/axios_intercepter";
+import { FaCrown } from "react-icons/fa";
 
 const server = "https://janus.jsflux.co.kr/janus";
 
@@ -81,7 +81,7 @@ const VideoComponentV3 = () => {
 
     //방 폭파 버튼 클릭
     const clickDestoryRoom = () => {
-        if (master == nickname) {
+        if (master === nickname) {
             setCheckDestory(true);
         } else {
             setMessage("방장만 선택 가능합니다.")
@@ -185,7 +185,7 @@ const VideoComponentV3 = () => {
                                                 success: function (result) {
                                                     let event = result["videoroom"];
                                                     Janus.debug("Event: " + event);
-                                                    if (event != undefined && event != null) {
+                                                    if (event !== undefined && event !== null) {
                                                         // Our own screen sharing session has been created, join it
                                                         console.log("Room Create Result: " + result);
                                                         console.log("error: " + result["error"]);
@@ -660,19 +660,23 @@ const VideoComponentV3 = () => {
         }
         } />}
         <div className="w-full flex flex-wrap">
-            <div className="w-3/4 flex flex-col flex-wrap min-h-[600px]">
+            <div className="w-3/4 flex flex-col flex-wrap">
             <div className="w-full h-24 px-12 flex flex-row justify-between items-center font-bold text-5xl text-white">
-                <span className="">{title}</span>
+                <div className="flex flex-row gap-3 items-center justify-center mt-4">
+                    <img className="h-16" src="/img/logo.png" alt="logo"/>
+                    {/* <img className="h-10" src="/img/title.png" alt="title"/> */}
+                    <span className="">{title}</span>
+                </div>
                 <ParticipantList participantList={participantList} setClickUserNick={setClickUserNick} />
             </div>
                 <div className="w-full flex flex-wrap items-start">
                     <div className={"flex flex-col justify-center rounded-lg items-center text-center p-6 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
-                        <div className="w-full  bg-black border-2 border-yellow-500 rounded-xl">
+                        <div className="w-full  bg-black border-2 border-white rounded-xl">
                             <div className="relative">
+                                {(master === nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
                                 <div className="pb-[56.25%] h-0 relative">
                                     <video ref={myVideoRef} id="myvideo" className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline muted />
                                 </div>
-                                <span className="absolute bottom-6 right-6 cursor-pointer" onClick={() => { setClickUserNick(nickname) }}><FaUserLarge size="40" /></span>
                             </div>
                             <span className="font-bold text-xl py-3 text-white" >{nickname}</span>
                         </div>
@@ -687,11 +691,11 @@ const VideoComponentV3 = () => {
                             <div className={"flex flex-col justify-center items-center text-center p-6 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
                                 <div className="w-full  bg-black border-2 border-white rounded-xl">
                                     <div className="relative">
+                                        {(master === participant.nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
                                         <div className="pb-[56.25%] h-0 relative">
                                             <video id={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover hidden" autoPlay playsInline />
                                             <img alt={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover" src={participant.profileImage ? `${API_SERVER_HOST}/api/user/${participant.profileImage}`: "/logo/basic.png"}/>
                                         </div>
-                                        <span className="absolute bottom-6 right-6 cursor-pointer z-20" onClick={() => { setClickUserNick(participant.nickname) }}><FaUserLarge size="40" /></span>
                                     </div>
                                     <span className="font-bold text-lg py-3 text-white">{participant.nickname}</span>
                                 </div>
@@ -701,8 +705,18 @@ const VideoComponentV3 = () => {
                     })}
                 </div>
             </div>
-            <div className="flex w-1/4 px-5">
-                <Chat roomNo={roomNo} nickname={nickname}/>
+            <div className="flex flex-col w-1/4 px-5 mt-8">
+                <Chat
+            nickname={nickname}
+            roomNo={roomNo}
+            participantList={participantList}
+            master={master}
+          />
+                <div className="w-full flex items-center px-4 justify-between text-center gap-5 font-bold">
+                    <button className="py-3 w-28 bg-gray-600 text-white" onClick={clickGame}>게임 선택</button>
+                    <button className="py-3 w-28 bg-white" onClick={clickDestoryRoom}>방 폭파</button>
+                    <button className="py-3 w-28 bg-[#BE2222] text-white" onClick={clickExitRoom}>나가기</button>
+                </div>
             </div>
         </div>
 
@@ -710,11 +724,7 @@ const VideoComponentV3 = () => {
             <div className="w-1/2 flex gap-5 text-white">
                 <VideoButton muted={muted} publish={publish} publishOwnFeed={publishOwnFeed} unpublishOwnFeed={unpublishOwnFeed} toggleMute={toggleMute} />
             </div>
-            <div className="w-1/2 flex items-center justify-end gap-5 text-lg font-bold">
-                <button className="py-3 w-1/4 bg-gray-600 text-white" onClick={clickGame}>게임 선택</button>
-                <button className="py-3 w-1/4 bg-white" onClick={clickDestoryRoom}>방 폭파</button>
-                <button className="py-3 w-1/4 bg-[#BE2222] text-white" onClick={clickExitRoom}>나가기</button>
-            </div>
+            
             </div>      
     </>);
 }

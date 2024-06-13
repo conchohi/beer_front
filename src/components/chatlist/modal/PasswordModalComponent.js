@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { checkPassword } from "../../../api/roomApi";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BasicModalComponent from "../../common/BasicModalComponent";
 
 const PasswordModalComponent = ({ roomNo, close }) => {

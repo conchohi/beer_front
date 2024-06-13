@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { FiLogIn } from "react-icons/fi";
-import { FaUserPlus, FaCaretDown } from "react-icons/fa";
+import { FaUserPlus } from "react-icons/fa";
 import { BiDoorOpen } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { BiSolidLogOut } from "react-icons/bi";
@@ -8,6 +8,7 @@ import CreateRoom from "../components/chatlist/modal/CreateRoom";
 import axios from "axios";
 import { API_SERVER_HOST } from "../api/axios_intercepter";
 import BasicModalComponent from "../components/common/BasicModalComponent";
+import { RiBeerFill } from "react-icons/ri";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,8 +17,6 @@ const Header = () => {
 
   const navigate = useNavigate();
   const token = localStorage.getItem("access");
-  const nickname = localStorage.getItem("nickname");
-  const dropdownRef = useRef(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -34,7 +33,7 @@ const Header = () => {
   const logoutFunction = async () => {
     try {
       // 서버에 로그아웃 요청을 보냅니다.
-      const response = await axios.post(`${API_SERVER_HOST}/logout`, {}, {
+      const response = await axios.post(`${API_SERVER_HOST}/api/logout`, {}, {
         withCredentials: true // 쿠키를 포함하여 요청
       });
 
@@ -136,7 +135,7 @@ const Header = () => {
                         className="flex flex-col items-center cursor-pointer text-white"
                         onClick={() => navigate("/mypage")}
                       >
-                        <FaUserPlus className="w-8 h-8 text-white text-md" />
+                        <RiBeerFill className="w-8 h-8 text-white text-md" />
                         마이페이지
                       </div>
                     </li>
@@ -151,15 +150,7 @@ const Header = () => {
                   </>
                 ) : (
                   <>
-                    <li>
-                      <div
-                        className="flex flex-col items-center cursor-pointer text-white"
-                        onClick={() => navigate("/login")}
-                      >
-                        <FiLogIn className="w-8 h-8 text-white text-md" />
-                        로그인
-                      </div>
-                    </li>
+                    
                     <li>
                       <div
                         className="flex flex-col items-center cursor-pointer text-white"
@@ -167,6 +158,15 @@ const Header = () => {
                       >
                         <FaUserPlus className="w-8 h-8 text-white text-md" />
                         회원가입
+                      </div>
+                    </li>
+                    <li>
+                      <div
+                        className="flex flex-col items-center cursor-pointer text-white"
+                        onClick={() => navigate("/login")}
+                      >
+                        <FiLogIn className="w-8 h-8 text-white text-md" />
+                        로그인
                       </div>
                     </li>
                   </>
@@ -234,7 +234,7 @@ const Header = () => {
                       className="flex flex-col items-center cursor-pointer text-white text-sm"
                       onClick={() => navigate("/mypage")}
                     >
-                      <FaUserPlus className="w-6 h-6 text-white" />
+                      <RiBeerFill className="w-6 h-6 text-white" />
                       마이페이지
                     </div>
                     <button onClick={logoutFunction} className="text-white text-sm">
@@ -246,6 +246,13 @@ const Header = () => {
                   </>
                 ) : (
                   <>
+                  <div
+                      className="flex flex-col items-center cursor-pointer text-white text-sm"
+                      onClick={() => navigate("/signup")}
+                    >
+                      <FaUserPlus className="w-6 h-6 text-white" />
+                      회원가입
+                    </div>
                     <div
                       className="flex flex-col items-center cursor-pointer text-white text-sm"
                       onClick={() => navigate("/login")}
@@ -253,13 +260,7 @@ const Header = () => {
                       <FiLogIn className="w-6 h-6 text-white" />
                       로그인
                     </div>
-                    <div
-                      className="flex flex-col items-center cursor-pointer text-white text-sm"
-                      onClick={() => navigate("/signup")}
-                    >
-                      <FaUserPlus className="w-6 h-6 text-white" />
-                      회원가입
-                    </div>
+                    
                   </>
                 )}
               </li>
