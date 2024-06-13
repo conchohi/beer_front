@@ -18,7 +18,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
 
-      - name: Build and push Docker image for React app
+      - name: Build Docker image for React app
         run: |
           # Generate a unique tag for the Docker image
           TAG=$(date +%s)
@@ -38,7 +38,7 @@ jobs:
           # Copy the build files from the running container to the host directory
           docker cp beer_front:/usr/share/nginx/html /home/test/
           # Copy the build files to the EC2 instance
-          scp -rf /home/test/html ubuntu@${{ secrets.EC2_HOST }}:/home/test
+          scp -r /home/test/html ubuntu@${{ secrets.EC2_HOST }}:/home/test
 
       - name: Cleanup Docker container
         run: |

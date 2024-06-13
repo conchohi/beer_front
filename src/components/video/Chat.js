@@ -3,6 +3,7 @@ import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import BaskinRobbins31 from "./modal/game/BaskinRobbins31";
 import BalanceGame from "./modal/game/BalanceGame";
+import { API_SERVER_HOST } from "../../api/axios_intercepter";
 // import GameA from "./modal/game/GameA"; // GameA 컴포넌트를 import
 // import GameB from "./modal/game/GameB"; // GameB 컴포넌트를 import
 // import GameC from "./modal/game/GameC"; // GameC 컴포넌트를 import
@@ -37,7 +38,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   };
 
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8080/ws");
+    const socket = new SockJS(`${API_SERVER_HOST}/ws`);
     const stompClient = Stomp.over(socket);
     stompClientRef.current = stompClient;
 
