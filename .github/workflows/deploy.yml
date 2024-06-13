@@ -18,26 +18,26 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
 
-      - name: Build and push Docker image for React app
+      - name: Build Docker image for React app
         run: |
           # Generate a unique tag for the Docker image
           TAG=$(date +%s)
-          docker build --no-cache -t "${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}" .
-          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
+          docker build --no-cache -t "react_app:${TAG}" .
           echo "TAG=${TAG}" >> $GITHUB_ENV
 
-      - name: Deploy on EC2
+      - name: Copy build files to host directory
+        run: |
+          # Run the Docker container to output build files
+          docker run --rm -v ${{ github.workspace }}/beer_front:/beer_front react_app:${TAG}
+          # Copy the build files to the host directory
+          scp -r ${{ github.workspace }}/beer_front ubuntu@${{ secrets.EC2_HOST }}:/path/to/host/directory
+
+      - name: Configure Nginx on EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          TAG: ${{ env.TAG }}
         run: |
-          echo "Deploying on EC2"
           ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << EOF
-            docker pull ${DOCKERHUB_USERNAME}/beer_front:${TAG}
-            docker stop beer_front || true
-            docker rm beer_front || true
-            docker run -d --name beer_front -p 3000:80 ${DOCKERHUB_USERNAME}/beer_front:${TAG}
+            sudo rm -rf /var/www/html/*
+            sudo cp -r /path/to/host/directory/* /var/www/html/
+            sudo systemctl restart nginx
           EOF
-
