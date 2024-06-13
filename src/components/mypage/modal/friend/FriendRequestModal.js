@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import privateApi from "../../../../api/axios_intercepter";
+import privateApi, { API_SERVER_HOST } from "../../../../api/axios_intercepter";
 import AlertModal from "./FriendCommonModal";
 import Draggable from "react-draggable";
 import Space2 from "../../../animation/Space2";
 
-const FriendRequestsModal = ({ show, closeModal, onFriendAccepted }) => {
+const FriendRequestsModal = ({ show, closeModal, onFriendAccepted, setClickNickname}) => {
   const [friendRequests, setFriendRequests] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShow, setAlertShow] = useState(false);
@@ -61,16 +61,16 @@ const FriendRequestsModal = ({ show, closeModal, onFriendAccepted }) => {
     <Draggable>
       <div
         className={`fixed inset-0 flex items-center justify-center transition-opacity duration-300 ${
-          show ? "opacity-100 z-50" : "opacity-0 pointer-events-none"
+          show ? "opacity-100 z-20" : "opacity-0 pointer-events-none"
         }`}
       >
         <div
-          className="bg-gray-800 text-white rounded-lg p-8 w-full max-w-md mx-auto"
+          className="bg-slate-200 text-gray-600 rounded-lg p-8 w-full max-w-md mx-auto"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-bold text-pink-500">친구 요청 목록</h2>
-            <button className="text-white text-2xl" onClick={closeModal}>
+            <button className=" text-2xl" onClick={closeModal}>
               ✖
             </button>
           </div>
@@ -81,7 +81,18 @@ const FriendRequestsModal = ({ show, closeModal, onFriendAccepted }) => {
                   key={user.userId}
                   className="flex justify-between items-center text-xl p-2 border-b border-gray-700"
                 >
-                  <span>{user.nickname}</span>
+                  <div
+                      className="flex items-center cursor-pointer" onClick={()=>{setClickNickname(user.nickname)}}
+                    >
+                      <img
+                        src={`${API_SERVER_HOST}/api/user/${user.profileImage}`}
+                        className="w-12 h-12 rounded-full mr-4"
+                        alt="프로필"
+                      />
+                      <div>
+                        <p className="text-xl">{user.nickname}</p>
+                      </div>
+                    </div>
                   <div>
                     <button
                       className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 mr-2"
@@ -100,13 +111,13 @@ const FriendRequestsModal = ({ show, closeModal, onFriendAccepted }) => {
               ))}
             </ul>
           ) : (
-            <div className="text-center text-xl text-white mt-4">
+            <div className="text-center text-xl  mt-4">
               친구 요청 목록이 없습니다.
               <Space2 />
             </div>
           )}
           <button
-            className="bg-gray-700 text-xl text-white px-4 py-2 rounded mt-4 w-full hover:bg-gray-600"
+            className="bg-slate-100 text-xl  px-4 py-2 rounded mt-4 w-full hover:bg-slate-300"
             onClick={closeModal}
           >
             닫기
