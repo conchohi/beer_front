@@ -1,7 +1,4 @@
-import { useNavigate } from "react-router-dom";
-
 const DeleteCheckModal = ({ setIsDelete, deletePost }) => {
-    const navigate = useNavigate();
     return (
         <div className="w-lvw h-lvh z-50 fixed top-0 left-0 bg-black/40">
             <div className="absolute bg-white top-1/2 left-1/2 w-[240px] h-[140px] z-50 -translate-x-1/2 -translate-y-1/2 rounded-lg shadow">

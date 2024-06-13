@@ -35,23 +35,23 @@ function ProfilePageInfo({ handleOpen, userData }) {
       <div className="flex flex-col justify-center items-center">
         <ImageDisplay fileName={userDetails?.profileImage} />
         <button
-          className="mt-5 bg-pink-500 text-white rounded-lg w-32 h-12 md:w-40 md:h-16 lg:w-40 lg:h-20 text-lg md:text-xl cursor-pointer"
+          className="mt-5 bg-pink-500 text-white rounded-lg w-32 h-12 text-lg cursor-pointer"
           onClick={openModal}
         >
           정보 수정
         </button>
       </div>
       <div className="flex flex-col justify-center items-start gap-6 w-full">
-        <div className="w-full text-2xl md:text-4xl lg:text-6xl">
+        <div className="w-full text-xl">
           <div className="flex flex-wrap items-center">
             <div className="flex flex-1 items-center">
-              <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-36 lg:h-24 rounded-full bg-pink-500 text-white">
+              <div className="ml-20 flex items-center justify-center w-50 h-16  rounded-full bg-pink-500 text-white">
                 닉네임
               </div>
               <div className="ml-2">: {userDetails?.nickname || "비공개"}</div>
             </div>
             <div className="flex flex-1 items-center mt-2 lg:mt-0">
-              <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-36 lg:h-24 rounded-full bg-pink-500 text-white">
+              <div className="ml-20 flex items-center justify-center w-50 h-16 rounded-full bg-pink-500 text-white">
                 성별
               </div>
               <div className="ml-2">: {userDetails?.gender || "비공개"}</div>
@@ -59,13 +59,13 @@ function ProfilePageInfo({ handleOpen, userData }) {
           </div>
           <div className="flex flex-wrap items-center mt-4 lg:mt-6">
             <div className="flex flex-1 items-center">
-              <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-36 lg:h-24 rounded-full bg-pink-500 text-white">
+              <div className="ml-20 flex items-center justify-center w-50 h-16 rounded-full bg-pink-500 text-white">
                 MBTI
               </div>
               <div className="ml-2">: {userDetails?.mbti || "비공개"}</div>
             </div>
             <div className="flex flex-1 items-center mt-2 lg:mt-0">
-              <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-36 lg:h-24 rounded-full bg-pink-500 text-white">
+              <div className="ml-20 flex items-center justify-center w-50 h-16 rounded-full bg-pink-500 text-white">
                 나이
               </div>
               <div className="ml-2">: {userDetails?.age || "비공개"}</div>
@@ -73,7 +73,7 @@ function ProfilePageInfo({ handleOpen, userData }) {
           </div>
           <div className="flex flex-wrap items-center mt-4 lg:mt-6">
             <div className="flex flex-1 items-center">
-              <div className="ml-20 flex items-center justify-center w-50 h-16 md:w-20 md:h-20 lg:w-44 lg:h-24 rounded-full bg-pink-500 text-white">
+              <div className="ml-20 flex items-center justify-center w-50 h-16 rounded-full bg-pink-500 text-white">
                 한줄소개
               </div>
               <textarea 
