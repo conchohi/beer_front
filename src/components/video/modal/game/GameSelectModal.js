@@ -14,7 +14,7 @@ const games = [
     alt: "Shout In Silence",
   },
   {
-    id: "밸런스 게임",
+    id: "BalanceGame",
     src: "/img/balancegame.png",
     alt: "Balance Game",
   },

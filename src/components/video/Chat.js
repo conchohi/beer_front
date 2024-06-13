@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import BaskinRobbins31 from "./modal/game/BaskinRobbins31";
+import BalanceGame from "./modal/game/BalanceGame";
 // import GameA from "./modal/game/GameA"; // GameA 컴포넌트를 import
 // import GameB from "./modal/game/GameB"; // GameB 컴포넌트를 import
 // import GameC from "./modal/game/GameC"; // GameC 컴포넌트를 import
@@ -262,6 +263,7 @@ const Chat = ({ roomNo, nickname, participantList, master,selectedGame }) => {
   const renderGame = () => {
     const games = {
       BaskinRobbins31: BaskinRobbins31,
+      BalanceGame:BalanceGame,
     };
 
     const GameComponent = games[currentGame];
