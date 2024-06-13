@@ -32,7 +32,7 @@ const FollowingListItem = ({ friend, onFriendDeleted }) => {
   return (
     <div className="flex items-center p-4 border-b border-gray-700">
       <FriendImageDisplay fileName={friend.profileImage} />
-      <div className="flex-grow">
+      <div className="flex-grow flex">
         <p className="text-lg">{friend.nickname}</p>
       </div>
       <button

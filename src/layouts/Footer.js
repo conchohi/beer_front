@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import "./Footer.css";
+import { FaGithub, FaGithubAlt, FaGoogleDrive, FaYoutube } from "react-icons/fa";
+import { RiNotionFill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   useEffect(() => {
@@ -8,39 +10,24 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="w-full footer text-white">
+    <footer className="w-full footer text-gray-400">
       <div className="w-full container mx-auto px-4">
         <div className="flex flex-wrap text-left lg:text-left">
           <div className="w-full lg:w-6/12 px-4">
-            <h4 className="text-xl text-white">
-              중앙정보기술인재개발원 2차 프로젝트
+            <h4 className="text text-lg">
+              중앙정보기술인재개발원 2차 프로젝트 <span className="text-white ms-5 text-base">🍺 우리집 BEER 🍺</span>
             </h4>
-            <br />
-            <h6 className="text-lg mt-2">
-              곽양신 김보라 박제용 유지연 이성훈 최현철
+            <h6 className="text-sm mt-2">
+              조원 : 곽양신 김보라 박제용 유지연 이성훈 최현철
             </h6>
           </div>
           <div className="w-full lg:w-6/12 px-4 flex justify-end mt-6 lg:mt-0">
-            <button type="button" className="text-white mx-2">
-              <a href="#">
-                <i className="fab fa-youtube"></i>
-              </a>
-            </button>
-            <button type="button" className="text-white mx-2">
-              <a href="https://github.com/conchohi/beer_front">
-                <i className="fab fa-github"></i>
-              </a>
-            </button>
-            <button type="button" className="text-white mx-2">
-              <a href="https://drive.google.com/drive/folders/1dkvxr2rZmJJpjyf_TIScOLvpA3Pk2lrV?usp=sharing">
-                <i className="fa-brands fa-google-drive"></i>
-              </a>
-            </button>
-            {/* <button type="button" className="text-white mx-2">
-              <a href="https://github.com/conchohi/beer_front">
-                <i className="fab fa-"></i>
-              </a>
-            </button> */}
+            <Link target='_blank' className="px-1" to="https://youtube.com"><FaYoutube size="20" /></Link>
+            <Link target='_blank' className="px-1" to="https://drive.google.com/drive/folders/1dkvxr2rZmJJpjyf_TIScOLvpA3Pk2lrV"><FaGoogleDrive size="20" /></Link>
+            <Link target='_blank' className="px-1" to="https://www.notion.so/REST-API-0039edd504344061b598bbe5fb16dfab"><RiNotionFill size="20" /></Link>
+            <Link target='_blank' className="px-1" to="https://github.com/conchohi/beer_front"><FaGithub size="20" /></Link>
+            <Link target='_blank' className="px-1" to="https://github.com/conchohi/beer_backend"><FaGithubAlt size="20" /></Link>
+
             <br />
           </div>
         </div>

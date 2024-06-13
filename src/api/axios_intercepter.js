@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const API_SERVER_HOST = 'http://localhost:8080';
+// export const API_SERVER_HOST = 'https://js1.jsflux.co.kr';
+export const API_SERVER_HOST = "http://localhost:8080"
 
 export const publicApi = axios.create({
     baseURL: `${API_SERVER_HOST}`
@@ -15,7 +16,7 @@ const privateApi = axios.create({
 
 // 리프레시 토큰 API
 export async function postRefreshToken() {
-    const response = await publicApi.post('/reissue', {}, {
+    const response = await publicApi.post('/api/reissue', {}, {
         withCredentials: true // 쿠키를 포함하여 요청
     });
     return response;

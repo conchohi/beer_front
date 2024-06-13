@@ -5,7 +5,6 @@ const FindPwdForm = lazy(() => import("../components/find/FindPwdForm"));
 const FindIdForm = lazy(() => import("../components/find/FindIdForm"));
 const Signup = lazy(() => import("../pages/SignupPage"));
 const Login = lazy(() => import("../pages/LoginPage"));
-const Logout = lazy(() => import("../pages/LogoutPage"));
 const Info = lazy(() => import("../pages/InfoPage"));
 const Game = lazy(() => import("../components/guide/Intro"));
 const Main = lazy(()=> import("../pages/MainPage"))
@@ -79,14 +78,6 @@ const root = createBrowserRouter([
         <Signup/>
       </Suspense>
           )
-  },
-  {
-    path: "/logout",
-    element: (
-      <Suspense fallback={<Loading />}>
-        <Logout/>
-      </Suspense>
-    )
   },
     {
     path: "/mypage",
