@@ -1,0 +1,15 @@
+/* 파일: MovingCat.css */
+@keyframes move {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(6vw, 0vw); /* 대각선으로 이동 */
+  }
+}
+
+.animation-container {
+  width: 30vw;
+  height: 30vw;
+  animation: move 5s infinite alternate;
+}
