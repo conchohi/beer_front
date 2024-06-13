@@ -694,7 +694,7 @@ const VideoComponentV3 = () => {
                                         {(master === participant.nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
                                         <div className="pb-[56.25%] h-0 relative">
                                             <video id={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover hidden" autoPlay playsInline />
-                                            <img alt={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover" src={participant.profileImage ? `${API_SERVER_HOST}/api/user/${participant.profileImage}`: "/logo/basic.png"}/>
+                                            <img alt={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover" src={`${API_SERVER_HOST}/api/user/${participant.profileImage}`}/>
                                         </div>
                                     </div>
                                     <span className="font-bold text-lg py-3 text-white">{participant.nickname}</span>
