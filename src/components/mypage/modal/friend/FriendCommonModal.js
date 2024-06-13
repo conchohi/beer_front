@@ -1,11 +1,9 @@
 import React from "react";
-import Draggable from "react-draggable";
 
 const FriendCommonModal = ({ show, message, onClose }) => {
   if (!show) return null;
 
   return (
-    <Draggable>
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-gray-800 text-white rounded-lg p-6 lg:w-2/12">
         <div className="flex justify-between items-center mb-4">
@@ -25,7 +23,6 @@ const FriendCommonModal = ({ show, message, onClose }) => {
         </button>
       </div>
     </div>
-    </Draggable>
   );
 };
 

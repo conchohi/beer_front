@@ -1,44 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { SlUserFollow } from "react-icons/sl";
-import { AiFillAlert } from "react-icons/ai";
 import Draggable from "react-draggable";
-import ReportUser from "./ReportUser";
-import { getUserByNickname } from "../../../api/userApi";
-import BasicModalComponent from "../../common/BasicModalComponent";
-import privateApi, { API_SERVER_HOST } from "../../../api/axios_intercepter"; // API_SERVER_HOST 추가
+import { getUserByNickname } from "../../../../api/userApi";
+import { API_SERVER_HOST } from "../../../../api/axios_intercepter";
 
 function UserDetail({ nickname, close }) {
   const [userInfo, setUserInfo] = useState({});
-  const [openModal, setOpenModal] = useState(false);
-  const [message, setMessage] = useState("");
-  const [report, setReport] = useState(false);
-  const myNickname = localStorage.getItem('nickname');
-
-  const handleReport = () => {
-    if(myNickname && myNickname === nickname){
-      setMessage('본인은 신고할 수 없습니다.')
-      setOpenModal(true);
-      return;
-    }
-    setReport(!report);
-  };
-
-  const handleFriend = async () => {
-    try {
-      await privateApi.post(`/api/friend/request`, { nickname });
-      setMessage('친구 요청을 보냈습니다!');
-      setOpenModal(true);
-    }catch (error) {
-        if (error.response && error.response.data) {
-          setMessage(error.response.data)
-        } else {
-          setMessage('팔로우 실패: 서버 오류');
-        }
-        setOpenModal(true);
-        console.error("Error following user:", error);
-      }
-    };
 
   useEffect(() => {
     getUserByNickname(nickname).then(result => {
@@ -48,8 +15,6 @@ function UserDetail({ nickname, close }) {
 
   return (
     <>
-      {openModal && <BasicModalComponent message={message} callbackFunction={()=>{setOpenModal(false)}}/>}
-      {report && <ReportUser user={userInfo} setMessage={setMessage} setOpenModal={setOpenModal} close={handleReport} />}
       <Draggable>
         <div className="fixed inset-0 flex items-center justify-center z-30 ">
           <div className="bg-gray-700 text-white w-96 p-5 rounded-lg shadow-lg relative">
@@ -63,7 +28,7 @@ function UserDetail({ nickname, close }) {
             <div className="flex items-center ">
               {/* 프로필 이미지 */}
               <div className="w-36 h-36 overflow-hidden object-cover mx-2">
-                <img src={userInfo.profileImage ? `${API_SERVER_HOST}/api/user/${userInfo.profileImage}` :`/imsi.jpg`}
+                <img src={`${API_SERVER_HOST}/api/user/${userInfo.profileImage}`}
 
                   alt="Profile"
                   className=" w-full h-full rounded-lg mr-6 object-cover " />
@@ -97,15 +62,6 @@ function UserDetail({ nickname, close }) {
               <div className="h-20 my-2 p-3 bg-white rounded-lg drop-shadow-md text-gray-800">
                 <div class="">{userInfo.intro}</div>
               </div>
-            </div>
-
-            <div className="mt-5 flex justify-between items-center">
-              <button className="bg-red-600 text-white py-2 px-4 rounded-lg flex items-center" onClick={handleReport}>
-                <AiFillAlert className="w-6 h-6 mr-2" /> 신고
-              </button>
-              <button className="bg-indigo-600 text-white py-2 px-4 rounded-lg flex items-center" onClick={handleFriend}>
-                <SlUserFollow className="mr-4" /> 친구 추가
-              </button>
             </div>
           </div>
         </div>

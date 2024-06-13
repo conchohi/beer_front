@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/loading/Loading";
+import { publicApi } from "../api/axios_intercepter";
 
 const GetAccessPage = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const GetAccessPage = () => {
     const getAccessToken = async () => {
       try {
         // refresh 토큰을 사용하여 access 토큰을 요청
-        const response = await axios.post('http://localhost:8080/reissue', {}, {
+        const response = await publicApi.post(`/api/reissue`, {}, {
           withCredentials: true // 쿠키를 포함하여 요청
         });
 

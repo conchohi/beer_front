@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import animationData from "./Spaceship.json";
+import animationData from "./JoinAni.json";
 
-const SpaceShip = () => {
+const JoinAni = () => {
   const animationContainer = useRef(null);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const SpaceShip = () => {
     return () => animation.destroy(); // Clean up on unmount
   }, []);
 
-  return <div ref={animationContainer} style={{ width: '400px', height: '250px' }} />;
+  return <div ref={animationContainer} style={{ width: '30vw', height: '30vw' }} />;
 };
 
-export default SpaceShip;
+export default JoinAni;

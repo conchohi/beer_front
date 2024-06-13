@@ -66,19 +66,19 @@ function FindIdForm() {
 
     return (
         <BasicLayout>
-            <div className="w-full h-auto font-bold text-2xl md:text-4xl text-black font-sans p-6 md:px-60 md:py-30 flex flex-col">
-                <div className="bg-gray-700 w-full h-auto rounded-2xl flex p-6 md:p-12">
-                    <div className="w-1/2 flex justify-center items-center bg-gray-900 rounded-2xl">
+            <div className="w-full h-auto  p-6 px-80 py-10 flex flex-col items-center ">
+                <div className="bg-white w-full h-auto rounded-2xl flex justify-between p-6 md:p-12 min-w-[500px] md:min-w-[700px] ">
+                    <div className="w-1/2 h-[260px] mr-2 flex justify-center items-center bg-gray-900 rounded-2xl">
                         <SpaceShip />
                     </div>
                     <div className="w-1/2 rounded-2xl text-left">
                         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                            <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-pink-500">
+                            <h2 className="mt-5 text-center text-3xl font-bold leading-9 tracking-tight text-pink-500">
                                 아이디 찾기
                             </h2>
                         </div>
 
-                        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md shadow-md rounded px-8 pt-6 pb-8">
+                        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-md shadow-md rounded px-8 pt-6 pb-8">
                             {!emailSent ? (
                                 <>
                                     <div>
@@ -104,7 +104,7 @@ function FindIdForm() {
                                         <button
                                             type="button"
                                             onClick={sendVerificationEmail}
-                                            className="flex w-full justify-center rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            className="flex w-full justify-center mt-5 rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                         >
                                             인증 번호 전송
                                         </button>
@@ -134,7 +134,7 @@ function FindIdForm() {
                                             <button
                                                 type="button"
                                                 onClick={retrieveUserIds}
-                                                className="flex w-full justify-center rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                className="flex w-full justify-center rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                             >
                                                 아이디 찾기
                                             </button>
@@ -150,7 +150,7 @@ function FindIdForm() {
                                             <button
                                                 type="button"
                                                 onClick={handleLoginClick}
-                                                className="flex w-full justify-center rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                                className="flex w-full justify-center rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                             >
                                                 로그인하러 가기
                                             </button>

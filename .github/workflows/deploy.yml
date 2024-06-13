@@ -20,20 +20,45 @@ jobs:
 
       - name: Build and push Docker image for React app
         run: |
-          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest" .
+          # Generate a unique tag for the Docker image
+          TAG=$(date +%s)
+          docker build --no-cache -t "${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}" .
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
+          echo "TAG=${TAG}" >> $GITHUB_ENV
+
+      - name: Run Docker container to output build files
+        run: |
+          # Run the Docker container to output build files
+          docker run --name beer_front -d ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
+          sleep 10 # Give the container some time to start
+
+      - name: Copy build files to host directory
+        run: |
+          # Copy the build files from the running container to the host directory
+          docker cp beer_front:/usr/share/nginx/html /home/test/
+          # Copy the build files to the EC2 instance
+          scp -rf /home/test/html ubuntu@${{ secrets.EC2_HOST }}:/home/test
+
+      - name: Cleanup Docker container
+        run: |
+          # Stop and remove the Docker container
+          docker stop beer_front
+          docker rm beer_front
 
       - name: Deploy on EC2
-        run: |
-          echo "Deploying on EC2"
-          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            # Frontend deployment
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest
-            docker stop beer_front || true
-            docker rm beer_front || true
-            docker run -d --name beer_front -p 3000:80 ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest
-          EOF
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          TAG: ${{ env.TAG }}
+        run: |
+          echo "Deploying on EC2"
+          ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << EOF
+            docker pull ${DOCKERHUB_USERNAME}/beer_front:${TAG}
+            docker stop beer_front || true
+            docker rm beer_front || true
+            docker run -d --name beer_front -p 3000:80 ${DOCKERHUB_USERNAME}/beer_front:${TAG}
+            sudo rm -rf /var/www/html/*
+            sudo cp -r /home/test/html/* /var/www/html/
+            sudo systemctl restart nginx
+          EOF

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
 import animationData from "./MovingCat.json";
+import "./MovingCat.css"; // CSS 파일을 가져옵니다.
 
 const MovingCat = () => {
   const animationContainer = useRef(null);
@@ -18,7 +19,11 @@ const MovingCat = () => {
   }, []);
 
   return (
-    <div ref={animationContainer} style={{ width: "30vw", height: "30vw" }} />
+    <div
+      className="animation-container"
+      ref={animationContainer}
+      style={{ width: "30vw", height: "30vw" }}
+    />
   );
 };
 

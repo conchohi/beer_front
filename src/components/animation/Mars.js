@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import animationData from "./Spaceship.json";
+import animationData from "./Mars.json";
+import "./Mars.css";
 
-const SpaceShip = () => {
+const Mars = () => {
   const animationContainer = useRef(null);
 
   useEffect(() => {
@@ -14,10 +15,20 @@ const SpaceShip = () => {
       animationData: animationData,
     });
 
-    return () => animation.destroy(); // Clean up on unmount
+    return () => animation.destroy();
   }, []);
 
-  return <div ref={animationContainer} style={{ width: '400px', height: '250px' }} />;
+  return (
+    <div
+      ref={animationContainer}
+      className="absolute w-40 h-40 orbit"
+      style={{
+        top: "50%",
+        left: "50%",
+        transform: "translate(-100%, -100%)",
+      }}
+    />
+  );
 };
 
-export default SpaceShip;
+export default Mars;
