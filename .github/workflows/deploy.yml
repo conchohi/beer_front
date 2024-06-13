@@ -30,15 +30,13 @@ jobs:
       - name: Run Docker container to output build files
         run: |
           # Run the Docker container to output build files
-          docker run --name beer_front -d ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
+          docker run --rm -v ${{ github.workspace }}/beer_front:/beer_front ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
           sleep 10 # Give the container some time to start
 
       - name: Copy build files to host directory
         run: |
-          # Copy the build files from the running container to the host directory
-          docker cp beer_front:/usr/share/nginx/html /home/test/
           # Copy the build files to the EC2 instance
-          scp -r /home/test ubuntu@${{ secrets.EC2_HOST }}:/home/test
+           scp -rf ${{ github.workspace }}/beer_front/public ubuntu@${{ secrets.EC2_HOST }}:/home/test
 
       - name: Cleanup Docker container
         run: |
