@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Janus from "../../api/janus";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { FaUserLarge } from "react-icons/fa6";
 import DestoryCheckModal from "./modal/room/DestroyCheckModal";
 import UserDetail from "./modal/UserDetail";
 import Chat from "./Chat";
@@ -82,7 +81,7 @@ const VideoComponentV3 = () => {
 
     //방 폭파 버튼 클릭
     const clickDestoryRoom = () => {
-        if (master == nickname) {
+        if (master === nickname) {
             setCheckDestory(true);
         } else {
             setMessage("방장만 선택 가능합니다.")
@@ -186,7 +185,7 @@ const VideoComponentV3 = () => {
                                                 success: function (result) {
                                                     let event = result["videoroom"];
                                                     Janus.debug("Event: " + event);
-                                                    if (event != undefined && event != null) {
+                                                    if (event !== undefined && event !== null) {
                                                         // Our own screen sharing session has been created, join it
                                                         console.log("Room Create Result: " + result);
                                                         console.log("error: " + result["error"]);

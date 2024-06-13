@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { FaCaretDown, FaSortDown } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { FaCaretDown } from 'react-icons/fa';
 
 function SearchTypeCheck({setSearchType}) {
     //선택된 지역의 값 설정
