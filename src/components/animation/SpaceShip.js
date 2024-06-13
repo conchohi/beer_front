@@ -17,7 +17,7 @@ const SpaceShip = () => {
     return () => animation.destroy(); // Clean up on unmount
   }, []);
 
-  return <div ref={animationContainer} style={{ width: '30vw', height: '20vw' }} />;
+  return <div ref={animationContainer} style={{ width: '400px', height: '250px' }} />;
 };
 
 export default SpaceShip;
