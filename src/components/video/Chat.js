@@ -38,7 +38,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
 
         // 새로운 사용자가 입장했음을 알리는 메시지 전송
         stompClient.send(
-          `/app/game.addUser/${roomNo}`,
+          `/app/chat.addUser/${roomNo}`,
           {},
           JSON.stringify({ sender: username, type: "JOIN" })
         );
