@@ -23,15 +23,12 @@ const FollowingList = () => {
   }
 
   const fetchFriends = async () => {
-    setLoading(true); // Start loading
     try {
       const response = await privateApi.get("/api/friend/list");
       setFriends(response.data);
     } catch (error) {
       console.error("Error fetching friends:", error);
-    } finally {
-      setLoading(false); // End loading
-    }
+    } 
   };
 
   const handleDetail = () => {

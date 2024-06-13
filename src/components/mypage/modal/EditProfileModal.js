@@ -161,7 +161,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                   onChange={(e) => setMbti(e.target.value)}
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 py-2 px-3 text-pink-500"
                 >
-                  <option value="">MBTI</option>
+                  <option value="">선택안함</option>
                   <option value="INTJ">INTJ</option>
                   <option value="INTP">INTP</option>
                   <option value="ENTJ">ENTJ</option>
