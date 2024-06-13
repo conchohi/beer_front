@@ -33,13 +33,13 @@ function CreateRoom({ close }) {
 
   const clickCreateRoom = ()=>{
     //제목 확인
-    if(!title || title.length == 0){
+    if(!title || title.length === 0){
       setMessage('제목을 입력하세요.')
       setCaution(true)
       return;
     }
     //카테고리 확인
-    if(!category || category.length == 0 || category === "선택하세요"){
+    if(!category || category.length === 0 || category === "선택하세요"){
       setMessage('카테고리를 선택하세요.')
       setCaution(true)
       return;

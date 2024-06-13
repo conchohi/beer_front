@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import animationData from "./MovingCat.json";
-import "./MovingCat.css"; // CSS 파일을 가져옵니다.
+import animationData from "./Saturn.json";
+import "./Saturn.css";
 
-const MovingCat = () => {
+const Saturn = () => {
   const animationContainer = useRef(null);
 
   useEffect(() => {
@@ -15,16 +15,21 @@ const MovingCat = () => {
       animationData: animationData,
     });
 
-    return () => animation.destroy(); // Clean up on unmount
+    return () => animation.destroy();
   }, []);
 
   return (
-    <div
-      className="animation-container"
-      ref={animationContainer}
-      style={{ width: "30vw", height: "30vw" }}
-    />
+    <div className="orbit-container">
+      <div
+        ref={animationContainer}
+        className="saturn"
+        style={{
+          width: "20vw",
+          height: "20vw",
+        }}
+      />
+    </div>
   );
 };
 
-export default MovingCat;
+export default Saturn;

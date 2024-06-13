@@ -39,7 +39,7 @@ const DetailPostModalComponent = ({ boardNo, onClose, refresh,setMessage, setBas
     }
     return (<>
         <BoardModalComponent>
-            <div className="fixed inset-0 flex justify-center items-center z-30 ">
+            <div className="fixed inset-0 flex justify-center items-center z-20 ">
                 <div className="bg-gray-800 border-2 border-pink-500 text-gray-200 rounded-lg w-11/12 max-w-2xl p-6 relative">
                 <button className="absolute top-4 right-4 text-pink-500" onClick={onClose}>
                         <AiOutlineClose size={24} />
@@ -80,7 +80,7 @@ const DetailPostModalComponent = ({ boardNo, onClose, refresh,setMessage, setBas
                             setComments={setComments}
                         />
                         <CommentInputComponent boardNo={boardNo} comments={comments}
-                            setComments={setComments}/>
+                            setComments={setComments} setMessage={setMessage} setBasicModal={setBasicModal}/>
                     </div>
                 </div>
             </div>

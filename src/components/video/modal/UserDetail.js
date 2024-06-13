@@ -4,9 +4,9 @@ import { SlUserFollow } from "react-icons/sl";
 import { AiFillAlert } from "react-icons/ai";
 import Draggable from "react-draggable";
 import ReportUser from "./ReportUser";
-import { getUserByNickname, followUser } from "../../../api/userApi";
+import { getUserByNickname } from "../../../api/userApi";
 import BasicModalComponent from "../../common/BasicModalComponent";
-import { API_SERVER_HOST } from "../../../api/axios_intercepter"; // API_SERVER_HOST 추가
+import privateApi, { API_SERVER_HOST } from "../../../api/axios_intercepter"; // API_SERVER_HOST 추가
 
 function UserDetail({ nickname, close }) {
   const [userInfo, setUserInfo] = useState({});
@@ -24,20 +24,14 @@ function UserDetail({ nickname, close }) {
     setReport(!report);
   };
 
-  const handleFollow = async () => {
+  const handleFriend = async () => {
     try {
-      const response = await followUser(userInfo.id);
-      setMessage('팔로우 성공');
+      await privateApi.post(`/api/friend/request`, { nickname });
+      setMessage('친구 요청을 보냈습니다!');
       setOpenModal(true);
     }catch (error) {
         if (error.response && error.response.data) {
-          if (error.response.data.includes('User cannot follow themselves')) {
-            setMessage('자기 자신은 팔로우할 수 없습니다.');
-          } else if (error.response.data.includes('is already following')) {
-            setMessage('이미 팔로우한 사용자입니다.');
-          } else {
-            setMessage('팔로우 실패: ' + error.response.data);
-          }
+          setMessage(error.response.data)
         } else {
           setMessage('팔로우 실패: 서버 오류');
         }
@@ -89,21 +83,10 @@ function UserDetail({ nickname, close }) {
               <div className="flex items-center justify-center ">
                 <div className="flex flex-col justify-between w-28 text-gray-800">
                   <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1 min-h-[30px]"> {nickname} </div>
-                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1 min-h-[30px]"> {userInfo.mbti} </div>
-                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1 min-h-[30px]"> {userInfo.gender} </div>
-                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1 min-h-[30px]"> {userInfo.age} </div>
+                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1 min-h-[30px]"> {userInfo.mbti || '미설정'} </div>
+                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1 min-h-[30px]"> {userInfo.gender || '미설정'} </div>
+                  <div className="flex justify-between mb-2 bg-white rounded-xl drop-shadow-md px-3 py-1 min-h-[30px]"> {userInfo.age > 0 ? userInfo.age : '미설정'} </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="flex flex-row justify-around mx-auto my-3 py-1 text-sm bg-gray-200 rounded-xl text-gray-800">
-              <div className="w-1/2 flex flex-col justify-center text-center border-r border-gray-800">
-                <span>팔로우</span>
-                <span>{userInfo.followingCount}</span>
-              </div>
-              <div className="w-1/2 flex flex-col justify-center text-center">
-                <span>팔로잉</span>
-                <span>{userInfo.followerCount}</span>
               </div>
             </div>
 
@@ -120,8 +103,8 @@ function UserDetail({ nickname, close }) {
               <button className="bg-red-600 text-white py-2 px-4 rounded-lg flex items-center" onClick={handleReport}>
                 <AiFillAlert className="w-6 h-6 mr-2" /> 신고
               </button>
-              <button className="bg-indigo-600 text-white py-2 px-4 rounded-lg flex items-center" onClick={handleFollow}>
-                <SlUserFollow className="mr-4" /> 팔로우
+              <button className="bg-indigo-600 text-white py-2 px-4 rounded-lg flex items-center" onClick={handleFriend}>
+                <SlUserFollow className="mr-4" /> 친구 추가
               </button>
             </div>
           </div>

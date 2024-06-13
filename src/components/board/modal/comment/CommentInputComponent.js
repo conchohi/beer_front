@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { addComment } from '../../../../api/BoardApi';
 
-const CommentInputComponent = ({boardNo, comments, setComments}) => {
+const CommentInputComponent = ({boardNo, comments, setComments,setMessage,setBasicModal}) => {
     const [newComment, setNewComment] = useState('');
 
     const handleNewCommentChange = (e) => {
@@ -9,12 +9,20 @@ const CommentInputComponent = ({boardNo, comments, setComments}) => {
     };
 
     const handleSubmit = () => {
+        if(!newComment || newComment.length === 0){
+            setMessage('내용을 입력하세요.')
+            setBasicModal(true)
+            return
+        }
         addComment({boardNo:boardNo, content:newComment}).then(result=>{
             const updateComments = [...comments];
             updateComments.push(result)
             setComments(updateComments);
+            setNewComment('');
+        }).catch(error=>{
+            setMessage('로그인 후 이용 가능합니다.')
+            setBasicModal(true)
         })
-        setNewComment('');
     };
 
     const handleMouseDown = (e) => {

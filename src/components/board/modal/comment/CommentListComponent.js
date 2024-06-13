@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { CgProfile } from 'react-icons/cg';
 import { API_SERVER_HOST } from '../../../../api/axios_intercepter';

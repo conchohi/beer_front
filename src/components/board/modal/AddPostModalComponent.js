@@ -11,6 +11,16 @@ const AddPostModalComponent = ({ isOpen, onClose, refresh,setMessage, setBasicMo
     };
 
     const handleAddPost = (()=>{
+        if(!newPost.title || newPost.title.length === 0){
+            setMessage('제목을 입력하세요.')
+            setBasicModal(true)
+            return
+        }
+        if(!newPost.content || newPost.content.length === 0){
+            setMessage('내용을 입력하세요.')
+            setBasicModal(true)
+            return
+        }
         registerBoard(newPost).then(result=>{
             setMessage('게시글 등록 완료!')
             setBasicModal(true)
