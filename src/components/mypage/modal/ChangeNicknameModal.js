@@ -18,7 +18,6 @@ const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNickna
     }
 };
 
-
   const handleSave = () => {
     if (isNicknameAvailable) {
       onNicknameChange(nickname);
@@ -40,7 +39,7 @@ const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNickna
       overlayClassName="fixed inset-0 "
     >
       <Draggable>
-      <div className="bg-black p-8 rounded-lg border-2 border-pink-500 w-full max-w-md mx-auto text-white">
+      <div className="bg-slate-200 p-8 rounded-lg border-2 border-pink-500 w-full max-w-md mx-auto text-white">
         <h2 className="text-xl text-pink-500 mb-4">닉네임 변경</h2>
         <div className="mb-4">
           <label className="block text-white text-sm font-bold mb-2">닉네임</label>
@@ -95,3 +94,4 @@ const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNickna
 };
 
 export default ChangeNicknameModal;
+

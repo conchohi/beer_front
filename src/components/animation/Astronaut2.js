@@ -17,7 +17,7 @@ const Astronaut2 = () => {
     return () => animation.destroy(); // Clean up on unmount
   }, []);
 
-  return <div ref={animationContainer} style={{ width: '30vw', height: '20vw' }} />;
+  return <div ref={animationContainer} className="mx-auto" style={{ width: '70%', height: '70%' }} />;
 };
 
 export default Astronaut2;

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const API_SERVER_HOST = 'https://js1.jsflux.co.kr';
+// export const API_SERVER_HOST = "http://localhost:8080"
 
 export const publicApi = axios.create({
     baseURL: `${API_SERVER_HOST}`

@@ -2290,7 +2290,7 @@ function Janus(gatewayCallbacks) {
         };
         event.track.onunmute = function (ev) {
           Janus.log("Remote track flowing again:", ev);
-          if (trackMutedTimeoutId != null) {
+          if (trackMutedTimeoutId !== null) {
             clearTimeout(trackMutedTimeoutId);
             trackMutedTimeoutId = null;
           } else {
@@ -2424,9 +2424,9 @@ function Janus(gatewayCallbacks) {
   function prepareWebrtc(handleId, offer, callbacks) {
     callbacks = callbacks || {};
     callbacks.success =
-      typeof callbacks.success == "function" ? callbacks.success : Janus.noop;
+      typeof callbacks.success === "function" ? callbacks.success : Janus.noop;
     callbacks.error =
-      typeof callbacks.error == "function" ? callbacks.error : webrtcError;
+      typeof callbacks.error === "function" ? callbacks.error : webrtcError;
     var jsep = callbacks.jsep;
     if (offer && jsep) {
       Janus.error("Provided a JSEP to a createOffer");

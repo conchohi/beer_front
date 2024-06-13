@@ -1,4 +1,3 @@
-import axios from "axios";
 import privateApi, { publicApi } from "./axios_intercepter";
 
 const prefix = `/api/board`

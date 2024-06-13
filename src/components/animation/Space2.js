@@ -17,7 +17,7 @@ const Space2 = () => {
     return () => animation.destroy(); // Clean up on unmount
   }, []);
 
-  return <div className="items-center" ref={animationContainer} style={{ width: '20vw', height: '10vw' }} />;
+  return <div className="items-center" ref={animationContainer} style={{ width: '100%', height: '100%' }} />;
 };
 
 export default Space2;

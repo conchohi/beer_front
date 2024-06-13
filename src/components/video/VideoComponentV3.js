@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Janus from "../../api/janus";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { FaUserLarge } from "react-icons/fa6";
 import DestoryCheckModal from "./modal/room/DestroyCheckModal";
 import UserDetail from "./modal/UserDetail";
 import Chat from "./Chat";
@@ -82,7 +81,7 @@ const VideoComponentV3 = () => {
 
     //방 폭파 버튼 클릭
     const clickDestoryRoom = () => {
-        if (master == nickname) {
+        if (master === nickname) {
             setCheckDestory(true);
         } else {
             setMessage("방장만 선택 가능합니다.")
@@ -186,7 +185,7 @@ const VideoComponentV3 = () => {
                                                 success: function (result) {
                                                     let event = result["videoroom"];
                                                     Janus.debug("Event: " + event);
-                                                    if (event != undefined && event != null) {
+                                                    if (event !== undefined && event !== null) {
                                                         // Our own screen sharing session has been created, join it
                                                         console.log("Room Create Result: " + result);
                                                         console.log("error: " + result["error"]);
@@ -707,7 +706,12 @@ const VideoComponentV3 = () => {
                 </div>
             </div>
             <div className="flex flex-col w-1/4 px-5 mt-8">
-                <Chat roomNo={roomNo} nickname={nickname}/>
+                <Chat
+            nickname={nickname}
+            roomNo={roomNo}
+            participantList={participantList}
+            master={master}
+          />
                 <div className="w-full flex items-center px-4 justify-between text-center gap-5 font-bold">
                     <button className="py-3 w-28 bg-gray-600 text-white" onClick={clickGame}>게임 선택</button>
                     <button className="py-3 w-28 bg-white" onClick={clickDestoryRoom}>방 폭파</button>

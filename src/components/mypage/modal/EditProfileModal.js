@@ -64,6 +64,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
       if (response.status === 200) {
         const updatedData = response.data;
         // Create a unique URL for the updated image
+        localStorage.setItem('nickname', nickname);
         if (imageFile) {
           updatedData.profileImage += `?timestamp=${new Date().getTime()}`;
         }
@@ -98,15 +99,15 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
       overlayClassName="fixed inset-0 "
     >
       <Draggable>
-        <div className="bg-black p-8 rounded-lg border-2 border-pink-500 w-full max-w-4xl mx-auto text-white cursor-move">
+        <div className="bg-slate-200 p-8 rounded-lg border-2 border-pink-500 w-[600px] mx-auto text-white cursor-move">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl text-pink-500">정보 수정</h2>
+            <h2 className="text-xl text-pink-500 text-center">정보 수정</h2>
             <button onClick={onRequestClose} className="text-pink-500 text-2xl">&times;</button>
           </div>
           <div className="flex">
-            <div className="w-1/2 pr-4">
-              <div className="mb-4">
-                <label className="block text-white text-sm font-bold mb-2">
+            <div className="w-2/5 ">
+              <div className=" flex flex-col items-center">
+                <label className="block text-gray-600 text-sm font-bold">
                   프로필 이미지
                 </label>
                 <label htmlFor="file-input">
@@ -121,9 +122,9 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                 />
               </div>
             </div>
-            <div className="w-1/2 pl-4">
+            <div className="w-3/5 pl-4">
               <div className="mb-4">
-                <label className="block text-white text-sm font-bold mb-2">
+                <label className="block text-gray-600 text-sm font-bold mb-2">
                   닉네임
                 </label>
                 <input
@@ -138,7 +139,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-white text-sm font-bold mb-2">
+                <label className="block text-gray-600 text-sm font-bold mb-2">
                   이메일
                 </label>
                 <input
@@ -150,7 +151,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-white text-sm font-bold mb-2">
+                <label className="block text-gray-600 text-sm font-bold mb-2">
                   MBTI
                 </label>
                 <select
@@ -160,7 +161,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                   onChange={(e) => setMbti(e.target.value)}
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 py-2 px-3 text-pink-500"
                 >
-                  <option value="">MBTI</option>
+                  <option value="">선택안함</option>
                   <option value="INTJ">INTJ</option>
                   <option value="INTP">INTP</option>
                   <option value="ENTJ">ENTJ</option>
@@ -181,7 +182,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
               </div>
               <div className="flex mb-4">
                 <div className="w-1/2 pr-2">
-                  <label className="block text-white text-sm font-bold mb-2">
+                  <label className="block text-gray-600 text-sm font-bold mb-2">
                     나이
                   </label>
                   <input
@@ -193,10 +194,10 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                   />
                 </div>
                 <div className="w-1/2 pl-2">
-                  <label className="block text-white text-sm font-bold mb-2">
+                  <label className="block text-gray-600 text-sm font-bold mb-2">
                     성별
                   </label>
-                  <div className="flex">
+                  <div className="flex text-gray-600">
                     <label className="mr-4">
                       <input
                         type="radio"
@@ -221,13 +222,13 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                 </div>
               </div>
               <div className="mb-4">
-                <label className="block text-white text-sm font-bold mb-2">
+                <label className="block text-gray-600 text-sm font-bold mb-2">
                   한줄소개
                 </label>
                 <textarea
                   value={intro}
                   onChange={(e) => setIntro(e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border w-full py-2 px-3 rounded-lg resize-none text-black leading-tight focus:outline-none focus:shadow-outline"
                   onMouseDown={handleMouseDown}
                 />
               </div>

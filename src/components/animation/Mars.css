@@ -1,0 +1,15 @@
+/* src/Mars.css */
+
+@keyframes diagonalOrbit {
+  0% {
+    transform: rotate(0deg) translateX(350px) translateY(200px) rotate(0deg); /* x축: 300px, y축: 100px */
+  }
+  100% {
+    transform: rotate(360deg) translateX(350px) translateY(200px)
+      rotate(-360deg); /* x축: 300px, y축: 100px */
+  }
+}
+
+.orbit {
+  animation: diagonalOrbit 7s linear infinite;
+}

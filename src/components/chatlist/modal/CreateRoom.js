@@ -33,13 +33,13 @@ function CreateRoom({ close }) {
 
   const clickCreateRoom = ()=>{
     //제목 확인
-    if(!title || title.length == 0){
+    if(!title || title.length === 0){
       setMessage('제목을 입력하세요.')
       setCaution(true)
       return;
     }
     //카테고리 확인
-    if(!category || category.length == 0 || category === "선택하세요"){
+    if(!category || category.length === 0 || category === "선택하세요"){
       setMessage('카테고리를 선택하세요.')
       setCaution(true)
       return;
@@ -171,7 +171,7 @@ function CreateRoom({ close }) {
             <div className="bg-gray-700 w-60 h-60 rounded-lg flex flex-col items-center justify-center mt-5">
               {viewVideo ? <video className="w-full h-full rounded-lg object-cover" ref={videoRef} autoPlay playsInline muted /> :
                 <><div className="bg-gray-600 w-24 h-24 rounded-full flex items-center justify-center">
-                  <CgProfile className="w-full h-full rounded-lg object-cover" />
+                  <CgProfile className="w-full h-full rounded-lg object-cover text-gray-800" />
                 </div><p className="text-gray-300 mt-2">카메라 출력 화면</p></>}
 
             </div>
