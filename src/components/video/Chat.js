@@ -11,11 +11,20 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   const [currentGame, setCurrentGame] = useState("BaskinRobbins31");
   const [isConnected, setIsConnected] = useState(false);
   const stompClientRef = useRef(null);
+  const chatMessagesEndRef = useRef(null)
 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
   const username = nickname; // 닉네임 고정
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    chatMessagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
     const socket = new SockJS("http://localhost:8080/ws");
@@ -86,9 +95,9 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   };
 
   const renderChat = () => (
-    <div className="chat-box flex bg-white rounded-lg flex-col shadow-lg p-4 h-full">
-      <div className="chat-content flex-1 overflow-y-scroll p-1">
-        <ul className="chat-messages space-y-2">
+    <div className="chat-box flex bg-white rounded-lg flex-col shadow-lg p-4 h-[700px]">
+      <div className="chat-content flex-1 overflow-y-scroll scrollbar-hide p-1">
+        <ul  className="chat-messages space-y-2">
           {messages.map((message, index) => (
             <li key={index}>
               {message.type === "JOIN" ? (
@@ -109,7 +118,8 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
               )}
             </li>
           ))}
-        </ul>
+          <div ref={chatMessagesEndRef}/>
+        </ul >
       </div>
       <div className="send-message flex mt-4">
         <input

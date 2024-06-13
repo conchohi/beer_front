@@ -47,8 +47,8 @@ const MyPageMain = () => {
           <ProfilePageInfo handleOpen={handleOpen} userData={userData} />
         </div>
         <div className="flex flex-row">
-          <div className="bg-white text-center rounded-2xl p-10 text-left w-7/12 mr-12 flex flex-col justify-start">
-            <div className="text-pink-500 text-4xl">
+          <div className="bg-white text-center rounded-2xl p-10 w-7/12 mr-12 flex flex-col justify-start">
+            <div className="text-pink-500 text-3xl">
               <b>친구가 참여 중인 방 목록</b>
             </div>
             <HostFollowingGames />
