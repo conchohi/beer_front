@@ -32,7 +32,7 @@ function ProfilePageInfo({ handleOpen, userData }) {
 
   return (
     <div className="flex flex-col lg:flex-row justify-around p-2">
-      <div className="flex flex-col justify-center items-center w-2/5">
+      <div className="flex flex-col justify-center items-center w-2/5 mb-3">
         <ImageDisplay fileName={userDetails?.profileImage} />
         <button
           className="mt-5 bg-pink-500 text-white rounded-lg w-32 h-12 text-lg cursor-pointer"

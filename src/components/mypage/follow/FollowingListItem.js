@@ -28,7 +28,7 @@ const FollowingListItem = ({ friend, onFriendDeleted, setClickNickname }) => {
 
 
   return (
-    <div className="flex items-center justify-between p-2 m-2 bg-white rounded-2xl ">
+    <div className="flex items-center justify-between p-2 m-2 bg-slate-100 rounded-2xl ">
       <div className="flex items-center cursor-pointer w-4/5" onClick={() => { setClickNickname(friend.nickname) }}>
         <FriendImageDisplay fileName={friend.profileImage} />
         <div className="flex-grow flex">

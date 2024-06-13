@@ -68,11 +68,11 @@ const SearchModal = ({ show, closeModal,setClickNickname }) => {
         onClick={closeModal}
       >
         <div
-          className="bg-slate-200 text-gray-600 rounded-lg p-8 w-11/12 md:w-1/2 lg:w-3/12 max-h-screen"
+          className="bg-slate-200 text-gray-600 rounded-lg border-2 border-pink-600 p-6 w-11/12 md:w-1/2 lg:w-3/12 max-h-screen"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-3xl font-bold">
+            <h2 className="text-2xl font-bold">
               <span className="text-pink-500">유저 검색</span>
             </h2>
             <button className="text-2xl text-pink-500" onClick={closeModal}>
@@ -81,7 +81,7 @@ const SearchModal = ({ show, closeModal,setClickNickname }) => {
           </div>
           <form className="relative mb-4" onSubmit={(e) => e.preventDefault()}>
             <input
-              className="w-full p-2 rounded bg-slate-100 text-xl  placeholder-gray-400"
+              className="w-full p-2 rounded bg-slate-100 text-lg  shadow-md placeholder-gray-400"
               placeholder="닉네임으로 검색"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -89,7 +89,7 @@ const SearchModal = ({ show, closeModal,setClickNickname }) => {
             />
             <FaSearch className="absolute right-3 top-3 text-2xl text-gray-400" />
           </form>
-          <div className="overflow-y-auto h-96">
+          <div className="overflow-y-auto h-96 scrollbar-hide ">
             {search ? (
               result.length === 0 ? (
                 <div className="text-center text-2xl">
