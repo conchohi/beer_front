@@ -40,15 +40,15 @@ const MyPageMain = () => {
   return (
     <div className="w-full h-auto font-bold text-pink-500 p-6 px-60 py-15 pb-20 flex flex-col">
       <div className="bg-slate-200 w-full h-auto rounded-2xl flex flex-col justify-between p-6">
-        <div className="bg-white w-full h-auto rounded-2xl p-5 text-left mb-12">
+        <div className="bg-white w-full h-auto rounded-2xl p-5 text-left mb-5">
           <div className="text-pink-500 text-3xl text-center mb-3 p-2">
-            <b>마이페이지</b>
+            <b>회원정보</b>
           </div>
           <ProfilePageInfo handleOpen={handleOpen} userData={userData} />
         </div>
         <div className="flex flex-row">
-          <div className="bg-white text-center rounded-2xl p-10 w-7/12 mr-12 flex flex-col justify-start">
-            <div className="text-pink-500 text-3xl">
+          <div className="bg-white text-center rounded-2xl p-8 w-7/12 mr-12 flex flex-col justify-start">
+            <div className="text-pink-500 text-2xl text-left mb-4 ">
               <b>친구가 참여 중인 방 목록</b>
             </div>
             <HostFollowingGames />

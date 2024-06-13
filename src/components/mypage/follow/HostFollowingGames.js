@@ -68,11 +68,11 @@ const HostFollowingGames = () => {
           ))}
         </div>
       ) : (
-        <div className="w-full text-black flex justify-center flex-col">
+        <div className="w-full text-gray-700 flex justify-center flex-col">
           
   
             <Astronaut2 />
-            <p className="text-3xl font-thin">참여 중인 친구가 없습니다.</p>
+            <p className="text-xl font-thin text-center">참여 중인 친구가 없습니다.</p>
    
         </div>
       )}
