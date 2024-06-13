@@ -74,7 +74,7 @@ const LoginMain = () => {
       let formData = new FormData();
       formData.append("username", loginId);
       formData.append("password", loginPassword);
-      const response = await publicApi.post("/login", formData, {
+      const response = await publicApi.post("/api/login", formData, {
         withCredentials: true,
       });
 
