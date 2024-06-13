@@ -20,19 +20,22 @@ jobs:
 
       - name: Build and push Docker image for React app
         run: |
-          docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest" .
+          # Generate a unique tag for the Docker image
+          TAG=$(date +%s)
+          docker build --no-cache -t "${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}" .
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
 
       - name: Deploy on EC2
         run: |
           echo "Deploying on EC2"
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             # Frontend deployment
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest
+            TAG=$(date +%s)
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
             docker stop beer_front || true
             docker rm beer_front || true
-            docker run -d --name beer_front -p 3000:80 ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:latest
+            docker run -d --name beer_front -p 3000:80 ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
           EOF
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
