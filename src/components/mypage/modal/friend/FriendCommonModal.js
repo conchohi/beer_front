@@ -5,7 +5,7 @@ const FriendCommonModal = ({ show, message, onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-gray-800 text-white rounded-lg p-6 lg:w-2/12">
+      <div className="bg-slate-100 text-gray-700 border-2 border-pink-600 rounded-lg p-4 lg:w-2/12">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">알림</h2>
           <button className="text-2xl text-white" onClick={onClose}>

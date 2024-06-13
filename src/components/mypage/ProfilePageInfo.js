@@ -24,7 +24,7 @@ function ProfilePageInfo({ handleOpen, userData }) {
 
   return (
     <div className="flex flex-col lg:flex-row justify-around p-2">
-      <div className="flex flex-col justify-center items-center w-2/5">
+      <div className="flex flex-col justify-center items-center w-2/5 mb-3">
         <img className="w-48 h-48 rounded-full border-4 border-transparent" alt={userDetails.profileImage} src={`${API_SERVER_HOST}/api/user/${userDetails.profileImage}`}/>
         <button
           className="mt-5 bg-pink-500 text-white rounded-lg w-32 h-12 text-lg cursor-pointer"

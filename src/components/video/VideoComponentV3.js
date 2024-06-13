@@ -730,9 +730,9 @@ const VideoComponentV3 = () => {
             selectedGame={selectedGame} // Pass selectedGame to Chat
           />
                 <div className="w-full flex items-center px-4 justify-between text-center gap-5 font-bold">
-                    <button className="py-3 w-28 bg-gray-600 text-white" onClick={clickGame}>게임 선택</button>
-                    <button className="py-3 w-28 bg-white" onClick={clickDestoryRoom}>방 폭파</button>
-                    <button className="py-3 w-28 bg-[#BE2222] text-white" onClick={clickExitRoom}>나가기</button>
+                    <button className="py-3 w-28 bg-yellow-400 text-white rounded-md" onClick={clickGame}>게임 선택</button>
+                    <button className="py-3 w-28 bg-white rounded-md" onClick={clickDestoryRoom}>방 폭파</button>
+                    <button className="py-3 w-28 bg-[#BE2222] text-white rounded-md" onClick={clickExitRoom}>나가기</button>
                 </div>
             </div>
         </div>
