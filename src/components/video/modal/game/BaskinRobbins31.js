@@ -121,11 +121,11 @@ const BaskinRobbins31 = ({
 
   return (
     <div className="game-container p-4">
-      <h1 className="text-2xl font-bold mb-4">Baskin Robbins 31</h1>
+      <h1 className="text-2xl font-bold mb-4">배스킨 라빈스 31</h1>
       {gameState.losingPlayer && (
         <div className="mt-4">
           <h2 className="text-xl text-red-500 font-bold">
-            {gameState.losingPlayer} has lost the game!
+             {gameState.losingPlayer}(이)가 졌어!
           </h2>
         </div>
       )}
@@ -144,7 +144,7 @@ const BaskinRobbins31 = ({
         onClick={sendMove}
         className="mb-4 p-2 bg-green-500 text-white rounded"
       >
-        Send Move
+        다음 차례로
       </button>
       {nickname === master && (
         <>
@@ -152,25 +152,25 @@ const BaskinRobbins31 = ({
             onClick={startGame}
             className="mb-4 p-2 bg-blue-500 text-white rounded"
           >
-            Start Game
+            게임 시작
           </button>
           <button
             onClick={resetGame}
             className="mb-4 p-2 bg-red-500 text-white rounded"
           >
-            Reset Game
+            재시작
           </button>
         </>
       )}
       <div>
         <ul className="list-disc list-inside">
-          Turn Player: {gameState.currentTurn}
+          순서: {gameState.currentTurn}
         </ul>
         <ul className="list-disc list-inside">
-          All Players: {gameState.players.join(", ")}
+          게임 참가자: {gameState.players.join(", ")}
         </ul>
         <div>
-          <h2 className="text-xl font-bold mb-2">Game State</h2>
+          <h2 className="text-xl font-bold mb-2">게임 현황</h2>
           <ul className="list-disc list-inside">
             {gameState.moves.map((msg, index) => (
               <li key={index}>{msg}</li>

@@ -44,7 +44,7 @@ const HostFollowingGamesItem = (props) => {
       <div className="mt-4">
         <img
           className="w-60 rounded-2xl cursor-pointer"
-          src={`/img/chatlist/${props.category}.png`}
+          src={`/img/chatlist/${props.category}.PNG`}
           alt="roomImage"
           onClick={navigateToGameRoom}
         />

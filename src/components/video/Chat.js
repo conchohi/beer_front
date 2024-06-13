@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import BaskinRobbins31 from "./modal/game/BaskinRobbins31";
+import BalanceGame from "./modal/game/BalanceGame";
 // import GameA from "./modal/game/GameA"; // GameA 컴포넌트를 import
 // import GameB from "./modal/game/GameB"; // GameB 컴포넌트를 import
 // import GameC from "./modal/game/GameC"; // GameC 컴포넌트를 import
@@ -13,6 +14,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   const stompClientRef = useRef(null);
   const chatMessagesEndRef = useRef(null)
 
+
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
@@ -21,6 +23,14 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    console.log("Selected game in Chat:", selectedGame);
+    if (selectedGame) {
+      setCurrentGame(selectedGame);
+      setActiveTab("game");
+    }
+  }, [selectedGame]);
 
   const scrollToBottom = () => {
     chatMessagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -69,6 +79,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
       }
     };
   }, [roomNo, username]);
+
 
   const handleSendMessage = () => {
     if (stompClientRef.current && stompClientRef.current.connected) {
@@ -144,52 +155,31 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   const renderGame = () => {
     const games = {
       BaskinRobbins31: BaskinRobbins31,
-      // GameA: GameA,
-      // GameB: GameB,
-      // GameC: GameC,
+      BalanceGame:BalanceGame,
     };
 
     const GameComponent = games[currentGame];
 
     return (
       <div className="game-box flex bg-slate-100 flex-col shadow-lg p-10">
-        <div className="flex justify-center space-x-4 mb-4">
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-            onClick={() => setCurrentGame("BaskinRobbins31")}
-          >
-            BaskinRobbins31
-          </button>
-          <button
-            className="bg-green-500 text-white px-4 py-2 rounded"
-            onClick={() => setCurrentGame("GameA")}
-          >
-            Game A
-          </button>
-          <button
-            className="bg-red-500 text-white px-4 py-2 rounded"
-            onClick={() => setCurrentGame("GameB")}
-          >
-            Game B
-          </button>
-          <button
-            className="bg-purple-500 text-white px-4 py-2 rounded"
-            onClick={() => setCurrentGame("GameC")}
-          >
-            Game C
-          </button>
-        </div>
-        {GameComponent && (
-          <GameComponent
-            nickname={nickname}
-            roomNo={roomNo}
-            participantList={participantList}
-            master={master}
-          />
-        )}
-      </div>
-    );
-  };
+         {GameComponent && (
+
+<GameComponent
+
+  nickname={nickname}
+
+  roomNo={roomNo}
+
+  participantList={participantList}
+
+  master={master}
+
+/>)}
+
+</div>
+);
+};
+
 
   return (
     <div className="container mx-auto p-4 flex flex-col h-full max-h-[800px]">

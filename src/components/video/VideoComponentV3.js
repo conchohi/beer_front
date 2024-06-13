@@ -71,7 +71,7 @@ const VideoComponentV3 = () => {
 
     const [newFeed, setNewFeed] = useState(null);
     const [leaveId, setleaveId] = useState(null);
-
+    const [selectedGame, setSelectedGame] = useState(null);
     const navigate = useNavigate();
 
     const clickExitRoom = () => {
@@ -502,6 +502,10 @@ const VideoComponentV3 = () => {
             simulcast: true,
             simulcast2: false,
             success: function (jsep) {
+                const videoElement = myVideoRef.current;
+                const imageElement = videoElement.nextSibling;
+                videoElement.classList.remove('hidden');
+                imageElement.classList.add('hidden');
                 setPublish(true)
                 Janus.debug("Got publisher SDP!", jsep);
                 const publish = { request: "configure", audio: useAudio, video: true };
@@ -522,6 +526,10 @@ const VideoComponentV3 = () => {
     // [jsflux] 화면 끄기
     function unpublishOwnFeed() {
         setPublish(false)
+        const videoElement = myVideoRef.current;
+        const imageElement = videoElement.nextSibling;
+        videoElement.classList.add('hidden');
+        imageElement.classList.remove('hidden');
         var unpublish = { request: "unpublish" };
         sfuClient.send({ message: unpublish });
     }
@@ -646,9 +654,17 @@ const VideoComponentV3 = () => {
             });
     }
 
+    const startSelectedGame = (game) => {
+        console.log("Selected game in VideoComponentV3:", game);
+        setSelectedGame(game);
+        setOpenGame(false);
+      };
+
     return (<>
         {/* 게임 선택 모달 */}
-        {openGame && <GameSelectModal roomNo={roomNo} close={() => { setOpenGame(false) }} />}
+        {/* {openGame && (<GameSelectModal close={() => {setOpenGame(false); }}startSelectedGame={setSelectedGame}  />)} */}
+        {openGame && (<GameSelectModal close={() => setOpenGame(false)} startSelectedGame={(game) => 
+            {console.log("Selected game in Videocomponentv3:", game);setSelectedGame(game);setOpenGame(false);}}/>)}       
         {/* 방 폭파 확인 모달 */}
         {checkDestory && <DestoryCheckModal setCheckDestroy={setCheckDestory} destroy={destory} />}
         {/* 메세지 모달 */}
@@ -676,11 +692,11 @@ const VideoComponentV3 = () => {
                                 {(master === nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
                                 <div className="pb-[56.25%] h-0 relative">
                                     <video ref={myVideoRef} id="myvideo" className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline muted />
+                                    <img alt={nickname} className="w-full h-full box-border p-3 absolute object-contain hidden" src="/img/title.png"/>
                                 </div>
                             </div>
                             <span className="font-bold text-xl py-3 text-white" >{nickname}</span>
                         </div>
-
                     </div>
 
                     {participantList.map((participant) => {
@@ -694,7 +710,7 @@ const VideoComponentV3 = () => {
                                         {(master === participant.nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
                                         <div className="pb-[56.25%] h-0 relative">
                                             <video id={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover hidden" autoPlay playsInline />
-                                            <img alt={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover" src={participant.profileImage ? `${API_SERVER_HOST}/api/user/${participant.profileImage}`: "/logo/basic.png"}/>
+                                            <img alt={participant.nickname} className="w-full h-full box-border p-3 absolute object-contain" src="/img/title.png"/>
                                         </div>
                                     </div>
                                     <span className="font-bold text-lg py-3 text-white">{participant.nickname}</span>
@@ -711,6 +727,7 @@ const VideoComponentV3 = () => {
             roomNo={roomNo}
             participantList={participantList}
             master={master}
+            selectedGame={selectedGame} // Pass selectedGame to Chat
           />
                 <div className="w-full flex items-center px-4 justify-between text-center gap-5 font-bold">
                     <button className="py-3 w-28 bg-yellow-400 text-white rounded-md" onClick={clickGame}>게임 선택</button>
