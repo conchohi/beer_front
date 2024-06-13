@@ -64,6 +64,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
       if (response.status === 200) {
         const updatedData = response.data;
         // Create a unique URL for the updated image
+        localStorage.setItem('nickname', nickname);
         if (imageFile) {
           updatedData.profileImage += `?timestamp=${new Date().getTime()}`;
         }

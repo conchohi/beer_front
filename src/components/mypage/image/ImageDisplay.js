@@ -29,13 +29,13 @@ const ImageDisplay = ({ fileName }) => {
                 <img 
                     src={imageSrc} 
                     alt={fileName} 
-                    className='w-36 h-36 md:w-48 md:h-48 lg:w-72 lg:h-60 rounded-full border-4 border-transparent'
+                    className='w-36 h-36 rounded-full border-4 border-transparent'
                 />
             ) : (
                 <img 
                     src="/logo/basic.png" 
                     alt="default" 
-                    className='w-36 h-36 md:w-48 md:h-48 lg:w-72 lg:h-60 rounded-full border-4 border-transparent' 
+                    className='w-36 h-36 rounded-full border-4 border-transparent' 
                 />
             )}
         </div>
