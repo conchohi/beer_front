@@ -16,7 +16,7 @@ const RadarAnimation = () => {
     return () => instance.destroy()
   })
   return (
-      <div ref={unlockContainer} style={{width:"95%", height:"95%"}}></div>
+      <div className="mx-auto" ref={unlockContainer} style={{width:"95%", height:"95%"}}></div>
   )
 }
 

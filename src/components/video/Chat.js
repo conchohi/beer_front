@@ -24,13 +24,13 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
     scrollToBottom();
   }, [messages]);
 
-  useEffect(() => {
-    console.log("Selected game in Chat:", selectedGame);
-    if (selectedGame) {
-      setCurrentGame(selectedGame);
-      setActiveTab("game");
-    }
-  }, [selectedGame]);
+  // useEffect(() => {
+  //   console.log("Selected game in Chat:", selectedGame);
+  //   if (selectedGame) {
+  //     setCurrentGame(selectedGame);
+  //     setActiveTab("game");
+  //   }
+  // }, [selectedGame]);
 
   const scrollToBottom = () => {
     chatMessagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -108,7 +108,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   const renderChat = () => (
     <div className="chat-box flex bg-white rounded-lg flex-col shadow-lg p-4 h-[700px]">
       <div className="chat-content flex-1 overflow-y-scroll scrollbar-hide p-1">
-        <ul  className="chat-messages space-y-2">
+        <ul className="chat-messages space-y-2">
           {messages.map((message, index) => (
             <li key={index}>
               {message.type === "JOIN" ? (
@@ -129,7 +129,7 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
               )}
             </li>
           ))}
-          <div ref={chatMessagesEndRef}/>
+          <div ref={chatMessagesEndRef} />
         </ul >
       </div>
       <div className="send-message flex mt-4">
@@ -155,51 +155,49 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
   const renderGame = () => {
     const games = {
       BaskinRobbins31: BaskinRobbins31,
-      BalanceGame:BalanceGame,
+      BalanceGame: BalanceGame,
     };
 
     const GameComponent = games[currentGame];
 
     return (
-      <div className="game-box flex bg-slate-100 flex-col shadow-lg p-10">
-         {GameComponent && (
+      <div className="game-box flex bg-slate-100 flex-col shadow-lg p-10 h-[700px]">
+        {GameComponent && (
 
-<GameComponent
+          <GameComponent
 
-  nickname={nickname}
+            nickname={nickname}
 
-  roomNo={roomNo}
+            roomNo={roomNo}
 
-  participantList={participantList}
+            participantList={participantList}
 
-  master={master}
+            master={master}
 
-/>)}
+          />)}
 
-</div>
-);
-};
+      </div>
+    );
+  };
 
 
   return (
     <div className="container mx-auto p-4 flex flex-col h-full max-h-[800px]">
       <div className="tabs flex justify-start mb-4 space-x-4">
         <button
-          className={`tab px-4 py-2 rounded ${
-            activeTab === "chat"
+          className={`tab px-4 py-2 rounded ${activeTab === "chat"
               ? "bg-yellow-500 text-gray-800"
               : "bg-white text-gray-800"
-          }`}
+            }`}
           onClick={() => setActiveTab("chat")}
         >
           대화창
         </button>
         <button
-          className={`tab px-4 py-2 rounded ${
-            activeTab === "game"
+          className={`tab px-4 py-2 rounded ${activeTab === "game"
               ? "bg-yellow-500 text-gray-800"
               : "bg-white text-gray-800"
-          }`}
+            }`}
           onClick={() => setActiveTab("game")}
         >
           게임 화면
