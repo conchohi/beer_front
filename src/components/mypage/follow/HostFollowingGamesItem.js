@@ -29,7 +29,7 @@ const HostFollowingGamesItem = (props) => {
   };
 
   return (
-    <div className="inline-block border-none m-4 text-gray-700 mt-4">
+    <div className="inline-block border-none m-4 text-gray-700 ">
       <div className="flex items-center gap-4">
         <FriendImageDisplay 
           fileName={props.host.userImageUrl} 

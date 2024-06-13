@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import Item from "./HostFollowingGamesItem";
-import { FaUserTimes } from "react-icons/fa";
 import privateApi from "../../../api/axios_intercepter";
-import Astronaut5 from "../../animation/Astronaut5";
-import Astronaut4 from "../../animation/Astronaut4";
 import Astronaut2 from "../../animation/Astronaut2";
 
 const HostFollowingGames = () => {
