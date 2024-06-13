@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { FaSearch, FaUserPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import privateApi from "../../../../api/axios_intercepter";
+import privateApi, { API_SERVER_HOST } from "../../../../api/axios_intercepter";
 import AlertModal from "../friend/FriendCommonModal";
 import Draggable from "react-draggable";
 import RadarAnimation from "../../../animation/mypage/Radar";
 
-const SearchModal = ({ show, closeModal }) => {
+const SearchModal = ({ show, closeModal,setClickNickname }) => {
   const [search, setSearch] = useState("");
   const [result, setResult] = useState([]);
   const [myFollowingList, setMyFollowingList] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShow, setAlertShow] = useState(false);
-  const navigate = useNavigate();
 
   // 드래그를 중지하는 핸들러 함수
   const handleMouseDown = (e) => {
@@ -51,12 +50,6 @@ const SearchModal = ({ show, closeModal }) => {
     }
   };
 
-  // 프로필로 이동
-  const navigateToProfile = (userNo) => {
-    navigate(`/profile/${userNo}`);
-    closeModal();
-  };
-
   // 친구 여부 확인
   const isFriend = (nickname) => {
     return myFollowingList.includes(nickname);
@@ -70,12 +63,12 @@ const SearchModal = ({ show, closeModal }) => {
     <Draggable>
       <div
         className={`fixed inset-0 flex items-center justify-center transition-opacity duration-300 ${
-          show ? "opacity-100 z-50" : "opacity-0 pointer-events-none"
+          show ? "opacity-100 z-20" : "opacity-0 pointer-events-none"
         }`}
         onClick={closeModal}
       >
         <div
-          className="bg-gray-800 text-white rounded-lg p-8 w-11/12 md:w-1/2 lg:w-3/12 max-h-screen"
+          className="bg-slate-200 text-gray-600 rounded-lg p-8 w-11/12 md:w-1/2 lg:w-3/12 max-h-screen"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between items-center mb-4">
@@ -88,7 +81,7 @@ const SearchModal = ({ show, closeModal }) => {
           </div>
           <form className="relative mb-4" onSubmit={(e) => e.preventDefault()}>
             <input
-              className="w-full p-2 rounded bg-gray-700 text-xl text-white placeholder-gray-400"
+              className="w-full p-2 rounded bg-slate-100 text-xl  placeholder-gray-400"
               placeholder="닉네임으로 검색"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -109,11 +102,10 @@ const SearchModal = ({ show, closeModal }) => {
                     className="flex justify-between items-center p-2 border-b border-gray-700"
                   >
                     <div
-                      className="flex items-center cursor-pointer"
-                      onClick={() => navigateToProfile(user.userId)}
+                      className="flex items-center cursor-pointer" onClick={()=>{setClickNickname(user.nickname)}}
                     >
                       <img
-                        src={user.profileImage || "https://via.placeholder.com/150"}
+                        src={`${API_SERVER_HOST}/api/user/${user.profileImage}`}
                         className="w-12 h-12 rounded-full mr-4"
                         alt="프로필"
                       />

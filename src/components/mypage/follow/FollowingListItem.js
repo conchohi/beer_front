@@ -4,46 +4,47 @@ import privateApi from "../../../api/axios_intercepter";
 import ConfirmDeleteModal from "../modal/friend/ConfirmDeleteModal";
 import FriendImageDisplay from "../modal/friend/FriendImageDisplay";
 
-const FollowingListItem = ({ friend, onFriendDeleted }) => {
+const FollowingListItem = ({ friend, onFriendDeleted, setClickNickname }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDelete = async () => {
     try {
-      await privateApi.delete(`/api/friend/delete`, { data: { nickname: friend.nickname } });
-      onFriendDeleted(friend.userId);
+      await privateApi.delete(`/api/friend/delete`, { data: { nickname: friend.nickname } }).then(() => {
+        onFriendDeleted();
+      })
     } catch (error) {
       console.error("Error deleting friend:", error);
     }
   };
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const handleModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
 
   const confirmDelete = () => {
     handleDelete();
-    closeModal();
+    handleModal()
   };
 
+
+
   return (
-    <div className="flex items-center p-4 border-b border-gray-700">
-      <FriendImageDisplay fileName={friend.profileImage} />
-      <div className="flex-grow flex">
-        <p className="text-lg">{friend.nickname}</p>
+    <div className="flex items-center justify-between p-2 m-2 bg-white rounded-2xl ">
+      <div className="flex items-center cursor-pointer w-4/5" onClick={() => { setClickNickname(friend.nickname) }}>
+        <FriendImageDisplay fileName={friend.profileImage} />
+        <div className="flex-grow flex">
+          <p className="ml-3 text-lg">{friend.nickname}</p>
+        </div>
       </div>
       <button
-        className="text-red-500 hover:text-red-600"
-        onClick={openModal}
+        className="text-pink-500 hover:text-pink-600 mr-2"
+        onClick={handleModal}
       >
         <FaTrash size={24} />
       </button>
       {isModalOpen && (
-        <ConfirmDeleteModal onClose={closeModal} onConfirm={confirmDelete} />
+        <ConfirmDeleteModal onClose={handleModal} onConfirm={confirmDelete} />
       )}
+
     </div>
   );
 };

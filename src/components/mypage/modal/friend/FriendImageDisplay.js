@@ -1,41 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import privateApi from '../../../../api/axios_intercepter';
+import  { API_SERVER_HOST } from '../../../../api/axios_intercepter';
 
 const FriendImageDisplay = ({ fileName }) => {
-    const [imageSrc, setImageSrc] = useState(null);
 
-    useEffect(() => {
-        const fetchImage = async () => {
-            try {
-                const response = await privateApi.get(`/api/user/${fileName}`, { responseType: 'arraybuffer' });
-                const base64 = btoa(
-                    new Uint8Array(response.data).reduce(
-                        (data, byte) => data + String.fromCharCode(byte),
-                        ''
-                    )
-                );
-                setImageSrc(`data:image/jpeg;base64,${base64}`);
-            } catch (error) {
-                console.error('Error fetching image:', error);
-            }
-        };
-
-        fetchImage();
-    }, [fileName]);
 
     return (
         <div>
-            {imageSrc ? (
+            {fileName ? (
                 <img 
-                    src={imageSrc} 
+                    src={`${API_SERVER_HOST}/api/user/${fileName}`} 
                     alt={fileName} 
-                    className='w-10 h-10 rounded-full border-4 border-transparent'
+                    className='w-12 h-12 rounded-full border border-black'
                 />
             ) : (
                 <img 
                     src="/logo/basic.png" 
                     alt="default" 
-                    className='w-12 h-12 rounded-full border-4 border-transparent' 
+                    className='w-12 h-12 rounded-full border border-black' 
                 />
             )}
         </div>
