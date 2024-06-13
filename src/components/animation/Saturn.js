@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import lottie from "lottie-web";
-import animationData from "./Mars.json";
-import "./Mars.css";
+import animationData from "./Saturn.json";
+import "./Saturn.css";
 
-const Mars = () => {
+const Saturn = () => {
   const animationContainer = useRef(null);
 
   useEffect(() => {
@@ -19,16 +19,17 @@ const Mars = () => {
   }, []);
 
   return (
-    <div
-      ref={animationContainer}
-      className="absolute w-40 h-40 orbit"
-      style={{
-        top: "50%",
-        left: "50%",
-        transform: "translate(-100%, -100%)",
-      }}
-    />
+    <div className="orbit-container">
+      <div
+        ref={animationContainer}
+        className="saturn"
+        style={{
+          width: "20vw",
+          height: "20vw",
+        }}
+      />
+    </div>
   );
 };
 
-export default Mars;
+export default Saturn;

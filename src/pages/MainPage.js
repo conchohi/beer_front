@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
 import Mars from "../components/animation/Mars";
+import Saturn from "../components/animation/Saturn";
 
 const DIVIDER_HEIGHT = 5;
 
@@ -12,14 +13,14 @@ function MainPage() {
   const outerDivRef = useRef();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const clickDown = ()=>{
+  const clickDown = () => {
     outerDivRef.current.scrollTo({
       top: window.innerHeight + DIVIDER_HEIGHT,
       left: 0,
       behavior: "smooth",
     });
     setCurrentPage(2);
-  }
+  };
   useEffect(() => {
     const wheelHandler = (e) => {
       e.preventDefault();
@@ -88,8 +89,9 @@ function MainPage() {
       <Header />
       <div ref={outerDivRef} className="outer bg-cover bg-center">
         <div className="inner">
-          <MainImage clickDown={clickDown}/>
-        <Mars />
+          <MainImage clickDown={clickDown} />
+          <Mars />
+          <Saturn />
         </div>
         <div className="inner">
           <Introduction />
