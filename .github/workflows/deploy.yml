@@ -40,3 +40,4 @@ jobs:
             docker rm beer_front || true
             docker run -d --name beer_front -p 3000:80 ${DOCKERHUB_USERNAME}/beer_front:${TAG}
           EOF
+
