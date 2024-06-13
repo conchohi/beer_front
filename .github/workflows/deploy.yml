@@ -27,6 +27,25 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
           echo "TAG=${TAG}" >> $GITHUB_ENV
 
+      - name: Run Docker container to output build files
+        run: |
+          # Run the Docker container to output build files
+          docker run --name beer_front -d ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
+          sleep 10 # Give the container some time to start
+
+      - name: Copy build files to host directory
+        run: |
+          # Copy the build files from the running container to the host directory
+          docker cp beer_front:/usr/share/nginx/html /home/test/
+          # Copy the build files to the EC2 instance
+          scp -rf /home/test/html ubuntu@${{ secrets.EC2_HOST }}:/home/test
+
+      - name: Cleanup Docker container
+        run: |
+          # Stop and remove the Docker container
+          docker stop beer_front
+          docker rm beer_front
+
       - name: Deploy on EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
@@ -39,5 +58,7 @@ jobs:
             docker stop beer_front || true
             docker rm beer_front || true
             docker run -d --name beer_front -p 3000:80 ${DOCKERHUB_USERNAME}/beer_front:${TAG}
+            sudo rm -rf /var/www/html/*
+            sudo cp -r /home/test/html/* /var/www/html/
+            sudo systemctl restart nginx
           EOF
-
