@@ -38,6 +38,6 @@ jobs:
             docker pull ${DOCKERHUB_USERNAME}/beer_front:${TAG}
             docker stop beer_front || true
             docker rm beer_front || true
-            docker run -d --name beer_front -p 80:80 ${DOCKERHUB_USERNAME}/beer_front:${TAG}
+            docker run -d --name beer_front -p 3000:80 ${DOCKERHUB_USERNAME}/beer_front:${TAG}
           EOF
 
