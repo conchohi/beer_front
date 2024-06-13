@@ -221,7 +221,7 @@ const SignupForm = () => {
                 required
                 value={formData.id}
                 onChange={handleChange}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
               />
               <button
                 type="button"
@@ -259,7 +259,7 @@ const SignupForm = () => {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
               />
             </div>
             {!passwordValid && (
@@ -284,7 +284,7 @@ const SignupForm = () => {
                 required
                 value={formData.passwordChk}
                 onChange={handleChange}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
               />
             </div>
             {formData.passwordChk && !passwordsMatch && (
@@ -310,7 +310,7 @@ const SignupForm = () => {
                 required
                 value={formData.nickname}
                 onChange={handleChange}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
               />
               <button
                 type="button"
@@ -350,13 +350,13 @@ const SignupForm = () => {
                     value="남자"
                     checked={formData.gender === "남자"}
                     onChange={handleChange}
-                    className="h-3 w-3 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                    className="h-3 w-3 border-gray-300 text-pink-500 focus:ring-pink-500"
                   />
                   <label
                     htmlFor="male"
                     className="ml-2 block text-sm font-normal text-pink-500"
                   >
-                    male
+                    남자
                   </label>
                 </div>
                 <div className="flex items-center">
@@ -367,13 +367,13 @@ const SignupForm = () => {
                     value="여자"
                     checked={formData.gender === "여자"}
                     onChange={handleChange}
-                    className="h-3 w-3 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                    className="h-3 w-3 border-gray-300 text-pink-500 focus:ring-pink-500"
                   />
                   <label
                     htmlFor="female"
                     className="ml-2 block text-sm font-normal text-pink-500"
                   >
-                    female
+                    여자
                   </label>
                 </div>
               </div>
@@ -391,9 +391,9 @@ const SignupForm = () => {
                   name="mbti"
                   value={formData.mbti}
                   onChange={handleChange}
-                  className="block `w-9/12 rounded-md text-sm font-thin border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 "
+                  className="block `w-9/12 rounded-md text-sm font-thin border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 "
                 >
-                  <option value="">MBTI</option>
+                  <option value="">선택안함</option>
                   <option value="INTJ">INTJ</option>
                   <option value="INTP">INTP</option>
                   <option value="ENTJ">ENTJ</option>
@@ -418,7 +418,7 @@ const SignupForm = () => {
           <div>
             <button
               type="submit"
-              className={`flex w-full justify-center rounded-md px-4 py-2 text-base tracking-widest font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 bg-pink-500 hover:bg-pink-600 ${
+              className={`flex w-full justify-center rounded-md px-4 py-2 text-base tracking-widest font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-500 bg-pink-500 hover:bg-pink-600 ${
                 !isEmailVerified ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={!isEmailVerified}
