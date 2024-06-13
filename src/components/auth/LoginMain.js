@@ -164,7 +164,7 @@ const LoginMain = () => {
                         required
                         value={id}
                         onChange={handleId}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
                       />
                       <div className="errorMessageWrap">
                         {!idValid && id.length > 0 && (
@@ -203,7 +203,7 @@ const LoginMain = () => {
                         required
                         value={password}
                         onChange={handlePassword}
-                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-600 focus:ring focus:ring-indigo-600 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
+                        className="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
                       />
                       <div className="errorMessageWrap">
                         {!passwordValid && password.length > 0 && (
