@@ -48,7 +48,7 @@ const MyPageMain = () => {
 
   return (
     <div className="w-full h-auto font-bold text-white font-sans p-40 flex flex-col">
-      <div className="bg-gray-700 w-full h-auto rounded-2xl flex flex-col justify-between p-12">
+      <div className="bg-gray-200 w-full h-auto rounded-2xl flex flex-col justify-between p-12">
         <div className="bg-gray-900 w-full h-auto rounded-2xl p-20 text-left mb-12">
           <div className="text-pink-500 mb-8">
             <b>마이페이지</b>
@@ -56,8 +56,8 @@ const MyPageMain = () => {
           <ProfilePageInfo handleOpen={handleOpen} userData={userData} />
         </div>
         <div className="flex flex-row">
-          <div className="bg-gray-900 rounded-2xl p-20 text-left w-7/12 mr-12 flex flex-col justify-start">
-            <div className="text-pink-500 mb-8">
+          <div className="bg-white text-center rounded-2xl p-10 text-left w-7/12 mr-12 flex flex-col justify-start">
+            <div className="text-pink-500 text-4xl">
               <b>친구가 참여 중인 방 목록</b>
             </div>
             <HostFollowingGames />

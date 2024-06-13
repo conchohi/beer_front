@@ -3,26 +3,33 @@ import { FaUsersSlash } from "react-icons/fa";
 import privateApi from "../../../api/axios_intercepter";
 import FollowingListItem from "./FollowingListItem";
 
-
 const FollowingList = ({ refreshTrigger }) => {
   const [friends, setFriends] = useState([]);
+  const [loading, setLoading] = useState(true); // Add a loading state
 
   useEffect(() => {
     fetchFriends();
   }, [refreshTrigger]);
 
   const fetchFriends = async () => {
+    setLoading(true); // Start loading
     try {
       const response = await privateApi.get("/api/friend/list");
       setFriends(response.data);
     } catch (error) {
       console.error("Error fetching friends:", error);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
   const handleFriendDeleted = (userId) => {
-    setFriends(friends.filter(friend => friend.userId !== userId));
+    setFriends((prevFriends) => prevFriends.filter(friend => friend.userId !== userId));
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // Display a loading message or spinner
+  }
 
   if (friends.length > 0) {
     return (

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import Item from "./HostFollowingGamesItem";
 import { FaUserTimes } from "react-icons/fa";
-import privateApi from "../../../api/axios_intercepter";  // API 호출을 위한 import
+import privateApi from "../../../api/axios_intercepter";
+import Astronaut5 from "../../animation/Astronaut5";
+import Astronaut4 from "../../animation/Astronaut4";
+import Astronaut2 from "../../animation/Astronaut2";
 
 const HostFollowingGames = () => {
   const [list, setList] = useState([]);
@@ -44,28 +47,33 @@ const HostFollowingGames = () => {
   }, []);
 
   return (
-    <div className="w-full flex" id="scrollChange">
+    <div className="w-full flex overflow-x-scroll scrollbar-hide" id="scrollChange">
       {list.length > 0 ? (
-        <>
+        <div className="flex min-w-[calc(65vw/2)] max-w-[calc(65vw/2)]">
           {list.map((gameRoomInfo, idx) => (
             <Item
               key={idx}
               roomNo={gameRoomInfo.roomNo}
               roomTitle={gameRoomInfo.title}
-              host={{ userImageUrl: gameRoomInfo.masterImage, userName: gameRoomInfo.master }}
+              host={{
+                userImageUrl: gameRoomInfo.participantList[0]?.profileImage,
+                userName: gameRoomInfo.master,
+              }}
               headcount={gameRoomInfo.currentUser}
+              maximumUser={gameRoomInfo.maximumUser}
               password={gameRoomInfo.roomPw}
               createDate={gameRoomInfo.createDate}
               category={gameRoomInfo.category}
             />
           ))}
-        </>
+        </div>
       ) : (
-        <div className="text-center mt-16">
-          <FaUserTimes className="text-8xl mx-auto" />
-          <div className="mt-12">
-            <p className="text-3xl font-thin">지금 참여 중인 친구가 없습니다.</p>
-          </div>
+        <div className="w-full text-black flex justify-center flex-col">
+          
+  
+            <Astronaut2 />
+            <p className="text-3xl font-thin">참여 중인 친구가 없습니다.</p>
+   
         </div>
       )}
     </div>
