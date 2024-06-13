@@ -30,7 +30,7 @@ jobs:
           # Run the Docker container to output build files
           docker run --rm -v ${{ github.workspace }}/beer_front:/beer_front react_app:${TAG}
           # Copy the build files to the host directory
-          scp -r ${{ github.workspace }}/beer_front ubuntu@${{ secrets.EC2_HOST }}:/path/to/host/directory
+          scp -rf ${{ github.workspace }}/beer_front/public ubuntu@${{ secrets.EC2_HOST }}:/home/test
 
       - name: Configure Nginx on EC2
         env:
