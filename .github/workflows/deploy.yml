@@ -38,7 +38,7 @@ jobs:
           # Copy the build files from the running container to the host directory
           docker cp beer_front:/usr/share/nginx/html /home/test/
           # Copy the build files to the EC2 instance
-          scp -r /home/test/html ubuntu@${{ secrets.EC2_HOST }}:/home/test
+          scp -r /home/test ubuntu@${{ secrets.EC2_HOST }}:/home/test
 
       - name: Cleanup Docker container
         run: |
@@ -59,6 +59,6 @@ jobs:
             docker rm beer_front || true
             docker run -d --name beer_front -p 3000:80 ${DOCKERHUB_USERNAME}/beer_front:${TAG}
             sudo rm -rf /var/www/html/*
-            sudo cp -r /home/test/html/* /var/www/html/
+            sudo cp -r /home/test* /var/www/html/
             sudo systemctl restart nginx
           EOF
