@@ -171,7 +171,7 @@ function CreateRoom({ close }) {
             <div className="bg-gray-700 w-60 h-60 rounded-lg flex flex-col items-center justify-center mt-5">
               {viewVideo ? <video className="w-full h-full rounded-lg object-cover" ref={videoRef} autoPlay playsInline muted /> :
                 <><div className="bg-gray-600 w-24 h-24 rounded-full flex items-center justify-center">
-                  <CgProfile className="w-full h-full rounded-lg object-cover" />
+                  <CgProfile className="w-full h-full rounded-lg object-cover text-gray-800" />
                 </div><p className="text-gray-300 mt-2">카메라 출력 화면</p></>}
 
             </div>

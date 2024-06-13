@@ -75,9 +75,9 @@ const BoardMain = () => {
     return (<>
         {basicModal && <BasicModalComponent message={message} callbackFunction={() => { setBasicModal(false) }} />}
         <BasicLayout>
-            <div className="w-full h-auto text-lg md:text-4xl text-black font-sans p-6 px-80 py-30 flex flex-col ">
-                <div className="bg-gray-700 w-full h-auto rounded-2xl flex flex-col justify-between p-6 md:p-12 min-w-[500px] min-h-[600px]">
-                    <div className="bg-gray-900 w-full h-auto rounded-2xl p-5 md:p-18 text-left mb-6  md:mb-12 min-w-[250px]">
+            <div className="w-full h-auto  p-6 px-80 py-30 flex flex-col items-center">
+                <div className="bg-gray-700 w-full h-auto rounded-2xl flex flex-col justify-between p-6 md:p-12 min-w-[500px] md:min-w-[700px] min-h-[600px]">
+                    <div className="bg-gray-900 w-full h-auto rounded-2xl p-5 md:p-18 text-left mb-6  ">
 
                         <h1 className="text-2xl font-semibold text-pink-500 mb-2 flex items-center justify-center">
                             <Astronaut4 />
