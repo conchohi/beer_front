@@ -18,7 +18,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
 
-      - name: Build Docker image for React app
+      - name: Build and push Docker image for React app
         run: |
           # Generate a unique tag for the Docker image
           TAG=$(date +%s)
@@ -30,13 +30,13 @@ jobs:
       - name: Run Docker container to output build files
         run: |
           # Run the Docker container to output build files
-          docker run --rm -v ${{ github.workspace }}/beer_front:/beer_front ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
+          docker run --name beer_front -d ${{ secrets.DOCKERHUB_USERNAME }}/beer_front:${TAG}
           sleep 10 # Give the container some time to start
 
       - name: Copy build files to host directory
         run: |
-          # Copy the build files to the EC2 instance
-           scp -rf ${{ github.workspace }}/beer_front/public ubuntu@${{ secrets.EC2_HOST }}:/home/test
+          # Copy the build files from the running container to the host directory
+          docker cp beer_front:/usr/share/nginx/html /home/test
 
       - name: Cleanup Docker container
         run: |
@@ -57,6 +57,6 @@ jobs:
             docker rm beer_front || true
             docker run -d --name beer_front -p 3000:80 ${DOCKERHUB_USERNAME}/beer_front:${TAG}
             sudo rm -rf /var/www/html/*
-            sudo cp -r /home/test* /var/www/html/
+            sudo cp -r /home/test/html/* /var/www/html/
             sudo systemctl restart nginx
           EOF
