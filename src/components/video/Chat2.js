@@ -161,6 +161,7 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
               nickname={nickname}
               roomNo={roomNo}
               participantList={participantList}
+              master={master}
             />
           )}
         </div>
