@@ -17,7 +17,7 @@ const BombGame = ({ roomNo, nickname, participantList = [] }) => {
       stompClient.subscribe(`/topic/game/${roomNo}`, (message) => {
         const gameState = JSON.parse(message.body);
         if(gameState.leftTime){
-            setGameTimeLeft(gameState.leftTime )
+            setGameTimeLeft(gameState.timeLeft )
         }
         setBomb(gameState.bomb)
       });
