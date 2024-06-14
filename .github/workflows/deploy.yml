@@ -41,7 +41,8 @@ jobs:
           # Copy the build files from the running container to the host directory
           docker cp beer_front:/usr/share/nginx/html $BUILD_DIR
           # Copy the build files to the EC2 instance
-          scp -r $BUILD_DIR/html ubuntu@${{ secrets.EC2_HOST }}:/home/test/html
+          scp -o StrictHostKeyChecking=no -r $BUILD_DIR/html ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/html
+
 
       - name: Cleanup Docker container
         run: |
