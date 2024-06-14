@@ -26,6 +26,7 @@ const VotingGame = ({ nickname, roomNo, participantList = [], master }) => {
   useEffect(() => {
     const connect = () => {
       const socket = new SockJS(`${API_SERVER_HOST}/ws`);
+
       stompClient = Stomp.over(socket);
       stompClient.connect({}, onConnected, onError);
     };

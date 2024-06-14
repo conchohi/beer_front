@@ -3,7 +3,6 @@ import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
 
-
 const CharacterGame = ({ roomNo, nickname, participantList = [] }) => {
   const [stompClient, setStompClient] = useState(null);
   const [currentRound, setCurrentRound] = useState(0);

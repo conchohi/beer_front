@@ -3,6 +3,7 @@ import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
 
+
 const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
   const canvasRef = useRef(null);
   const [stompClient, setStompClient] = useState(null);
