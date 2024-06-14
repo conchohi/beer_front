@@ -13,7 +13,7 @@ const ShoutInSilence = ({ roomNo, nickname, participantList = [] }) => {
   const [timeLeft, setTimeLeft] = useState(180);
 
   useEffect(() => {
-    const socket = new SockJS(`${API_SERVER_HOST}/ws`);
+    const socket = new SockJS(`${API_SERVER_HOST}/wss`);
     const stompClient = Stomp.over(socket);
 
     const onMessageReceived = (message) => {

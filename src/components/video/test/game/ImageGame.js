@@ -3,6 +3,7 @@ import { Hands } from '@mediapipe/hands';
 import { Camera } from '@mediapipe/camera_utils';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { API_SERVER_HOST } from '../../../../api/axios_intercepter';
 
 const ImageGame = ({ roomNo, nickname }) => {
   const videoRef = useRef(null);
@@ -11,7 +12,7 @@ const ImageGame = ({ roomNo, nickname }) => {
   const [stompClient, setStompClient] = useState(null);
 
   useEffect(() => {
-    const socket = new SockJS('http://localhost:8080/ws'); // WebSocket URL
+    const socket = new SockJS(`${API_SERVER_HOST}/wss`); // WebSocket URL
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       stompClient.subscribe(`/topic/game/${roomNo}`, (message) => {

@@ -18,7 +18,7 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
   const username = nickname;
 
   useEffect(() => {
-    const socket = new SockJS(`${API_SERVER_HOST}/ws`);
+    const socket = new SockJS(`${API_SERVER_HOST}/wss`);
     const stompClient = Stomp.over(socket);
     stompClientRef.current = stompClient;
 

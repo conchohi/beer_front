@@ -13,7 +13,7 @@ const LiarGame = ({ roomNo, nickname, participantList = [] }) => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const socket = new SockJS(`${API_SERVER_HOST}/ws`);
+    const socket = new SockJS(`${API_SERVER_HOST}/wss`);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       stompClient.subscribe(`/topic/game/${roomNo}`, (message) => {

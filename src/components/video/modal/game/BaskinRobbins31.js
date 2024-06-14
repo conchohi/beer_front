@@ -1,6 +1,7 @@
 import { Stomp } from "@stomp/stompjs";
 import React, { useState, useEffect } from "react";
 import SockJS from "sockjs-client";
+import { API_SERVER_HOST } from "../../../../api/axios_intercepter";
 
 let stompClient = null;
 
@@ -24,7 +25,7 @@ const BaskinRobbins31 = ({
 
   useEffect(() => {
     const connect = () => {
-      const socket = new SockJS("http://localhost:8080/game");
+      const socket = new SockJS(`${API_SERVER_HOST}/game`);
       stompClient = Stomp.over(socket);
       stompClient.connect({}, onConnected, onError);
     };
