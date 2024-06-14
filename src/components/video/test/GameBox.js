@@ -4,6 +4,7 @@ import CharacterGame from "./game/CharacterGame";
 import LiarGame from "./game/LiarGame";
 import CatchMindGame from "./game/CatchMindGame";
 import ShoutInSilence from "./game/ShoutInsilence";
+import BaskinRobbins31 from "../modal/game/BaskinRobbins31";
 
 const GameBox = ({
   currentGame,
@@ -14,26 +15,28 @@ const GameBox = ({
   messages,
   newMessage,
   setNewMessage,
-  handleSendMessage
+  handleSendMessage,
 }) => {
   const games = {
     "캐릭터 게임": CharacterGame,
     "라이어 게임": LiarGame,
     "캐치마인드 게임": CatchMindGame,
-    "고요속의외침 게임" : ShoutInSilence,
+    "고요속의외침 게임": ShoutInSilence,
+    "베스킨라빈스 31": BaskinRobbins31,
     // "밸런스 게임": BalanceGame,
   };
 
   const GameComponent = games[currentGame];
 
   return (
-    <div className="game-box flex bg-slate-100 flex-col shadow-lg p-10 h-[700px]">
+    <div className="game-box flex bg-slate-100 flex-col shadow-lg p-5 h-[700px]">
       <div className="flex justify-center h-[300px]">
         {GameComponent && (
-          <GameComponent 
-            roomNo={roomNo} 
-            nickname={nickname} 
-            participantList={participantList} 
+          <GameComponent
+            roomNo={roomNo}
+            nickname={nickname}
+            participantList={participantList}
+            master={master}
           />
         )}
       </div>
