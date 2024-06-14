@@ -32,6 +32,7 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
             let body = JSON.parse(message.body)
             if(body.type === "GAME"){
               setCurrentGame(body.content);
+              setActiveTab("game")
               console.log(body.content)
             }
             setMessages((prevMessages) => [
