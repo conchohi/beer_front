@@ -5,7 +5,7 @@ import { API_SERVER_HOST } from "../../../../api/axios_intercepter";
 
 let stompClient = null;
 
-const VotingGame = ({ nickname, roomNo, participantList = [], master }) => {
+const BalanceGame = ({ nickname, roomNo, participantList = [], master }) => {
   const [currentChoices, setCurrentChoices] = useState(["", ""]);
   const [isChoiceInputTime, setIsChoiceInputTime] = useState(true); // 선택지 입력 시간 여부
   const [gameState, setGameState] = useState({
@@ -250,4 +250,4 @@ const VotingGame = ({ nickname, roomNo, participantList = [], master }) => {
   );
 };
 
-export default VotingGame;
+export default BalanceGame;
