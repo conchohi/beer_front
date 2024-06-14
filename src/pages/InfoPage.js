@@ -7,13 +7,13 @@ import InfoModal from "../components/guide/modal/InfoModal";
 
 function InfoPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
   const introRef = useRef(null);
   const location = useLocation();
 
-  const openModal = (content) => {
+  const openModal = (title) => {
     setIsModalOpen(true);
-    setModalContent(content);
+    setModalTitle(title);
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function InfoPage() {
         <div className="flex justify-center items-center gap-8 flex-wrap">
           <div
             className="bg-yellow-300 p-6 rounded-xl shadow-lg w-64 h-48 flex flex-col justify-center items-center cursor-pointer transform transition duration-300 hover:scale-105"
-            onClick={() => openModal("이용시 주의사항")}
+            onClick={() => openModal("이용시 주의 사항")}
           >
             <div className="text-2xl font-bold text-white mb-4">#1</div>
             <div className="text-2xl font-bold text-white">이용시 주의사항</div>
@@ -90,7 +90,7 @@ function InfoPage() {
         <InfoModal
           isOpen={isModalOpen}
           closeModal={() => setIsModalOpen(false)}
-          title={modalContent}
+          title={modalTitle}
         ></InfoModal>
       </div>
       <div ref={introRef}>

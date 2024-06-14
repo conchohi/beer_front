@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { API_SERVER_HOST } from '../../../../api/axios_intercepter';
+import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
 
 const CharacterGame = ({ roomNo, nickname, participantList = [] }) => {
   const [stompClient, setStompClient] = useState(null);
@@ -14,7 +14,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [] }) => {
   const [winner, setWinner] = useState(null);
 
   useEffect(() => {
-    const socket = new SockJS(`${API_SERVER_HOST}/wss`);
+    const socket = new SockJS(WEB_SOCKET_SERVER);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       stompClient.subscribe(`/topic/game/${roomNo}/correct`, (message) => {
@@ -48,7 +48,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [] }) => {
     return () => {
       if (stompClient) stompClient.disconnect();
     };
-  }, [roomNo, nickname, participantList]);
+  }, [roomNo, nickname]);
 
   const handleGuessChange = (e) => {
     setGuess(e.target.value);

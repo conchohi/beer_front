@@ -25,7 +25,7 @@ const BaskinRobbins31 = ({
 
   useEffect(() => {
     const connect = () => {
-      const socket = new SockJS(`${API_SERVER_HOST}/game`);
+      const socket = new SockJS(`${API_SERVER_HOST}/ws`);
       stompClient = Stomp.over(socket);
       stompClient.connect({}, onConnected, onError);
     };
@@ -112,7 +112,11 @@ const BaskinRobbins31 = ({
     if (connected && nickname === master) {
       const playerNames = participantList.map((player) => player.nickname);
       const gameMessage = { players: playerNames };
-      stompClient.send(`/app/start/${roomNo}`, {}, JSON.stringify(gameMessage));
+      stompClient.send(
+        `/app/startBaskinRobbins31/${roomNo}`,
+        {},
+        JSON.stringify(gameMessage)
+      );
     }
   };
 
@@ -120,38 +124,75 @@ const BaskinRobbins31 = ({
     setMove(number);
   };
 
+  const getButtonClass = (number) => {
+    return number >= 31
+      ? "ml-2 p-1.5 bg-red-500 text-white rounded"
+      : "ml-2 p-1.5 bg-blue-500 text-white rounded";
+  };
+
   return (
-    <div className="game-container p-4">
-      <h1 className="text-2xl font-bold mb-4">배스킨 라빈스 31</h1>
+    <div className="game-container">
+      <h1 className="text-2xl font-bold mb-4 text-center">배스킨 라빈스 31</h1>
       {gameState.losingPlayer && (
         <div className="mt-4">
           <h2 className="text-xl text-red-500 font-bold">
-             {gameState.losingPlayer}(이)가 졌어!
+            {gameState.losingPlayer}(이)가 졌어!
           </h2>
         </div>
       )}
-      <div className="mb-4">
+      <div className="mb-4 relative">
         {currentRange.map((number) => (
           <button
             key={number}
             onClick={() => handleNumberClick(number)}
-            className="m-2 p-2 bg-blue-500 text-white rounded"
+            className={`m-3 p-2 bg-blue-500 text-white rounded ${getButtonClass(
+              number
+            )}`}
           >
             {number}
           </button>
         ))}
+        <button
+          onClick={sendMove}
+          className="m-3 p-2 bg-green-500 text-white rounded absolute right-0"
+        >
+          제출
+        </button>
       </div>
-      <button
-        onClick={sendMove}
-        className="mb-4 p-2 bg-green-500 text-white rounded"
-      >
-        다음 차례로
-      </button>
+
+      <div className="">
+        <ul className="list-disc list-inside">순서: {gameState.currentTurn}</ul>
+        <ul className="list-disc list-inside">
+          게임 참가자: {gameState.players.join(", ")}
+        </ul>
+        <div>
+          <h2 className="text-xl font-bold mb-2">게임 현황</h2>
+          <ul className="h-48 overflow-y-auto">
+            {gameState.moves
+              .slice()
+              .reverse()
+              .map((msg, index) => {
+                const playerName = msg.split(": ")[0];
+                const numbers = JSON.parse(msg.split(": ")[1]);
+                return (
+                  <li key={index} className="mb-2 list-none">
+                    <span className="font-bold">{playerName}</span>
+                    {numbers.map((number, i) => (
+                      <button key={i} className={getButtonClass(number)}>
+                        {number}
+                      </button>
+                    ))}
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+      </div>
       {nickname === master && (
-        <>
+        <div className="content-center justify-items-center">
           <button
             onClick={startGame}
-            className="mb-4 p-2 bg-blue-500 text-white rounded"
+            className="mt-10 p-2 mr-36 bg-blue-500 text-white rounded"
           >
             게임 시작
           </button>
@@ -161,24 +202,8 @@ const BaskinRobbins31 = ({
           >
             재시작
           </button>
-        </>
-      )}
-      <div>
-        <ul className="list-disc list-inside">
-          순서: {gameState.currentTurn}
-        </ul>
-        <ul className="list-disc list-inside">
-          게임 참가자: {gameState.players.join(", ")}
-        </ul>
-        <div>
-          <h2 className="text-xl font-bold mb-2">게임 현황</h2>
-          <ul className="list-disc list-inside">
-            {gameState.moves.map((msg, index) => (
-              <li key={index}>{msg}</li>
-            ))}
-          </ul>
         </div>
-      </div>
+      )}
     </div>
   );
 };
