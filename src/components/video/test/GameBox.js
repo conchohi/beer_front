@@ -7,11 +7,13 @@ import ShoutInSilence from "./game/ShoutInsilence";
 import BombGame from "./game/BombGame";
 import BaskinRobbins31 from "../modal/game/BaskinRobbins31";
 
+
 const GameBox = ({
   currentGame,
   nickname,
   roomNo,
-  participantList
+  participantList,
+  master
 }) => {
   const games = {
     "캐릭터 게임": CharacterGame,
@@ -19,7 +21,7 @@ const GameBox = ({
     "캐치마인드 게임": CatchMindGame,
     "폭탄 게임" : BombGame,
     "고요속의외침 게임": ShoutInSilence,
-    "베스킨라빈스 31": BaskinRobbins31,
+    "베스킨라빈스 게임": BaskinRobbins31,
     // "밸런스 게임": BalanceGame,
   };
 
