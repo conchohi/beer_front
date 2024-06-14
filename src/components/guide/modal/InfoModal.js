@@ -16,7 +16,7 @@ function InfoModal({ isOpen, closeModal, title }) {
 
   let children;
   switch (title) {
-    case "방개설방법":
+    case "방 참여 및 개설 방법":
       children = (
         <div className="mt-8">
           <p className="text-lg font-bold">About</p>
@@ -29,8 +29,8 @@ function InfoModal({ isOpen, closeModal, title }) {
       break;
     case "이용시 주의 사항":
       children = (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-8 rounded-lg w-[600px] h-[600px] relative">
+        <div className="fixed inset-0 flex justify-center items-center">
+          <div className="bg-white p-8 rounded-lg w-[600px] h-auto relative">
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -86,23 +86,23 @@ function InfoModal({ isOpen, closeModal, title }) {
         </div>
       );
       break;
-    case "게시판 이용 방법":
-      children = (
-        <div className="mt-8">
-          <p className="text-lg font-bold">Privacy</p>
-          <p className="mt-4">
-            This is the Privacy section of the InfoModal. You can customize the
-            content here.
-          </p>
-        </div>
-      );
-      break;
+    // case "게시판 이용 방법":
+    //   children = (
+    //     <div className="mt-8">
+    //       <p className="text-lg font-bold">Privacy</p>
+    //       <p className="mt-4">
+    //         This is the Privacy section of the InfoModal. You can customize the
+    //         content here.
+    //       </p>
+    //     </div>
+    //   );
+    //   break;
     default:
       children = null;
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="fixed inset-0 flex justify-center items-center z-30">
       <div className="bg-slate-300 text-black p-4 rounded-lg w-[600px] h-[600px] relative">
         <button
           onClick={closeModal}
