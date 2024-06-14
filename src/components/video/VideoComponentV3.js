@@ -12,6 +12,7 @@ import ParticipantList from "./ParticipantList";
 import VideoButton from "./VideoButton";
 import { API_SERVER_HOST } from "../../api/axios_intercepter";
 import { FaCrown } from "react-icons/fa";
+import Chat2 from "./Chat2";
 
 const server = "https://janus.jsflux.co.kr/janus";
 
@@ -722,7 +723,7 @@ const VideoComponentV3 = () => {
                 </div>
             </div>
             <div className="flex flex-col w-1/4 px-5 mt-8">
-                <Chat
+                <Chat2
             nickname={nickname}
             roomNo={roomNo}
             participantList={participantList}
