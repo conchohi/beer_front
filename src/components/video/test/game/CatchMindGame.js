@@ -65,7 +65,7 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
     return () => {
       if (stompClient) stompClient.disconnect();
     };
-  }, [roomNo, nickname, participantList]);
+  }, [roomNo, nickname]);
 
   const startDrawing = ({ nativeEvent }) => {
     if (currentTurn !== nickname || winner) return;

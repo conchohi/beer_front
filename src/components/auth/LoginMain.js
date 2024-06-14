@@ -4,7 +4,7 @@ import BasicLayout from "../../layouts/BasicLayout";
 import Astronaut2 from "../animation/Astronaut2";
 import BasicModalComponent from "../common/BasicModalComponent";
 import { publicApi } from "../../api/axios_intercepter";
-import { onKakaoLogin, onNaverLogin } from "../../api/socialApi";
+import { onKakaoLogin, onNaverLogin, onGoogleLogin } from "../../api/socialApi";
 import MovingCat from "../animation/MovingCat";
 
 const LoginMain = () => {
@@ -247,7 +247,7 @@ const LoginMain = () => {
                   <div>
                     <button
                       type="submit"
-                      className="flex w-full justify-center rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      className="flex w-full justify-center rounded-md bg-pink-500 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
                     >
                       로그인
                     </button>
@@ -265,7 +265,7 @@ const LoginMain = () => {
                 <hr className="my-8" />
                 <div className="flex flex-col justify-center items-center mt-3 space-y-4">
                   <button
-                    className="w-full flex items-center bg-yellow-300 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-black shadow-sm hover:bg-yellow-500"
+                    className="w-full flex items-center bg-yellow-300 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-black shadow-sm hover:bg-yellow-500 transition duration-300 ease-in-out transform hover:scale-105"
                     onClick={onKakaoLogin}
                   >
                     <img
@@ -276,7 +276,7 @@ const LoginMain = () => {
                     <span className="flex-grow text-center">카카오 로그인</span>
                   </button>
                   <button
-                    className="w-full flex items-center bg-green-500 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600"
+                    className="w-full flex items-center bg-green-500 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105"
                     onClick={onNaverLogin}
                   >
                     <img
@@ -286,6 +286,18 @@ const LoginMain = () => {
                     />
                     <span className="flex-grow text-center">네이버 로그인</span>
                   </button>
+                  <button
+                    className="w-full flex items-center border-1 border-gray-300 bg-gray-50 px-4 py-2 rounded-md text-sm font-semibold leading-6 text-black shadow-md hover:bg-gray-200 transition duration-300 ease-in-out transform hover:scale-105"
+                    onClick={onGoogleLogin}
+                  >
+                    <img
+                      src="/login/googlelogin.png"
+                      alt="Google Logo"
+                      className="w-6 h-6 mr-2"
+                    />
+                    <span className="flex-grow text-center">구글 로그인</span>
+                  </button>
+
                 </div>
               </div>
             </div>

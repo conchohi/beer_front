@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { API_SERVER_HOST } from '../../../../api/axios_intercepter';
 
 const LiarGame = ({ roomNo, nickname, participantList = [] }) => {
   const [stompClient, setStompClient] = useState(null);

@@ -7,3 +7,6 @@ export const onNaverLogin = () => {
 export const onKakaoLogin = () => {
     window.location.href = `${API_SERVER_HOST}/oauth2/authorization/kakao`;
 }
+export const onGoogleLogin = () => {
+    window.location.href = `${API_SERVER_HOST}/oauth2/authorization/google`;
+}
