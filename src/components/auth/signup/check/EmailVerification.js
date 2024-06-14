@@ -124,11 +124,11 @@ const EmailVerification = ({
           <button
             type="button"
             onClick={verifyEmailCode}
-            className="ml-4 px-4 py-2 w-2/12 rounded-md bg-pink-500 text-black text-sm font-semibold hover:bg-blue-600"
+            className="ml-4 px-6 py-2 w-3/12 rounded-md bg-pink-500 text-white tracking-widest text-xs font-semibold hover:bg-pink-600"
           >
-            확인
+            CHECK
           </button>
-          <span className="ml-4 text-sm text-pink-500">
+          <span className="ml-4 text-xs text-pink-500">
             {`남은 시간: ${Math.floor(timeLeft / 60)}분 ${timeLeft % 60}초`}
           </span>
         </div>

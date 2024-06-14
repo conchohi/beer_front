@@ -8,9 +8,9 @@ import { API_SERVER_HOST } from "../../api/axios_intercepter";
 // import GameB from "./modal/game/GameB"; // GameB 컴포넌트를 import
 // import GameC from "./modal/game/GameC"; // GameC 컴포넌트를 import
 
-const Chat = ({ roomNo, nickname, participantList, master }) => {
+const Chat = ({ roomNo, nickname, participantList, master,selectedGame }) => {
   const [activeTab, setActiveTab] = useState("chat");
-  const [currentGame, setCurrentGame] = useState("BaskinRobbins31");
+  const [currentGame, setCurrentGame] = useState(selectedGame);
   const [isConnected, setIsConnected] = useState(false);
   const stompClientRef = useRef(null);
   const chatMessagesEndRef = useRef(null)
@@ -25,13 +25,13 @@ const Chat = ({ roomNo, nickname, participantList, master }) => {
     scrollToBottom();
   }, [messages]);
 
-  // useEffect(() => {
-  //   console.log("Selected game in Chat:", selectedGame);
-  //   if (selectedGame) {
-  //     setCurrentGame(selectedGame);
-  //     setActiveTab("game");
-  //   }
-  // }, [selectedGame]);
+  useEffect(() => {
+    console.log("Selected game in Chat:", selectedGame);
+    if (selectedGame) {
+      setCurrentGame(selectedGame);
+      setActiveTab("game");
+    }
+  }, [selectedGame]);
 
   const scrollToBottom = () => {
     chatMessagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
