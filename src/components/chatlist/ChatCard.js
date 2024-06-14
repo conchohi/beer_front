@@ -52,7 +52,7 @@ const ChatCard = ({ chat }) => {
             alt={chat.category}
           />
           {chat.roomPw && (
-            <FaLock className="absolute top-3 right-3 text-white bg-black bg-opacity-50 p-1 rounded-full" />
+            <FaLock className="absolute bottom-3 right-2 text-white text-4xl bg-black  p-1 rounded-full" />
           )}
         </div>
         <div className="flex flex-col p-3">
@@ -62,11 +62,23 @@ const ChatCard = ({ chat }) => {
             </span>
             <span className="text-gray-600 text-sm">{chat.master}</span>
           </div>
-          <p className="font-bold text-lg text-gray-800 mb-1">{chat.title}</p>
-          <div className="flex justify-between text-xs text-gray-400">
+          <p className="font-bold text-2xl text-gray-800 mb-1">{chat.title}</p>
+          <div className="flex justify-between text-base text-gray-400">
             <span>{chat.createDate}</span>
-            <span className="flex items-center gap-1">
-              <FaUser className="text-gray-500" />
+            <span
+              className={`flex items-center gap-1 ${
+                chat.currentUser === chat.maximumUser
+                  ? "text-red-500"
+                  : "text-gray-500"
+              }`}
+            >
+              <FaUser
+                className={`${
+                  chat.currentUser === chat.maximumUser
+                    ? "text-red-500"
+                    : "text-gray-500"
+                }`}
+              />
               {`${chat.currentUser}/${chat.maximumUser}`}
             </span>
           </div>

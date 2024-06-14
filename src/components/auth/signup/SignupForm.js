@@ -418,8 +418,8 @@ const SignupForm = () => {
           <div>
             <button
               type="submit"
-              className={`flex w-full justify-center rounded-md px-4 py-2 text-base tracking-widest font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-500 bg-pink-500 hover:bg-pink-600 ${
-                !isEmailVerified ? "opacity-50 cursor-not-allowed" : ""
+              className={`flex w-full justify-center rounded-md px-4 py-2 text-base tracking-widest font-semibold leading-6 text-white shadow-sm   bg-pink-500 hover:bg-pink-600 ${
+                !isEmailVerified ? " cursor-not-allowed" : ""
               }`}
               disabled={!isEmailVerified}
             >
