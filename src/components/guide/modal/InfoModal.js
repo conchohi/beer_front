@@ -30,7 +30,7 @@ function InfoModal({ isOpen, closeModal, title }) {
     case "이용시 주의 사항":
       children = (
         <div className="fixed inset-0 flex justify-center items-center">
-          <div className="bg-white p-8 rounded-lg w-[600px] h-auto relative">
+          <div className="bg-slate-200 border-2 border-yellow-400 p-8 rounded-lg w-[600px] h-auto relative">
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -103,7 +103,7 @@ function InfoModal({ isOpen, closeModal, title }) {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-30">
-      <div className="bg-slate-300 text-black p-4 rounded-lg w-[600px] h-[600px] relative">
+      <div className=" text-black p-4 rounded-lg relative">
         <button
           onClick={closeModal}
           className="absolute top-4 right-4 text-black text-4xl hover:text-gray-500"
