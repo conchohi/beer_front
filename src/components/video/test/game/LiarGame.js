@@ -3,6 +3,7 @@ import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
 
+
 const LiarGame = ({ roomNo, nickname, participantList = [] }) => {
   const [stompClient, setStompClient] = useState(null);
   const [liar, setLiar] = useState('');
