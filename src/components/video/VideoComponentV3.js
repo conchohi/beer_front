@@ -503,7 +503,7 @@ const VideoComponentV3 = () => {
             simulcast2: false,
             success: function (jsep) {
                 const videoElement = myVideoRef.current;
-                const imageElement = videoElement.nextSibling;
+                const imageElement = videoElement?.nextSibling;
                 videoElement.classList.remove('hidden');
                 imageElement.classList.add('hidden');
                 setPublish(true)
@@ -527,7 +527,7 @@ const VideoComponentV3 = () => {
     function unpublishOwnFeed() {
         setPublish(false)
         const videoElement = myVideoRef.current;
-        const imageElement = videoElement.nextSibling;
+        const imageElement = videoElement?.nextSibling;
         videoElement.classList.add('hidden');
         imageElement.classList.remove('hidden');
         var unpublish = { request: "unpublish" };
