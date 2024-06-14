@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
 
 const ShoutInSilence = ({ roomNo, nickname, participantList = [] }) => {
   const [stompClient, setStompClient] = useState(null);
@@ -13,7 +14,7 @@ const ShoutInSilence = ({ roomNo, nickname, participantList = [] }) => {
   const [timeLeft, setTimeLeft] = useState(180);
 
   useEffect(() => {
-    const socket = new SockJS(`${API_SERVER_HOST}/ws`);
+    const socket = new SockJS(WEB_SOCKET_SERVER);
     const stompClient = Stomp.over(socket);
 
     const onMessageReceived = (message) => {

@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { API_SERVER_HOST } from '../../../../api/axios_intercepter';
 
 const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
   const canvasRef = useRef(null);
@@ -20,7 +19,7 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
   const [gameSelected, setGameSelected] = useState('');
 
   useEffect(() => {
-    const socket = new SockJS(`${API_SERVER_HOST}/ws`);
+    const socket = new SockJS(WEB_SOCKET_SERVER);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       stompClient.subscribe(`/topic/game/${roomNo}/drawing`, (message) => {
