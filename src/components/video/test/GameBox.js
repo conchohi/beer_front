@@ -4,23 +4,20 @@ import CharacterGame from "./game/CharacterGame";
 import LiarGame from "./game/LiarGame";
 import CatchMindGame from "./game/CatchMindGame";
 import ShoutInSilence from "./game/ShoutInsilence";
+import BombGame from "./game/BombGame";
 
 const GameBox = ({
   currentGame,
   nickname,
   roomNo,
-  participantList,
-  master,
-  messages,
-  newMessage,
-  setNewMessage,
-  handleSendMessage
+  participantList
 }) => {
   const games = {
     "캐릭터 게임": CharacterGame,
     "라이어 게임": LiarGame,
     "캐치마인드 게임": CatchMindGame,
     "고요속의외침 게임" : ShoutInSilence,
+    "폭탄 게임" : BombGame,
     // "밸런스 게임": BalanceGame,
   };
 

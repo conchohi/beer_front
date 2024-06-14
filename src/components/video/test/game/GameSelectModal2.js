@@ -28,6 +28,11 @@ const gameGuides = [
     //     src: "/img/balancegame.png",
     //     alt: "Balance Game Guide",
     // },
+    {
+        id: "폭탄 게임",
+        src: "/img/imggame.png",
+        alt: "Catch Mind Game Guide",
+    },
 ];
 
 const GameSelectModal2 = ({ close, handleGameSelect }) => {

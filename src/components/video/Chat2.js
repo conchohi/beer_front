@@ -29,6 +29,11 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
         setIsConnected(true);
         stompClient.subscribe(`/topic/${roomNo}`, (message) => {
           if (message.body) {
+            let body = JSON.parse(message.body)
+            if(body.type === "GAME"){
+              setCurrentGame(body.content);
+              console.log(body.content)
+            }
             setMessages((prevMessages) => [
               ...prevMessages,
               JSON.parse(message.body),
@@ -88,7 +93,21 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
   };
 
   const handleGameSelect = (game) => {
-    setCurrentGame(game);
+    if (stompClientRef.current && stompClientRef.current.connected) {
+      const chatMessage = {
+        sender: username,
+        content: game,
+        type: "GAME",
+      };
+      stompClientRef.current.send(
+        `/app/chat.sendMessage/${roomNo}`,
+        {},
+        JSON.stringify(chatMessage)
+      );
+      setNewMessage("");
+    } else {
+      console.error("STOMP client is not connected");
+    }
     closeGameSelectModal();
   };
 
@@ -138,15 +157,9 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
           ) : (
             <GameBox
               currentGame={currentGame}
-              setCurrentGame={setCurrentGame}
               nickname={nickname}
               roomNo={roomNo}
               participantList={participantList}
-              master={master}
-              messages={messages}
-              newMessage={newMessage}
-              setNewMessage={setNewMessage}
-              handleSendMessage={handleSendMessage}
             />
           )}
         </div>
