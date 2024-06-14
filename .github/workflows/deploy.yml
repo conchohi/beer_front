@@ -35,8 +35,13 @@ jobs:
 
       - name: Copy build files to host directory
         run: |
+          # Use the GitHub Actions workspace directory
+          BUILD_DIR=$GITHUB_WORKSPACE/build
+          mkdir -p $BUILD_DIR
           # Copy the build files from the running container to the host directory
-          docker cp beer_front:/usr/share/nginx/html /home/test
+          docker cp beer_front:/usr/share/nginx/html $BUILD_DIR
+          # Copy the build files to the EC2 instance
+          scp -r $BUILD_DIR/html ubuntu@${{ secrets.EC2_HOST }}:/home/test/html
 
       - name: Cleanup Docker container
         run: |
