@@ -24,14 +24,18 @@ const ChatBox = ({ messages, newMessage, setNewMessage, handleSendMessage }) => 
           {messages.map((message, index) => (
             <li key={index}>
               {message.type === "JOIN" ? (
-                <span className="text-pink-500 font-bold">
+                <span className="text-blue-500 font-bold">
                   {message.sender}님이 입장하셨습니다.
                 </span>
               ) : message.type === "LEAVE" ? (
-                <span className="text-pink-500 font-bold">
+                <span className="text-red-500 font-bold">
                   {message.sender}님이 퇴장하셨습니다.
                 </span>
-              ) : (
+              ) : message.type === "GAME" ? (
+                <div className="font-bold text-lg mx-auto text-purple-600 text-center">
+                  {message.content} 시작 <br/>게임화면으로 이동하세요!
+                </div>
+              ) :(
                 <>
                   <span className="text-pink-500 font-bold">
                     {message.sender}

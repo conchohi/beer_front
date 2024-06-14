@@ -5,6 +5,7 @@ import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
 
+
 const ImageGame = ({ roomNo, nickname }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
