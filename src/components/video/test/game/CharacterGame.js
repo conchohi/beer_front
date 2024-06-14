@@ -49,7 +49,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [] }) => {
     return () => {
       if (stompClient) stompClient.disconnect();
     };
-  }, [roomNo, nickname, participantList]);
+  }, [roomNo, nickname]);
 
   const handleGuessChange = (e) => {
     setGuess(e.target.value);
