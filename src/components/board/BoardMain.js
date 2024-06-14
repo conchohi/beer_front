@@ -84,9 +84,9 @@ const BoardMain = () => {
     return (<>
         {basicModal && <BasicModalComponent message={message} callbackFunction={() => { setBasicModal(false) }} />}
         <BasicLayout>
-            <div className="w-full h-auto text-lg text-black font-sans p-6 px-80 py-30 flex flex-col ">
-                <div className="bg-gray-700 w-full h-auto rounded-2xl flex flex-col justify-between p-6 md:p-12 min-w-[500px] min-h-[600px]">
-                    <div className="bg-gray-900 w-full h-auto rounded-2xl p-5 md:p-18 text-left mb-6  md:mb-12 min-w-[250px]">
+            <div className="w-full h-auto text-lg text-black font-sans  p-6 md:px-10 lg:px-60 py-30 flex flex-col items-center">
+                <div className="bg-gray-700 w-full h-auto rounded-2xl flex flex-col justify-between p-6 md:p-8 lg:p-12 min-w-[450px] max-w-6xl">
+                    <div className="bg-gray-900 w-full h-auto rounded-2xl p-5 md:p-8  md:p-18 text-left mb-6 lg:mb-12 min-w-[300px]">
 
                         <h1 className="text-2xl font-semibold text-pink-500 mb-2 flex items-center justify-center">
                             <Astronaut4 />
@@ -126,7 +126,7 @@ const BoardMain = () => {
                         </div>
 
                         {/* 게시글 */}
-                        <div className="p-4 m-4 rounded-md shadow-md min-w-[300px]">
+                        <div className="p-4 m-4 rounded-md shadow-md min-w-[350px]">
                             {currentPosts.map((item) => (
                                 <div
                                     key={item.boardNo}
@@ -137,7 +137,7 @@ const BoardMain = () => {
                                     }}
                                 >
                                     <h2 className="text-base font-bold text-pink-500">{truncateText(item.title, 20)}</h2>
-                                    <div className="text-sm text-gray-500 mt-1 min-w-[350px]">
+                                    <div className="text-sm text-gray-500 mt-1 min-w-[250px]">
                                         <span className="mr-4">작성자: {item.writer}</span>
                                         <span className="mr-4">등록일: {item.regDate}</span>
                                         <span>조회수: {item.count}</span>
