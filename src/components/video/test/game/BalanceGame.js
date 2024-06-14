@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
 
 const BalanceGame = ({ roomNo, nickname, participantList = [] }) => {
   const [stompClient, setStompClient] = useState(null);
@@ -13,7 +14,7 @@ const BalanceGame = ({ roomNo, nickname, participantList = [] }) => {
   const [timeLeft, setTimeLeft] = useState(180); // 3분 타이머 설정
 
   useEffect(() => {
-    const socket = new SockJS('http://localhost:8080/ws');
+    const socket = new SockJS(WEB_SOCKET_SERVER);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       stompClient.subscribe(`/topic/game/${roomNo}/correct`, (message) => {

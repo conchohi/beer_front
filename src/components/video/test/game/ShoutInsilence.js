@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { API_SERVER_HOST } from '../../../../api/axios_intercepter';
+import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
 
 const ShoutInSilence = ({ roomNo, nickname, participantList = [] }) => {
   const [stompClient, setStompClient] = useState(null);
@@ -15,7 +15,7 @@ const ShoutInSilence = ({ roomNo, nickname, participantList = [] }) => {
   const [winner, setWinner] = useState(null); // 승리자를 저장할 상태 추가
 
   useEffect(() => {
-    const socket = new SockJS(`${API_SERVER_HOST}/ws`);
+    const socket = new SockJS(WEB_SOCKET_SERVER);
     const stompClient = Stomp.over(socket);
 
     const onMessageReceived = (message) => {

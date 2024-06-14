@@ -57,7 +57,7 @@ const AddPostModalComponent = ({ isOpen, onClose, refresh,setMessage, setBasicMo
                 placeholder="내용"
                 value={newPost.content}
                 onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
-                className="mb-4 p-2 border rounded w-full bg-gray-700 h-52"
+                className="mb-4 p-2 border rounded w-full bg-gray-700 h-52 text-white"
                 onMouseDown={handleMouseDown}
 
             />

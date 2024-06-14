@@ -43,15 +43,16 @@ const gameGuides = [
         src: "/img/baskingame.png",
         alt: "Balance Game Guide",
     },
+
 ];
 
 const GameSelectModal2 = ({ close, handleGameSelect }) => {
-    const startGame = (e) => {
-        // 게임 이름
-        let game = e.target.id;
-        handleGameSelect(game);
-        close(); // 모달 닫기
-    };
+  const startGame = (e) => {
+    // 게임 이름
+    let game = e.target.id;
+    handleGameSelect(game);
+    close(); // 모달 닫기
+  };
 
     return (
         <Draggable>
@@ -77,6 +78,7 @@ const GameSelectModal2 = ({ close, handleGameSelect }) => {
             </div>
         </Draggable>
     );
+
 };
 
 export default GameSelectModal2;

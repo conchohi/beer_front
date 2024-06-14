@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
 
 const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
   const canvasRef = useRef(null);
@@ -19,7 +20,7 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
   const [gameSelected, setGameSelected] = useState('');
 
   useEffect(() => {
-    const socket = new SockJS('http://localhost:8080/ws');
+    const socket = new SockJS(WEB_SOCKET_SERVER);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       stompClient.subscribe(`/topic/game/${roomNo}/drawing`, (message) => {
