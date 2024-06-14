@@ -5,8 +5,8 @@ const ConfirmDeleteModal = ({ onClose, onConfirm }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center ">
       <Draggable>
-        <div className="bg-black p-8 rounded-lg shadow-lg text-center border-4 border-pink-500 cursor-move">
-          <h2 className="text-2xl mb-4 text-white">친구를 삭제하시겠습니까?</h2>
+        <div className="bg-slate-200 p-6 rounded-lg shadow-lg text-center border-2 border-pink-500 cursor-move">
+          <h2 className="text-2xl mb-4 text-gray-700">친구를 삭제하시겠습니까?</h2>
           <div className="flex justify-center gap-4">
             <button
               onClick={onConfirm}
@@ -16,7 +16,7 @@ const ConfirmDeleteModal = ({ onClose, onConfirm }) => {
             </button>
             <button
               onClick={onClose}
-              className="bg-gray-400 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-300 ease-in-out"
+              className="bg-gray-400 text-gray-700 px-4 py-2 rounded hover:bg-gray-500 transition-colors duration-300 ease-in-out"
             >
               아니오
             </button>

@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import Item from "./HostFollowingGamesItem";
-import { FaUserTimes } from "react-icons/fa";
 import privateApi from "../../../api/axios_intercepter";
-import Astronaut5 from "../../animation/Astronaut5";
-import Astronaut4 from "../../animation/Astronaut4";
 import Astronaut2 from "../../animation/Astronaut2";
 
 const HostFollowingGames = () => {
@@ -68,11 +65,11 @@ const HostFollowingGames = () => {
           ))}
         </div>
       ) : (
-        <div className="w-full text-black flex justify-center flex-col">
+        <div className="w-full text-gray-700 flex justify-center flex-col">
           
   
             <Astronaut2 />
-            <p className="text-3xl font-thin">참여 중인 친구가 없습니다.</p>
+            <p className="text-xl font-thin text-center">참여 중인 친구가 없습니다.</p>
    
         </div>
       )}

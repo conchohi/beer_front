@@ -29,7 +29,7 @@ const HostFollowingGamesItem = (props) => {
   };
 
   return (
-    <div className="inline-block border-none m-8 text-black">
+    <div className="inline-block border-none m-4 text-gray-700 ">
       <div className="flex items-center gap-4">
         <FriendImageDisplay 
           fileName={props.host.userImageUrl} 
@@ -44,7 +44,7 @@ const HostFollowingGamesItem = (props) => {
       <div className="mt-4">
         <img
           className="w-60 rounded-2xl cursor-pointer"
-          src={`/img/chatlist/${props.category}.png`}
+          src={`/img/chatlist/${props.category}.PNG`}
           alt="roomImage"
           onClick={navigateToGameRoom}
         />
@@ -52,7 +52,7 @@ const HostFollowingGamesItem = (props) => {
       <div className="text-start text-xl w-full mt-4 pl-4 cursor-pointer text-ellipsis overflow-hidden">
         <p className="line-clamp-2">방 이름 : {truncateTitle(props.roomTitle)}</p>
       </div>
-      <div className="text-right text-2xl mt-2 cursor-pointer">
+      <div className="text-right text-lg mt-2 cursor-pointer">
         <p onClick={navigateToGameRoom}>
           {props.headcount} / {props.maximumUser}
         </p>

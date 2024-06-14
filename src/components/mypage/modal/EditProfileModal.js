@@ -65,9 +65,6 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
         const updatedData = response.data;
         // Create a unique URL for the updated image
         localStorage.setItem('nickname', nickname);
-        if (imageFile) {
-          updatedData.profileImage += `?timestamp=${new Date().getTime()}`;
-        }
         onUpdateUserData(updatedData); // Immediately reflect changes in ProfilePageInfo
         onRequestClose();
       } else {
@@ -99,7 +96,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
       overlayClassName="fixed inset-0 "
     >
       <Draggable>
-        <div className="bg-slate-200 p-8 rounded-lg border-2 border-pink-500 w-[600px] mx-auto text-white cursor-move">
+        <div className="bg-slate-200 p-4 rounded-lg border-2 border-pink-500 w-[600px] mx-auto text-white cursor-move">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl text-pink-500 text-center">정보 수정</h2>
             <button onClick={onRequestClose} className="text-pink-500 text-2xl">&times;</button>

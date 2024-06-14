@@ -65,7 +65,7 @@ const FriendRequestsModal = ({ show, closeModal, onFriendAccepted, setClickNickn
         }`}
       >
         <div
-          className="bg-slate-200 text-gray-600 rounded-lg p-8 w-full max-w-md mx-auto"
+          className="bg-slate-200 text-gray-600 rounded-lg border-2 border-pink-600 p-6 w-full max-w-md mx-auto"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between items-center mb-4">

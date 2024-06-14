@@ -66,7 +66,7 @@ const FollowingList = () => {
             </button>
           </div>
         </div>
-        {friends.length > 0 ? <div className="max-h-40rem w-full mt-4 overflow-auto scrollbar-hide border rounded-2xl h-full p-2 bg-gray-200">
+        {friends.length > 0 ? <div className="max-h-[390px] overflow-y-scroll scrollbar-hide w-full mt-4 overflow-auto  rounded-2xl h-full p-2 bg-white">
           {friends.map(friend => (
             <FollowingListItem
               key={friend.userId}
