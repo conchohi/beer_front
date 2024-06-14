@@ -51,9 +51,6 @@ const ChatCard = ({ chat }) => {
             src={`/img/chatlist/${chat.category}.PNG`}
             alt={chat.category}
           />
-          {chat.roomPw && (
-            <FaLock className="absolute bottom-3 right-2 text-white text-4xl bg-black  p-1 rounded-full" />
-          )}
         </div>
         <div className="flex flex-col p-3">
           <div className="flex justify-between items-center mb-2">
@@ -62,7 +59,9 @@ const ChatCard = ({ chat }) => {
             </span>
             <span className="text-gray-600 text-sm">{chat.master}</span>
           </div>
-          <p className="font-bold text-2xl text-gray-800 mb-1">{chat.title}</p>
+          <p className="font-bold text-2xl text-gray-800 mb-1 flex justify-between ">{chat.title} {chat.roomPw && (
+            <FaLock className="text-gray-700" />
+          )}</p>
           <div className="flex justify-between text-base text-gray-400">
             <span>{chat.createDate}</span>
             <span

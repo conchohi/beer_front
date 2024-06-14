@@ -64,7 +64,7 @@ const BoardMain = () => {
             return item.title.toLowerCase().includes(searchTerm.toLowerCase());
         } else if (searchCategory === 'content') {
             return item.content.toLowerCase().includes(searchTerm.toLowerCase());
-        } else if (searchCategory === 'writer') {
+        } else if (searchCategory === 'author') {
             return item.writer.toLowerCase().includes(searchTerm.toLowerCase());
         }
         return false;
@@ -97,7 +97,7 @@ const BoardMain = () => {
                         <div className="flex justify-center items-center mb-2 px-6 py-2 rounded-md shadow-md font-semibold ">
                             <div className="flex space-x-4 items-center justify-center w-2/3">
                                 <select
-                                    className="border rounded-md bg-gray-300 text-gray-700 drop-shadow-md "
+                                    className="border rounded-md bg-gray-300 text-gray-700 drop-shadow-md ps-3 pe-8 py-2"
                                     value={searchCategory}
                                     onChange={(e) => setSearchCategory(e.target.value)}
                                 >
