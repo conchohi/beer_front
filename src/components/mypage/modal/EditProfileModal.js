@@ -5,7 +5,12 @@ import ChangeNicknameModal from "./ChangeNicknameModal"; // New component for ch
 import ImageEditDisplay from "../image/ImageEditDisplay";
 import privateApi from "../../../api/axios_intercepter";
 
-const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }) => {
+const EditProfileModal = ({
+  isOpen,
+  onRequestClose,
+  userData,
+  onUpdateUserData,
+}) => {
   const [imageFile, setImageFile] = useState(null); // New state for the file
   const [imageUrl, setImageUrl] = useState(userData?.profileImage || ""); // New state for the image URL
   const [nickname, setNickname] = useState(userData?.nickname || "");
@@ -28,7 +33,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
       setAge(userData.age);
       setIntro(userData.intro);
       setGender(userData.gender);
-      setImageUrl(userData.profileImage); 
+      setImageUrl(userData.profileImage);
     }
   }, [userData]);
 
@@ -64,7 +69,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
       if (response.status === 200) {
         const updatedData = response.data;
         // Create a unique URL for the updated image
-        localStorage.setItem('nickname', nickname);
+        localStorage.setItem("nickname", nickname);
         onUpdateUserData(updatedData); // Immediately reflect changes in ProfilePageInfo
         onRequestClose();
       } else {
@@ -99,16 +104,19 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
         <div className="bg-slate-200 p-4 rounded-lg border-2 border-pink-500 w-[600px] mx-auto text-white cursor-move">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl text-pink-500 text-center">정보 수정</h2>
-            <button onClick={onRequestClose} className="text-pink-500 text-2xl">&times;</button>
+            <button onClick={onRequestClose} className="text-pink-500 text-2xl">
+              &times;
+            </button>
           </div>
           <div className="flex">
             <div className="w-2/5 ">
               <div className=" flex flex-col items-center">
-                <label className="block text-gray-600 text-sm font-bold">
-                  프로필 이미지
-                </label>
                 <label htmlFor="file-input">
-                  <ImageEditDisplay fileName={imageUrl} /> {/* Use ImageDisplay component */}
+                  <ImageEditDisplay fileName={imageUrl} />{" "}
+                  {/* Use ImageDisplay component */}
+                </label>
+                <label className="block pt-3 text-gray-600 text-base font-bold">
+                  프로필 이미지
                 </label>
                 <input
                   id="file-input"
@@ -156,7 +164,7 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                   name="mbti"
                   value={mbti}
                   onChange={(e) => setMbti(e.target.value)}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 py-2 px-3 text-pink-500"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
                 >
                   <option value="">선택안함</option>
                   <option value="INTJ">INTJ</option>
@@ -190,7 +198,8 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
                     onMouseDown={handleMouseDown}
                   />
                 </div>
-                <div className="w-1/2 pl-2">
+
+                <div className="w-1/2 pl-2 pt-1">
                   <label className="block text-gray-600 text-sm font-bold mb-2">
                     성별
                   </label>
@@ -220,11 +229,13 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
               </div>
               <div className="mb-4">
                 <label className="block text-gray-600 text-sm font-bold mb-2">
-                  한줄소개
+                  소개글
                 </label>
                 <textarea
                   value={intro}
                   onChange={(e) => setIntro(e.target.value)}
+                  maxLength={100}
+                  placeholder="텍스트 제한 100글자"
                   className="shadow appearance-none border w-full py-2 px-3 rounded-lg resize-none text-black leading-tight focus:outline-none focus:shadow-outline"
                   onMouseDown={handleMouseDown}
                 />
@@ -234,17 +245,17 @@ const EditProfileModal = ({ isOpen, onRequestClose, userData, onUpdateUserData }
           <div className="flex items-center justify-between">
             <button
               type="button"
-              className="bg-pink-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-pink-700"
-              onClick={handleSave}
-            >
-              저장
-            </button>
-            <button
-              type="button"
               className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               onClick={onRequestClose}
             >
               취소
+            </button>
+            <button
+              type="button"
+              className="bg-pink-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-pink-700"
+              onClick={handleSave}
+            >
+              저장
             </button>
           </div>
         </div>

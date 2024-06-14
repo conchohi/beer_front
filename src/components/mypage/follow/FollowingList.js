@@ -19,8 +19,8 @@ const FollowingList = () => {
   }, [refresh]);
 
   const handleFriendRefresh = () => {
-    setRefresh(!refresh)
-  }
+    setRefresh(!refresh);
+  };
 
   const fetchFriends = async () => {
     try {
@@ -28,7 +28,7 @@ const FollowingList = () => {
       setFriends(response.data);
     } catch (error) {
       console.error("Error fetching friends:", error);
-    } 
+    }
   };
 
   const handleDetail = () => {
@@ -36,19 +36,17 @@ const FollowingList = () => {
     setClickNickname(null);
   };
 
-  useEffect(()=>{
-    if(clickNickname){
+  useEffect(() => {
+    if (clickNickname) {
       setIsDetail(true);
     }
-  },[clickNickname])
-
-
+  }, [clickNickname]);
 
   return (
     <>
       <div className="flex flex-col text-black h-full">
         <div className="flex items-center justify-between h-1/8 p-2 pb-0">
-          <div className="text-pink-500 text-2xl ">
+          <div className="text-pink-500 border-b-4 border-gray-300 text-2xl ">
             <b>친구 목록</b>
           </div>
           <div className="flex space-x-4">
@@ -66,23 +64,25 @@ const FollowingList = () => {
             </button>
           </div>
         </div>
-        {friends.length > 0 ? <div className="max-h-[390px] overflow-y-scroll scrollbar-hide w-full mt-4 overflow-auto  rounded-2xl h-full p-2 bg-white">
-          {friends.map(friend => (
-            <FollowingListItem
-              key={friend.userId}
-              friend={friend}
-              onFriendDeleted={handleFriendRefresh}
-              setClickNickname={setClickNickname}
-            />
-          ))}
-        </div> :
+        {friends.length > 0 ? (
+          <div className="max-h-[390px] overflow-y-scroll scrollbar-hide w-full mt-4 overflow-auto  rounded-2xl h-full p-2 bg-white">
+            {friends.map((friend) => (
+              <FollowingListItem
+                key={friend.userId}
+                friend={friend}
+                onFriendDeleted={handleFriendRefresh}
+                setClickNickname={setClickNickname}
+              />
+            ))}
+          </div>
+        ) : (
           <div className="text-center flex flex-col items-center justify-center h-full mb-10">
-            <FaUsersSlash className="text-8xl mx-auto" />
+            <FaUsersSlash className="text-7xl mx-auto" />
             <div className="mt-12">
-              <p className="text-3xl font-thin">등록한 친구가 없습니다.</p>
+              <p className="text-xl font-thin">등록한 친구가 없습니다.</p>
             </div>
-          </div>}
-
+          </div>
+        )}
       </div>
       {friendRequestsOpen && (
         <FriendRequestsModal
@@ -102,7 +102,6 @@ const FollowingList = () => {
       {isDetail && <UserDetail nickname={clickNickname} close={handleDetail} />}
     </>
   );
-
 };
 
 export default FollowingList;
