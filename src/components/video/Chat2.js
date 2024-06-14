@@ -29,11 +29,11 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
         setIsConnected(true);
         stompClient.subscribe(`/topic/${roomNo}`, (message) => {
           if (message.body) {
-            let body = JSON.parse(message.body)
-            if(body.type === "GAME"){
+            let body = JSON.parse(message.body);
+            if (body.type === "GAME") {
               setCurrentGame(body.content);
-              setActiveTab("game")
-              console.log(body.content)
+              setActiveTab("game");
+              console.log(body.content);
             }
             setMessages((prevMessages) => [
               ...prevMessages,
@@ -161,12 +161,16 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
               nickname={nickname}
               roomNo={roomNo}
               participantList={participantList}
+              master={master}
             />
           )}
         </div>
       )}
       {isGameSelectModalOpen && (
-        <GameSelectModal2 close={closeGameSelectModal} handleGameSelect={handleGameSelect} />
+        <GameSelectModal2
+          close={closeGameSelectModal}
+          handleGameSelect={handleGameSelect}
+        />
       )}
     </div>
   );
