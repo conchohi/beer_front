@@ -68,6 +68,10 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
   }, [roomNo, username]);
 
   const handleSendMessage = () => {
+    //빈 메시지 전송 불가
+    if(!newMessage){
+      return;
+    }
     if (stompClientRef.current && stompClientRef.current.connected) {
       const chatMessage = {
         sender: username,
