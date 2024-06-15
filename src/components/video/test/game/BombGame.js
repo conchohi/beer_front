@@ -67,9 +67,9 @@ const BombGame = ({ roomNo, nickname, participantList = [] }) => {
           </div>
         </div>
       )}
-      <div className="mt-4 relative mx-auto">
-        <FaBomb className='w-28 h-28'/>
-        <span className='absolute right-1/2 top-1/2 translate-x-1/2 translate-y-1/2 text-white'>{bomb}</span>
+      <div className="mt-4 relative ">
+        <FaBomb className='w-40 h-40'/>
+        <span className='absolute right-[60%] top-[40%] translate-x-1/2 translate-y-1/2 text-white text-3xl font-bold'>{bomb}</span>
       </div>
       <div className="game-time mt-4">
         게임 시간: {gameTimeLeft > 0 ? "?" : gameTimeLeft} 초
