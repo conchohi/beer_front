@@ -29,7 +29,7 @@ const GameBox = ({
 
   return (
     <div className="game-box flex bg-slate-100 flex-col shadow-lg p-5 h-[700px]">
-      <div className="flex justify-center h-[300px]">
+      <div className="flex justify-center h-full">
         {GameComponent && (
           <GameComponent
             roomNo={roomNo}
