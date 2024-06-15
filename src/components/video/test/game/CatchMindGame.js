@@ -58,6 +58,10 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
         setGameSelected(gameMessage.content);
       });
 
+      stompClient.subscribe(`/topic/game/${roomNo}/erase`, (message) => {
+        clearCanvas();
+      });
+
       stompClient.send(`/app/start/${roomNo}`, {}, JSON.stringify({ player: nickname, players: participantList.map(p => p.nickname) }));
     });
 
@@ -146,9 +150,9 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
   };
 
   const clearAll = () => {
-    clearCanvas();
     if (stompClient && stompClient.connected) {
-      stompClient.send(`/app/draw/${roomNo}`, {}, JSON.stringify([]));
+      stompClient.send(`/app/erase/${roomNo}`, {}, {});
+      setDrawingData([]);
     }
   };
 
@@ -177,22 +181,26 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
           {currentTurn === nickname && <div className="topic text-red-500 font-bold">주제: {topic}</div>}
           <canvas
             ref={canvasRef}
-            width="640"
-            height="400"
-            className="border-2 border-black"
+            width="320"
+            height="320"
+            className="border-2 border-black bg-white"
             onMouseDown={startDrawing}
             onMouseMove={draw}
             onMouseUp={endDrawing}
             onMouseLeave={endDrawing}
           ></canvas>
           {currentTurn === nickname && (
-            <div className="controls mt-4">
-              <label className="mr-2">색상:</label>
-              <input type="color" value={color} onChange={handleColorChange} className="border p-2 rounded mr-4" />
-              <label className="mr-2">굵기:</label>
-              <input type="number" value={lineWidth} min="1" max="20" onChange={handleLineWidthChange} className="border p-2 rounded mr-4" />
-              <button onClick={toggleEraser} className="ml-2 p-2 bg-red-500 text-white rounded">{isErasing ? '펜 사용' : '지우개 사용'}</button>
-              <button onClick={clearAll} className="ml-2 p-2 bg-gray-500 text-white rounded">전체 지우기</button>
+            <div className="controls mt-4 flex flex-col items-center w-full justify-center">
+              <div className='mb-2'>
+                <label className="mr-2">색상:</label>
+                <input type="color" value={color} onChange={handleColorChange} className="border p-2 rounded mr-4" />
+                <label className="mr-2">굵기:</label>
+                <input type="number" value={lineWidth} min="1" max="20" onChange={handleLineWidthChange} className="border p-2 rounded mr-4" />
+              </div>
+              <div>
+                <button onClick={toggleEraser} className="ml-2 p-2 bg-red-500 text-white rounded">{isErasing ? '펜 사용' : '지우개 사용'}</button>
+                <button onClick={clearAll} className="ml-2 p-2 bg-gray-500 text-white rounded">전체 지우기</button>
+              </div>
             </div>
           )}
           {currentTurn !== nickname && (
