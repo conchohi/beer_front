@@ -126,7 +126,7 @@ const LoginMain = () => {
       <BasicLayout>
         <div className="flex flex-col md:flex-row justify-center items-center min-h-screen p-4 rounded-x">
         <div className="flex flex-col md:flex-row w-full max-w-5xl bg-gray-200 rounded-xl shadow-lg overflow-hidden">
-        <div className="flex flex-1 justify-center items-center bg-white p-6 md:p-1">
+        <div className="flex-none justify-center items-center bg-white p-6 md:p-1 mb-3 md:mb-0 hidden lg:flex" >
             <MovingCat />
           </div>
           <div className="flex flex-1 flex-col justify-center items-center p-6 md:p-12 bg-white">
