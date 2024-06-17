@@ -29,10 +29,10 @@ const EditProfileModal = ({
     if (userData) {
       setNickname(userData.nickname);
       setEmail(userData.email);
-      setMbti(userData.mbti);
-      setAge(userData.age);
-      setIntro(userData.intro);
-      setGender(userData.gender);
+      setMbti(userData.mbti || "");
+      setAge(userData.age || 0);
+      setIntro(userData.intro  || "");
+      setGender(userData.gender  || "");
       setImageUrl(userData.profileImage);
     }
   }, [userData]);

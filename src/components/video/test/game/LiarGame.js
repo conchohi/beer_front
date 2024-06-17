@@ -9,7 +9,7 @@ const LiarGame = ({ roomNo, nickname, participantList = [] }) => {
   const [liar, setLiar] = useState('');
   const [subject, setSubject] = useState('');
   const [topic, setTopic] = useState('');
-  const [gameTimeLeft, setGameTimeLeft] = useState(10); // 5분 (300초)
+  const [gameTimeLeft, setGameTimeLeft] = useState(300); // 5분 (300초)
   const [vote, setVote] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
   const [isVotingTime, setIsVotingTime] = useState(false);
@@ -22,6 +22,7 @@ const LiarGame = ({ roomNo, nickname, participantList = [] }) => {
       stompClient.subscribe(`/topic/game/${roomNo}`, (message) => {
         const gameState = JSON.parse(message.body);
         setLiar(gameState.liar); // 처음 설정된 후 변경되지 않도록 함
+        setGameTimeLeft(gameState.timeLeft);
         if (gameState.message){
           setMessage(gameState.message);
           setTimeout(() => {
@@ -67,7 +68,7 @@ const LiarGame = ({ roomNo, nickname, participantList = [] }) => {
   useEffect(() => {
     if (gameTimeLeft === 0 && !isVotingTime && !isGameOver) {
       setIsVotingTime(true);
-      setGameTimeLeft(10); // 투표 시간 30초 설정
+      setGameTimeLeft(30); // 투표 시간 30초 설정
     } else if (gameTimeLeft === 0 && isVotingTime) {
       setIsGameOver(true);
     }

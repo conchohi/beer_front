@@ -4,7 +4,7 @@ import { Stomp } from "@stomp/stompjs";
 import ChatBox from "./test/ChatBox";
 import GameBox from "./test/GameBox";
 import GameSelectModal2 from "./test/game/GameSelectModal2";
-import { API_SERVER_HOST } from "../../api/axios_intercepter";
+import { WEB_SOCKET_SERVER } from "../../api/websocketApi";
 import ChatBox2 from "./test/ChatBox2";
 
 const Chat2 = ({
@@ -28,7 +28,7 @@ const Chat2 = ({
   const username = nickname;
 
   useEffect(() => {
-    const socket = new SockJS(`${API_SERVER_HOST}/ws`);
+    const socket = new SockJS(`${WEB_SOCKET_SERVER}`);
     const stompClient = Stomp.over(socket);
     stompClientRef.current = stompClient;
 
@@ -78,6 +78,10 @@ const Chat2 = ({
   }, [roomNo, username]);
 
   const handleSendMessage = () => {
+    //빈 메시지 전송 불가
+    if(!newMessage){
+      return;
+    }
     if (stompClientRef.current && stompClientRef.current.connected) {
       const chatMessage = {
         sender: username,
@@ -104,6 +108,22 @@ const Chat2 = ({
   };
 
   const handleGameSelect = (game) => {
+    const nickname = localStorage.getItem('nickname')
+    if(nickname !== master){
+      if (stompClientRef.current && stompClientRef.current.connected) {
+        const chatMessage = {
+          sender: username,
+          content: `${game}을 하고 싶어요!`,
+          type: "CHAT",
+        };
+        stompClientRef.current.send(
+          `/app/chat.sendMessage/${roomNo}`,
+          {},
+          JSON.stringify(chatMessage)
+        );
+        return;
+      }
+    }
     if (stompClientRef.current && stompClientRef.current.connected) {
       const chatMessage = {
         sender: username,
@@ -115,11 +135,9 @@ const Chat2 = ({
         {},
         JSON.stringify(chatMessage)
       );
-      setNewMessage("");
     } else {
       console.error("STOMP client is not connected");
     }
-    closeGameSelectModal();
   };
 
   return (

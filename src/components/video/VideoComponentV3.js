@@ -794,8 +794,7 @@ const VideoComponentV3 = () => {
                         currentTurn={currentTurn}
                         setCurrentTurn={setCurrentTurn}
                     />
-                    <div className="w-full flex items-center px-4 justify-between text-center gap-5 font-bold">
-                        <button className="py-3 w-28 bg-yellow-400 text-white rounded-md" onClick={clickGame}>게임 선택</button>
+                    <div className="w-full flex items-center px-4 justify-end text-center gap-5 font-bold">
                         <button className="py-3 w-28 bg-white rounded-md" onClick={clickDestoryRoom}>방 폭파</button>
                         <button className="py-3 w-28 bg-[#BE2222] text-white rounded-md" onClick={clickExitRoom}> 나가기</button>
                     </div>
