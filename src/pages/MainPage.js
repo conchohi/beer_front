@@ -90,8 +90,8 @@ function MainPage() {
       <div ref={outerDivRef} className="outer bg-cover bg-center">
         <div className="inner">
           <MainImage clickDown={clickDown} />
-          <Mars />
-          <Saturn />
+          {/* <Mars /> */}
+          {/* <Saturn /> */}
         </div>
         <div className="inner">
           <Introduction />

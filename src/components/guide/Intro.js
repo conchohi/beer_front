@@ -12,26 +12,46 @@ const Intro = () => {
 
   const gameGuides = [
     {
-        id: "이미지 게임",
-        src: "/img/imggame.png",
-        alt: "Image Game Guide",
+      id: "인물퀴즈",
+      src: "/img/guessquiz.png",
+      alt: "Inmulquiz",
     },
     {
-        id: "고요 속의 외침",
-        src: "/img/whaechim.png",
-        alt: "Shout In Silence Guide",
+      id: "몸으로말해요",
+      src: "/img/bodylanguage.png",
+      alt: "Momuromalhaeyo",
     },
     {
-        id: "밸런스 게임",
-        src: "/img/balancegame.png",
-        alt: "Balance Game Guide",
+      id: "라이어게임",
+      src: "/img/liargame.png",
+      alt: "Liargame",
     },
     {
-        id: "라이어 게임",
-        src: "/img/liargame.png",
-        alt: "Liar Game Guide",
+      id: "캐치마인드",
+      src: "/img/catchmind.png",
+      alt: "CatchMindGame",
     },
-];
+    {
+      id: "밸런스게임",
+      src: "/img/balancegame.png",
+      alt: "BalanceGame",
+    },
+    {
+      id: "폭탄돌리기",
+      src: "/img/bomb.png",
+      alt: "RandomBomb",
+    },
+    {
+      id: "훈민정음",
+      src: "/img/hunmin.png",
+      alt: "Hunminjungum",
+    },
+    {
+      id: "베스킨라빈스",
+      src: "/img/Baskin.png",
+      alt: "Baskinrobbins",
+    },
+  ];
 
   return (
     <div className="font-bold text-gray-200 flex flex-col pt-16 break-keep relative min-h-screen">
@@ -51,16 +71,15 @@ const Intro = () => {
         </h2>
       </div>
 
-      <div className="flex justify-center items-center gap-8 flex-wrap">
+      <div className="flex justify-center items-center gap-8 flex-wrap pb-20">
         {gameGuides.map((guide) => (
           <div
             key={guide.id}
-            className="flex flex-col justify-center items-center bg-violet-600 bg-opacity-30 p-6 rounded-xl shadow-lg w-64 h-auto cursor-pointer transform transition duration-300 hover:scale-105"
+            className="flex flex-col justify-center items-center bg-white/20 bg-opacity-30 p-6 rounded-xl shadow-lg w-80 h-auto cursor-pointer transform transition duration-300 hover:scale-105"
             onClick={() => openModal(guide.id)}
           >
-            <div className="text-2xl font-bold text-white mb-4">{guide.id}</div>
             <img
-              className="rounded-lg shadow-lg w-40 h-auto object-cover"
+              className="rounded-lg shadow-lg w-11/12 h-auto object-cover"
               src={guide.src}
               alt={guide.alt}
             />

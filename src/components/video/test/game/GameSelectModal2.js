@@ -1,6 +1,5 @@
 import React from "react";
 import { FaWindowClose } from "react-icons/fa";
-import ModalLayout from "../../../../layouts/ModalLayout";
 
 const gameGuides = [
     {
@@ -34,7 +33,7 @@ const gameGuides = [
         alt: "RandomBomb",
     },
     {
-        id: "이미지",
+        id: "초성",
         src: "/img/hunmin.png",
         alt: "Hunminjungum",
     },
@@ -56,7 +55,6 @@ const GameSelectModal2 = ({ close, handleGameSelect }) => {
   };
 
     return (
-        <ModalLayout>
             <div className="w-lvw h-lvh z-20 fixed top-0 left-0">
                 <div className="absolute flex flex-col bg-[#222222] top-1/2 left-1/2 w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-xl shadow p-3">
                     <div className="relative">
@@ -77,7 +75,6 @@ const GameSelectModal2 = ({ close, handleGameSelect }) => {
                     </div>
                 </div>
             </div>
-        </ModalLayout>
     );
 
 };
