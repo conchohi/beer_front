@@ -1,4 +1,4 @@
-import VideoComponent from "../components/video/VideoComponentV3";
+import VideoComponent from "../components/video/VideoComponent";
 
 
 const VideoPage = () => {
