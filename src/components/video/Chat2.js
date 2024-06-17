@@ -5,7 +5,6 @@ import ChatBox from "./test/ChatBox";
 import GameBox from "./test/GameBox";
 import GameSelectModal2 from "./test/game/GameSelectModal2";
 import { WEB_SOCKET_SERVER } from "../../api/websocketApi";
-import ChatBox2 from "./test/ChatBox2";
 
 const Chat2 = ({
   roomNo,
@@ -113,7 +112,7 @@ const Chat2 = ({
       if (stompClientRef.current && stompClientRef.current.connected) {
         const chatMessage = {
           sender: username,
-          content: `${game}을 하고 싶어요!`,
+          content: `${game} 게임을 하고 싶어요!`,
           type: "CHAT",
         };
         stompClientRef.current.send(
