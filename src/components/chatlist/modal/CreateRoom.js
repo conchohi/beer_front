@@ -114,7 +114,7 @@ function CreateRoom({ close }) {
             <h2 className="text-amber-400 text-2xl mb-4 font-semibold ">방 만들기</h2>
             <div className="mb-4">
               <label className="block text-gray-300 font-semibold">방 제목</label> 
-              <input type="text" placeholder="방 제목을 입력하세요" value={title} onMouseDown={handleMouseDown} onChange={(e) => { setTitle(e.target.value) }}
+              <input type="text" placeholder="방 제목을 입력하세요" value={title} maxLength={13} onMouseDown={handleMouseDown} onChange={(e) => { setTitle(e.target.value) }}
                 className="w-full p-2 mt-2 rounded-lg text-gray-800 focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400" />
             </div>
             <div className="mb-4">
@@ -164,6 +164,7 @@ function CreateRoom({ close }) {
                 value={roomPw} onChange={(e) => { setRoomPw(e.target.value) }}
                 className="w-full p-3 mt-2 rounded-lg text-black focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400"
                 onMouseDown={handleMouseDown}
+                maxLength={10}
               />
             </div>
           </div>
