@@ -4,17 +4,13 @@ import { Stomp } from "@stomp/stompjs";
 import BaskinRobbins31 from "./modal/game/BaskinRobbins31";
 import BalanceGame from "./modal/game/BalanceGame";
 import { API_SERVER_HOST } from "../../api/axios_intercepter";
-// import GameA from "./modal/game/GameA"; // GameA 컴포넌트를 import
-// import GameB from "./modal/game/GameB"; // GameB 컴포넌트를 import
-// import GameC from "./modal/game/GameC"; // GameC 컴포넌트를 import
 
-const Chat = ({ roomNo, nickname, participantList, master,selectedGame }) => {
+const Chat = ({ roomNo, nickname, participantList, master, selectedGame }) => {
   const [activeTab, setActiveTab] = useState("chat");
   const [currentGame, setCurrentGame] = useState(selectedGame);
   const [isConnected, setIsConnected] = useState(false);
   const stompClientRef = useRef(null);
-  const chatMessagesEndRef = useRef(null)
-
+  const chatMessagesEndRef = useRef(null);
 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -25,11 +21,11 @@ const Chat = ({ roomNo, nickname, participantList, master,selectedGame }) => {
     scrollToBottom();
   }, [messages]);
 
+  // selectedGame이 변경될 때마다 handleGameSelection 호출
   useEffect(() => {
     console.log("Selected game in Chat:", selectedGame);
     if (selectedGame) {
-      setCurrentGame(selectedGame);
-      setActiveTab("game");
+      handleGameSelection(selectedGame);
     }
   }, [selectedGame]);
 
@@ -49,10 +45,18 @@ const Chat = ({ roomNo, nickname, participantList, master,selectedGame }) => {
         setIsConnected(true);
         stompClient.subscribe(`/topic/${roomNo}`, (message) => {
           if (message.body) {
+            const receivedMessage = JSON.parse(message.body);
+            console.log("Received message:", receivedMessage);
             setMessages((prevMessages) => [
               ...prevMessages,
-              JSON.parse(message.body),
+              receivedMessage,
             ]);
+
+            if (receivedMessage.type === "GAME_SELECTION") {
+              console.log("Game selection received:", receivedMessage.selectedGame);
+              setCurrentGame(receivedMessage.selectedGame);
+              setActiveTab("game");
+            }
           }
         });
 
@@ -81,7 +85,6 @@ const Chat = ({ roomNo, nickname, participantList, master,selectedGame }) => {
     };
   }, [roomNo, username]);
 
-
   const handleSendMessage = () => {
     if (stompClientRef.current && stompClientRef.current.connected) {
       const chatMessage = {
@@ -95,6 +98,28 @@ const Chat = ({ roomNo, nickname, participantList, master,selectedGame }) => {
         JSON.stringify(chatMessage)
       );
       setNewMessage("");
+    } else {
+      console.error("STOMP client is not connected");
+    }
+  };
+
+  const handleGameSelection = (selectedGame) => {
+    console.log("Sending game selection:", selectedGame);
+    setCurrentGame(selectedGame);
+    setActiveTab("game");
+
+    if (stompClientRef.current && stompClientRef.current.connected) {
+      const gameSelectionMessage = {
+        sender: username,
+        type: "GAME_SELECTION",
+        selectedGame: selectedGame,
+      };
+      console.log(">>> SEND\n", JSON.stringify(gameSelectionMessage));
+      stompClientRef.current.send(
+        `/app/chat.sendMessage/${roomNo}`,
+        {},
+        JSON.stringify(gameSelectionMessage)
+      );
     } else {
       console.error("STOMP client is not connected");
     }
@@ -120,6 +145,10 @@ const Chat = ({ roomNo, nickname, participantList, master,selectedGame }) => {
                 <span className="text-pink-500 font-bold">
                   {message.sender}님이 퇴장하셨습니다.
                 </span>
+              ) : message.type === "GAME_SELECTION" ? (
+                <span className="text-pink-500 font-bold">
+                  {message.sender}님이 {message.selectedGame} 게임을 선택했습니다.
+                </span>
               ) : (
                 <>
                   <span className="text-pink-500 font-bold">
@@ -131,7 +160,7 @@ const Chat = ({ roomNo, nickname, participantList, master,selectedGame }) => {
             </li>
           ))}
           <div ref={chatMessagesEndRef} />
-        </ul >
+        </ul>
       </div>
       <div className="send-message flex mt-4">
         <input
@@ -164,41 +193,36 @@ const Chat = ({ roomNo, nickname, participantList, master,selectedGame }) => {
     return (
       <div className="game-box flex bg-slate-100 flex-col shadow-lg p-10 h-[700px]">
         {GameComponent && (
-
           <GameComponent
-
             nickname={nickname}
-
             roomNo={roomNo}
-
             participantList={participantList}
-
             master={master}
-
-          />)}
-
+          />
+        )}
       </div>
     );
   };
-
 
   return (
     <div className="container mx-auto p-4 flex flex-col h-full max-h-[800px]">
       <div className="tabs flex justify-start mb-4 space-x-4">
         <button
-          className={`tab px-4 py-2 rounded ${activeTab === "chat"
+          className={`tab px-4 py-2 rounded ${
+            activeTab === "chat"
               ? "bg-yellow-500 text-gray-800"
               : "bg-white text-gray-800"
-            }`}
+          }`}
           onClick={() => setActiveTab("chat")}
         >
           대화창
         </button>
         <button
-          className={`tab px-4 py-2 rounded ${activeTab === "game"
+          className={`tab px-4 py-2 rounded ${
+            activeTab === "game"
               ? "bg-yellow-500 text-gray-800"
               : "bg-white text-gray-800"
-            }`}
+          }`}
           onClick={() => setActiveTab("game")}
         >
           게임 화면

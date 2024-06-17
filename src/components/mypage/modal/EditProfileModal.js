@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
-import Draggable from "react-draggable";
 import ChangeNicknameModal from "./ChangeNicknameModal"; // New component for changing nickname
 import ImageEditDisplay from "../image/ImageEditDisplay";
 import privateApi from "../../../api/axios_intercepter";
+import ModalLayout from "../../../layouts/ModalLayout";
 
 const EditProfileModal = ({
   isOpen,
@@ -100,7 +100,7 @@ const EditProfileModal = ({
       className="fixed inset-0 flex items-center justify-center z-50"
       overlayClassName="fixed inset-0 "
     >
-      <Draggable>
+      <ModalLayout>
         <div className="bg-slate-200 p-4 rounded-lg border-2 border-pink-500 w-[600px] mx-auto text-white cursor-move">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl text-pink-500 text-center">정보 수정</h2>
@@ -259,7 +259,7 @@ const EditProfileModal = ({
             </button>
           </div>
         </div>
-      </Draggable>
+      </ModalLayout>
       {isNicknameModalOpen && (
         <ChangeNicknameModal
           isOpen={isNicknameModalOpen}

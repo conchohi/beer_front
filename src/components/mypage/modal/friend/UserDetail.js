@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import Draggable from "react-draggable";
 import { getUserByNickname } from "../../../../api/userApi";
 import { API_SERVER_HOST } from "../../../../api/axios_intercepter";
+import ModalLayout from "../../../../layouts/ModalLayout";
 
 function UserDetail({ nickname, close }) {
   const [userInfo, setUserInfo] = useState({});
@@ -15,7 +15,7 @@ function UserDetail({ nickname, close }) {
 
   return (
     <>
-      <Draggable>
+      <ModalLayout>
         <div className="fixed inset-0 flex items-center justify-center z-30 ">
           <div className="bg-gray-700 text-white w-96 p-5 rounded-lg shadow-lg relative">
             {/* 닫기창 */}
@@ -65,7 +65,7 @@ function UserDetail({ nickname, close }) {
             </div>
           </div>
         </div>
-      </Draggable>
+      </ModalLayout>
     </>
   );
 };

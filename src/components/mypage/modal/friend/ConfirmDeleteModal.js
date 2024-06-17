@@ -1,10 +1,10 @@
 import React from "react";
-import Draggable from "react-draggable";
+import ModalLayout from "../../../../layouts/ModalLayout";
 
 const ConfirmDeleteModal = ({ onClose, onConfirm }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center ">
-      <Draggable>
+      <ModalLayout>
         <div className="bg-slate-200 p-6 rounded-lg shadow-lg text-center border-2 border-pink-500 cursor-move">
           <h2 className="text-2xl mb-4 text-gray-700">친구를 삭제하시겠습니까?</h2>
           <div className="flex justify-center gap-4">
@@ -22,7 +22,7 @@ const ConfirmDeleteModal = ({ onClose, onConfirm }) => {
             </button>
           </div>
         </div>
-      </Draggable>
+      </ModalLayout>
     </div>
   );
 };
