@@ -34,7 +34,7 @@ const gameGuides = [
         alt: "RandomBomb",
     },
     {
-        id: "이미지",
+        id: "초성",
         src: "/img/hunmin.png",
         alt: "Hunminjungum",
     },

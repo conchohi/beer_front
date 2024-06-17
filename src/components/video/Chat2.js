@@ -176,6 +176,7 @@ const Chat2 = ({
         </div>
       ) : (
         <div className="content flex-1 flex flex-col md:flex-row">
+          <div className="w-full flex-1 flex flex-col">
           {activeTab === "chat" ? (
             <ChatBox
               messages={messages}
@@ -184,8 +185,6 @@ const Chat2 = ({
               handleSendMessage={handleSendMessage}
             />
           ) : (
-            <div className="flex-1 flex flex-col md:flex-row">
-              <div className="w-full md:w-8/12 flex-1 flex flex-col">
                 <GameBox
                   currentGame={currentGame}
                   nickname={nickname}
@@ -196,17 +195,9 @@ const Chat2 = ({
                   currentTurn={currentTurn}
                   setCurrentTurn={setCurrentTurn}
                 />
-              </div>
-              <div className="w-full md:w-4/12 flex-1 flex flex-col mt-4 md:mt-0 md:ml-4">
-                <ChatBox2
-                  messages={messages}
-                  newMessage={newMessage}
-                  setNewMessage={setNewMessage}
-                  handleSendMessage={handleSendMessage}
-                />
-              </div>
-            </div>
+
           )}
+          </div>
         </div>
       )}
       {isGameSelectModalOpen && (
