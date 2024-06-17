@@ -418,7 +418,7 @@ const SignupForm = () => {
           <div>
             <button
               type="submit"
-              className={`flex w-full justify-center rounded-md px-4 py-2 text-base tracking-widest font-semibold leading-6 text-white shadow-sm   bg-pink-500 hover:bg-pink-600 ${
+              className={`flex w-full justify-center rounded-md px-4 py-2 text-base tracking-widest font-semibold leading-6 text-white shadow-md   bg-pink-500 hover:bg-pink-600 ${
                 !isEmailVerified ? " cursor-not-allowed" : ""
               }`}
               disabled={!isEmailVerified}
