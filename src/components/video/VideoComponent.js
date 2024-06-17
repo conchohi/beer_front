@@ -689,8 +689,8 @@ const VideoComponent = () => {
                     }}
                 />
             )}
-            <div className="w-full flex flex-wrap">
-                <div className="w-3/4 flex flex-col flex-wrap">
+            <div className="w-full flex flex-col md:flex-row">
+                <div className="w-full md:w-3/4 flex flex-col flex-wrap">
                     <div className="w-full h-24 px-12 flex flex-row justify-between items-center font-bold text-5xl text-white">
                         <div className="flex flex-row gap-3 items-center justify-center mt-4">
                             <img className="h-16" src="/img/logo.png" alt="logo" />
@@ -781,7 +781,7 @@ const VideoComponent = () => {
                         )}
                     </div>
                 </div>
-                <div className="flex flex-col w-1/4 px-5 mt-8">
+                <div className="flex flex-col md:w-1/4 px-5 mt-8">
                     <Chat
                         nickname={nickname}
                         roomNo={roomNo}
