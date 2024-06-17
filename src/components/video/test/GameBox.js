@@ -1,11 +1,11 @@
 import React from "react";
-import BalanceGame from "./game/BalanceGame";
 import CharacterGame from "./game/CharacterGame";
 import LiarGame from "./game/LiarGame";
 import CatchMindGame from "./game/CatchMindGame";
 import ShoutInSilence from "./game/ShoutInsilence";
 import BombGame from "./game/BombGame";
 import BaskinRobbins31 from "../modal/game/BaskinRobbins31";
+import BalanceGame from "../modal/game/BalanceGame";
 
 const GameBox = ({
   currentGame,
@@ -21,7 +21,7 @@ const GameBox = ({
     "폭탄 게임": BombGame,
     "고요속의외침 게임": ShoutInSilence,
     "베스킨라빈스 게임": BaskinRobbins31,
-    // "밸런스 게임": BalanceGame,
+    "밸런스 게임": BalanceGame,
   };
 
   const GameComponent = games[currentGame];
