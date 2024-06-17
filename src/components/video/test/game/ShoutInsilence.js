@@ -13,7 +13,7 @@ const ShoutInSilence = ({ roomNo, nickname, participantList = [],currentGame,set
   const [timeLeft, setTimeLeft] = useState(180);
   const [winner, setWinner] = useState(null);
   const [gameEnded, setGameEnded] = useState(false);
-  const gametitle = "고요 속의 외침";
+  const gametitle = "몸으로 말해요";
 
   useEffect(() => {
     const socket = new SockJS(WEB_SOCKET_SERVER);
