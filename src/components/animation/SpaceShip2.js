@@ -19,9 +19,9 @@ const SpaceShip2 = () => {
 
   return (
     <div
-      className="w-full"
       ref={animationContainer}
-      style={{ width: "30vw", height: "40vw" }}
+      className="w-full h-full pl-5"
+      style={{ width: "20vw", height: "20vw" }}
     />
   );
 };

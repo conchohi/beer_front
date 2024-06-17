@@ -8,6 +8,7 @@ import BaskinRobbins31 from "../modal/game/BaskinRobbins31";
 import BalanceGame from "../modal/game/BalanceGame";
 import ChosungGame from "./game/ChosungGame";
 
+
 const GameBox = ({
   currentGame,
   nickname,
@@ -27,6 +28,7 @@ const GameBox = ({
     "베스킨라빈스": BaskinRobbins31,
     "밸런스": BalanceGame,
     "초성": ChosungGame
+
   };
 
   const GameComponent = games[currentGame];

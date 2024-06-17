@@ -5,43 +5,44 @@ import ModalLayout from "../../../../layouts/ModalLayout";
 const gameGuides = [
     {
         id: "캐릭터",
-        src: "/img/personquiz.png",
-        alt: "Image Game Guide",
+        src: "/img/guessquiz.png",
+        alt: "Inmulquiz",
     },
     {
         id: "고요속의외침",
-        src: "/img/whaechim.png",
-        alt: "Shout In Silence Guide",
+        src: "/img/bodylanguage.png",
+        alt: "Momuromalhaeyo",
     },
     {
         id: "라이어",
         src: "/img/liargame.png",
-        alt: "Balance Game Guide",
+        alt: "Liargame",
     },
     {
         id: "캐치마인드",
-        src: "/img/catchmindgame.png",
-        alt: "Catch Mind Game Guide",
+        src: "/img/catchmind.png",
+        alt: "CatchMindGame",
     },
     {
         id: "밸런스",
         src: "/img/balancegame.png",
-        alt: "Balance Game Guide",
+        alt: "BalanceGame",
     },
     {
         id: "폭탄",
-        src: "/img/bombgame.jpg",
-        alt: "Balance Game Guide",
+        src: "/img/bomb.png",
+        alt: "RandomBomb",
     },
     {
-        id: "초성",
-        src: "/img/imggame.png",
-        alt: "Balance Game Guide",
+        id: "이미지",
+        src: "/img/hunmin.png",
+        alt: "Hunminjungum",
     },
     {
         id: "베스킨라빈스",
-        src: "/img/baskingame.png",
-        alt: "Balance Game Guide",
+        src: "/img/Baskin.png",
+        alt: "Baskinrobbins",
+
     },
 
 ];
