@@ -9,6 +9,7 @@ import axios from "axios";
 import { API_SERVER_HOST } from "../api/axios_intercepter";
 import BasicModalComponent from "../components/common/BasicModalComponent";
 import { RiBeerFill } from "react-icons/ri";
+import BackgroundMusic from "../components/music/BackgroundMusic";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -119,6 +120,9 @@ const Header = () => {
             </nav>
             <div className="hidden md:flex md:w-26 md:justify-end items-center">
               <ul className="flex items-center space-x-12 ml-auto pr-0">
+                <li>
+                <BackgroundMusic />
+                </li>
                 <li>
                   <div
                     className="flex flex-col items-center cursor-pointer"
