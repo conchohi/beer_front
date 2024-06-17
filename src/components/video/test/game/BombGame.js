@@ -72,7 +72,7 @@ const BombGame = ({ roomNo, nickname, participantList = [] }) => {
         <span className='absolute right-[55%] top-1/2 translate-x-1/2 text-white font-bold'>{bomb}</span>
       </div>
       <div className="game-time mt-4">
-        게임 시간: {gameTimeLeft } 초
+        게임 시간: {gameTimeLeft>0 ? "?" : gameTimeLeft } 초
       </div>
       <div className="participants mt-4">
         <h2 className="text-xl font-bold">참가자</h2>

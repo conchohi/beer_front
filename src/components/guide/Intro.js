@@ -75,12 +75,11 @@ const Intro = () => {
         {gameGuides.map((guide) => (
           <div
             key={guide.id}
-            className="flex flex-col justify-center items-center bg-violet-600 bg-opacity-30 p-6 rounded-xl shadow-lg w-64 h-auto cursor-pointer transform transition duration-300 hover:scale-105"
+            className="flex flex-col justify-center items-center bg-white/20 bg-opacity-30 p-6 rounded-xl shadow-lg w-80 h-auto cursor-pointer transform transition duration-300 hover:scale-105"
             onClick={() => openModal(guide.id)}
           >
-            <div className="text-2xl font-bold text-white mb-4">{guide.id}</div>
             <img
-              className="rounded-lg shadow-lg w-40 h-auto object-cover"
+              className="rounded-lg shadow-lg w-11/12 h-auto object-cover"
               src={guide.src}
               alt={guide.alt}
             />
