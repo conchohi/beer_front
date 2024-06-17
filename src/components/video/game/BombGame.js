@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../api/websocketApi';
-import Bomb from '../../animation/bomb/Bomb';
 import Explode from '../../animation/bomb/Explode';
+import Bomb from '../../animation/bomb/Bomb';
 
 const BombGame = ({ roomNo, nickname, participantList = [] }) => {
   const [stompClient, setStompClient] = useState(null);
