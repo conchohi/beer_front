@@ -183,8 +183,8 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
           {currentTurn === nickname && <div className="topic text-red-500 font-bold">주제: {topic}</div>}
           <canvas
             ref={canvasRef}
-            width="320"
-            height="320"
+            width="280"
+            height="280"
             className="border-2 border-black bg-white"
             onMouseDown={startDrawing}
             onMouseMove={draw}
@@ -192,19 +192,19 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
             onMouseLeave={endDrawing}
           ></canvas>
            {currentTurn === nickname && (
-            <div className="controls mt-4 flex items-center">
-              <input type="color" value={color} onChange={handleColorChange} className="rounded mr-4 h-8" />
-              <select value={lineWidth} onChange={handleLineWidthChange} className="rounded mr-2">
+            <div className="controls mt-4 flex items-center gap-3">
+              <input type="color" value={color} onChange={handleColorChange} className="rounded h-9" />
+              <select value={lineWidth} onChange={handleLineWidthChange} className="rounded pr-5 text-sm">
                 {Array.from({ length: 10 }, (_, i) => i + 1).map(value => (
                   <option key={value} value={value}>
                     {value}
                   </option>
                 ))}
               </select>
-              <button onClick={toggleEraser} className="h-8 w-8 ml-2 p-2 bg-pink-400 text-white rounded">
+              <button onClick={toggleEraser} className="h-9 w-9 p-2 bg-pink-400 text-white rounded flex justify-center items-center">
                 {isErasing ? <FaPen /> : <FaEraser />}
               </button>
-              <button onClick={clearAll} className="h-8 ml-2 pl-2 pr-2 bg-pink-500 text-white rounded">전체 지우기</button>
+              <button onClick={clearAll} className="h-9 px-2 bg-pink-500 text-white rounded">전체 지우기</button>
             </div>
           )}
           {currentTurn !== nickname && (

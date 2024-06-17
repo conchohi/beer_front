@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../api/websocketApi';
-import { FaBomb } from 'react-icons/fa';
+import Explode from '../../animation/bomb/Explode';
+import Bomb from '../../animation/bomb/Bomb';
 
 const BombGame = ({ roomNo, nickname, participantList = [] }) => {
   const [stompClient, setStompClient] = useState(null);
@@ -29,14 +30,14 @@ const BombGame = ({ roomNo, nickname, participantList = [] }) => {
 
     const timer = setInterval(() => {
         setGameTimeLeft(prev => {
-            if (prev > 0) {
+            if (prev > 1) {
               return prev - 1;
             } else {
               clearInterval(timer);
               setIsEnd(true)
               setTimeout(() => {
                 setIsEnd(false);
-              }, 3000);
+              }, 2500);
               return 0;
             }
           });
@@ -61,15 +62,15 @@ const BombGame = ({ roomNo, nickname, participantList = [] }) => {
       <h1 className="text-2xl font-bold">폭탄 게임</h1>
       {isEnd && (
         <div className="winner-overlay flex justify-center items-center fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50">
-          <div className="winner text-2xl text-white font-bold p-5 bg-blue-500 rounded-lg shadow-lg flex flex-col">
-            <FaBomb className='w-80 h-80 mb-2'/>
-            {bomb}님 손에서 터졌습니다.
+          <div className="winner text-white text-5xl font-bold p-5 bg-red-500 rounded-lg shadow-lg flex flex-col text-center">
+            <Explode/>
+            <span className='mt-5'>{bomb}님 손에서 터졌습니다.</span>
           </div>
         </div>
       )}
-      <div className="mt-4 relative ">
-        <FaBomb className='w-48 h-48'/>
-        <span className='absolute right-[55%] top-1/2 translate-x-1/2 text-white font-bold'>{bomb}</span>
+      <div className="mt-4 relative flex flex-col">
+        <span className='font-bold text-center text-3xl'>{bomb}</span>
+        <Bomb className='w-48 h-48'/>
       </div>
       <div className="game-time mt-4">
         게임 시간: {gameTimeLeft>0 ? "?" : gameTimeLeft } 초

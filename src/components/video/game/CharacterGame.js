@@ -71,18 +71,18 @@ const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setC
   };
 
   return (
-    <div className="game-box flex flex-col items-center md:p-4 w-full">
+    <div className="game-box flex flex-col items-center w-full">
       <h1 className="text-2xl font-bold ">연예인퀴즈</h1>
-      {message && <div className="message text-green-500 font-bold ">{message}</div>}
+      <div className="message text-green-500 font-bold h-6">{message}</div>
       {isGameOver ? (
         <div className="text-red-500 font-bold mb-4">게임 종료! {message}</div>
       ) : (
         <>
-          <div className="w-full flex justify-center">
+          <div className="w-full flex justify-center mb-3">
             <img 
               src={imageUrl} 
               alt="연예인 퀴즈" 
-              className="border-2 border-black w-[250px] h-[350px] "
+              className="border-2 border-black w-[200px] h-[300px] "
             />
           </div>
           <form onSubmit={handleGuessSubmit} className="mt-4 w-full flex flex-col items-center">
@@ -91,13 +91,13 @@ const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setC
               value={guess}
               onChange={handleGuessChange}
               placeholder="정답을 입력하세요"
-              className="border p-2 rounded w-full md:w-1/2"
+              className="border p-2 rounded w-full"
             />
-            <button type="submit" className="mt-2 p-2 bg-blue-500 text-white rounded w-full md:w-1/2">전송</button>
+            <button type="submit" className="mt-2 p-2 bg-blue-500 text-white rounded w-full">전송</button>
           </form>
           <div className="scores mt-4 w-full">
         <h2 className="text-xl font-bold">참가자 점수</h2>
-        <ul className="grid grid-cols-2 gap-4">
+        <ul className="grid grid-cols-2 gap-2 text-lg font-bold">
           {participantList.map(participant => (
             <li key={participant.nickname} className="mt-2">
               {participant.nickname}: {scores[participant.nickname] || 0}점

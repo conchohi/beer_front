@@ -413,7 +413,7 @@ const VideoComponent = () => {
         };
         attachStreamToVideo();
 
-    }, [myStream,currentGame]);
+    }, [myStream,currentGame,currentTurn]);
 
 
     useEffect(() => {
@@ -438,7 +438,7 @@ const VideoComponent = () => {
             }
 
         })
-    }, [feeds,participantList,currentGame])
+    }, [feeds,participantList,currentGame,currentTurn])
 
     useEffect(() => {
         //새로운 피드가 들어오면 시작
@@ -724,12 +724,12 @@ const VideoComponent = () => {
                                     {participantList.map((participant) => {
                                         if (participant.nickname !== currentTurn) {
                                             return (
-                                                <div key={participant.nickname} className="flex flex-col justify-center items-center text-center p-3 w-1/2">
+                                                <div key={participant.nickname} className={"flex flex-col justify-center items-center text-center p-3 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
                                                     <div className="w-full bg-black border-2 border-white rounded-xl">
                                                         <div className="relative">
                                                             {(master === participant.nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
                                                             <div className="pb-[56.25%] h-0 relative">
-                                                                <video id={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover hidden" autoPlay playsInline />
+                                                                <video ref={participant.nickname === nickname ? myVideoRef : undefined} id={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover hidden" autoPlay playsInline />
                                                                 <img alt={participant.nickname} className="w-full h-full box-border p-3 absolute object-contain" src="/img/title.png" />
                                                             </div>
                                                         </div>
