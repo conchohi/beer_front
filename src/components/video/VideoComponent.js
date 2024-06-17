@@ -726,7 +726,7 @@ const VideoComponent = () => {
                                     {participantList.map((participant) => {
                                         if (participant.nickname !== currentTurn) {
                                             return (
-                                                <div key={participant.nickname} className={"flex flex-col justify-center items-center text-center p-3 w-full md:" + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
+                                                <div key={participant.nickname} className={"flex flex-col justify-center items-center text-center p-3 w-full md:" + (participantList.length <= 4 ? "w-6/12" : "w-4/12")}>
                                                     <div className="w-full bg-black border-2 border-white rounded-xl">
                                                         <div className="relative">
                                                             {(master === participant.nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
@@ -747,7 +747,7 @@ const VideoComponent = () => {
                         ) : (
                             <>
                                 {/* 본인의 비디오 화면 */}
-                                <div className={"flex flex-col justify-center rounded-lg items-center text-center p-6 w-full md:" + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
+                                <div className={"flex flex-col justify-center rounded-lg items-center text-center p-6 w-full md:" + (participantList.length <= 4 ? "w-6/12" : "w-4/12")}>
                                     <div className="w-full bg-black border-2 border-white rounded-xl">
                                         <div className="relative">
                                             {(master === nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
@@ -765,7 +765,7 @@ const VideoComponent = () => {
                                         return null;
                                     }
                                     return (
-                                        <div key={participant.nickname} className={"flex flex-col justify-center items-center text-center p-6 w-full md:" + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
+                                        <div key={participant.nickname} className={"flex flex-col justify-center items-center text-center p-6 w-full md:" + (participantList.length <= 4 ? "w-6/12" : "w-4/12")}>
                                             <div className="w-full bg-black border-2 border-white rounded-xl">
                                                 <div className="relative">
                                                     {(master === participant.nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
