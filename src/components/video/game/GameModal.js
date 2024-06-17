@@ -13,51 +13,55 @@ const GameModal = ({ isOpen, closeModal, title }) => {
 
   const getModalContents = (title) => {
     switch (title) {
-      case "역전의 한방":
+      case "인물퀴즈":
         return [
           {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">사진 촬영</span> 가이드{" "}
+                  <span className="text-[#f400b0]">인물 퀴즈</span> 가이드{" "}
                 </div>
-                <FaCamera />
-                <ol className="px-10 text-2xl font-light text-start">
-                  <li>
-                    화면 하단의{" "}
-                    <span className="text-[#f400b0] font-bold">사진 버튼</span>
-                    을 누르면 5초 후 사진이 촬영됩니다.
-                  </li>
-                  <li>
-                    사진 촬영 후, 사진의{" "}
-                    <span className="text-[#f400b0] font-bold">
-                      프레임, 제목, 본문
-                    </span>
-                    을 설정할 수 있는 창이 출력됩니다.
-                  </li>
-                  <li>
-                    찍은 사진은{" "}
-                    <span className="text-[#f400b0] font-bold">
-                      '피드에 저장' 버튼
-                    </span>
-                    으로 프로필에 저장할 수 있습니다.
-                  </li>
-                  <li>취소 버튼을 누르면 찍었던 사진은 사라집니다.</li>
-                </ol>
+                <div>
+                  <img src="/img/인물퀴즈1.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  이름을 정확히 입력 후 Enter or 전송 버튼 클릭 시{" "}
+                  <span className="text-[#f400b0] font-bold">선착순</span>
+                  으로 정답 처리 합니다.
+                </h1>
+              </>
+            ),
+          },
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">인물 퀴즈</span> 가이드{" "}
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  정답을 먼저 맞춘 유저닉네임이 상단에 표시 됩니다.{" "}
+                  <span className="text-[#f400b0] font-bold">5점 먼저</span>
+                  획득 시 게임은 끝납니다!
+                </h1>
               </>
             ),
           },
         ];
-      case "이미지 게임":
+        break;
+      case "몸으로말해요":
         return [
           {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">게임 가이드 </span>
-                  이미지 게임
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
                 </div>
-                <FaHandPaper />
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
                   각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
                   <span className="text-[#f400b0] font-bold">카메라에 손</span>
@@ -69,22 +73,244 @@ const GameModal = ({ isOpen, closeModal, title }) => {
           {
             content: (
               <>
-                <FaHandPaper />
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  해당 키워드에{" "}
-                  <span className="text-[#f400b0] font-bold">
-                    해당하는 참가자
-                  </span>
-                  는{" "}
-                  <span className="text-[#f400b0] font-bold">
-                    손가락을 하나
-                  </span>{" "}
-                  접습니다. 손가락이 모두 접힌 사람이 나올 때 까지 반복합니다.
-                  을 펼쳐 보입니다. 손이{" "}
-                  <span className="text-[#f400b0] font-bold">
-                    모두 접힌 사람은 점수가 차감됩니다.
-                  </span>
-                  누구를 노릴지, 전략적으로 생각해 봅시다.
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+        ];
+        break;
+      case "라이어게임":
+        return [
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+        ];
+        break;
+      case "캐치마인드":
+        return [
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+        ];
+        break;
+      case "밸런스게임":
+        return [
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+        ];
+        break;
+      case "폭탄돌리기":
+        return [
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+        ];
+        break;
+      case "훈민정음":
+        return [
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+        ];
+        break;
+      case "베스킨라빈스":
+        return [
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
+                </h1>
+              </>
+            ),
+          },
+          {
+            content: (
+              <>
+                <div className="text-4xl text-center m-5">
+                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                </div>
+                <div>
+                  <img src="/img/인물퀴즈2.png"></img>
+                </div>
+                <h1 className="px-10 text-2xl  text-start pr-5">
+                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
+                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
+                  을 펼쳐 보입니다.
                 </h1>
               </>
             ),
