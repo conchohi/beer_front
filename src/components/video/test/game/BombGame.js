@@ -16,8 +16,8 @@ const BombGame = ({ roomNo, nickname, participantList = [] }) => {
     stompClient.connect({}, () => {
       stompClient.subscribe(`/topic/game/${roomNo}`, (message) => {
         const gameState = JSON.parse(message.body);
-        if(gameState.leftTime){
-            setGameTimeLeft(gameState.timeLeft )
+        if(gameState.timeLeft){
+            setGameTimeLeft(gameState.timeLeft)
         }
         setBomb(gameState.bomb)
       });
@@ -62,17 +62,17 @@ const BombGame = ({ roomNo, nickname, participantList = [] }) => {
       {isEnd && (
         <div className="winner-overlay flex justify-center items-center fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50">
           <div className="winner text-2xl text-white font-bold p-5 bg-blue-500 rounded-lg shadow-lg flex flex-col">
-            <FaBomb className='w-80 h-80'/>
+            <FaBomb className='w-80 h-80 mb-2'/>
             {bomb}님 손에서 터졌습니다.
           </div>
         </div>
       )}
       <div className="mt-4 relative ">
-        <FaBomb className='w-40 h-40'/>
-        <span className='absolute right-[60%] top-[40%] translate-x-1/2 translate-y-1/2 text-white text-3xl font-bold'>{bomb}</span>
+        <FaBomb className='w-48 h-48'/>
+        <span className='absolute right-[55%] top-1/2 translate-x-1/2 text-white font-bold'>{bomb}</span>
       </div>
       <div className="game-time mt-4">
-        게임 시간: {gameTimeLeft > 0 ? "?" : gameTimeLeft} 초
+        게임 시간: {gameTimeLeft } 초
       </div>
       <div className="participants mt-4">
         <h2 className="text-xl font-bold">참가자</h2>
