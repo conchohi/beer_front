@@ -73,6 +73,8 @@ const VideoComponentV3 = () => {
     const [newFeed, setNewFeed] = useState(null);
     const [leaveId, setleaveId] = useState(null);
     const [selectedGame, setSelectedGame] = useState(null);
+    const [currentGame, setCurrentGame] = useState(null); // currentGame 상태 추가
+    const [currentTurn, setCurrentTurn] = useState(''); // currentTurn 상태 추가
     const navigate = useNavigate();
 
     const clickExitRoom = () => {
@@ -412,7 +414,7 @@ const VideoComponentV3 = () => {
         };
         attachStreamToVideo();
 
-    }, [myStream]);
+    }, [myStream,currentGame]);
 
 
     useEffect(() => {
@@ -437,7 +439,7 @@ const VideoComponentV3 = () => {
             }
 
         })
-    }, [feeds,participantList])
+    }, [feeds,participantList,currentGame])
 
     useEffect(() => {
         //새로운 피드가 들어오면 시작
@@ -661,90 +663,158 @@ const VideoComponentV3 = () => {
         setOpenGame(false);
       };
 
-    return (<>
-        {/* 게임 선택 모달 */}
-        {/* {openGame && (<GameSelectModal close={() => {setOpenGame(false); }}startSelectedGame={setSelectedGame}  />)} */}
-        {openGame && (<GameSelectModal close={() => setOpenGame(false)} startSelectedGame={(game) => 
-            {console.log("Selected game in Videocomponentv3:", game);setSelectedGame(game);setOpenGame(false);}}/>)}       
-        {/* 방 폭파 확인 모달 */}
-        {checkDestory && <DestoryCheckModal setCheckDestroy={setCheckDestory} destroy={destory} />}
-        {/* 메세지 모달 */}
-        {openModal && <BasicModalComponent message={message} callbackFunction={basicModalClose} />}
-        {/* 회원 정보 모달 */}
-        {userDetail && <UserDetail nickname={clickUserNick} close={() => {
-            setClickUserNick("");
-            setUserDetail(false);
-        }
-        } />}
-        <div className="w-full flex flex-wrap">
-            <div className="w-3/4 flex flex-col flex-wrap">
-            <div className="w-full h-24 px-12 flex flex-row justify-between items-center font-bold text-5xl text-white">
-                <div className="flex flex-row gap-3 items-center justify-center mt-4">
-                    <img className="h-16" src="/img/logo.png" alt="logo"/>
-                    {/* <img className="h-10" src="/img/title.png" alt="title"/> */}
-                    <span className="">{title}</span>
-                </div>
-                <ParticipantList participantList={participantList} setClickUserNick={setClickUserNick} />
-            </div>
-                <div className="w-full flex flex-wrap items-start">
-                    <div className={"flex flex-col justify-center rounded-lg items-center text-center p-6 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
-                        <div className="w-full  bg-black border-2 border-white rounded-xl">
-                            <div className="relative">
-                                {(master === nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
-                                <div className="pb-[56.25%] h-0 relative">
-                                    <video ref={myVideoRef} id="myvideo" className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline muted />
-                                    <img alt={nickname} className="w-full h-full box-border p-3 absolute object-contain hidden" src="/img/title.png"/>
-                                </div>
-                            </div>
-                            <span className="font-bold text-xl py-3 text-white" >{nickname}</span>
+      return (
+        <>
+            {/* 게임 선택 모달 */}
+            {openGame && (
+                <GameSelectModal
+                    close={() => setOpenGame(false)}
+                    startSelectedGame={(game) => {
+                        console.log("Selected game in Videocomponentv3:", game);
+                        setSelectedGame(game);
+                        setOpenGame(false);
+                    }}
+                />
+            )}
+            {/* 방 폭파 확인 모달 */}
+            {checkDestory && <DestoryCheckModal setCheckDestroy={setCheckDestory} destroy={destory} />}
+            {/* 메세지 모달 */}
+            {openModal && <BasicModalComponent message={message} callbackFunction={basicModalClose} />}
+            {/* 회원 정보 모달 */}
+            {userDetail && (
+                <UserDetail
+                    nickname={clickUserNick}
+                    close={() => {
+                        setClickUserNick("");
+                        setUserDetail(false);
+                    }}
+                />
+            )}
+            <div className="w-full flex flex-wrap">
+                <div className="w-3/4 flex flex-col flex-wrap">
+                    <div className="w-full h-24 px-12 flex flex-row justify-between items-center font-bold text-5xl text-white">
+                        <div className="flex flex-row gap-3 items-center justify-center mt-4">
+                            <img className="h-16" src="/img/logo.png" alt="logo" />
+                            <span className="">{title}</span>
                         </div>
+                        <ParticipantList participantList={participantList} setClickUserNick={setClickUserNick} />
                     </div>
-
-                    {participantList.map((participant) => {
-                        if(participant.nickname === nickname){
-                            return;
-                        }
-                        return (
-                            <div className={"flex flex-col justify-center items-center text-center p-6 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
-                                <div className="w-full  bg-black border-2 border-white rounded-xl">
-                                    <div className="relative">
-                                        {(master === participant.nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
-                                        <div className="pb-[56.25%] h-0 relative">
-                                            <video id={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover hidden" autoPlay playsInline />
-                                            <img alt={participant.nickname} className="w-full h-full box-border p-3 absolute object-contain" src="/img/title.png"/>
-                                        </div>
-                                    </div>
-                                    <span className="font-bold text-lg py-3 text-white">{participant.nickname}</span>
+                    <div className="w-full flex flex-wrap items-start">
+                        {currentGame === '고요속의외침' ? (
+                            <>
+                                {participantList.map((participant) => {
+                                    if (participant.nickname === currentTurn) {
+                                        return (
+                                            <div key={participant.nickname} className="flex flex-col justify-center rounded-lg items-center text-center p-6 w-full">
+                                                <div className="w-full bg-black border-2 border-white rounded-xl">
+                                                    <div className="relative">
+                                                        {(master === participant.nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
+                                                        <div className="pb-[56.25%] h-0 relative">
+                                                            <video ref={participant.nickname === nickname ? myVideoRef : undefined} id={participant.nickname === nickname ? "myvideo" : participant.nickname} className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline muted={participant.nickname === nickname} />
+                                                            <img alt={participant.nickname} className="w-full h-full box-border p-3 absolute object-contain hidden" src="/img/title.png" />
+                                                        </div>
+                                                    </div>
+                                                    <span className="font-bold text-xl py-3 text-white">출제자 : </span> <span className="font-bold text-xl py-3 text-pink-500"> {participant.nickname}</span>
+                                                </div>
+                                            </div>
+                                        );
+                                    }
+                                    return null;
+                                })}
+                                <div className="flex flex-wrap w-full">
+                                    {participantList.map((participant) => {
+                                        if (participant.nickname !== currentTurn) {
+                                            return (
+                                                <div key={participant.nickname} className="flex flex-col justify-center items-center text-center p-3 w-1/2">
+                                                    <div className="w-full bg-black border-2 border-white rounded-xl">
+                                                        <div className="relative">
+                                                            {(master === participant.nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
+                                                            <div className="pb-[56.25%] h-0 relative">
+                                                                <video id={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover hidden" autoPlay playsInline />
+                                                                <img alt={participant.nickname} className="w-full h-full box-border p-3 absolute object-contain" src="/img/title.png" />
+                                                            </div>
+                                                        </div>
+                                                        <span className="font-bold text-lg py-3 text-white">{participant.nickname}</span>
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
+                                        return null;
+                                    })}
                                 </div>
-                            </div>
-                        )
-
-                    })}
+                            </>
+                        ) : (
+                            <>
+                                {/* 본인의 비디오 화면 */}
+                                <div className={"flex flex-col justify-center rounded-lg items-center text-center p-6 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
+                                    <div className="w-full bg-black border-2 border-white rounded-xl">
+                                        <div className="relative">
+                                            {(master === nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
+                                            <div className="pb-[56.25%] h-0 relative">
+                                                <video ref={myVideoRef} id="myvideo" className="w-full h-full box-border p-3 absolute object-cover" autoPlay playsInline muted />
+                                                <img alt={nickname} className="w-full h-full box-border p-3 absolute object-contain hidden" src="/img/title.png" />
+                                            </div>
+                                        </div>
+                                        <span className="font-bold text-xl py-3 text-white">{nickname}</span>
+                                    </div>
+                                </div>
+                                {/* 참여자 비디오 화면 */}
+                                {participantList.map((participant) => {
+                                    if (participant.nickname === nickname) {
+                                        return null;
+                                    }
+                                    return (
+                                        <div key={participant.nickname} className={"flex flex-col justify-center items-center text-center p-6 " + (participantList.length <= 4 ? "w-1/2" : "w-1/3")}>
+                                            <div className="w-full bg-black border-2 border-white rounded-xl">
+                                                <div className="relative">
+                                                    {(master === participant.nickname && <FaCrown className="text-yellow-500 absolute right-8 top-5 z-10" size="50" />)}
+                                                    <div className="pb-[56.25%] h-0 relative">
+                                                        <video id={participant.nickname} className="w-full h-full box-border p-3 absolute object-cover hidden" autoPlay playsInline />
+                                                        <img alt={participant.nickname} className="w-full h-full box-border p-3 absolute object-contain" src="/img/title.png" />
+                                                    </div>
+                                                </div>
+                                                <span className="font-bold text-lg py-3 text-white">{participant.nickname}</span>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </>
+                        )}
+                    </div>
+                </div>
+                <div className="flex flex-col w-1/4 px-5 mt-8">
+                    <Chat2
+                        nickname={nickname}
+                        roomNo={roomNo}
+                        participantList={participantList}
+                        master={master}
+                        selectedGame={selectedGame}
+                        currentGame={currentGame}
+                        setCurrentGame={setCurrentGame}
+                        currentTurn={currentTurn}
+                        setCurrentTurn={setCurrentTurn}
+                    />
+                    <div className="w-full flex items-center px-4 justify-end text-center gap-5 font-bold">
+                        <button className="py-3 w-28 bg-white rounded-md" onClick={clickDestoryRoom}>방 폭파</button>
+                        <button className="py-3 w-28 bg-[#BE2222] text-white rounded-md" onClick={clickExitRoom}> 나가기</button>
+                    </div>
                 </div>
             </div>
-            <div className="flex flex-col w-1/4 px-5 mt-8">
-                <Chat2
-            nickname={nickname}
-            roomNo={roomNo}
-            participantList={participantList}
-            master={master}
-            selectedGame={selectedGame} // Pass selectedGame to Chat
-          />
-                <div className="w-full flex items-center px-4 justify-between text-center gap-5 font-bold">
-                    <button className="py-3 w-28 bg-yellow-400 text-white rounded-md" onClick={clickGame}>게임 선택</button>
-                    <button className="py-3 w-28 bg-white rounded-md" onClick={clickDestoryRoom}>방 폭파</button>
-                    <button className="py-3 w-28 bg-[#BE2222] text-white rounded-md" onClick={clickExitRoom}>나가기</button>
+            <div className="flex flex-row px-10">
+                <div className="w-1/2 flex gap-5 text-white">
+                    <VideoButton
+                        muted={muted}
+                        publish={publish}
+                        publishOwnFeed={publishOwnFeed}
+                        unpublishOwnFeed={unpublishOwnFeed}
+                        toggleMute={toggleMute}
+                    />
                 </div>
             </div>
-        </div>
-
-          <div className="flex flex-row px-10">
-            <div className="w-1/2 flex gap-5 text-white">
-                <VideoButton muted={muted} publish={publish} publishOwnFeed={publishOwnFeed} unpublishOwnFeed={unpublishOwnFeed} toggleMute={toggleMute} />
-            </div>
-            
-            </div>      
-    </>);
+        </>
+    );
+    
+    
 }
 
 export default VideoComponentV3;

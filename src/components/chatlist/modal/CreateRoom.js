@@ -3,10 +3,10 @@ import { CgProfile } from "react-icons/cg";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaVideo, FaVideoSlash } from "react-icons/fa";
 import { FaMicrophone } from "react-icons/fa";
-import Draggable from 'react-draggable';
 import BasicModalComponent from '../../common/BasicModalComponent';
 import { createRoom } from '../../../api/roomApi';
 import { useNavigate } from 'react-router-dom';
+import ModalLayout from '../../../layouts/ModalLayout';
 
 function CreateRoom({ close }) {
   const navigate = useNavigate();
@@ -94,10 +94,12 @@ function CreateRoom({ close }) {
   const handleVideo = () => {
     setViewVideo(!viewVideo);
   }
-
+  const handleMouseDown = (e) => {
+    e.stopPropagation();
+  };
   return (<>
     {caution && <BasicModalComponent message={message} callbackFunction={()=>{setCaution(false)}}/>}
-    <Draggable>
+    <ModalLayout>
       <div className="flex inset-0 fixed z-10 justify-center items-center">
         <div className="relative bg-gray-800 p-6 rounded-lg shadow-xl w-[800px] flex flex-col md:flex-row justify-between space-y-4 md:space-y-0">
 
@@ -112,7 +114,7 @@ function CreateRoom({ close }) {
             <h2 className="text-amber-400 text-2xl mb-4 font-semibold ">방 만들기</h2>
             <div className="mb-4">
               <label className="block text-gray-300 font-semibold">방 제목</label> 
-              <input type="text" placeholder="방 제목을 입력하세요" value={title} onChange={(e) => { setTitle(e.target.value) }}
+              <input type="text" placeholder="방 제목을 입력하세요" value={title} onMouseDown={handleMouseDown} onChange={(e) => { setTitle(e.target.value) }}
                 className="w-full p-2 mt-2 rounded-lg text-gray-800 focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400" />
             </div>
             <div className="mb-4">
@@ -161,6 +163,7 @@ function CreateRoom({ close }) {
                 placeholder="방 비밀번호를 입력하세요."
                 value={roomPw} onChange={(e) => { setRoomPw(e.target.value) }}
                 className="w-full p-3 mt-2 rounded-lg text-black focus:outline-none focus:ring-1 focus:ring-amber-400 focus:border-amber-400"
+                onMouseDown={handleMouseDown}
               />
             </div>
           </div>
@@ -191,7 +194,7 @@ function CreateRoom({ close }) {
 
         </div>
       </div>
-    </Draggable>
+    </ModalLayout>
     </>
   );
 }

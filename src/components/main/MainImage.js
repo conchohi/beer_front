@@ -19,7 +19,7 @@ const MainImage = ({ clickDown }) => {
       <img
         src="/img/mainImage.png"
         alt="Main"
-        className="w-1/2 animated-zoom"
+        className="md:w-2/3 xl:w-1/2 animated-zoom"
       />{" "}
       <img src="/img/title.png" alt="Title" className="w-3/12" />
       <button

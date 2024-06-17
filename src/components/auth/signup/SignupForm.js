@@ -199,7 +199,7 @@ const SignupForm = () => {
         />
       )}
       <div className="">
-        <h2 className=" text-center text-2xl font-bold leading-9 tracking-widest text-pink-500">
+        <h2 className=" text-center text-2xl font-bold leading-9 tracking-widest text-pink-500 pt-3">
           JOIN
         </h2>
       </div>
@@ -428,10 +428,10 @@ const SignupForm = () => {
           </div>
         </form>
 
-        <p className="mt-4 text-center text-base tracking-widest text-gray-500">
+        <p className="mt-4 text-center text-base tracking-widest text-gray-500 pb-5">
           <a
             href="/login"
-            className="font-semibold leading-6 text-pink-500 hover:text-pink-600"
+            className="leading-6 font-extrabold  text-pink-500 hover:text-pink-600"
           >
             LOGIN
           </a>

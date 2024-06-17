@@ -1,47 +1,47 @@
 import React from "react";
-import Draggable from "react-draggable";
 import { FaWindowClose } from "react-icons/fa";
 
 const gameGuides = [
     {
-        id: "캐릭터 게임",
-        src: "/img/personquiz.png",
-        alt: "Image Game Guide",
+        id: "캐릭터",
+        src: "/img/guessquiz.png",
+        alt: "Inmulquiz",
     },
     {
-        id: "고요속의외침 게임",
-        src: "/img/whaechim.png",
-        alt: "Shout In Silence Guide",
+        id: "고요속의외침",
+        src: "/img/bodylanguage.png",
+        alt: "Momuromalhaeyo",
     },
     {
-        id: "라이어 게임",
+        id: "라이어",
         src: "/img/liargame.png",
-        alt: "Balance Game Guide",
+        alt: "Liargame",
     },
     {
-        id: "캐치마인드 게임",
-        src: "/img/catchmindgame.png",
-        alt: "Catch Mind Game Guide",
+        id: "캐치마인드",
+        src: "/img/catchmind.png",
+        alt: "CatchMindGame",
     },
     {
-        id: "밸런스 게임",
+        id: "밸런스",
         src: "/img/balancegame.png",
-        alt: "Balance Game Guide",
+        alt: "BalanceGame",
     },
     {
-        id: "폭탄 게임",
-        src: "/img/bombgame.jpg",
-        alt: "Balance Game Guide",
+        id: "폭탄",
+        src: "/img/bomb.png",
+        alt: "RandomBomb",
     },
     {
-        id: "이미지 게임",
-        src: "/img/imggame.png",
-        alt: "Balance Game Guide",
+        id: "초성",
+        src: "/img/hunmin.png",
+        alt: "Hunminjungum",
     },
     {
-        id: "베스킨라빈스 게임",
-        src: "/img/baskingame.png",
-        alt: "Balance Game Guide",
+        id: "베스킨라빈스",
+        src: "/img/Baskin.png",
+        alt: "Baskinrobbins",
+
     },
 
 ];
@@ -55,7 +55,6 @@ const GameSelectModal2 = ({ close, handleGameSelect }) => {
   };
 
     return (
-        <Draggable>
             <div className="w-lvw h-lvh z-20 fixed top-0 left-0">
                 <div className="absolute flex flex-col bg-[#222222] top-1/2 left-1/2 w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-xl shadow p-3">
                     <div className="relative">
@@ -76,7 +75,6 @@ const GameSelectModal2 = ({ close, handleGameSelect }) => {
                     </div>
                 </div>
             </div>
-        </Draggable>
     );
 
 };

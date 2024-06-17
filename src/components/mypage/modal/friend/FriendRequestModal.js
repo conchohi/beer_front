@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import privateApi, { API_SERVER_HOST } from "../../../../api/axios_intercepter";
 import AlertModal from "./FriendCommonModal";
-import Draggable from "react-draggable";
 import Space2 from "../../../animation/Space2";
+import ModalLayout from "../../../../layouts/ModalLayout";
 
 const FriendRequestsModal = ({ show, closeModal, onFriendAccepted, setClickNickname}) => {
   const [friendRequests, setFriendRequests] = useState([]);
@@ -58,7 +58,7 @@ const FriendRequestsModal = ({ show, closeModal, onFriendAccepted, setClickNickn
   }
 
   return (
-    <Draggable>
+    <ModalLayout>
       <div
         className={`fixed inset-0 flex items-center justify-center transition-opacity duration-300 ${
           show ? "opacity-100 z-20" : "opacity-0 pointer-events-none"
@@ -129,7 +129,7 @@ const FriendRequestsModal = ({ show, closeModal, onFriendAccepted, setClickNickn
           onClose={() => setAlertShow(false)}
         />
       </div>
-    </Draggable>
+    </ModalLayout>
   );
 };
 

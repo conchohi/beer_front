@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
+import { FaEraser, FaPen } from 'react-icons/fa';
 
 
 const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
@@ -57,6 +58,10 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
       stompClient.subscribe(`/topic/game/${roomNo}/select`, (message) => {
         const gameMessage = JSON.parse(message.body);
         setGameSelected(gameMessage.content);
+      });
+
+      stompClient.subscribe(`/topic/game/${roomNo}/erase`, (message) => {
+        clearCanvas();
       });
 
       stompClient.send(`/app/start/${roomNo}`, {}, JSON.stringify({ player: nickname, players: participantList.map(p => p.nickname) }));
@@ -147,9 +152,9 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
   };
 
   const clearAll = () => {
-    clearCanvas();
     if (stompClient && stompClient.connected) {
-      stompClient.send(`/app/draw/${roomNo}`, {}, JSON.stringify([]));
+      stompClient.send(`/app/erase/${roomNo}`, {}, {});
+      setDrawingData([]);
     }
   };
 
@@ -175,25 +180,32 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
               <div className="message text-5xl text-white font-bold p-5 bg-green-500 rounded-lg shadow-lg">{message}</div>
             </div>
           )}
+          <div className="topic text-blue-500 font-bold">출제자: {currentTurn}</div>
           {currentTurn === nickname && <div className="topic text-red-500 font-bold">주제: {topic}</div>}
           <canvas
             ref={canvasRef}
-            width="640"
-            height="400"
-            className="border-2 border-black"
+            width="320"
+            height="320"
+            className="border-2 border-black bg-white"
             onMouseDown={startDrawing}
             onMouseMove={draw}
             onMouseUp={endDrawing}
             onMouseLeave={endDrawing}
           ></canvas>
-          {currentTurn === nickname && (
-            <div className="controls mt-4">
-              <label className="mr-2">색상:</label>
-              <input type="color" value={color} onChange={handleColorChange} className="border p-2 rounded mr-4" />
-              <label className="mr-2">굵기:</label>
-              <input type="number" value={lineWidth} min="1" max="20" onChange={handleLineWidthChange} className="border p-2 rounded mr-4" />
-              <button onClick={toggleEraser} className="ml-2 p-2 bg-red-500 text-white rounded">{isErasing ? '펜 사용' : '지우개 사용'}</button>
-              <button onClick={clearAll} className="ml-2 p-2 bg-gray-500 text-white rounded">전체 지우기</button>
+           {currentTurn === nickname && (
+            <div className="controls mt-4 flex items-center">
+              <input type="color" value={color} onChange={handleColorChange} className="rounded mr-4 h-8" />
+              <select value={lineWidth} onChange={handleLineWidthChange} className="rounded mr-2">
+                {Array.from({ length: 10 }, (_, i) => i + 1).map(value => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+              <button onClick={toggleEraser} className="h-8 w-8 ml-2 p-2 bg-pink-400 text-white rounded">
+                {isErasing ? <FaPen /> : <FaEraser />}
+              </button>
+              <button onClick={clearAll} className="h-8 ml-2 pl-2 pr-2 bg-pink-500 text-white rounded">전체 지우기</button>
             </div>
           )}
           {currentTurn !== nickname && (
@@ -210,9 +222,9 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
           )}
         </>
       )}
-      <div className="scores mt-4">
+      <div className="scores mt-4 w-full">
         <h2 className="text-xl font-bold">참가자 점수</h2>
-        <ul>
+        <ul className='grid grid-cols-2 gap-4'>
           {participantList.map(participant => (
             <li key={participant.nickname} className="mt-2">
               {participant.nickname}: {scores[participant.nickname] || 0}점

@@ -3,7 +3,7 @@ import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
 
-const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setCurrentGame, currentTurn, setCurrentTurn }) => {
+const InitialGame = ({ roomNo, nickname, participantList = [],currentGame,setCurrentGame, currentTurn, setCurrentTurn }) => {
   const [stompClient, setStompClient] = useState(null);
   const [currentRound, setCurrentRound] = useState(0);
   const [imageUrl, setImageUrl] = useState('');
@@ -118,4 +118,4 @@ const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setC
   );
 };
 
-export default CharacterGame;
+export default InitialGame;

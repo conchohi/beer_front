@@ -22,7 +22,7 @@ const MovingCat = () => {
     <div
       className="animation-container"
       ref={animationContainer}
-      style={{ width: "30vw", height: "30vw" }}
+      style={{ width: "25vw", height: "30vw" }}
     />
   );
 };
