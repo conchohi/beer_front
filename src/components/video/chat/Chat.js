@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
-import ChatBox from "./test/ChatBox";
-import GameBox from "./test/GameBox";
-import GameSelectModal2 from "./test/game/GameSelectModal2";
-import { WEB_SOCKET_SERVER } from "../../api/websocketApi";
+import ChatBox from "./ChatBox";
+import GameBox from "./GameBox";
+import { WEB_SOCKET_SERVER } from "../../../api/websocketApi";
+import GameSelectModal from "../modal/GameSelectModal";
 
-const Chat2 = ({
+
+const Chat = ({
   roomNo,
   nickname,
   participantList = [],
@@ -200,10 +201,10 @@ const Chat2 = ({
         </div>
       )}
       {isGameSelectModalOpen && (
-        <GameSelectModal2 close={closeGameSelectModal} handleGameSelect={handleGameSelect} />
+        <GameSelectModal close={closeGameSelectModal} handleGameSelect={handleGameSelect} />
       )}
     </div>
   );
 };
 
-export default Chat2;
+export default Chat;

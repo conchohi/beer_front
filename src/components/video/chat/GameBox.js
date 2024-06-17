@@ -1,12 +1,12 @@
 import React from "react";
-import CharacterGame from "./game/CharacterGame";
-import LiarGame from "./game/LiarGame";
-import CatchMindGame from "./game/CatchMindGame";
-import ShoutInSilence from "./game/ShoutInsilence";
-import BombGame from "./game/BombGame";
-import BaskinRobbins31 from "../modal/game/BaskinRobbins31";
-import BalanceGame from "../modal/game/BalanceGame";
-import ChosungGame from "./game/ChosungGame";
+import CharacterGame from "../game/CharacterGame";
+import LiarGame from "../game/LiarGame";
+import CatchMindGame from "../game/CatchMindGame";
+import BombGame from "../game/BombGame";
+import ShoutInSilence from "../game/ShoutInsilence";
+import BaskinRobbins31 from "../game/BaskinRobbins31";
+import BalanceGame from "../game/BalanceGame";
+import ChosungGame from "../game/ChosungGame";
 
 
 const GameBox = ({

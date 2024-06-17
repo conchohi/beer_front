@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
+import { WEB_SOCKET_SERVER } from '../../../api/websocketApi';
 import { FaEraser, FaPen } from 'react-icons/fa';
 
 const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {

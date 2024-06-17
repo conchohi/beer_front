@@ -4,22 +4,21 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import DestoryCheckModal from "./modal/room/DestroyCheckModal";
 import UserDetail from "./modal/UserDetail";
-import Chat from "./Chat";
+import Chat from "./chat/Chat";
 import { destoryRoom, exit, getParticipantList, getRoom, join } from "../../api/roomApi";
 import BasicModalComponent from "../common/BasicModalComponent";
-import GameSelectModal from "./modal/game/GameSelectModal";
+import GameSelectModal from "./modal/GameSelectModal";
 import ParticipantList from "./ParticipantList";
 import VideoButton from "./VideoButton";
-import { API_SERVER_HOST } from "../../api/axios_intercepter";
 import { FaCrown } from "react-icons/fa";
-import Chat2 from "./Chat2";
+
 
 const server = "https://janus.jsflux.co.kr/janus";
 
 var sfuClient = null
 var janus = null
 
-const VideoComponentV3 = () => {
+const VideoComponent = () => {
     //방에 최대 인원 수가 필요, 자신의 닉네임도 필요
     const { roomNo } = useParams();
     const myroom = Number(roomNo);
@@ -783,7 +782,7 @@ const VideoComponentV3 = () => {
                     </div>
                 </div>
                 <div className="flex flex-col w-1/4 px-5 mt-8">
-                    <Chat2
+                    <Chat
                         nickname={nickname}
                         roomNo={roomNo}
                         participantList={participantList}
@@ -817,4 +816,4 @@ const VideoComponentV3 = () => {
     
 }
 
-export default VideoComponentV3;
+export default VideoComponent;
