@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Draggable from 'react-draggable';
 import { AiFillAlert, AiOutlineClose } from "react-icons/ai";
 import { reportUser } from '../../../api/reportApi';
 import BasicModalComponent from '../../common/BasicModalComponent';
+import ModalLayout from '../../../layouts/ModalLayout';
 
 
 function ReportUser({user, close, setMessage, setOpenModal}) {
@@ -54,7 +54,7 @@ function ReportUser({user, close, setMessage, setOpenModal}) {
   }
 
   return (<>
-    <Draggable>
+    <ModalLayout>
       <div className="fixed inset-0 flex items-center justify-center z-40">
         <div className="bg-blue-950 p-6 rounded-lg shadow-lg w-full max-w-md relative">
                   {/* 닫기창 */}
@@ -114,7 +114,7 @@ function ReportUser({user, close, setMessage, setOpenModal}) {
             </button>
         </div>
       </div>
-    </Draggable>
+    </ModalLayout>
     </>
   );
 }

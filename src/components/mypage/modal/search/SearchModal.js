@@ -3,8 +3,8 @@ import { FaSearch, FaUserPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import privateApi, { API_SERVER_HOST } from "../../../../api/axios_intercepter";
 import AlertModal from "../friend/FriendCommonModal";
-import Draggable from "react-draggable";
 import RadarAnimation from "../../../animation/mypage/Radar";
+import ModalLayout from "../../../../layouts/ModalLayout";
 
 const SearchModal = ({ show, closeModal,setClickNickname }) => {
   const [search, setSearch] = useState("");
@@ -60,7 +60,7 @@ const SearchModal = ({ show, closeModal,setClickNickname }) => {
   }
 
   return (
-    <Draggable>
+    <ModalLayout>
       <div
         className={`fixed inset-0 flex items-center justify-center transition-opacity duration-300 ${
           show ? "opacity-100 z-20" : "opacity-0 pointer-events-none"
@@ -135,7 +135,7 @@ const SearchModal = ({ show, closeModal,setClickNickname }) => {
           onClose={() => setAlertShow(false)}
         />
       </div>
-    </Draggable>
+    </ModalLayout>
   );
 };
 

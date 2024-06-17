@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const ChatBox2 = ({ messages, newMessage, setNewMessage, handleSendMessage }) => {
+const ChatBox = ({ messages, newMessage, setNewMessage, handleSendMessage }) => {
   const chatMessagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -18,20 +18,24 @@ const ChatBox2 = ({ messages, newMessage, setNewMessage, handleSendMessage }) =>
   };
 
   return (
-    <div className="chat-box flex bg-white rounded-lg flex-col shadow-lg p-4 h-[100px]">
+    <div className="chat-box flex bg-white rounded-lg flex-col shadow-lg p-4 h-[700px]">
       <div className="chat-content flex-1 overflow-y-scroll scrollbar-hide p-1">
         <ul className="chat-messages space-y-2">
           {messages.map((message, index) => (
             <li key={index}>
               {message.type === "JOIN" ? (
-                <span className="text-pink-500 font-bold">
+                <span className="text-blue-500 font-bold">
                   {message.sender}님이 입장하셨습니다.
                 </span>
               ) : message.type === "LEAVE" ? (
-                <span className="text-pink-500 font-bold">
+                <span className="text-red-500 font-bold">
                   {message.sender}님이 퇴장하셨습니다.
                 </span>
-              ) : (
+              ) : message.type === "GAME" ? (
+                <div className="font-bold text-lg mx-auto text-purple-600 text-center">
+                  {message.content} 시작 <br/>게임화면으로 이동하세요!
+                </div>
+              ) :(
                 <>
                   <span className="text-pink-500 font-bold">
                     {message.sender}
@@ -47,7 +51,7 @@ const ChatBox2 = ({ messages, newMessage, setNewMessage, handleSendMessage }) =>
       <div className="send-message flex mt-4">
         <input
           type="text"
-          className="input-message flex-1 rounded-full bg-slate-200 px-4 py-2"
+          className="input-message flex-1 rounded-full bg-slate-200 px-4 py-2 w-full"
           placeholder="메시지를 입력하세요"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
@@ -65,4 +69,4 @@ const ChatBox2 = ({ messages, newMessage, setNewMessage, handleSendMessage }) =>
   );
 };
 
-export default ChatBox2;
+export default ChatBox;
