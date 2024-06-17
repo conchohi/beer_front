@@ -4,6 +4,7 @@ import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
 import { FaEraser, FaPen } from 'react-icons/fa';
 
+
 const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
   const canvasRef = useRef(null);
   const [stompClient, setStompClient] = useState(null);
