@@ -22,6 +22,7 @@ const LiarGame = ({ roomNo, nickname, participantList = [] }) => {
       stompClient.subscribe(`/topic/game/${roomNo}`, (message) => {
         const gameState = JSON.parse(message.body);
         setLiar(gameState.liar); // 처음 설정된 후 변경되지 않도록 함
+        setGameTimeLeft(gameState.timeLeft);
         if (gameState.message){
           setMessage(gameState.message);
           setTimeout(() => {
