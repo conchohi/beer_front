@@ -29,7 +29,7 @@ const gameGuides = [
     },
     {
         id: "폭탄",
-        src: "/img/bomb.png",
+        src: "/img/bombgame.png",
         alt: "RandomBomb",
     },
     {
