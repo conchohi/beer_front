@@ -1,10 +1,11 @@
-import VideoComponentV3 from "../components/video/VideoComponentV3";
+import VideoComponent from "../components/video/VideoComponent";
+
 
 const VideoPage = () => {
     return ( <>
         <div className="flex flex-col">
             
-            <VideoComponentV3/>
+            <VideoComponent/>
             
         </div>
     </> );

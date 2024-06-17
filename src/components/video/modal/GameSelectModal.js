@@ -46,7 +46,7 @@ const gameGuides = [
 
 ];
 
-const GameSelectModal2 = ({ close, handleGameSelect }) => {
+const GameSelectModal = ({ close, handleGameSelect }) => {
   const startGame = (e) => {
     // 게임 이름
     let game = e.target.id;
@@ -79,4 +79,4 @@ const GameSelectModal2 = ({ close, handleGameSelect }) => {
 
 };
 
-export default GameSelectModal2;
+export default GameSelectModal;

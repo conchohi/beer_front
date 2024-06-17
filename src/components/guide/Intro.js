@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import GameModal from "../video/modal/game/GameModal";
+import GameModal from "../video/game/GameModal";
 
 const Intro = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -63,7 +63,7 @@ function UserDetail({ nickname, close }) {
             <div className="flex items-center ">
               {/* 프로필 이미지 */}
               <div className="w-36 h-36 overflow-hidden object-cover mx-2">
-                <img src={userInfo.profileImage ? `${API_SERVER_HOST}/api/user/${userInfo.profileImage}` :`/imsi.jpg`}
+                <img src={`${API_SERVER_HOST}/api/user/${userInfo.profileImage}`}
 
                   alt="Profile"
                   className=" w-full h-full rounded-lg mr-6 object-cover " />

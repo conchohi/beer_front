@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
+import { WEB_SOCKET_SERVER } from '../../../api/websocketApi';
 import { FaBomb } from 'react-icons/fa';
 
 const BombGame = ({ roomNo, nickname, participantList = [] }) => {

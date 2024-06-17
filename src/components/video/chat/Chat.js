@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
-import ChatBox from "./test/ChatBox";
-import GameBox from "./test/GameBox";
-import GameSelectModal2 from "./test/game/GameSelectModal2";
-import { WEB_SOCKET_SERVER } from "../../api/websocketApi";
-import ChatBox2 from "./test/ChatBox2";
+import ChatBox from "./ChatBox";
+import GameBox from "./GameBox";
+import { WEB_SOCKET_SERVER } from "../../../api/websocketApi";
+import GameSelectModal from "../modal/GameSelectModal";
 
-const Chat2 = ({
+const Chat = ({
   roomNo,
   nickname,
   participantList = [],
@@ -79,7 +78,7 @@ const Chat2 = ({
 
   const handleSendMessage = () => {
     //빈 메시지 전송 불가
-    if(!newMessage){
+    if (!newMessage) {
       return;
     }
     if (stompClientRef.current && stompClientRef.current.connected) {
@@ -108,12 +107,12 @@ const Chat2 = ({
   };
 
   const handleGameSelect = (game) => {
-    const nickname = localStorage.getItem('nickname')
-    if(nickname !== master){
+    const nickname = localStorage.getItem("nickname");
+    if (nickname !== master) {
       if (stompClientRef.current && stompClientRef.current.connected) {
         const chatMessage = {
           sender: username,
-          content: `${game}을 하고 싶어요!`,
+          content: `${game} 게임을 하고 싶어요!`,
           type: "CHAT",
         };
         stompClientRef.current.send(
@@ -177,31 +176,30 @@ const Chat2 = ({
       ) : (
         <div className="content flex-1 flex flex-col md:flex-row">
           <div className="w-full flex-1 flex flex-col">
-          {activeTab === "chat" ? (
-            <ChatBox
-              messages={messages}
-              newMessage={newMessage}
-              setNewMessage={setNewMessage}
-              handleSendMessage={handleSendMessage}
-            />
-          ) : (
-                <GameBox
-                  currentGame={currentGame}
-                  nickname={nickname}
-                  roomNo={roomNo}
-                  participantList={participantList}
-                  master={master}
-                  setCurrentGame={setCurrentGame}
-                  currentTurn={currentTurn}
-                  setCurrentTurn={setCurrentTurn}
-                />
-
-          )}
+            {activeTab === "chat" ? (
+              <ChatBox
+                messages={messages}
+                newMessage={newMessage}
+                setNewMessage={setNewMessage}
+                handleSendMessage={handleSendMessage}
+              />
+            ) : (
+              <GameBox
+                currentGame={currentGame}
+                nickname={nickname}
+                roomNo={roomNo}
+                participantList={participantList}
+                master={master}
+                setCurrentGame={setCurrentGame}
+                currentTurn={currentTurn}
+                setCurrentTurn={setCurrentTurn}
+              />
+            )}
           </div>
         </div>
       )}
       {isGameSelectModalOpen && (
-        <GameSelectModal2
+        <GameSelectModal
           close={closeGameSelectModal}
           handleGameSelect={handleGameSelect}
         />
@@ -210,4 +208,4 @@ const Chat2 = ({
   );
 };
 
-export default Chat2;
+export default Chat;

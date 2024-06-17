@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
+import { WEB_SOCKET_SERVER } from '../../../api/websocketApi';
 
 const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setCurrentGame, currentTurn, setCurrentTurn }) => {
   const [stompClient, setStompClient] = useState(null);

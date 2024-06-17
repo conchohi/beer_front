@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { publicApi } from '../../../../api/axios_intercepter';
-import { WEB_SOCKET_SERVER } from '../../../../api/websocketApi';
+import { publicApi } from '../../../api/axios_intercepter';
+import { WEB_SOCKET_SERVER } from '../../../api/websocketApi';
 
 const ChosungGame = ({ roomNo, nickname, participantList = [], currentGame, setCurrentGame, currentTurn, setCurrentTurn }) => {
   const [stompClient, setStompClient] = useState(null);
