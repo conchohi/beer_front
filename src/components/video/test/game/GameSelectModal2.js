@@ -5,43 +5,43 @@ import { FaWindowClose } from "react-icons/fa";
 const gameGuides = [
     {
         id: "캐릭터 게임",
-        src: "/img/personquiz.png",
-        alt: "Image Game Guide",
+        src: "/img/guessquiz.png",
+        alt: "Inmulquiz",
     },
     {
         id: "고요속의외침 게임",
-        src: "/img/whaechim.png",
-        alt: "Shout In Silence Guide",
+        src: "/img/bodylanguage.png",
+        alt: "Momuromalhaeyo",
     },
     {
         id: "라이어 게임",
         src: "/img/liargame.png",
-        alt: "Balance Game Guide",
+        alt: "Liargame",
     },
     {
         id: "캐치마인드 게임",
-        src: "/img/catchmindgame.png",
-        alt: "Catch Mind Game Guide",
+        src: "/img/catchmind.png",
+        alt: "CatchMindGame",
     },
     {
         id: "밸런스 게임",
         src: "/img/balancegame.png",
-        alt: "Balance Game Guide",
+        alt: "BalanceGame",
     },
     {
         id: "폭탄 게임",
-        src: "/img/bombgame.jpg",
-        alt: "Balance Game Guide",
+        src: "/img/bomb.png",
+        alt: "RandomBomb",
     },
     {
         id: "이미지 게임",
-        src: "/img/imggame.png",
-        alt: "Balance Game Guide",
+        src: "/img/hunmin.png",
+        alt: "Hunminjungum",
     },
     {
         id: "베스킨라빈스 게임",
-        src: "/img/baskingame.png",
-        alt: "Balance Game Guide",
+        src: "/img/Baskin.png",
+        alt: "Baskinrobbins",
     },
 
 ];
