@@ -101,7 +101,7 @@ const EmailVerification = ({
         <button
           type="button"
           onClick={sendEmailVerificationCode}
-          className={`ml-4 px-4 py-2 w-4/12 rounded-md bg-pink-500 text-white tracking-widest text-xs font-semibold hover:bg-pink-600 ${
+          className={`ml-4 px-4 py-2 w-4/12 rounded-md bg-pink-500 text-white tracking-widest text-xs font-semibold hover:bg-pink-600 transition duration-300 ease-in-out transform hover:scale-105 ${
             isEmailVerified ? "hidden" : ""
           }`}
         >
