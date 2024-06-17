@@ -1,6 +1,6 @@
 import React from "react";
-import Draggable from "react-draggable";
 import { FaWindowClose } from "react-icons/fa";
+import ModalLayout from "../../../../layouts/ModalLayout";
 
 const games = [
   {
@@ -34,7 +34,7 @@ const GameSelectModal = ({ close, startSelectedGame }) => {
     };
 
   return (
-    <Draggable>
+    <ModalLayout>
       <div className="w-lvw h-lvh z-20 fixed top-0 left-0">
         <div className="absolute flex flex-col bg-[#222222] top-1/2 left-1/2 w-[60vw] -translate-x-1/2 -translate-y-1/2 rounded-xl shadow p-3">
           <div className="relative">
@@ -55,7 +55,7 @@ const GameSelectModal = ({ close, startSelectedGame }) => {
           </div>
         </div>
       </div>
-    </Draggable>
+    </ModalLayout>
   );
 };
 

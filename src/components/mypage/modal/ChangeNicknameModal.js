@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { publicApi } from "../../../api/axios_intercepter"; // 여기에 실제 파일 경로를 입력하세요.
-import Draggable from "react-draggable";
+import ModalLayout from "../../../layouts/ModalLayout";
 
 const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNicknameChange }) => {
   const [nickname, setNickname] = useState(currentNickname);
@@ -38,7 +38,7 @@ const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNickna
       className="fixed inset-0 flex items-center justify-center  z-50"
       overlayClassName="fixed inset-0 "
     >
-      <Draggable>
+      <ModalLayout>
       <div className="bg-slate-200 p-8 rounded-lg border-2 border-pink-500 w-full max-w-md mx-auto text-white">
         <h2 className="text-xl text-pink-500 mb-4">닉네임 변경</h2>
         <div className="mb-4">
@@ -88,7 +88,7 @@ const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNickna
           <div className="text-red-500 text-sm mt-2">닉네임 중복 체크를 완료해주세요.</div>
         )}
       </div>
-      </Draggable>
+      </ModalLayout>
     </Modal>
   );
 };

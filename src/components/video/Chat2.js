@@ -4,12 +4,22 @@ import { Stomp } from "@stomp/stompjs";
 import ChatBox from "./test/ChatBox";
 import GameBox from "./test/GameBox";
 import GameSelectModal2 from "./test/game/GameSelectModal2";
-import { API_SERVER_HOST } from "../../api/axios_intercepter";
-const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
+import { WEB_SOCKET_SERVER } from "../../api/websocketApi";
+import ChatBox2 from "./test/ChatBox2";
+
+const Chat2 = ({
+  roomNo,
+  nickname,
+  participantList = [],
+  master,
+  currentGame,
+  setCurrentGame,
+  currentTurn,
+  setCurrentTurn,
+}) => {
   const [activeTab, setActiveTab] = useState("chat");
   const [isConnected, setIsConnected] = useState(false);
   const [isGameSelectModalOpen, setIsGameSelectModalOpen] = useState(false);
-  const [currentGame, setCurrentGame] = useState(null);
   const stompClientRef = useRef(null);
 
   const [messages, setMessages] = useState([]);
@@ -18,7 +28,7 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
   const username = nickname;
 
   useEffect(() => {
-    const socket = new SockJS(`${API_SERVER_HOST}/ws`);
+    const socket = new SockJS(`${WEB_SOCKET_SERVER}`);
     const stompClient = Stomp.over(socket);
     stompClientRef.current = stompClient;
 
@@ -68,6 +78,10 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
   }, [roomNo, username]);
 
   const handleSendMessage = () => {
+    //빈 메시지 전송 불가
+    if(!newMessage){
+      return;
+    }
     if (stompClientRef.current && stompClientRef.current.connected) {
       const chatMessage = {
         sender: username,
@@ -94,6 +108,22 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
   };
 
   const handleGameSelect = (game) => {
+    const nickname = localStorage.getItem('nickname')
+    if(nickname !== master){
+      if (stompClientRef.current && stompClientRef.current.connected) {
+        const chatMessage = {
+          sender: username,
+          content: `${game}을 하고 싶어요!`,
+          type: "CHAT",
+        };
+        stompClientRef.current.send(
+          `/app/chat.sendMessage/${roomNo}`,
+          {},
+          JSON.stringify(chatMessage)
+        );
+        return;
+      }
+    }
     if (stompClientRef.current && stompClientRef.current.connected) {
       const chatMessage = {
         sender: username,
@@ -105,11 +135,9 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
         {},
         JSON.stringify(chatMessage)
       );
-      setNewMessage("");
     } else {
       console.error("STOMP client is not connected");
     }
-    closeGameSelectModal();
   };
 
   return (
@@ -147,7 +175,7 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
           <span className="text-gray-500">연결 중...</span>
         </div>
       ) : (
-        <div className="content flex-1">
+        <div className="content flex-1 flex flex-col md:flex-row">
           {activeTab === "chat" ? (
             <ChatBox
               messages={messages}
@@ -156,13 +184,28 @@ const Chat2 = ({ roomNo, nickname, participantList = [], master }) => {
               handleSendMessage={handleSendMessage}
             />
           ) : (
-            <GameBox
-              currentGame={currentGame}
-              nickname={nickname}
-              roomNo={roomNo}
-              participantList={participantList}
-              master={master}
-            />
+            <div className="flex-1 flex flex-col md:flex-row">
+              <div className="w-full md:w-8/12 flex-1 flex flex-col">
+                <GameBox
+                  currentGame={currentGame}
+                  nickname={nickname}
+                  roomNo={roomNo}
+                  participantList={participantList}
+                  master={master}
+                  setCurrentGame={setCurrentGame}
+                  currentTurn={currentTurn}
+                  setCurrentTurn={setCurrentTurn}
+                />
+              </div>
+              <div className="w-full md:w-4/12 flex-1 flex flex-col mt-4 md:mt-0 md:ml-4">
+                <ChatBox2
+                  messages={messages}
+                  newMessage={newMessage}
+                  setNewMessage={setNewMessage}
+                  handleSendMessage={handleSendMessage}
+                />
+              </div>
+            </div>
           )}
         </div>
       )}

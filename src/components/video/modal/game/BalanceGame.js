@@ -7,20 +7,22 @@ let stompClient = null;
 
 const BalanceGame = ({ nickname, roomNo, participantList = [], master }) => {
   const [currentChoices, setCurrentChoices] = useState(["", ""]);
-  const [isChoiceInputTime, setIsChoiceInputTime] = useState(true); // 선택지 입력 시간 여부
+  const [isChoiceInputTime, setIsChoiceInputTime] = useState(false);
   const [gameState, setGameState] = useState({
     choices: ["", ""],
     choice0: 0,
     choice1: 0,
-    currentTurn: master,
+    currentTurn: "",
     players: participantList.map((player) => player.nickname),
     currentRound: 0,
     totalRounds: 3,
+    balanceGameVotes: [],
+    completedPlayers: [],  // 각 플레이어의 완료 상태 추적
   });
   const [roundResults, setRoundResults] = useState([]);
-  const [timer, setTimer] = useState(50); // 50초 타이머
-  const [gameStarted, setGameStarted] = useState(false); // 게임 시작 여부
-  const [connected, setConnected] = useState(false); // WebSocket 연결 여부
+  const [timer, setTimer] = useState(0);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [connected, setConnected] = useState(false);
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const BalanceGame = ({ nickname, roomNo, participantList = [], master }) => {
       console.log("Connected to WebSocket");
       setConnected(true);
       stompClient.subscribe(`/topic/game/${roomNo}`, onMessageReceived);
+      console.log(`>>> SUBSCRIBE to /topic/game/${roomNo}`);
     };
 
     const onError = (error) => {
@@ -52,11 +55,17 @@ const BalanceGame = ({ nickname, roomNo, participantList = [], master }) => {
         currentTurn: gameMessage.currentTurn,
         players: gameMessage.players,
         currentRound: gameMessage.currentRound,
+        balanceGameVotes: gameMessage.balanceGameVotes || [],
+        completedPlayers: gameMessage.completedPlayers || [],  // 완료된 플레이어 목록
       }));
 
       if (gameMessage.currentRound > 0 && gameMessage.currentRound <= gameState.totalRounds) {
         setIsChoiceInputTime(false);
-        startTimer(30); // 투표 시간 30초
+        startTimer(30);
+      }
+
+      if (gameMessage.currentRound === 1) {
+        setGameStarted(true);
       }
     };
 
@@ -78,11 +87,6 @@ const BalanceGame = ({ nickname, roomNo, participantList = [], master }) => {
       setTimer((prev) => {
         if (prev === 1) {
           clearInterval(timerRef.current);
-          if (isChoiceInputTime) {
-            handleChoiceSubmit(); // 선택지 입력 시간이 끝나면 라운드 시작
-          } else {
-            endRound(); // 투표 시간이 끝나면 라운드 종료
-          }
         }
         return prev - 1;
       });
@@ -93,7 +97,8 @@ const BalanceGame = ({ nickname, roomNo, participantList = [], master }) => {
     if (connected && nickname) {
       console.log("Sending vote:", vote);
       const voteMessage = { player: nickname, vote };
-      stompClient.send(`/app/vote/${roomNo}`, {}, JSON.stringify(voteMessage));
+      stompClient.send(`/app/voteBalanceGame/${roomNo}`, {}, JSON.stringify(voteMessage));
+      console.log(`>>> SEND vote to /app/voteBalanceGame/${roomNo}:`, voteMessage);
     } else {
       console.log("Cannot send vote. Conditions not met.");
     }
@@ -109,78 +114,52 @@ const BalanceGame = ({ nickname, roomNo, participantList = [], master }) => {
       };
       setRoundResults((prevResults) => [...prevResults, roundResult]);
 
-      if (gameState.currentRound >= gameState.totalRounds) {
-        // 모든 라운드가 끝났을 때 결과를 표시
-        setGameStarted(false);
-        setIsChoiceInputTime(false);
-        stompClient.send(`/app/end-round/${roomNo}`, {}, JSON.stringify({}));
-      } else {
-        setGameState((prevState) => ({
-          ...prevState,
-          currentRound: prevState.currentRound + 1,
-          choice0: 0, // Reset votes for the new round
-          choice1: 0,
-        }));
-        setIsChoiceInputTime(true);
-        startTimer(50); // 다음 라운드 선택지 입력 시간 50초
-        stompClient.send(`/app/end-round/${roomNo}`, {}, JSON.stringify({}));
-      }
-    }
-  };
+      // 현재 플레이어를 완료된 플레이어 목록에 추가
+      const completedPlayers = [...gameState.completedPlayers, nickname];
 
-  const startNextRound = () => {
-    if (connected && nickname === master) {
-      const nextRound = gameState.currentRound + 1;
-      if (nextRound > gameState.totalRounds) {
-        console.log("All rounds completed");
-        return;
+      setGameState((prevState) => ({
+        ...prevState,
+        currentRound: prevState.currentRound + 1,
+        choice0: 0,
+        choice1: 0,
+        balanceGameVotes: [],
+        completedPlayers,  // 완료된 플레이어 목록 업데이트
+      }));
+
+      if (completedPlayers.length === gameState.players.length) {
+        stompClient.send(`/app/endRoundBalanceGame/${roomNo}`, {}, JSON.stringify({}));
+        console.log(`>>> SEND endRoundBalanceGame to /app/endRoundBalanceGame/${roomNo}`);
+      } else {
+        stompClient.send(`/app/updateGameState/${roomNo}`, {}, JSON.stringify({ completedPlayers }));
+        console.log(`>>> SEND updateGameState to /app/updateGameState/${roomNo}`);
       }
-      const playerNames = participantList.map((player) => player.nickname);
-      const gameMessage = { players: playerNames, round: nextRound, choices: currentChoices };
-      stompClient.send(`/app/start/${roomNo}`, {}, JSON.stringify(gameMessage));
-      setCurrentChoices(["", ""]); // Reset choices for next round
-      startTimer(30); // 투표 시간 30초
     }
   };
 
   const handleVoteClick = (choice) => {
+    setGameState((prevState) => {
+        const updatedVotes = [...prevState.balanceGameVotes, nickname];
+        const updatedState = {
+            ...prevState,
+            balanceGameVotes: updatedVotes,
+            [choice === prevState.choices[0] ? 'choice0' : 'choice1']: prevState[choice === prevState.choices[0] ? 'choice0' : 'choice1'] + 1,
+        };
+
+        if (updatedVotes.length === prevState.players.length) {
+            endRound();  // 모든 플레이어가 투표를 완료하면 라운드를 종료
+        }
+
+        return updatedState;
+    });
+
     sendVote(choice);
-    setGameState((prevState) => ({
-      ...prevState,
-      [choice === prevState.choices[0] ? 'choice0' : 'choice1']: prevState[choice === prevState.choices[0] ? 'choice0' : 'choice1'] + 1,
-    }));
-    endRound();
-  };
+};
 
-  const handleChoiceChange = (index, value) => {
-    const newChoices = [...currentChoices];
-    newChoices[index] = value;
-    setCurrentChoices(newChoices);
-  };
-
-  const handleChoiceSubmit = () => {
-    if (currentChoices[0] && currentChoices[1]) {
-      clearInterval(timerRef.current);
-      setGameState((prevState) => ({
-        ...prevState,
-        choices: currentChoices,
-      }));
-      setIsChoiceInputTime(false);
-      startTimer(30); // 투표 시간 30초
-    } else {
-      alert("두 개의 선택지를 모두 입력해 주세요.");
-    }
-  };
 
   const startGame = () => {
     if (connected && nickname === master) {
-      setGameStarted(true);
-      setIsChoiceInputTime(true);
-      setGameState((prevState) => ({
-        ...prevState,
-        currentRound: 1, // 게임 시작 시 첫 라운드 설정
-      }));
-      startTimer(50); // 선택지 입력 시간 50초
+      stompClient.send(`/app/startBalanceGame/${roomNo}`, {}, JSON.stringify({ players: participantList.map(p => p.nickname) }));
+      console.log(`>>> SEND startBalanceGame to /app/startBalanceGame/${roomNo}`);
     }
   };
 
@@ -192,37 +171,14 @@ const BalanceGame = ({ nickname, roomNo, participantList = [], master }) => {
           게임 시작
         </button>
       )}
-      {gameStarted && isChoiceInputTime && nickname === master && (
-        <>
-          <div className="mb-4">
-            <input
-              type="text"
-              value={currentChoices[0]}
-              onChange={(e) => handleChoiceChange(0, e.target.value)}
-              placeholder="첫번째 선택지"
-              className="mb-2 p-2 border rounded"
-            />
-            <input
-              type="text"
-              value={currentChoices[1]}
-              onChange={(e) => handleChoiceChange(1, e.target.value)}
-              placeholder="두번째 선택지"
-              className="p-2 border rounded"
-            />
-          </div>
-          <button onClick={handleChoiceSubmit} className="mb-4 p-2 bg-green-500 text-white rounded">
-            입력 완료
-          </button>
-        </>
-      )}
       {gameStarted && !isChoiceInputTime && (
         <div>
           <h2 className="text-xl font-bold mb-2">당신의 선택은?</h2>
           <div className="mb-4">
-            <button onClick={() => handleVoteClick(gameState.choices[0])} className="m-2 p-2 bg-green-500 text-white rounded">
+            <button onClick={() => handleVoteClick("choice0")} className="m-2 p-2 bg-green-500 text-white rounded">
               {gameState.choices[0]}
             </button>
-            <button onClick={() => handleVoteClick(gameState.choices[1])} className="m-2 p-2 bg-red-500 text-white rounded">
+            <button onClick={() => handleVoteClick("choice1")} className="m-2 p-2 bg-red-500 text-white rounded">
               {gameState.choices[1]}
             </button>
           </div>
@@ -240,7 +196,7 @@ const BalanceGame = ({ nickname, roomNo, participantList = [], master }) => {
           <ul className="list-disc list-inside">
             {roundResults.map((result, index) => (
               <li key={index}>
-                라운드 {result.round}: {result.choices[0]} (예: {result.choice0}), {result.choices[1]} (아니오: {result.choice1})
+                라운드 {result.round}: {result.choices[0]}: {result.choice0}, {result.choices[1]} {result.choice1}
               </li>
             ))}
           </ul>
