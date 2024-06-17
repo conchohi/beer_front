@@ -131,7 +131,7 @@ const BaskinRobbins31 = ({
   };
 
   return (
-    <div className="game-container">
+    <div className="game-container ">
       <h1 className="text-2xl font-bold mb-4 text-center">배스킨 라빈스 31</h1>
       {gameState.losingPlayer && (
         <div className="mt-4">
@@ -166,8 +166,8 @@ const BaskinRobbins31 = ({
           게임 참가자: {gameState.players.join(", ")}
         </ul>
         <div>
-          <h2 className="text-xl font-bold mb-2">게임 현황</h2>
-          <ul className="h-48 overflow-y-auto">
+          <h2 className="text-xl font-bold mb-2 mt-4">게임 현황</h2>
+          <ul className="h-80 overflow-y-auto">
             {gameState.moves
               .slice()
               .reverse()

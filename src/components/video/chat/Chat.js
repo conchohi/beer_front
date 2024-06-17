@@ -6,7 +6,6 @@ import GameBox from "./GameBox";
 import { WEB_SOCKET_SERVER } from "../../../api/websocketApi";
 import GameSelectModal from "../modal/GameSelectModal";
 
-
 const Chat = ({
   roomNo,
   nickname,
@@ -79,7 +78,7 @@ const Chat = ({
 
   const handleSendMessage = () => {
     //빈 메시지 전송 불가
-    if(!newMessage){
+    if (!newMessage) {
       return;
     }
     if (stompClientRef.current && stompClientRef.current.connected) {
@@ -108,8 +107,8 @@ const Chat = ({
   };
 
   const handleGameSelect = (game) => {
-    const nickname = localStorage.getItem('nickname')
-    if(nickname !== master){
+    const nickname = localStorage.getItem("nickname");
+    if (nickname !== master) {
       if (stompClientRef.current && stompClientRef.current.connected) {
         const chatMessage = {
           sender: username,
@@ -177,31 +176,33 @@ const Chat = ({
       ) : (
         <div className="content flex-1 flex flex-col md:flex-row">
           <div className="w-full flex-1 flex flex-col">
-          {activeTab === "chat" ? (
-            <ChatBox
-              messages={messages}
-              newMessage={newMessage}
-              setNewMessage={setNewMessage}
-              handleSendMessage={handleSendMessage}
-            />
-          ) : (
-                <GameBox
-                  currentGame={currentGame}
-                  nickname={nickname}
-                  roomNo={roomNo}
-                  participantList={participantList}
-                  master={master}
-                  setCurrentGame={setCurrentGame}
-                  currentTurn={currentTurn}
-                  setCurrentTurn={setCurrentTurn}
-                />
-
-          )}
+            {activeTab === "chat" ? (
+              <ChatBox
+                messages={messages}
+                newMessage={newMessage}
+                setNewMessage={setNewMessage}
+                handleSendMessage={handleSendMessage}
+              />
+            ) : (
+              <GameBox
+                currentGame={currentGame}
+                nickname={nickname}
+                roomNo={roomNo}
+                participantList={participantList}
+                master={master}
+                setCurrentGame={setCurrentGame}
+                currentTurn={currentTurn}
+                setCurrentTurn={setCurrentTurn}
+              />
+            )}
           </div>
         </div>
       )}
       {isGameSelectModalOpen && (
-        <GameSelectModal close={closeGameSelectModal} handleGameSelect={handleGameSelect} />
+        <GameSelectModal
+          close={closeGameSelectModal}
+          handleGameSelect={handleGameSelect}
+        />
       )}
     </div>
   );

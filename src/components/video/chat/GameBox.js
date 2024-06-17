@@ -8,27 +8,26 @@ import BaskinRobbins31 from "../game/BaskinRobbins31";
 import BalanceGame from "../game/BalanceGame";
 import ChosungGame from "../game/ChosungGame";
 
-
 const GameBox = ({
   currentGame,
   nickname,
   roomNo,
   participantList,
   master,
+
   setCurrentGame,
   currentTurn,
-  setCurrentTurn
+  setCurrentTurn,
 }) => {
   const games = {
-    "캐릭터": CharacterGame,
-    "라이어": LiarGame,
-    "캐치마인드": CatchMindGame,
-    "폭탄" : BombGame,
-    "고요속의외침": ShoutInSilence,
-    "베스킨라빈스": BaskinRobbins31,
-    "밸런스": BalanceGame,
-    "초성": ChosungGame
-
+    캐릭터: CharacterGame,
+    라이어: LiarGame,
+    캐치마인드: CatchMindGame,
+    폭탄: BombGame,
+    고요속의외침: ShoutInSilence,
+    베스킨라빈스: BaskinRobbins31,
+    밸런스: BalanceGame,
+    초성: ChosungGame,
   };
 
   const GameComponent = games[currentGame];
