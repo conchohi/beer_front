@@ -60,12 +60,14 @@ const GameModal = ({ isOpen, closeModal, title }) => {
                   <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/몸으로 말해요 가이드1.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  각 참가자는 화면에 출제자 확인 후
+                  <span className="text-[#f400b0] font-bold">
+                    출제자의 화면{" "}
+                  </span>
+                  을 주시합니다.
                 </h1>
               </>
             ),
@@ -77,12 +79,12 @@ const GameModal = ({ isOpen, closeModal, title }) => {
                   <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/몸으로말해요2.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  출제자는 주어진 제시어를{" "}
+                  <span className="text-[#f400b0] font-bold">몸으로 </span>
+                  해설명해서 제시어를 설명합니다.
                 </h1>
               </>
             ),
@@ -95,15 +97,16 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]">라이어 게임 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/라이어게임 2.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  각 참가자는 화면에 주제는 공통으로 주어지고{" "}
+                  <span className="text-[#f400b0] font-bold">라이어에게만</span>
+                  특정단어 대신 라이어 임을 알려줍니다. 다른 사람의 대화 내용을
+                  듣고 단어를 유추 해보세요.
                 </h1>
               </>
             ),
@@ -112,15 +115,15 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]">라이어 게임 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/라이어게임 2.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  일반 유저는 라이어를 찾으면서{" "}
+                  <span className="text-[#f400b0] font-bold">특정단어를</span>
+                  라이어에게 들키지 않도록 주의 합니다.
                 </h1>
               </>
             ),
@@ -133,15 +136,15 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]">캐치마인드 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/캐치마인드 가이드1.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  각 참가자는 출제자가 그린 그림을 보면서{" "}
+                  <span className="text-[#f400b0] font-bold">주제를</span>
+                  맞추는 게임입니다.
                 </h1>
               </>
             ),
@@ -150,15 +153,15 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]">캐치마인드 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/캐치마인드2.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  출제자는{" "}
+                  <span className="text-[#f400b0] font-bold">주제를 </span>
+                  그림으로 그려서 알려줍니다.{" "}
                 </h1>
               </>
             ),
@@ -171,15 +174,15 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]"> 밸런스게임 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/밸런스게임.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  주어진 시간안에 두 개 중 하나를{" "}
+                  <span className="text-[#f400b0] font-bold">선택</span>
+                  하면 됩니다.
                 </h1>
               </>
             ),
@@ -188,15 +191,15 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]">밸런스게임 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/밸런스게임2.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  모든 참가자가 선택시{" "}
+                  <span className="text-[#f400b0] font-bold">투표 결과를</span>
+                  확인 할 수 있습니다.
                 </h1>
               </>
             ),
@@ -209,15 +212,17 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]">폭탄돌리기 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/폭탄게임1.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  폭탄은{" "}
+                  <span className="text-[#f400b0] font-bold">5 ~ 20 초</span>{" "}
+                  사이에{" "}
+                  <span className="text-[#f400b0] font-bold">랜덤으로 </span>
+                  터지도록 설정 되어 있습니다.
                 </h1>
               </>
             ),
@@ -226,15 +231,17 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]">폭탄돌리기 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/폭탄돌리기.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  만약 폭탄을 가지게 된다면{" "}
+                  <span className="text-[#f400b0] font-bold">
+                    다른 유저에게
+                  </span>
+                  전달하면 됩니다.
                 </h1>
               </>
             ),
@@ -247,15 +254,17 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]">훈민정음 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/훈민정음1.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  주어진 초성에 맞게 단어를 빠르게 입력하면 됩니다.{" "}
+                  <span className="text-[#f400b0] font-bold">맨 마지막</span>에
+                  입력한 유저는{" "}
+                  <span className="text-[#f400b0] font-bold">- 1 점</span> 을
+                  받습니다.
                 </h1>
               </>
             ),
@@ -264,15 +273,15 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]">훈민정음 </span> 가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/훈민정음2.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  만약 주어진 시간에 단어를 입력하지 못한 유저들도{" "}
+                  <span className="text-[#f400b0] font-bold">- 1 점</span>을
+                  받습니다.
                 </h1>
               </>
             ),
@@ -285,15 +294,16 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]">베스킨라빈스 31 </span>{" "}
+                  가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/베라1.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  주어진 턴에 맞게 숫자 3개중
+                  <span className="text-[#f400b0] font-bold">선택</span>
+                  하여 제출하시면 됩니다.
                 </h1>
               </>
             ),
@@ -302,15 +312,17 @@ const GameModal = ({ isOpen, closeModal, title }) => {
             content: (
               <>
                 <div className="text-4xl text-center m-5">
-                  <span className="text-[#f400b0]">몸으로 말해요 </span> 가이드
+                  <span className="text-[#f400b0]">베스킨라빈스 31 </span>{" "}
+                  가이드
                 </div>
                 <div>
-                  <img src="/img/인물퀴즈2.png"></img>
+                  <img src="/img/베라3.png"></img>
                 </div>
                 <h1 className="px-10 text-2xl  text-start pr-5">
-                  각 참가자는 화면에 자신의 손가락이 모두 인식되도록{" "}
-                  <span className="text-[#f400b0] font-bold">카메라에 손</span>
-                  을 펼쳐 보입니다.
+                  <span className="text-[#f400b0] font-bold">
+                    31 이거 그 이상{" "}
+                  </span>
+                  클릭 시 그 숫자를 선택한 유저가 패배합니다.
                 </h1>
               </>
             ),
