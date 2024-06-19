@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
-import ChangeNicknameModal from "./ChangeNicknameModal"; // New component for changing nickname
+import { useNavigate } from "react-router-dom";
+import ChangeNicknameModal from "./ChangeNicknameModal"; 
+import CheckEmailModal from "./CheckEmailModal"; 
+import ChangePasswordModal from "./ChangePasswordModal";
+import DeleteAccountModal from "./DeleteAccountModal";
 import ImageEditDisplay from "../image/ImageEditDisplay";
 import privateApi from "../../../api/axios_intercepter";
 import ModalLayout from "../../../layouts/ModalLayout";
@@ -11,15 +15,21 @@ const EditProfileModal = ({
   userData,
   onUpdateUserData,
 }) => {
-  const [imageFile, setImageFile] = useState(null); // New state for the file
-  const [imageUrl, setImageUrl] = useState(userData?.profileImage || ""); // New state for the image URL
+  const [imageFile, setImageFile] = useState(null); 
+  const [imageUrl, setImageUrl] = useState(userData?.profileImage || ""); 
   const [nickname, setNickname] = useState(userData?.nickname || "");
   const [email, setEmail] = useState(userData?.email || "");
   const [mbti, setMbti] = useState(userData?.mbti || "");
   const [age, setAge] = useState(userData?.age || "");
   const [intro, setIntro] = useState(userData?.intro || "");
-  const [gender, setGender] = useState(userData?.gender || ""); // New state for gender
+  const [gender, setGender] = useState(userData?.gender || ""); 
   const [isNicknameModalOpen, setIsNicknameModalOpen] = useState(false);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false); 
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false); 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeletedModalOpen, setIsDeletedModalOpen] = useState(false); // 추가된 상태
+
+  const navigate = useNavigate();
 
   const handleMouseDown = (e) => {
     e.stopPropagation();
@@ -57,20 +67,19 @@ const EditProfileModal = ({
       formData.append("gender", gender);
 
       if (imageFile) {
-        formData.append("profileFile", imageFile); // Append the file to the form data
+        formData.append("profileFile", imageFile);
       }
 
       const response = await privateApi.patch(`/api/user`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Specify the correct content type
+          "Content-Type": "multipart/form-data",
         },
       });
 
       if (response.status === 200) {
         const updatedData = response.data;
-        // Create a unique URL for the updated image
         localStorage.setItem("nickname", nickname);
-        onUpdateUserData(updatedData); // Immediately reflect changes in ProfilePageInfo
+        onUpdateUserData(updatedData);
         onRequestClose();
       } else {
         console.error("Failed to update user");
@@ -90,6 +99,47 @@ const EditProfileModal = ({
 
   const handleNicknameChange = (newNickname) => {
     setNickname(newNickname);
+  };
+
+  const openEmailModal = () => {
+    setIsEmailModalOpen(true);
+  };
+
+  const closeEmailModal = () => {
+    setIsEmailModalOpen(false);
+  };
+
+  const handleEmailVerified = (newEmail) => {
+    setEmail(newEmail);
+  };
+
+  const openPasswordModal = () => {
+    setIsPasswordModalOpen(true);
+  };
+
+  const closePasswordModal = () => {
+    setIsPasswordModalOpen(false);
+  };
+
+  const openDeleteModal = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const openDeletedModal = () => {
+    setIsDeletedModalOpen(true);
+  };
+
+  const closeDeletedModal = () => {
+    setIsDeletedModalOpen(false);
+    navigate("/login");
+  };
+
+  const handleDeleteAccount = () => {
+    openDeletedModal();
   };
 
   return (
@@ -112,8 +162,7 @@ const EditProfileModal = ({
             <div className="w-2/5 ">
               <div className=" flex flex-col items-center">
                 <label htmlFor="file-input">
-                  <ImageEditDisplay fileName={imageUrl} />{" "}
-                  {/* Use ImageDisplay component */}
+                  <ImageEditDisplay fileName={imageUrl} />
                 </label>
                 <label className="block pt-3 text-gray-600 text-base font-bold">
                   프로필 이미지
@@ -148,10 +197,28 @@ const EditProfileModal = ({
                   이메일
                 </label>
                 <input
+                  id="email"
+                  name="email"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+                  onClick={openEmailModal}
+                  readOnly
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+                  onMouseDown={handleMouseDown}
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-600 text-sm font-bold mb-2">
+                  패스워드
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value="********"
+                  onClick={openPasswordModal}
+                  readOnly
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
                   onMouseDown={handleMouseDown}
                 />
               </div>
@@ -253,6 +320,13 @@ const EditProfileModal = ({
             <button
               type="button"
               className="bg-pink-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-pink-700"
+              onClick={openDeleteModal}
+            >
+              회원 탈퇴
+            </button>
+            <button
+              type="button"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               onClick={handleSave}
             >
               저장
@@ -267,6 +341,48 @@ const EditProfileModal = ({
           currentNickname={nickname}
           onNicknameChange={handleNicknameChange}
         />
+      )}
+      {isEmailModalOpen && (
+        <CheckEmailModal
+          isOpen={isEmailModalOpen}
+          onRequestClose={closeEmailModal}
+          onEmailVerified={handleEmailVerified}
+        />
+      )}
+      {isPasswordModalOpen && (
+        <ChangePasswordModal
+          isOpen={isPasswordModalOpen}
+          onRequestClose={closePasswordModal}
+        />
+      )}
+      {isDeleteModalOpen && (
+        <DeleteAccountModal
+          isOpen={isDeleteModalOpen}
+          onRequestClose={closeDeleteModal}
+          onDeleted={handleDeleteAccount}
+        />
+      )}
+      {isDeletedModalOpen && (
+        <Modal
+          isOpen={isDeletedModalOpen}
+          onRequestClose={closeDeletedModal}
+          contentLabel="Account Deleted Modal"
+          className="fixed inset-0 flex items-center justify-center z-50"
+          overlayClassName="fixed inset-0"
+        >
+          <ModalLayout>
+            <div className="bg-slate-200 p-8 rounded-lg border-2 border-pink-500 w-full max-w-md mx-auto text-white">
+              <h2 className="text-xl text-pink-500 mb-4">계정 삭제</h2>
+              <p className="text-black mb-4">계정이 성공적으로 삭제되었습니다.</p>
+              <button
+                onClick={closeDeletedModal}
+                className="bg-pink-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-pink-700"
+              >
+                확인
+              </button>
+            </div>
+          </ModalLayout>
+        </Modal>
       )}
     </Modal>
   );

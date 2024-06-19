@@ -5,7 +5,6 @@ import BasicLayout from "../../layouts/BasicLayout";
 import ModalComponent from "../common/ModalComponent";
 import { publicApi } from "../../api/axios_intercepter";
 
-
 function FindIdForm() {
     const [email, setEmail] = useState('');
     const [verificationCode, setVerificationCode] = useState('');
@@ -44,9 +43,9 @@ function FindIdForm() {
         try {
             const response = await publicApi.post('/api/auth/retrieve-ids', { email, code: verificationCode });
             setUserIds(response.data);
-            setMessage(`가입되어 있는 아이디는 : ${response.data.join(', ')} 입니다.`);
+            setMessage(`가입되어 있는 아이디는 : ${response.data.join('\n')} 입니다.`);
+
             setVerificationSuccess(true);
-            setIsOpen(true); // Show modal with success message
         } catch (error) {
             setMessage(error.response?.data || "이메일이 존재하지 않습니다.");
             setIsOpen(true);
@@ -145,7 +144,14 @@ function FindIdForm() {
                                     </>
                                 ) : (
                                     <div>
-                                        <p className="mt-4 text-center text-2xl font-bold text-pink-500">{message}</p>
+                                        <div className="mt-4 text-center text-2xl font-bold text-pink-500">
+                                            {message.split('\n').map((line, index) => (
+                                                <React.Fragment key={index}>
+                                                    {line}
+                                                    <br />
+                                                </React.Fragment>
+                                            ))}
+                                        </div>
                                         <div className="mt-4">
                                             <button
                                                 type="button"
