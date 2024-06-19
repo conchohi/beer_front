@@ -20,7 +20,7 @@ function BackgroundMusic() {
         <source src="/music/background5.mp3" type="audio/mpeg" />
       </audio>
       <button onClick={handlePlayPause}>
-        {isPlaying ? <TbPlayerPauseFilled className='w-8 h-8 text-white' /> : <TbPlayerPlayFilled className='w-8 h-6 text-white' />}
+        {isPlaying ? <TbPlayerPauseFilled className='w-6 h-6 text-white' /> : <TbPlayerPlayFilled className='w-6 h-6 text-white' />}
       </button>
     </div>
   );
