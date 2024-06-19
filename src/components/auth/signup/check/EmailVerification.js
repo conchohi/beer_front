@@ -33,7 +33,12 @@ const EmailVerification = ({
       setIsOpen(true);
       return;
     }
-
+    let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!regex.test(formData.email)) {
+      setModalContent("이메일 형식이 아닙니다.");
+      setIsOpen(true);
+      return;
+    }
     try {
       await publicApi.post("/api/auth/email-verify", { email: formData.email });
       setModalContent("인증번호가 이메일로 전송되었습니다.");
