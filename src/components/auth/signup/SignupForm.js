@@ -26,6 +26,8 @@ const SignupForm = () => {
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
   const [idValid, setIdValid] = useState({ valid: false, message: "" });
+  const [nicknameValid, setNicknameValid] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
 
   const navigate = useNavigate();
 
@@ -45,12 +47,20 @@ const SignupForm = () => {
     }
 
     if (name === "password") {
-      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,20}$/;
       setPasswordValid(passwordRegex.test(value));
     }
 
     if (name === "id") {
       handleIdChange(e);
+    }
+
+    if (name === "nickname") {
+      handleNicknameChange(e);
+    }
+
+    if (name === "email") {
+      handleEmailChange(e);
     }
   };
 
@@ -61,9 +71,9 @@ const SignupForm = () => {
       id: value,
     });
 
-    const minLength = 5;
-    const maxLength = 10;
-    const regex = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{5,10}$/;
+    const minLength = 4;
+    const maxLength = 15;
+    const regex = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{4,15}$/;
 
     if (value.length < minLength) {
       setIdValid({ valid: false, message: "아이디가 너무 짧습니다." });
@@ -76,6 +86,31 @@ const SignupForm = () => {
     }
   };
 
+  const handleNicknameChange = (e) => {
+    const { value } = e.target;
+    setFormData({
+      ...formData,
+      nickname: value,
+    });
+
+    if (value.length > 20) {
+      setNicknameValid(false);
+    } else {
+      setNicknameValid(true);
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const { value } = e.target;
+    setFormData({
+      ...formData,
+      email: value,
+    });
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setEmailValid(emailRegex.test(value));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!idValid.valid) {
@@ -85,7 +120,7 @@ const SignupForm = () => {
     }
     if (!passwordValid) {
       setModalContent(
-        "비밀번호는 영문, 숫자를 포함하여 8자 이상이어야 합니다."
+        "비밀번호는 영문, 숫자를 포함하여 8자 이상 20자 이하여야 합니다."
       );
       setIsOpen(true);
       return;
@@ -133,9 +168,9 @@ const SignupForm = () => {
       setIsOpen(true);
       return;
     }
-    const minLength = 5;
-    const maxLength = 10;
-    const regex = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{5,10}$/;
+    const minLength = 4;
+    const maxLength = 15;
+    const regex = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{4,15}$/;
 
     if (formData.id.length < minLength) {
       setModalContent("아이디가 너무 짧습니다.");
@@ -175,6 +210,11 @@ const SignupForm = () => {
   const checkNicknameAvailability = async () => {
     if (!formData.nickname) {
       setModalContent("닉네임을 입력해주세요.");
+      setIsOpen(true);
+      return;
+    }
+    if (!nicknameValid) {
+      setModalContent("닉네임은 20자 이하로 입력해주세요.");
       setIsOpen(true);
       return;
     }
@@ -244,6 +284,7 @@ const SignupForm = () => {
                 type="button"
                 onClick={checkIdAvailability}
                 className="ml-4 px-4 py-2 w-4/12 rounded-md bg-pink-500 text-xs tracking-widest text-white font-extrabold hover:bg-pink-600 transition duration-300 ease-in-out transform hover:scale-105"
+                disabled={!idValid.valid}
               >
                 CHECK
               </button>
@@ -281,7 +322,7 @@ const SignupForm = () => {
             </div>
             {!passwordValid && (
               <div className="text-red-500 text-sm mt-1">
-                비밀번호는 영문, 숫자를 포함하여 8자 이상이어야 합니다.
+                비밀번호는 영문, 숫자를 포함하여 8자 이상 20자 이하여야 합니다.
               </div>
             )}
           </div>
@@ -333,6 +374,7 @@ const SignupForm = () => {
                 type="button"
                 onClick={checkNicknameAvailability}
                 className="ml-4 px-4 py-2 w-4/12 rounded-md tracking-widest bg-pink-500 text-xs text-white font-extrabold hover:bg-pink-600 transition duration-300 ease-in-out transform hover:scale-105"
+                disabled={!nicknameValid}
               >
                 CHECK
               </button>
@@ -340,6 +382,37 @@ const SignupForm = () => {
             {isNicknameAvailable === false && (
               <div className="text-red-500 text-sm mt-1">
                 이미 사용 중인 닉네임입니다.
+              </div>
+            )}
+            {!nicknameValid && (
+              <div className="text-red-500 text-sm mt-1">
+                닉네임은 20자 이하로 입력해주세요.
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm  tracking-wider font-bold leading-6 text-pink-500 "
+            >
+              EMAIL
+            </label>
+            <div className="mt-1">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="이메일을 입력하세요"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
+              />
+            </div>
+            {!emailValid && (
+              <div className="text-red-500 text-sm mt-1">
+                유효한 이메일 주소를 입력하세요.
               </div>
             )}
           </div>
@@ -459,3 +532,4 @@ const SignupForm = () => {
 };
 
 export default SignupForm;
+
