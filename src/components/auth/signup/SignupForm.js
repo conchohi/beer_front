@@ -243,7 +243,7 @@ const SignupForm = () => {
               <button
                 type="button"
                 onClick={checkIdAvailability}
-                className="ml-4 px-4 py-2 w-4/12 rounded-md bg-pink-500 text-xs tracking-widest text-white font-extrabold hover:bg-pink-600"
+                className="ml-4 px-4 py-2 w-4/12 rounded-md bg-pink-500 text-xs tracking-widest text-white font-extrabold hover:bg-pink-600 transition duration-300 ease-in-out transform hover:scale-105"
               >
                 CHECK
               </button>
@@ -314,7 +314,7 @@ const SignupForm = () => {
           <div>
             <label
               htmlFor="nickname"
-              className="block text-sm  tracking-wider font-bold leading-6 text-pink-500"
+              className="block text-sm  tracking-wider font-bold leading-6 text-pink-500 "
             >
               NICKNAME
             </label>
@@ -332,7 +332,7 @@ const SignupForm = () => {
               <button
                 type="button"
                 onClick={checkNicknameAvailability}
-                className="ml-4 px-4 py-2 w-4/12 rounded-md tracking-widest bg-pink-500 text-xs text-white font-extrabold hover:bg-pink-600"
+                className="ml-4 px-4 py-2 w-4/12 rounded-md tracking-widest bg-pink-500 text-xs text-white font-extrabold hover:bg-pink-600 transition duration-300 ease-in-out transform hover:scale-105"
               >
                 CHECK
               </button>
@@ -435,8 +435,9 @@ const SignupForm = () => {
           <div>
             <button
               type="submit"
-              className={`flex w-full justify-center rounded-md px-4 py-2 text-base tracking-widest font-semibold leading-6 text-white shadow-md   bg-pink-500 hover:bg-pink-600 ${!isEmailVerified ? " cursor-not-allowed" : ""
-                }`}
+              className={`flex w-full justify-center rounded-md px-4 py-2 text-base tracking-widest font-semibold leading-6 text-white shadow-md   bg-pink-500 hover:bg-pink-600 transition duration-300 ease-in-out transform hover:scale-105 ${
+                !isEmailVerified ? " cursor-not-allowed" : ""
+              }`}
               disabled={!isEmailVerified}
             >
               JOIN

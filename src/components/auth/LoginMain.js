@@ -247,7 +247,7 @@ const LoginMain = () => {
                   <div>
                     <button
                       type="submit"
-                      className="flex w-full justify-center rounded-md bg-pink-500 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-md hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-500"
+                      className="flex w-full justify-center rounded-md bg-pink-500 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-md hover:bg-pink-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-500 transition duration-300 ease-in-out transform hover:scale-105"
                     >
                       로그인
                     </button>
@@ -265,7 +265,7 @@ const LoginMain = () => {
                 <hr className="my-6" />
                 <div className="flex flex-col justify-center items-center mt-3 space-y-2">
                   <button
-                    className="w-full flex items-center bg-yellow-300 px-3 py-2 rounded-md text-sm font-semibold leading-6 text-black shadow-md hover:bg-yellow-400"
+                    className="w-full flex items-center bg-yellow-300 px-3 py-2 rounded-md text-sm font-semibold leading-6 text-black shadow-md hover:bg-yellow-400 transition duration-300 ease-in-out transform hover:scale-105"
                     onClick={onKakaoLogin}
                   >
                     <img
@@ -276,7 +276,7 @@ const LoginMain = () => {
                     <span className="flex-grow text-center">카카오 로그인</span>
                   </button>
                   <button
-                    className="w-full flex items-center bg-green-500 px-3 py-2 rounded-md text-sm font-semibold leading-6 text-white shadow-md hover:bg-green-600"
+                    className="w-full flex items-center bg-green-500 px-3 py-2 rounded-md text-sm font-semibold leading-6 text-white shadow-md hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105"
                     onClick={onNaverLogin}
                   >
                     <img
