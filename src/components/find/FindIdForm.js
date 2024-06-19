@@ -44,6 +44,7 @@ function FindIdForm() {
         try {
             const response = await publicApi.post('/api/auth/retrieve-ids', { email, code: verificationCode });
             setUserIds(response.data);
+            setMessage(`가입되어 있는 아이디는 : ${response.data.join(', ')} 입니다.`);
             setVerificationSuccess(true);
         } catch (error) {
             setMessage(error.response?.data || "이메일이 존재하지 않습니다.");
