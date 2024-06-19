@@ -701,7 +701,7 @@ const VideoComponent = () => {
                         </div>
                     </div>
                     <div className="w-full flex flex-wrap items-start">
-                        {currentGame === '고요속의외침' ? (
+                        {currentGame === '몸으로말해요' ? (
                             <>
                                 {participantList.map((participant) => {
                                     if (participant.nickname === currentTurn) {

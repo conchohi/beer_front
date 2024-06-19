@@ -391,32 +391,6 @@ const SignupForm = () => {
             )}
           </div>
 
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm  tracking-wider font-bold leading-6 text-pink-500 "
-            >
-              EMAIL
-            </label>
-            <div className="mt-1">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="이메일을 입력하세요"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 text-sm py-2 px-3"
-              />
-            </div>
-            {!emailValid && (
-              <div className="text-red-500 text-sm mt-1">
-                유효한 이메일 주소를 입력하세요.
-              </div>
-            )}
-          </div>
-
           <EmailVerification
             formData={formData}
             setFormData={setFormData}
