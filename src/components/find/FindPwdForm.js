@@ -39,6 +39,10 @@ const FindPwdForm = () => {
     }, [emailSent, timeLeft]);
 
     const sendVerificationEmail = async () => {
+        if(!id && !email){
+            return;
+        }
+        
         try {
             await publicApi.post('/api/auth/send-password-reset-code', { userId: id, email });
             setEmailSent(true);
