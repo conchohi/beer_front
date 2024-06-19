@@ -4,7 +4,7 @@ import AlertModal from "./FriendCommonModal";
 import Space2 from "../../../animation/Space2";
 import ModalLayout from "../../../../layouts/ModalLayout";
 
-const FriendRequestsModal = ({ show, closeModal, onFriendAccepted, setClickNickname}) => {
+const FriendRequestsModal = ({ show, closeModal, onFriendAccepted, setClickNickname, onFriendRequestHandled }) => {
   const [friendRequests, setFriendRequests] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertShow, setAlertShow] = useState(false);
@@ -31,7 +31,7 @@ const FriendRequestsModal = ({ show, closeModal, onFriendAccepted, setClickNickn
       setAlertMessage("친구 요청을 수락했습니다!");
       setAlertShow(true);
       onFriendAccepted(); // Trigger the refresh
-      closeModal(); // Close the modal
+      onFriendRequestHandled(); // Notify parent to refresh friend requests
     } catch (error) {
       console.error("친구 요청을 수락하는 중 에러 발생:", error);
       setAlertMessage("친구 요청을 수락하는 데 에러가 발생했습니다");
@@ -45,7 +45,7 @@ const FriendRequestsModal = ({ show, closeModal, onFriendAccepted, setClickNickn
       setFriendRequests(friendRequests.filter((req) => req.nickname !== nickname));
       setAlertMessage("친구 요청을 거절했습니다!");
       setAlertShow(true);
-      closeModal(); // Close the modal
+      onFriendRequestHandled(); // Notify parent to refresh friend requests
     } catch (error) {
       console.error("친구 요청을 거절하는 중 에러 발생:", error);
       setAlertMessage("친구 요청을 거절하는 데 에러가 발생했습니다");
@@ -82,17 +82,17 @@ const FriendRequestsModal = ({ show, closeModal, onFriendAccepted, setClickNickn
                   className="flex justify-between items-center text-xl p-2 border-b border-gray-700"
                 >
                   <div
-                      className="flex items-center cursor-pointer" onClick={()=>{setClickNickname(user.nickname)}}
-                    >
-                      <img
-                        src={`${API_SERVER_HOST}/api/user/${user.profileImage}`}
-                        className="w-12 h-12 rounded-full mr-4"
-                        alt="프로필"
-                      />
-                      <div>
-                        <p className="text-xl">{user.nickname}</p>
-                      </div>
+                    className="flex items-center cursor-pointer" onClick={() => { setClickNickname(user.nickname) }}
+                  >
+                    <img
+                      src={`${API_SERVER_HOST}/api/user/${user.profileImage}`}
+                      className="w-12 h-12 rounded-full mr-4"
+                      alt="프로필"
+                    />
+                    <div>
+                      <p className="text-xl">{user.nickname}</p>
                     </div>
+                  </div>
                   <div>
                     <button
                       className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 mr-2"
@@ -111,23 +111,23 @@ const FriendRequestsModal = ({ show, closeModal, onFriendAccepted, setClickNickn
               ))}
             </ul>
           ) : (
-            <div className="text-center text-xl  mt-4">
+            <div className="text-center text-xl mt-4">
               친구 요청 목록이 없습니다.
               <Space2 />
             </div>
           )}
           <button
-            className="bg-slate-100 text-xl  px-4 py-2 rounded mt-4 w-full hover:bg-slate-300"
+            className="bg-slate-100 text-xl px-4 py-2 rounded mt-4 w-full hover:bg-slate-300"
             onClick={closeModal}
           >
             닫기
           </button>
+          <AlertModal
+            show={alertShow}
+            message={alertMessage}
+            onClose={() => setAlertShow(false)}
+          />
         </div>
-        <AlertModal
-          show={alertShow}
-          message={alertMessage}
-          onClose={() => setAlertShow(false)}
-        />
       </div>
     </ModalLayout>
   );

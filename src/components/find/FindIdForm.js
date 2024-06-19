@@ -5,7 +5,6 @@ import BasicLayout from "../../layouts/BasicLayout";
 import ModalComponent from "../common/ModalComponent";
 import { publicApi } from "../../api/axios_intercepter";
 
-
 function FindIdForm() {
     const [email, setEmail] = useState('');
     const [verificationCode, setVerificationCode] = useState('');
@@ -147,7 +146,14 @@ function FindIdForm() {
                                     </>
                                 ) : (
                                     <div>
-                                        <p className="mt-4 text-center text-2xl font-bold text-pink-500">{message}</p>
+                                        <div className="mt-4 text-center text-2xl font-bold text-pink-500">
+                                            {message.split('\n').map((line, index) => (
+                                                <React.Fragment key={index}>
+                                                    {line}
+                                                    <br />
+                                                </React.Fragment>
+                                            ))}
+                                        </div>
                                         <div className="mt-4">
                                             <button
                                                 type="button"

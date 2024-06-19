@@ -95,6 +95,7 @@ const Header = () => {
               <ul className="flex justify-between space-x-25 font-bold">
                 <li>
                   <BackgroundMusic2 />
+                  
                 </li>
                 <li>
                   <span
@@ -125,7 +126,13 @@ const Header = () => {
             <div className="hidden md:flex md:w-26 md:justify-end items-center">
               <ul className="flex items-center space-x-12 ml-auto pr-0">
                 <li>
-                <BackgroundMusic />
+                <div
+                    className="flex flex-col items-center cursor-pointer"
+
+                  >
+                    <BackgroundMusic className="w-8 h-8 text-white" />
+                    <span className="text-white">BGM</span>
+                  </div>
                 </li>
                 <li>
                   <div
