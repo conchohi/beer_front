@@ -7,7 +7,7 @@ const SignupMain = () => {
   return (
     <BasicLayout>
       <div className="flex justify-center items-center min-h-screen">
-        <div className="w-full lg:w-9/12 xl:w-7/12 font-bold text-black font-sans p-4 lg:p-6 flex flex-col">
+        <div className="w-full lg:w-9/12 font-bold text-black font-sans p-4 lg:p-6 flex flex-col">
           <div className="bg-white w-full h-auto rounded-2xl flex flex-col md:flex-row overflow-hidden">
             {/* Container for SpaceShip2 */}
             <div className="flex-none lg:w-2/5 justify-center items-center bg-white rounded-xl mb-3 md:mb-0 hidden lg:flex">

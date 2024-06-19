@@ -133,6 +133,23 @@ const SignupForm = () => {
       setIsOpen(true);
       return;
     }
+    const minLength = 5;
+    const maxLength = 10;
+    const regex = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{5,10}$/;
+
+    if (formData.id.length < minLength) {
+      setModalContent("아이디가 너무 짧습니다.");
+      setIsOpen(true);
+      return;
+    } else if (formData.id.length > maxLength) {
+      setModalContent("아이디가 너무 깁니다.");
+      setIsOpen(true);
+      return;
+    } else if (!regex.test(formData.id)) {
+      setModalContent("사용할 수 없는 아이디입니다.");
+      setIsOpen(true);
+      return;
+    }
 
     try {
       const response = await publicApi.post("/api/user/id-check", {

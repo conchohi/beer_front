@@ -413,7 +413,7 @@ const VideoComponent = () => {
         };
         attachStreamToVideo();
 
-    }, [myStream,currentGame,currentTurn]);
+    }, [myStream, currentGame, currentTurn]);
 
 
     useEffect(() => {
@@ -422,7 +422,7 @@ const VideoComponent = () => {
                 return;
             }
             let videoElement = document.getElementById(`${feed.rfdisplay}`);
-            let imgElement =  videoElement?.nextSibling;
+            let imgElement = videoElement?.nextSibling;
             try {
                 if (videoElement && feed.stream) {
                     if ('srcObject' in videoElement) {
@@ -438,7 +438,7 @@ const VideoComponent = () => {
             }
 
         })
-    }, [feeds,participantList,currentGame,currentTurn])
+    }, [feeds, participantList, currentGame, currentTurn])
 
     useEffect(() => {
         //새로운 피드가 들어오면 시작
@@ -472,8 +472,8 @@ const VideoComponent = () => {
         if (remoteFeed != null) {
             Janus.debug("Feed " + remoteFeed.rfid + " (" + remoteFeed.rfdisplay + ") has left the room, detaching");
             let videoElement = document.getElementById(`${remoteFeed.rfdisplay}`);
-            let imgElement =  videoElement?.nextSibling;
-            if(!videoElement){
+            let imgElement = videoElement?.nextSibling;
+            if (!videoElement) {
                 return;
             }
             videoElement.srcObject = null;
@@ -660,9 +660,9 @@ const VideoComponent = () => {
         console.log("Selected game in VideoComponentV3:", game);
         setSelectedGame(game);
         setOpenGame(false);
-      };
+    };
 
-      return (
+    return (
         <>
             {/* 게임 선택 모달 */}
             {openGame && (
@@ -696,7 +696,9 @@ const VideoComponent = () => {
                             <img className="h-16" src="/img/logo.png" alt="logo" />
                             <span className="">{title}</span>
                         </div>
-                        <ParticipantList participantList={participantList} setClickUserNick={setClickUserNick} />
+                        <div className="hidden md:block">
+                            <ParticipantList participantList={participantList} setClickUserNick={setClickUserNick} />
+                        </div>
                     </div>
                     <div className="w-full flex flex-wrap items-start">
                         {currentGame === '고요속의외침' ? (
@@ -812,8 +814,8 @@ const VideoComponent = () => {
             </div>
         </>
     );
-    
-    
+
+
 }
 
 export default VideoComponent;
