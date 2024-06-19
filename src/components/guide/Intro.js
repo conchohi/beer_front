@@ -38,7 +38,7 @@ const Intro = () => {
     },
     {
       id: "폭탄돌리기",
-      src: "/img/bomb.png",
+      src: "/img/bombgame.png",
       alt: "RandomBomb",
     },
     {

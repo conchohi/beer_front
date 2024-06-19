@@ -3,12 +3,12 @@ import { FaWindowClose } from "react-icons/fa";
 
 const gameGuides = [
     {
-        id: "캐릭터",
+        id: "인물퀴즈",
         src: "/img/guessquiz.png",
         alt: "Inmulquiz",
     },
     {
-        id: "고요속의외침",
+        id: "몸으로말해요",
         src: "/img/bodylanguage.png",
         alt: "Momuromalhaeyo",
     },
@@ -33,7 +33,7 @@ const gameGuides = [
         alt: "RandomBomb",
     },
     {
-        id: "초성",
+        id: "훈민정음",
         src: "/img/hunmin.png",
         alt: "Hunminjungum",
     },
