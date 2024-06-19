@@ -28,6 +28,9 @@ function FindIdForm() {
     }, [emailSent, timeLeft]);
 
     const sendVerificationEmail = async () => {
+        if(!email){
+            return;
+        }
         try {
             await publicApi.post('/api/auth/email-verify', { email });
             setEmailSent(true);
@@ -44,9 +47,11 @@ function FindIdForm() {
         try {
             const response = await publicApi.post('/api/auth/retrieve-ids', { email, code: verificationCode });
             setUserIds(response.data);
-            setMessage(`가입되어 있는 아이디는 : ${response.data.join(', ')} 입니다.`);
+            let excludedWords = ["kakao ", "naver ", "google "];
+            let ids = response.data.filter(id => 
+                !excludedWords.some(excludedWord => id.includes(excludedWord)));
+            setMessage(`가입되어 있는 아이디는 : ${ids.join(', ')} 입니다.`);
             setVerificationSuccess(true);
-            setIsOpen(true); // Show modal with success message
         } catch (error) {
             setMessage(error.response?.data || "이메일이 존재하지 않습니다.");
             setIsOpen(true);
@@ -59,9 +64,6 @@ function FindIdForm() {
 
     const closeModal = () => {
         setIsOpen(false);
-        if (verificationSuccess) {
-            navigate('/login');
-        }
     };
 
     return (
