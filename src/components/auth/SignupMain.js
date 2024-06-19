@@ -18,7 +18,7 @@ const SignupMain = () => {
             </div>
             {/* Container for SignupForm */}
             <div className="flex flex-1 flex-col justify-center items-center p-6 md:p-16 bg-white">
-              <div className="w-full lg:w-3/5 bg-white rounded-xl text-left p-2 md:p-6 lg:p-8 flex justify-center shadow-xl items-center">
+              <div className="w-full bg-white rounded-xl text-left p-2 md:p-6 lg:p-8 flex justify-center shadow-xl items-center">
                 <SignupForm />
               </div>
             </div>
