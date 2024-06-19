@@ -33,7 +33,12 @@ const EmailVerification = ({
       setIsOpen(true);
       return;
     }
-
+    let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!regex.test(formData.email)) {
+      setModalContent("이메일 형식이 아닙니다.");
+      setIsOpen(true);
+      return;
+    }
     try {
       await publicApi.post("/api/auth/email-verify", { email: formData.email });
       setModalContent("인증번호가 이메일로 전송되었습니다.");
@@ -101,7 +106,7 @@ const EmailVerification = ({
         <button
           type="button"
           onClick={sendEmailVerificationCode}
-          className={`ml-4 px-4 py-2 w-4/12 rounded-md bg-pink-500 text-white tracking-widest text-xs font-semibold hover:bg-pink-600 ${
+          className={`ml-4 px-4 py-2 w-4/12 rounded-md bg-pink-500 text-white tracking-widest text-xs font-semibold hover:bg-pink-600 transition duration-300 ease-in-out transform hover:scale-105 ${
             isEmailVerified ? "hidden" : ""
           }`}
         >

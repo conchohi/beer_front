@@ -20,14 +20,14 @@ const GameBox = ({
   setCurrentTurn,
 }) => {
   const games = {
-    캐릭터: CharacterGame,
+    인물퀴즈: CharacterGame,
     라이어: LiarGame,
     캐치마인드: CatchMindGame,
     폭탄: BombGame,
-    고요속의외침: ShoutInSilence,
+    몸으로말해요: ShoutInSilence,
     베스킨라빈스: BaskinRobbins31,
     밸런스: BalanceGame,
-    초성: ChosungGame,
+    훈민정음: ChosungGame,
   };
 
   const GameComponent = games[currentGame];
