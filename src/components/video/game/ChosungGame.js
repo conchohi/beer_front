@@ -18,7 +18,7 @@ const ChosungGame = ({ roomNo, nickname, participantList = [], currentGame, setC
   const [loser, setLoser] = useState(null);
   const [lastCorrectPlayers, setLastCorrectPlayers] = useState([]);
   const [guessedWords, setGuessedWords] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(15);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const ChosungGame = ({ roomNo, nickname, participantList = [], currentGame, setC
           setChosung(gameState.topic);
           setLastCorrectPlayers([]);
           setGuessedWords([]);
-          setTimeLeft(20);  // 주제가 바뀔 때만 타이머를 초기화
+          setTimeLeft(15);  // 주제가 바뀔 때만 타이머를 초기화
         }
       });
 
