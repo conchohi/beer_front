@@ -455,7 +455,7 @@ const SignupForm = () => {
                   name="mbti"
                   value={formData.mbti}
                   onChange={handleChange}
-                  className="block `w-9/12 rounded-md text-sm font-thin border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 "
+                  className="block w-9/12 mr-3 rounded-md text-sm font-thin border-gray-300 shadow-sm focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50 placeholder-gray-400 "
                 >
                   <option value="">선택안함</option>
                   <option value="INTJ">INTJ</option>
