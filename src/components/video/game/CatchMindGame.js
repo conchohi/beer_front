@@ -4,7 +4,7 @@ import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../api/websocketApi';
 import { FaEraser, FaPen } from 'react-icons/fa';
 
-const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
+const CatchMindGame = ({ roomNo, nickname, participantList = [],setCurrentGame }) => {
   const canvasRef = useRef(null);
   const [stompClient, setStompClient] = useState(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -49,6 +49,7 @@ const CatchMindGame = ({ roomNo, nickname, participantList = [] }) => {
             setGameSelected('');
             setScores({});
             setCurrentTurn('');
+            setCurrentGame(null);
             setTopic('');
           }, 3000);
         }
