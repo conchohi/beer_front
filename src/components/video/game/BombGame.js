@@ -86,7 +86,7 @@ const BombGame = ({ roomNo, nickname, participantList = [] }) => {
           {participantList.map(participant => (
             <li key={participant.nickname} className="mt-2">
               {participant.nickname}
-              {nickname === bomb && participant.nickname !== nickname && (
+              {nickname === bomb && participant.nickname !== nickname && gameTimeLeft > 0 && (
                 <button
                   onClick={() => handleSend(participant.nickname)}
                   className="ml-2 p-1 bg-red-500 text-white rounded"
