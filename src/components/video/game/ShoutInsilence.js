@@ -38,7 +38,7 @@ const ShoutInSilence = ({ roomNo, nickname, participantList = [],currentGame,set
           setCurrentTurn(null);
           setCurrentGame(null);
           setGameEnded(true); // 게임 종료 화면 표시
-        }, 4000); // 4초 후에 게임 종료 화면으로 전환
+        }, 3000); // 3초 후에 게임 종료 화면으로 전환
       } else if (gameState.timeLeft !== undefined) {
         setTimeLeft(gameState.timeLeft);
       }

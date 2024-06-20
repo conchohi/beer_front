@@ -51,7 +51,7 @@ const ChosungGame = ({ roomNo, nickname, participantList = [], currentGame, setC
           setLoser(gameState.loser);
           setPenaltyMessage(`${gameState.loser}님이 패배하셨습니다!`);
           setTimeout(() => {
-            setLoser(null);
+            setLoser('');
             setPenaltyMessage('');
             setScores({});
             setCurrentTurn(null);
