@@ -1,6 +1,6 @@
 import React from "react";
 import useCheckedState from "../../../hooks/useCheckedState";
-import Draggable from "react-draggable";
+import ModalLayout from "../../../layouts/ModalLayout";
 
 function InfoModal({ isOpen, closeModal, title }) {
   const [isChecked, handleCheckboxChange] = useCheckedState();
@@ -21,16 +21,16 @@ function InfoModal({ isOpen, closeModal, title }) {
       children = (
         <div className="fixed inset-0 flex justify-center items-center">
           <div className="bg-slate-200 border-4 border-yellow-400 text-gray-700 p-6 rounded-lg w-[400px] h-auto relative">
-          <button
+            <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
               X
-          </button>
+            </button>
 
-          <div className=" font-bold text-center text-2xl">채팅방 참여 및 개설 방법</div>
+            <div className=" font-bold text-center text-2xl">채팅방 참여 및 개설 방법</div>
 
-          
-          <div className="my-4 bg-slate-300 rounded-2xl p-3">
+
+            <div className="my-4 bg-slate-300 rounded-2xl p-3">
               <div className="space-y-2 mb-4 ">
                 <div className=" ml-2 text-lg font-bold text-center bg-yellow-100 rounded-full w-[180px] px-4 py-1"> ⭐ 채팅방 참여 방법 </div>
               </div>
@@ -39,23 +39,23 @@ function InfoModal({ isOpen, closeModal, title }) {
                 <div> 2. 마음에 드는 방을 입장한다. </div>
                 <div> 3. 즐겁게 즐긴다!!! 😊 </div>
               </div>
-          </div>
-
-          <div className="my-2  bg-slate-300 rounded-2xl p-3">
-            <div className="space-y-3 mb-4">
-              <div className=" ml-2 text-lg font-bold text-center bg-yellow-100 rounded-full w-[180px] px-4 py-1"> ⭐ 채팅방 개설 방법 </div>
             </div>
-            <div className="space-y-2 ml-4">
+
+            <div className="my-2  bg-slate-300 rounded-2xl p-3">
+              <div className="space-y-3 mb-4">
+                <div className=" ml-2 text-lg font-bold text-center bg-yellow-100 rounded-full w-[180px] px-4 py-1"> ⭐ 채팅방 개설 방법 </div>
+              </div>
+              <div className="space-y-2 ml-4">
                 <div> 1. 방생성 버튼을 클릭한다. </div>
                 <div> 2. 방제목을 입력하고, 원하는 관심사, 인원수, 비밀번호(선택)을 선택한다.</div>
                 <div> 3. 방 생성버튼을 클릭한다. </div>
                 <div> 4.  즐겁게 즐긴다!!! 🙌 </div>
+              </div>
             </div>
-          </div>
 
           </div>
         </div>
-        
+
       );
       break;
     case "이용시 주의 사항":
@@ -72,7 +72,7 @@ function InfoModal({ isOpen, closeModal, title }) {
               📌📌📌 필독📌📌📌
             </h2>
             <p className="mb-4 ">
-              안녕하세요! 우리집 비어에 들어오신 것을 환영합니다!!! 
+              안녕하세요! 우리집 비어에 들어오신 것을 환영합니다!!!
               공지사항 필독해주시고, 재미 있게 놀아주시면 감사하겠습니다.♥
             </p>
             <div className="border-4 border-gray-300 pt-4 bg-slate-300 rounded-2xl p-4">
@@ -124,20 +124,20 @@ function InfoModal({ isOpen, closeModal, title }) {
   }
 
   return (
-    <Draggable>
-    <div className="fixed inset-0 flex justify-center items-center z-30">
-      <div className=" text-black p-4 rounded-lg relative">
-        <button
-          onClick={closeModal}
-          className="absolute top-4 right-4 text-black text-4xl hover:text-gray-500"
-        >
-          X
-        </button>
-        <h2 className="text-2xl font-bold">{title}</h2>
-        {children}
+    <ModalLayout>
+      <div className="fixed inset-0 flex justify-center items-center z-30">
+        <div className=" text-black p-4 rounded-lg relative">
+          <button
+            onClick={closeModal}
+            className="absolute top-4 right-4 text-black text-4xl hover:text-gray-500"
+          >
+            X
+          </button>
+          <h2 className="text-2xl font-bold">{title}</h2>
+          {children}
+        </div>
       </div>
-    </div>
-    </Draggable>
+    </ModalLayout>
   );
 }
 
