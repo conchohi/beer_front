@@ -3,7 +3,7 @@ name: Deploy React to EC2
 on:
   push:
     branches:
-      - deploy4
+      - main
 
 jobs:
   deploy:
