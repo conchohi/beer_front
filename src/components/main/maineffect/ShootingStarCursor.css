@@ -1,25 +1,26 @@
-/* styles.css */
 .star {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease-out, background-color 0.5s;
-    animation: sparkle 1s infinite;
+  position: absolute;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  opacity: 1;
+}
+
+/* 짝수 번째 별의 페이드 아웃 애니메이션 */
+.star:nth-child(even) {
+  animation: fadeOut 0.5s forwards;
+}
+
+/* 홀수 번째 별의 페이드 아웃 애니메이션 */
+.star:nth-child(odd) {
+  animation: fadeOut 0.7s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
   }
-  
-  @keyframes sparkle {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
   }
-  
-  .pointer-events-none {
-    pointer-events: none;
-  }
-  
+}

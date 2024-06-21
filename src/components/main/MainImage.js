@@ -4,6 +4,7 @@ import EarthImg from "./mainimg/EarthImg";
 import MoonImg from "./mainimg/MoonImg";
 import MeteorEffect from "./maineffect/MeteorEffect";
 import ShootingStarCursor from "./maineffect/ShootingStarCursor";
+import Hidden from "./mainimg/Hidden";
 
 
 
@@ -27,6 +28,7 @@ const MainImage = ({ clickDown }) => {
        <MoonImg />
        <MeteorEffect />
        <ShootingStarCursor />
+       <Hidden />
        </div>
       <img
         src="/img/mainImage.png"
