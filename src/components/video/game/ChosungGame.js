@@ -4,7 +4,7 @@ import SockJS from 'sockjs-client';
 import { publicApi } from '../../../api/axios_intercepter';
 import { WEB_SOCKET_SERVER } from '../../../api/websocketApi';
 
-const ChosungGame = ({ roomNo, nickname, participantList = [], currentGame, setCurrentGame, currentTurn, setCurrentTurn }) => {
+const ChosungGame = ({ roomNo, nickname, participantList = [], currentGame, setCurrentGame, currentTurn, setCurrentTurn, master }) => {
   const [stompClient, setStompClient] = useState(null);
   const [currentRound, setCurrentRound] = useState(0);
   const [chosung, setChosung] = useState('');
@@ -153,8 +153,10 @@ const ChosungGame = ({ roomNo, nickname, participantList = [], currentGame, setC
   };
 
   const handleTimeout = () => {
-    if (stompClient && stompClient.connected) {
-      stompClient.send(`/app/timeoutChosung/${roomNo}`, {}, JSON.stringify({ player: nickname }));
+    if (stompClient && stompClient.connected && nickname === master) {
+
+      
+      stompClient.send(`/app/timeoutChosung/${roomNo}`, {}, {});
     }
   };
 
