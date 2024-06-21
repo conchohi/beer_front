@@ -19,9 +19,9 @@ const SpaceCat3 = () => {
 
   return (
     <div
-      className="absolute -z-50"
+      className="absolute -z-40 w-[100%] h-[70vw]"
       ref={animationContainer}
-      style={{ width: "70vw", height: "70vw" }}
+    
     />
   );
 };

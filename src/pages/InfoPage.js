@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import Intro from "../components/guide/Intro";
 import SpaceCat3 from "../components/animation/InfoCat/SpaceCat3";
 import InfoModal from "../components/guide/modal/InfoModal";
+import Supernovaimg from "../components/guide/Supernovaimg";
 
 function InfoPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,6 +27,7 @@ function InfoPage() {
     <BasicLayout>
       <SpaceCat3 />
       <div className="font-bold text-gray-200 flex flex-col pt-16 break-keep relative min-h-screen">
+        <Supernovaimg />
         <div className="text-center py-10">
           <h1 className="text-4xl font-bold mb-2">
             처음이신가요?{" "}
