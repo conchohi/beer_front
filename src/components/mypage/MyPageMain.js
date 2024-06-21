@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProfilePageInfo from "./ProfilePageInfo";
 import privateApi from "../../api/axios_intercepter";
-import FriendsList from "./follow/FriendsList";
-import FriendsGames from "./follow/FriendsGames";
+
 import EditProfileModal from "./modal/profile/EditProfileModal";
+import FriendsGames from "./friends/FriendsGames";
+import FriendsList from "./friends/FriendsList";
 
 const MyPageMain = () => {
   const { state } = useLocation();
