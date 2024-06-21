@@ -4,10 +4,6 @@ import Introduction from "../components/main/Introduction";
 import { useEffect, useRef, useState } from "react";
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
-import Mars from "../components/animation/Mars";
-import Saturn from "../components/animation/Saturn";
-import MeteorEffect from "../components/main/MeteorEffect";
-import ShootingStarCursor from "../components/main/ShootingStarCursor";
 
 const DIVIDER_HEIGHT = 5;
 
@@ -89,11 +85,11 @@ function MainPage() {
   return (
     <>
       <Header />
-      <ShootingStarCursor />
+     
       <div ref={outerDivRef} className="outer bg-cover bg-center">
         <div className="inner">
           <MainImage clickDown={clickDown} />
-          <MeteorEffect />
+          
         </div>
         <div className="inner">
           <Introduction />

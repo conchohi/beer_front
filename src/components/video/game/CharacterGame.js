@@ -38,7 +38,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setC
         } else {
           setCurrentRound(gameState.round);
           setScores(gameState.scores);
-          setImageUrl(`/game1/${gameState.topic}.jpg`);
+          setImageUrl(`/charactergame/${gameState.topic}.jpg`);
         }
       });
 

@@ -1,8 +1,8 @@
 import React from "react";
 import Modal from "react-modal";
-import ModalLayout from "../../../layouts/ModalLayout";
-import privateApi from "../../../api/axios_intercepter";
 import { useNavigate } from "react-router-dom";
+import ModalLayout from "../../../../layouts/ModalLayout";
+import privateApi from "../../../../api/axios_intercepter";
 
 const DeleteAccountModal = ({ isOpen, onRequestClose, onDeleted }) => {
   const navigate = useNavigate();

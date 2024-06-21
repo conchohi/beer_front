@@ -4,7 +4,7 @@ import privateApi from "../../../api/axios_intercepter";
 import ConfirmDeleteModal from "../modal/friend/ConfirmDeleteModal";
 import FriendImageDisplay from "../modal/friend/FriendImageDisplay";
 
-const FollowingListItem = ({ friend, onFriendDeleted, setClickNickname }) => {
+const FriendsListItem = ({ friend, onFriendDeleted, setClickNickname }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDelete = async () => {
@@ -49,4 +49,4 @@ const FollowingListItem = ({ friend, onFriendDeleted, setClickNickname }) => {
   );
 };
 
-export default FollowingListItem;
+export default FriendsListItem;

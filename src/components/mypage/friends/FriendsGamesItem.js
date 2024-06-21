@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FriendImageDisplay from "../modal/friend/FriendImageDisplay";
 
-const HostFollowingGamesItem = (props) => {
+const FriendsGamesItem = (props) => {
   const navigate = useNavigate();
   const [users, setUsers] = useState(0);
 
@@ -61,4 +61,4 @@ const HostFollowingGamesItem = (props) => {
   );
 };
 
-export default React.memo(HostFollowingGamesItem);
+export default React.memo(FriendsGamesItem);

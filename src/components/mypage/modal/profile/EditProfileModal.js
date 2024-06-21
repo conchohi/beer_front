@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
-import ChangeNicknameModal from "./ChangeNicknameModal"; 
-import CheckEmailModal from "./CheckEmailModal"; 
+import ModalLayout from "../../../../layouts/ModalLayout";
+import ImageEditDisplay from "../../image/ImageEditDisplay";
+import ChangeNicknameModal from "./ChangeNicknameModal";
+import CheckEmailModal from "./CheckEmailModal";
 import ChangePasswordModal from "./ChangePasswordModal";
 import DeleteAccountModal from "./DeleteAccountModal";
-import ImageEditDisplay from "../image/ImageEditDisplay";
-import privateApi from "../../../api/axios_intercepter";
-import ModalLayout from "../../../layouts/ModalLayout";
+
 
 const EditProfileModal = ({
   isOpen,

@@ -20,7 +20,7 @@ const MeteorEffect = ({ count = 6, white = false, maxDelay = 15, minSpeed = 2, m
   }, [count]);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+    <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
       {(new Array(starCount)).fill(0).map((_, idx) => {
         const left = `${50 + Math.random() * 80}vw`; // 별똥별이 화면 오른쪽 50%에서 시작하도록 설정
         const top = `${Math.random() * 100}vh`; // 별똥별이 화면 전체 높이에서 시작하도록 설정

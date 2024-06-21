@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { publicApi } from "../../../api/axios_intercepter"; // 여기에 실제 파일 경로를 입력하세요.
-import ModalLayout from "../../../layouts/ModalLayout";
 import { FaTimes } from "react-icons/fa";
+import { publicApi } from "../../../../api/axios_intercepter";
+import ModalLayout from "../../../../layouts/ModalLayout";
 
 const ChangeNicknameModal = ({ isOpen, onRequestClose, currentNickname, onNicknameChange }) => {
   const [nickname, setNickname] = useState(currentNickname);

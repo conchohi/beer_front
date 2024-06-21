@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
-import EditProfileModal from "./modal/EditProfileModal.js";
 import { API_SERVER_HOST } from "../../api/axios_intercepter.js";
+import EditProfileModal from "./modal/profile/EditProfileModal.js";
 
 // React Modal's root element setting
 Modal.setAppElement("#root");
