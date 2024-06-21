@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import privateApi from "../../../api/axios_intercepter";
-import ModalLayout from "../../../layouts/ModalLayout";
 import { FaTimes } from "react-icons/fa";
+import privateApi from "../../../../api/axios_intercepter";
+import ModalLayout from "../../../../layouts/ModalLayout";
 
 const ChangePasswordModal = ({ isOpen, onRequestClose }) => {
   const [currentPassword, setCurrentPassword] = useState("");

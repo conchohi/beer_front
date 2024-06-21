@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FaUsersSlash, FaSearch, FaEnvelope } from "react-icons/fa";
 import privateApi from "../../../api/axios_intercepter";
-import FollowingListItem from "./FollowingListItem";
+import FriendsListItem from "./FriendsListItem";
 import FriendRequestsModal from "../modal/friend/FriendRequestModal";
 import SearchModal from "../modal/search/SearchModal";
 import UserDetail from "../modal/friend/UserDetail";
 import "./Friendcss.css"; // CSS 파일 임포트
 
-const FollowingList = () => {
+const FriendsList = () => {
   const [friendRequestsOpen, setFriendRequestsOpen] = useState(false);
   const [friends, setFriends] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -79,7 +79,7 @@ const FollowingList = () => {
         {friends.length > 0 ? (
           <div className="max-h-[390px] overflow-y-scroll scrollbar-hide w-full mt-4 overflow-auto rounded-2xl h-full p-2 bg-white">
             {friends.map((friend) => (
-              <FollowingListItem
+              <FriendsListItem
                 key={friend.userId}
                 friend={friend}
                 onFriendDeleted={handleFriendRefresh}
@@ -117,4 +117,4 @@ const FollowingList = () => {
   );
 };
 
-export default FollowingList;
+export default FriendsList;

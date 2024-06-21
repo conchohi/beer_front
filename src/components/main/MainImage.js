@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import EarthImg from "./mainimg/EarthImg";
+import MoonImg from "./mainimg/MoonImg";
+import MeteorEffect from "./maineffect/MeteorEffect";
+import ShootingStarCursor from "./maineffect/ShootingStarCursor";
+
+
 
 const MainImage = ({ clickDown }) => {
   const [isClicked, setIsClicked] = useState(false);
@@ -15,7 +21,13 @@ const MainImage = ({ clickDown }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-10 pb-20 w-full">
+    <div className="flex relative flex-col justify-center items-center p-10 pb-20 w-full">
+      <div className="hidden lg:block">
+       <EarthImg />
+       <MoonImg />
+       <MeteorEffect />
+       <ShootingStarCursor />
+       </div>
       <img
         src="/img/mainImage.png"
         alt="Main"

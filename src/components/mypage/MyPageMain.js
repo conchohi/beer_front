@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProfilePageInfo from "./ProfilePageInfo";
-import HostFollowingGames from "./follow/HostFollowingGames";
-import FollowingList from "./follow/FollowingList";
-import EditProfileModal from "./modal/EditProfileModal";
 import privateApi from "../../api/axios_intercepter";
+import FriendsList from "./follow/FriendsList";
+import FriendsGames from "./follow/FriendsGames";
+import EditProfileModal from "./modal/profile/EditProfileModal";
 
 const MyPageMain = () => {
   const { state } = useLocation();
@@ -50,10 +50,10 @@ const MyPageMain = () => {
             <div className="text-pink-500 text-2xl text-left border-b-4 border-gray-300 mb-4">
               <b>친구가 참여 중인 방 목록</b>
             </div>
-            <HostFollowingGames />
+            <FriendsGames />
           </div>
           <div className="bg-white rounded-2xl p-5 w-full lg:w-5/12">
-            <FollowingList />
+            <FriendsList />
           </div>
         </div>
       </div>

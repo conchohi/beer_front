@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Item from "./HostFollowingGamesItem";
+import Item from "./FriendsGamesItem";
 import privateApi from "../../../api/axios_intercepter";
 import Astronaut2 from "../../animation/Astronaut2";
 
-const HostFollowingGames = () => {
+const FriendsGames = () => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -77,4 +77,4 @@ const HostFollowingGames = () => {
   );
 };
 
-export default HostFollowingGames;
+export default FriendsGames;
