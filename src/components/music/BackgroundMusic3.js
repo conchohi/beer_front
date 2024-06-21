@@ -17,7 +17,7 @@ function BackgroundMusic3() {
   return (
     <div>
       <audio ref={audioRef} loop>
-        <source src="/music/background8.mp3" type="audio/mpeg" />
+        <source src="/music/background7.mp3" type="audio/mpeg" />
       </audio>
       <button onClick={handlePlayPause}>
         　
