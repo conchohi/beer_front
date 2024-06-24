@@ -3,7 +3,7 @@ import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../api/websocketApi';
 
-const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setCurrentGame, currentTurn, setCurrentTurn }) => {
+const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, setCurrentGame, currentTurn, setCurrentTurn }) => {
   const [stompClient, setStompClient] = useState(null);
   const [currentRound, setCurrentRound] = useState(0);
   const [imageUrl, setImageUrl] = useState('');
@@ -12,6 +12,8 @@ const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setC
   const [scores, setScores] = useState({});
   const [isGameOver, setIsGameOver] = useState(false);
   const [winner, setWinner] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(20);
+  const timerRef = useRef(null);
 
   useEffect(() => {
     const socket = new SockJS(WEB_SOCKET_SERVER);
@@ -39,6 +41,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setC
           setCurrentRound(gameState.round);
           setScores(gameState.scores);
           setImageUrl(`/charactergame/${gameState.topic}.jpg`);
+          resetTimer();
         }
       });
 
@@ -49,6 +52,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setC
 
     return () => {
       if (stompClient) stompClient.disconnect();
+      clearTimeout(timerRef.current);
     };
   }, [roomNo, nickname]);
 
@@ -70,6 +74,23 @@ const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setC
     }
   };
 
+  const resetTimer = () => {
+    clearTimeout(timerRef.current);
+    setTimeLeft(20);
+    timerRef.current = setTimeout(() => {
+      if (stompClient) {
+        stompClient.send(`/app/timeExpired/${roomNo}`, {});
+      }
+    }, 20000);
+  };
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timerId = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timerId);
+    }
+  }, [timeLeft]);
+
   return (
     <div className="game-box flex flex-col items-center w-full">
       <h1 className="text-2xl font-bold ">연예인퀴즈</h1>
@@ -85,6 +106,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setC
               className="border-2 border-black w-[200px] h-[300px] "
             />
           </div>
+          <div className="timer text-xl font-bold">{timeLeft}초 남았습니다</div>
           <form onSubmit={handleGuessSubmit} className="mt-4 w-full flex flex-col items-center">
             <input
               type="text"
@@ -96,15 +118,15 @@ const CharacterGame = ({ roomNo, nickname, participantList = [],currentGame,setC
             <button type="submit" className="mt-2 p-2 bg-blue-500 text-white rounded w-full">전송</button>
           </form>
           <div className="scores mt-4 w-full">
-        <h2 className="text-xl font-bold">참가자 점수</h2>
-        <ul className="grid grid-cols-2 gap-2 text-lg font-bold">
-          {participantList.map(participant => (
-            <li key={participant.nickname} className="mt-2">
-              {participant.nickname}: {scores[participant.nickname] || 0}점
-            </li>
-          ))}
-        </ul>
-      </div>
+            <h2 className="text-xl font-bold">참가자 점수</h2>
+            <ul className="grid grid-cols-2 gap-2 text-lg font-bold">
+              {participantList.map(participant => (
+                <li key={participant.nickname} className="mt-2">
+                  {participant.nickname}: {scores[participant.nickname] || 0}점
+                </li>
+              ))}
+            </ul>
+          </div>
         </>
       )}
       {winner && (
