@@ -12,19 +12,22 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
   const [scores, setScores] = useState({});
   const [isGameOver, setIsGameOver] = useState(false);
   const [winner, setWinner] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(10); // Set the initial timer to 10 seconds
+  const [timeLeft, setTimeLeft] = useState(10); // 타이머를 10초로 설정
   const [roundEnded, setRoundEnded] = useState(false);
 
+  // 웹소켓 연결 설정
   useEffect(() => {
     const socket = new SockJS(WEB_SOCKET_SERVER);
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
+      // 정답 맞춘 메시지 구독
       stompClient.subscribe(`/topic/game/${roomNo}/correct`, (message) => {
         setMessage(`${message.body}님이 정답을 맞췄습니다!`);
         setTimeout(() => setMessage(''), 5000);
         setTimeout(nextRound, 5000);
       });
 
+      // 게임 상태 변경 메시지 구독
       stompClient.subscribe(`/topic/game/${roomNo}`, (message) => {
         const gameState = JSON.parse(message.body);
         if (gameState.winner) {
@@ -42,7 +45,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
           setScores(gameState.scores);
           setImageUrl(`/charactergame/${gameState.topic}.jpg`);
           setRoundEnded(false);
-          setTimeLeft(10); // Reset the timer to 10 seconds for the new round
+          setTimeLeft(10); 
         }
       });
 
@@ -56,6 +59,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
     };
   }, [roomNo, nickname]);
 
+  // 타이머 설정
   useEffect(() => {
     if (!roundEnded && timeLeft > 0) {
       const timerId = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
@@ -65,10 +69,12 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
     }
   }, [timeLeft, roundEnded]);
 
+  // 정답 입력 핸들러
   const handleGuessChange = (e) => {
     setGuess(e.target.value);
   };
 
+  // 정답 제출 핸들러
   const handleGuessSubmit = (e) => {
     e.preventDefault();
     if (stompClient) {
@@ -77,6 +83,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
     setGuess('');
   };
 
+  // 시간 만료 핸들러
   const handleTimeExpired = () => {
     setRoundEnded(true);
     if (stompClient) {
@@ -84,6 +91,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
     }
   };
 
+  // 다음 라운드 시작 핸들러
   const nextRound = () => {
     if (stompClient) {
       stompClient.send(`/app/startCharacterGame/${roomNo}`, {}, JSON.stringify({ player: nickname, players: participantList.map(p => p.nickname) }));
@@ -105,7 +113,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
               className="border-2 border-black w-[200px] h-[300px] "
             />
           </div>
-          <div className="timer text-xl font-bold">{timeLeft}초 남았습니다</div>
+          <div className="timer font-bold">남은 시간 : {timeLeft}</div>
           <form onSubmit={handleGuessSubmit} className="mt-4 w-full flex flex-col items-center">
             <input
               type="text"
