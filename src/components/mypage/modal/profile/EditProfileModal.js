@@ -7,7 +7,7 @@ import ChangeNicknameModal from "./ChangeNicknameModal";
 import CheckEmailModal from "./CheckEmailModal";
 import ChangePasswordModal from "./ChangePasswordModal";
 import DeleteAccountModal from "./DeleteAccountModal";
-
+import privateApi from "../../../../api/axios_intercepter";
 
 const EditProfileModal = ({
   isOpen,
