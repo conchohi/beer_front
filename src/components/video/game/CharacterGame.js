@@ -12,7 +12,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
   const [scores, setScores] = useState({});
   const [isGameOver, setIsGameOver] = useState(false);
   const [winner, setWinner] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [timeLeft, setTimeLeft] = useState(10); // Set the initial timer to 10 seconds
   const [roundEnded, setRoundEnded] = useState(false);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
           setScores(gameState.scores);
           setImageUrl(`/charactergame/${gameState.topic}.jpg`);
           setRoundEnded(false);
-          setTimeLeft(20); // Reset the timer for the new round
+          setTimeLeft(10); // Reset the timer to 10 seconds for the new round
         }
       });
 
