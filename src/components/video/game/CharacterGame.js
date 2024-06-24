@@ -113,7 +113,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
               className="border-2 border-black w-[200px] h-[300px] "
             />
           </div>
-          <div className="timer font-bold">남은 시간 : {timeLeft}</div>
+          <div className="timer font-bold">남은 시간 : {timeLeft} 초</div>
           <form onSubmit={handleGuessSubmit} className="mt-4 w-full flex flex-col items-center">
             <input
               type="text"
