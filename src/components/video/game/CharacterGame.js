@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { WEB_SOCKET_SERVER } from '../../../api/websocketApi';
@@ -13,7 +13,7 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
   const [isGameOver, setIsGameOver] = useState(false);
   const [winner, setWinner] = useState(null);
   const [timeLeft, setTimeLeft] = useState(20);
-  const timerRef = useRef(null);
+  const [roundEnded, setRoundEnded] = useState(false);
 
   useEffect(() => {
     const socket = new SockJS(WEB_SOCKET_SERVER);
@@ -41,7 +41,8 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
           setCurrentRound(gameState.round);
           setScores(gameState.scores);
           setImageUrl(`/charactergame/${gameState.topic}.jpg`);
-          resetTimer();
+          setRoundEnded(false);
+          setTimeLeft(20); // Reset the timer for the new round
         }
       });
 
@@ -52,9 +53,17 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
 
     return () => {
       if (stompClient) stompClient.disconnect();
-      clearTimeout(timerRef.current);
     };
   }, [roomNo, nickname]);
+
+  useEffect(() => {
+    if (!roundEnded && timeLeft > 0) {
+      const timerId = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timerId);
+    } else if (timeLeft === 0 && !roundEnded) {
+      handleTimeExpired();
+    }
+  }, [timeLeft, roundEnded]);
 
   const handleGuessChange = (e) => {
     setGuess(e.target.value);
@@ -68,28 +77,18 @@ const CharacterGame = ({ roomNo, nickname, participantList = [], currentGame, se
     setGuess('');
   };
 
+  const handleTimeExpired = () => {
+    setRoundEnded(true);
+    if (stompClient) {
+      stompClient.send(`/app/charactergamehandleTimeExpired/${roomNo}`, {});
+    }
+  };
+
   const nextRound = () => {
     if (stompClient) {
       stompClient.send(`/app/startCharacterGame/${roomNo}`, {}, JSON.stringify({ player: nickname, players: participantList.map(p => p.nickname) }));
     }
   };
-
-  const resetTimer = () => {
-    clearTimeout(timerRef.current);
-    setTimeLeft(20);
-    timerRef.current = setTimeout(() => {
-      if (stompClient) {
-        stompClient.send(`/app/timeExpired/${roomNo}`, {});
-      }
-    }, 20000);
-  };
-
-  useEffect(() => {
-    if (timeLeft > 0) {
-      const timerId = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timerId);
-    }
-  }, [timeLeft]);
 
   return (
     <div className="game-box flex flex-col items-center w-full">
