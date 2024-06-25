@@ -24,7 +24,7 @@ const Footer = () => {
           <div className="w-full lg:w-6/12 px-4 flex justify-end mt-6 lg:mt-0">
             <Link target='_blank' className="px-1" to="https://www.youtube.com/watch?v=RDssr8zE3Nw"><FaYoutube size="20" /></Link>
             <Link target='_blank' className="px-1" to="https://drive.google.com/drive/folders/1dkvxr2rZmJJpjyf_TIScOLvpA3Pk2lrV"><FaGoogleDrive size="20" /></Link>
-            <Link target='_blank' className="px-1" to="https://www.notion.so/4-Beer-5d54edc1e7574cf58fc50d979819fd3bb"><RiNotionFill size="20" /></Link>
+            <Link target='_blank' className="px-1" to="https://www.notion.so/4-Beer-5d54edc1e7574cf58fc50d979819fd3b?pvs=4"><RiNotionFill size="20" /></Link>
             <Link target='_blank' className="px-1" to="https://github.com/conchohi/beer_front"><FaGithub size="20" /></Link>
             <Link target='_blank' className="px-1" to="https://github.com/conchohi/beer-backend"><FaGithubAlt size="20" /></Link>
 
