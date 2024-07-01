@@ -26,7 +26,7 @@ const Footer = () => {
             <Link target='_blank' className="px-1" to="https://drive.google.com/drive/folders/1dkvxr2rZmJJpjyf_TIScOLvpA3Pk2lrV"><FaGoogleDrive size="20" /></Link>
             <Link target='_blank' className="px-1" to="https://www.notion.so/4-Beer-5d54edc1e7574cf58fc50d979819fd3b?pvs=4"><RiNotionFill size="20" /></Link>
             <Link target='_blank' className="px-1" to="https://github.com/conchohi/beer_front"><FaGithub size="20" /></Link>
-            <Link target='_blank' className="px-1" to="https://github.com/conchohi/beer-backend"><FaGithubAlt size="20" /></Link>
+            <Link target='_blank' className="px-1" to="https://github.com/conchohi/beer_backend"><FaGithubAlt size="20" /></Link>
 
             <br />
           </div>
