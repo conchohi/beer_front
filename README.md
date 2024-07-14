@@ -1,10 +1,8 @@
 
 
 ## 🍻 우리집 Beer - *WebRtc 기반 온라인 술자리 서비스*
-<div align="center">
 <img src="https://github.com/user-attachments/assets/91721254-991f-4aed-944b-ff4ec0a04744" width="200"/><br/>
 <img src="https://github.com/user-attachments/assets/274c324c-6bc8-43a3-8182-d0b4fb2bde12" width="200"/>
-</div>
 
 
 
